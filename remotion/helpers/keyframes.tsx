@@ -3,7 +3,7 @@ import { EasingType, getEasingFunction } from "./easing";
 
 type KeyframeType = number | [number, number] | [number, number, number];
 
-type Keyframe<T extends KeyframeType> = {
+export type Keyframe<T extends KeyframeType> = {
   time: number;
   easing: EasingType;
   value: T;

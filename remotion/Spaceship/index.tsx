@@ -1,17 +1,13 @@
 import React from "react";
-import { AbsoluteFill, staticFile, Video } from "remotion";
+import { AbsoluteFill } from "remotion";
 import { SkyBg } from "./SkyBg";
+import { SkyDark } from "./SkyDark";
 
 export const Spaceship: React.FC = () => {
   return (
     <AbsoluteFill>
       <SkyBg></SkyBg>
-      <AbsoluteFill>
-        <Video
-          src={staticFile("comparison.mp4")}
-          style={{ opacity: 0.5 }}
-        ></Video>
-      </AbsoluteFill>
+      <SkyDark></SkyDark>
     </AbsoluteFill>
   );
 };
