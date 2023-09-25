@@ -13,10 +13,6 @@ Adobe After Effects 8.0 Keyframe Data
 	Source Pixel Aspect Ratio	1
 	Comp Pixel Aspect Ratio	1
 
-Transform	Scale
-	Frame	X percent	Y percent	Z percent	
-		14.2103	14.2103	103.928	
-
 Transform	Position
 	Frame	X pixels	Y pixels	Z pixels	
 	0	540	540	0	
@@ -27,10 +23,6 @@ Transform	Position
 	272	540	540	0	
 	281	540	540	0	
 	375	610	540	0	
-
-Transform	Opacity
-	Frame	percent	
-		100	
 
 Transform	Rotation
 	Frame	degrees	
@@ -43,12 +35,9 @@ Transform	Rotation
 	281	0	
 	375	0	
 
-Transform	Anchor Point
-	Frame	X pixels	Y pixels	Z pixels	
-		4096	3850.5	0	
-
 
 End of Keyframe Data
+
 `.trim();
 
 const converted = convertAfterEffectsKeyFrames(keyframes);

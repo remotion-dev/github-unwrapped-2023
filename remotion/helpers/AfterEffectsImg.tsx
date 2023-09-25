@@ -14,7 +14,7 @@ export const AfterEffectsImg: React.FC<{
   src: string;
   scale?: number;
   anchorPoint?: [number, number];
-  position?: [number, number];
+  position?: [number, number] | [number, number, number];
   rotationInDegrees?: number;
 }> = ({
   width,
