@@ -35,6 +35,7 @@
     "eslint": "^8.43.0",
     "eslint-config-next": "^13.4.13",
     "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.3",
     "typescript": "4.8.3"
   }
 }
