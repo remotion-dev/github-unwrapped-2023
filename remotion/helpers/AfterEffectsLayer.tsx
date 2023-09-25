@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { AbsoluteFill, Img } from "remotion";
+import React, { useMemo } from "react";
+import { AbsoluteFill } from "remotion";
 import {
   rotateZ,
   scale,
@@ -11,7 +11,7 @@ import {
 export const AfterEffectsImg: React.FC<{
   width: number;
   height: number;
-  src: string;
+  children: React.ReactNode;
   scale?: number;
   anchorPoint?: [number, number];
   position?: [number, number] | [number, number, number];
@@ -19,7 +19,7 @@ export const AfterEffectsImg: React.FC<{
 }> = ({
   width,
   height,
-  src,
+  children,
   scale: scaleFactor,
   anchorPoint,
   position,
@@ -45,7 +45,7 @@ export const AfterEffectsImg: React.FC<{
 
   return (
     <AbsoluteFill>
-      <Img style={style} src={src}></Img>
+      <AbsoluteFill style={style}>{children}</AbsoluteFill>
     </AbsoluteFill>
   );
 };

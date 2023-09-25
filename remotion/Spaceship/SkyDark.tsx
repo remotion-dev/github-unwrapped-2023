@@ -1,6 +1,6 @@
 import React from "react";
-import { AbsoluteFill, staticFile, useCurrentFrame } from "remotion";
-import { AfterEffectsImg } from "../helpers/AfterEffectsImg";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
+import { AfterEffectsImg as AfterEffectsLayer } from "../helpers/AfterEffectsLayer";
 import { makeKeyFrames } from "../helpers/keyframes";
 
 export const SkyDark: React.FC = () => {
@@ -8,10 +8,9 @@ export const SkyDark: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <AfterEffectsImg
+      <AfterEffectsLayer
         height={7701}
         width={8192}
-        src={staticFile("Spaceship/Sky-dark.png")}
         anchorPoint={[4096, 3850.5]}
         scale={0.142103}
         position={makeKeyFrames(frame, [
@@ -98,7 +97,9 @@ export const SkyDark: React.FC = () => {
             easing: "easy-ease",
           },
         ])}
-      ></AfterEffectsImg>
+      >
+        <Img src={staticFile("Spaceship/Sky-dark.png")}></Img>
+      </AfterEffectsLayer>
     </AbsoluteFill>
   );
 };

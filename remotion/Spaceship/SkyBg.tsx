@@ -1,6 +1,6 @@
 import React from "react";
-import { staticFile, useCurrentFrame } from "remotion";
-import { AfterEffectsImg } from "../helpers/AfterEffectsImg";
+import { Img, staticFile, useCurrentFrame } from "remotion";
+import { AfterEffectsImg } from "../helpers/AfterEffectsLayer";
 import { makeKeyFrames } from "../helpers/keyframes";
 
 export const SkyBg: React.FC = () => {
@@ -10,7 +10,6 @@ export const SkyBg: React.FC = () => {
     <AfterEffectsImg
       height={6908}
       width={8192}
-      src={staticFile("Spaceship/Sky-BG.png")}
       scale={0.162}
       rotationInDegrees={makeKeyFrames(frame, [
         { time: 0, value: 0, easing: "ease-out" },
@@ -88,6 +87,8 @@ export const SkyBg: React.FC = () => {
           value: [512, 524],
         },
       ])}
-    ></AfterEffectsImg>
+    >
+      <Img src={staticFile("Spaceship/Sky-BG.png")}></Img>
+    </AfterEffectsImg>
   );
 };
