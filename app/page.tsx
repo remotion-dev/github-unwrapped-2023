@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { HomeLink } from "../components/HomeLink";
+import { Input } from "../components/Input";
 import { GithubIcon } from "../icons/GithubIcon";
 import { RemotionIcon } from "../icons/RemotionIcon";
 import { RocketIcon } from "../icons/RocketIcon";
@@ -62,6 +63,18 @@ const description: React.CSSProperties = {
   padding: 0,
 };
 
+const inputContainer: React.CSSProperties = {
+  width: "100%",
+  paddingTop: "auto",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+const buttonContainer: React.CSSProperties = {
+  display: "flex",
+};
+
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const router = useRouter();
@@ -112,6 +125,28 @@ const Home: NextPage = () => {
             <h2 className="gradient-text">#GitHubUnwrapped 2023</h2>
             <h1 style={title}>Unlock your coding year in review</h1>
             <p>Get a personalized video of your GitHub activity in 2023.</p>
+          </div>
+          <div style={inputContainer}>
+            <div style={buttonContainer}>
+              <Input
+                text={username}
+                placeHolder="Username"
+                setText={(s) => setUsername(s)}
+                style={{
+                  borderRadius: "5px 0 0 5px",
+                }}
+              />
+              <button onClick={() => router.push(username)}>
+                Get your unwrapped
+              </button>
+            </div>
+
+            <div>or</div>
+            <a
+              href={`https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`}
+            >
+              Login with GitHub
+            </a>
           </div>
         </GradientBox>
       </div>
