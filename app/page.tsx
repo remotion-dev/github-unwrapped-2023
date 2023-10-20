@@ -1,13 +1,13 @@
 "use client";
 
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { HomeLink } from "../components/HomeLink";
 import { GithubIcon } from "../icons/GithubIcon";
 import { RemotionIcon } from "../icons/RemotionIcon";
 import { RocketIcon } from "../icons/RocketIcon";
+import { GradientBox } from "./GradientBox";
 
 const container: React.CSSProperties = {
   width: "100vw",
@@ -17,13 +17,18 @@ const container: React.CSSProperties = {
   backgroundImage: 'url("/background.png")',
   backgroundPosition: "center",
   backgroundSize: "cover",
+  position: "relative",
 };
 
 const header: React.CSSProperties = {
   display: "flex",
   justifyContent: "flex-end",
+  top: 0,
+  left: 0,
+  width: "100%",
   gap: 24,
   padding: "24px 56px 0",
+  position: "absolute",
 };
 
 const player: React.CSSProperties = {
@@ -32,31 +37,85 @@ const player: React.CSSProperties = {
   padding: 24,
 };
 
+const content: React.CSSProperties = {
+  flex: 1,
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const title: React.CSSProperties = {
+  margin: 0,
+  padding: 0,
+  marginBottom: 16,
+  fontSize: 36,
+  fontWeight: 700,
+  color: "white",
+};
+
+const description: React.CSSProperties = {
+  color: "rgba(235, 234, 238, 1)",
+  fontSize: 18,
+  fontWeight: 500,
+  margin: 0,
+  padding: 0,
+};
+
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const router = useRouter();
 
   return (
-    <div>
-      <div style={container}>
-        <div style={header}>
-          <HomeLink
-            icon={(props) => <RemotionIcon {...props} />}
-            label={"Made with Remotion"}
-            href={"https://remotion.dev"}
-          />
-          <HomeLink
-            href={"https://github.com/remotion-dev/github-unwrapped-2023"}
-            label={"Source Code"}
-            icon={(props) => <GithubIcon {...props} />}
-          />
-          <HomeLink
-            href={"https://github.com/remotion-dev/github-unwrapped-2023"}
-            label={"About Unwrapped"}
-            icon={(props) => <RocketIcon {...props} />}
-          />
-        </div>
-        <div className="cinematics" style={player}>
+    <div style={container}>
+      <style jsx>{`
+        .gradient-text {
+          background: linear-gradient(270.02deg, #c0b1e5 3.63%, #c5be81 99.87%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+          font-size: 24px;
+          padding: 0;
+          margin: 0;
+          margin-bottom: 32px;
+        }
+      `}</style>
+      <div style={header}>
+        <HomeLink
+          icon={(props) => <RemotionIcon {...props} />}
+          label={"Made with Remotion"}
+          href={"https://remotion.dev"}
+        />
+        <HomeLink
+          href={"https://github.com/remotion-dev/github-unwrapped-2023"}
+          label={"Source Code"}
+          icon={(props) => <GithubIcon {...props} />}
+        />
+        <HomeLink
+          href={"https://github.com/remotion-dev/github-unwrapped-2023"}
+          label={"About Unwrapped"}
+          icon={(props) => <RocketIcon {...props} />}
+        />
+      </div>
+      <div style={content}>
+        <GradientBox>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <h2 className="gradient-text">#GitHubUnwrapped 2023</h2>
+            <h1 style={title}>Unlock your coding year in review</h1>
+            <p>Get a personalized video of your GitHub activity in 2023.</p>
+          </div>
+        </GradientBox>
+      </div>
+      {/* <div className="cinematics" style={player}>
           <h1>Your coding year in review</h1>
           <p>
             Get a personalized video of your GitHub activity in 2023. Type your
@@ -77,8 +136,7 @@ const Home: NextPage = () => {
           >
             Login with GitHub
           </Link>
-        </div>
-      </div>
+        </div> */}
     </div>
   );
 };
