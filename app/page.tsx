@@ -1,8 +1,11 @@
 "use client";
 
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { Button } from "../components/Button/Button";
+import buttonStyles from "../components/Button/styles.module.css";
 import { HomeLink } from "../components/HomeLink";
 import { Input } from "../components/Input";
 import { GithubIcon } from "../icons/GithubIcon";
@@ -134,19 +137,25 @@ const Home: NextPage = () => {
                 setText={(s) => setUsername(s)}
                 style={{
                   borderRadius: "5px 0 0 5px",
+                  width: 250,
                 }}
               />
-              <button onClick={() => router.push(username)}>
-                Get your unwrapped
-              </button>
+              <Button
+                onClick={() => router.push(username)}
+                style={{ borderRadius: "0 5px 5px 0" }}
+              >
+                Start Unwrapped
+              </Button>
             </div>
 
             <div>or</div>
-            <a
+            <Link
+              style={{ textDecoration: "none" }}
+              className={buttonStyles.secondarybutton}
               href={`https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`}
             >
-              Login with GitHub
-            </a>
+              Sign in with GitHub
+            </Link>
           </div>
         </GradientBox>
       </div>

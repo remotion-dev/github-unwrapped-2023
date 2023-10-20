@@ -18,8 +18,7 @@ export const Input: React.FC<{
     <>
       <style jsx>{`
         input {
-          width: 100%;
-          font-size: 18px;
+          font-size: 16px;
           padding: 0 16px;
           border: 1px solid rgba(70, 195, 189, 0.5);
           border-radius: 5px;
@@ -28,6 +27,7 @@ export const Input: React.FC<{
           display: flex;
           align-items: center;
           caret-color: white;
+          color: white;
         }
 
         input::placeholder {
