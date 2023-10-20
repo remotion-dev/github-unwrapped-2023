@@ -4,13 +4,26 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { HomeLink } from "../components/HomeLink";
+import { GithubIcon } from "../icons/GithubIcon";
+import { RemotionIcon } from "../icons/RemotionIcon";
+import { RocketIcon } from "../icons/RocketIcon";
 
 const container: React.CSSProperties = {
   width: "100vw",
   height: "100vh",
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  flexDirection: "column",
+  backgroundImage: 'url("/background.png")',
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+};
+
+const header: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "flex-end",
+  gap: 24,
+  padding: "24px 56px 0",
 };
 
 const player: React.CSSProperties = {
@@ -26,6 +39,23 @@ const Home: NextPage = () => {
   return (
     <div>
       <div style={container}>
+        <div style={header}>
+          <HomeLink
+            icon={(props) => <RemotionIcon {...props} />}
+            label={"Made with Remotion"}
+            href={""}
+          />
+          <HomeLink
+            href={""}
+            label={"Source Code"}
+            icon={(props) => <GithubIcon {...props} />}
+          />
+          <HomeLink
+            href={""}
+            label={"About Unwrapped"}
+            icon={(props) => <RocketIcon {...props} />}
+          />
+        </div>
         <div className="cinematics" style={player}>
           <h1>Your coding year in review</h1>
           <p>
