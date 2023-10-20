@@ -43,15 +43,15 @@ const Home: NextPage = () => {
           <HomeLink
             icon={(props) => <RemotionIcon {...props} />}
             label={"Made with Remotion"}
-            href={""}
+            href={"https://remotion.dev"}
           />
           <HomeLink
-            href={""}
+            href={"https://github.com/remotion-dev/github-unwrapped-2023"}
             label={"Source Code"}
             icon={(props) => <GithubIcon {...props} />}
           />
           <HomeLink
-            href={""}
+            href={"https://github.com/remotion-dev/github-unwrapped-2023"}
             label={"About Unwrapped"}
             icon={(props) => <RocketIcon {...props} />}
           />
