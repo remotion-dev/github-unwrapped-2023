@@ -6,7 +6,7 @@ export const HomeLink: React.FC<{
   href: string;
 }> = ({ label, icon, href }) => {
   return (
-    <div className="container">
+    <a className="container" href={href}>
       <style jsx>{`
         .container {
           display: flex;
@@ -27,7 +27,7 @@ export const HomeLink: React.FC<{
         }
       `}</style>
       {icon({ height: 16, width: 16, color: "white" })}
-      <a href={href}>{label}</a>
-    </div>
+      {label}
+    </a>
   );
 };
