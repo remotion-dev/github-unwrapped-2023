@@ -20,6 +20,61 @@ export const GradientBox: React.FC<{ children: ReactNode }> = (props) => {
         alt="decoration around the gradient box"
         style={{ width: 852, position: "absolute", top: -60, left: -48 }}
       />
+      <div
+        style={{
+          position: "absolute",
+          alignSelf: "center",
+          left: -120 - 40,
+          top: 0,
+          bottom: 0,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          width: 120,
+          fontSize: 12,
+          textAlign: "right",
+          color: "rgba(203, 203, 203, 1)",
+        }}
+      >
+        A personalized video made just for you
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          alignSelf: "center",
+          left: 0,
+          right: 0,
+          margin: "auto",
+          top: -64,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          width: 120,
+          fontSize: 12,
+          textAlign: "center",
+          color: "rgba(203, 203, 203, 1)",
+        }}
+      >
+        Your favorite Github statistics, animated
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          alignSelf: "center",
+          right: -144 - 40,
+          top: 0,
+          bottom: 0,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          width: 144,
+          fontSize: 12,
+          textAlign: "left",
+          color: "rgba(203, 203, 203, 1)",
+        }}
+      >
+        An MP4 video to share with your community
+      </div>
       {props.children}
     </div>
   );
