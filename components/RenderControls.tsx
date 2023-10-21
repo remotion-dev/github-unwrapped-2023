@@ -6,7 +6,7 @@ import { Button } from "./Button/Button";
 import { InputContainer } from "./Container";
 import { DownloadButton } from "./DownloadButton";
 import { ErrorComp } from "./Error";
-import { Input } from "./Input";
+import { Input } from "./Input/Input";
 import { ProgressBar } from "./ProgressBar";
 import { Spacing } from "./Spacing";
 
