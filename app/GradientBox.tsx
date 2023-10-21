@@ -8,7 +8,7 @@ const style: React.CSSProperties = {
   border: "2px solid rgba(171, 230, 195, 1)",
   borderRadius: 20,
   position: "relative",
-  padding: "40px 40px 72px",
+  padding: "40px 40px 104px",
 };
 
 const textLeft: React.CSSProperties = {

@@ -78,6 +78,15 @@ const buttonContainer: React.CSSProperties = {
   display: "flex",
 };
 
+const octocat: React.CSSProperties = {
+  position: "absolute",
+  bottom: -296 + 64,
+  left: 0,
+  right: 0,
+  margin: "0 auto",
+  height: 296,
+};
+
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const router = useRouter();
@@ -157,6 +166,8 @@ const Home: NextPage = () => {
               Sign in with GitHub
             </Link>
           </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/octocat.svg" alt="Octocat" style={octocat} />
         </GradientBox>
       </div>
       {/* <div className="cinematics" style={player}>
