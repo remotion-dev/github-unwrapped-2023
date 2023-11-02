@@ -7,6 +7,7 @@ const style: React.CSSProperties = {
   borderRadius: 20,
   position: "relative",
   padding: "40px",
+  backdropFilter: "blur(5px)",
 };
 
 export const GradientBox: React.FC<{
