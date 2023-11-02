@@ -10,8 +10,21 @@ type UfoPosition = {
   scale: number;
 };
 
+const issuesPerRow = (numberOfIssues: number) => {
+  if (numberOfIssues < 4) {
+    return 3;
+  }
+  if (numberOfIssues < 15) {
+    return 4;
+  }
+  if (numberOfIssues < 30) {
+    return 6;
+  }
+  return 8;
+};
+
 export const makeUfoPositions = (numberOfUfos: number): UfoPosition[] => {
-  const perRow = 4;
+  const perRow = issuesPerRow(numberOfUfos);
   const ufoScale = 1 / (UFO_WIDTH / (USABLE_CANVAS_WIDTH / perRow));
   const ufoHeight = UFO_HEIGHT * ufoScale;
 
