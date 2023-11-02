@@ -1,0 +1,21 @@
+.gradientText {
+  background: linear-gradient(270.02deg, #c3abff 3.63%, #eee69d 99.87%),
+    linear-gradient(0deg, #ffffff, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: rgba(231, 231, 231, 1);
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.footer:hover {
+  text-decoration: underline;
+}
