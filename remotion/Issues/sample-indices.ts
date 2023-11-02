@@ -23,5 +23,5 @@ export function sampleUniqueIndices(
   }
 
   // Convert the Set to an array of numbers (indices) before returning
-  return Array.from(indices);
+  return Array.from(indices).sort((a, b) => a - b);
 }
