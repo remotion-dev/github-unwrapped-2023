@@ -1,4 +1,5 @@
 import { noise2D } from "@remotion/noise";
+import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 export const CANVAS_WIDTH = 1080;
@@ -11,6 +12,7 @@ type UfoPosition = {
   scale: number;
   shootDelay: number;
   shootDuration: number;
+  isClosed: boolean;
 };
 
 const issuesPerRow = (numberOfIssues: number) => {
@@ -28,6 +30,7 @@ const issuesPerRow = (numberOfIssues: number) => {
 
 export const makeUfoPositions = (
   numberOfUfos: number,
+  closedIssues: number,
   frame: number
 ): UfoPosition[] => {
   const perRow = issuesPerRow(numberOfUfos);
@@ -40,6 +43,8 @@ export const makeUfoPositions = (
   const ufoHeight = UFO_HEIGHT * ufoScale;
 
   const rowHeight = ufoHeight + 10;
+
+  const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
   return new Array(numberOfUfos).fill(0).map((_, i) => {
     const width = ufoContainerWidth;
@@ -56,8 +61,9 @@ export const makeUfoPositions = (
         noise2D("seed", frame / 100, i) * 10,
       y: PADDING + row * rowHeight + noise2D("seedy", frame / 100, i) * 10,
       scale: ufoScale,
-      shootDelay: (numberOfUfos - i) * 5,
+      shootDelay: (closedIssues - closedIndices.indexOf(i)) * 5,
       shootDuration: 14,
+      isClosed: closedIndices.includes(i),
     };
   });
 };

@@ -18,7 +18,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const positions = makeUfoPositions(totalIssues, frame);
+  const positions = makeUfoPositions(totalIssues, closedIssues, frame);
 
   return (
     <AbsoluteFill
@@ -27,6 +27,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       }}
     >
       {positions.map((p, i) => {
+        if (!p.isClosed) {
+          return null;
+        }
+
         return (
           <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
             <GlowStick
@@ -42,7 +46,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         return (
           <Sequence
             key={i}
-            durationInFrames={p.shootDelay + p.shootDuration + 2}
+            durationInFrames={
+              p.isClosed ? p.shootDelay + p.shootDuration + 2 : Infinity
+            }
           >
             <Ufo
               explodeAfter={p.shootDelay + p.shootDuration}
@@ -54,6 +60,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         );
       })}
       {positions.map((p, i) => {
+        if (!p.isClosed) {
+          return null;
+        }
         return (
           <Sequence key={i} from={p.shootDelay + p.shootDuration} layout="none">
             <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
