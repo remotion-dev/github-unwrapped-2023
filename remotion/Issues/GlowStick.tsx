@@ -7,7 +7,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { ROCKET_ORIGIN_X, ROCKET_ORIGIN_Y } from "./rocket-origin";
+import {
+  getAngleForShoot,
+  ROCKET_ORIGIN_X,
+  ROCKET_ORIGIN_Y,
+} from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
 const IMAGE_HEIGHT = 165;
@@ -18,9 +22,7 @@ export const GlowStick: React.FC<{
   shootDelay: number;
   shootDuration: number;
 }> = ({ targetX, targetY, shootDelay, shootDuration }) => {
-  const deltaX = targetX - ROCKET_ORIGIN_X;
-  const deltaY = targetY - ROCKET_ORIGIN_Y;
-  let angleRadians = Math.atan2(deltaY, deltaX);
+  const angleRadians = getAngleForShoot(targetX, targetY);
 
   // Make the glowstick only reach the bottom
   const actualTargetY = targetY;

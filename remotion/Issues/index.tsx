@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Poof } from "../Poof";
 import { GlowStick } from "./GlowStick";
 import { makeUfoPositions } from "./make-ufo-positions";
+import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
 export const issuesSchema = z.object({
@@ -69,6 +70,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           </Sequence>
         );
       })}
+      <AbsoluteFill>
+        <Rocket positions={positions}></Rocket>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

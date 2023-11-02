@@ -1,12 +1,15 @@
 import { noise2D } from "@remotion/noise";
+import { interpolate } from "remotion";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 export const CANVAS_WIDTH = 1080;
 export const PADDING = 100;
 export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
+export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
+export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
 
-type UfoPosition = {
+export type UfoPosition = {
   x: number;
   y: number;
   scale: number;
@@ -71,4 +74,39 @@ export const makeUfoPositions = (
       isClosed: closedIndices.includes(i),
     };
   });
+};
+
+export const rocketRotation = (positions: UfoPosition[], frame: number) => {
+  const sortedByDelay = positions
+    .filter((p) => p.isClosed)
+    .sort((a, b) => a.shootDelay - b.shootDelay);
+
+  const angles = sortedByDelay.map((p) => {
+    const angle = getAngleForShoot(p.x, p.y);
+    return { angle, delay: p.shootDelay };
+  });
+  if (angles.length === 0) {
+    return 0;
+  }
+
+  if (angles.length === 1) {
+    return angles[0].angle;
+  }
+
+  return interpolate(
+    frame,
+    angles.map((a) => a.delay),
+    angles.map((a) => a.angle),
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+};
+
+export const getAngleForShoot = (targetX: number, targetY: number) => {
+  const deltaX = targetX - ROCKET_ORIGIN_X;
+  const deltaY = targetY - ROCKET_ORIGIN_Y;
+  let angleRadians = Math.atan2(deltaY, deltaX);
+  return angleRadians;
 };
