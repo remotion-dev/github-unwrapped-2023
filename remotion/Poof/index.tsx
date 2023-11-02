@@ -263,8 +263,18 @@ const Sprite6 = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const Poof: React.FC = () => {
+const BIGGEST_WIDTH = 256;
+const BIGGEST_HEIGHT = 284;
+
+export const Poof: React.FC<{
+  x: number;
+  y: number;
+  ufoScale: number;
+}> = ({ x, y, ufoScale }) => {
   const frame = Math.round(useCurrentFrame() / 2);
+
+  const actualScale = ufoScale * 1.5;
+
   return (
     <AbsoluteFill
       style={{
@@ -273,12 +283,26 @@ export const Poof: React.FC = () => {
         justifyItems: "center",
       }}
     >
-      {frame === 0 ? <Sprite1></Sprite1> : null}
-      {frame === 1 ? <Sprite2></Sprite2> : null}
-      {frame === 2 ? <Sprite3></Sprite3> : null}
-      {frame === 3 ? <Sprite4></Sprite4> : null}
-      {frame === 4 ? <Sprite5></Sprite5> : null}
-      {frame === 5 ? <Sprite6></Sprite6> : null}
+      <div
+        style={{
+          width: BIGGEST_WIDTH,
+          height: BIGGEST_HEIGHT,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          left: x - BIGGEST_WIDTH / 2,
+          top: y - BIGGEST_HEIGHT / 2,
+          transform: `scale(${actualScale})`,
+        }}
+      >
+        {frame === 0 ? <Sprite1></Sprite1> : null}
+        {frame === 1 ? <Sprite2></Sprite2> : null}
+        {frame === 2 ? <Sprite3></Sprite3> : null}
+        {frame === 3 ? <Sprite4></Sprite4> : null}
+        {frame === 4 ? <Sprite5></Sprite5> : null}
+        {frame === 5 ? <Sprite6></Sprite6> : null}
+      </div>
     </AbsoluteFill>
   );
 };

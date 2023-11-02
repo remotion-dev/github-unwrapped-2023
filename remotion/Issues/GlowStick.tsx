@@ -34,7 +34,9 @@ export const GlowStick: React.FC<{
     config: {
       damping: 200,
     },
+    durationInFrames: shootDuration,
     delay: shootDelay,
+    durationRestThreshold: 0.1,
   });
 
   const x = interpolate(progress, [0, 1], [ROCKET_ORIGIN_X, targetX]);
@@ -47,6 +49,8 @@ export const GlowStick: React.FC<{
   if (progress === 0) {
     return null;
   }
+
+  console.log({ x, y, scaleY, progress, shootDuration, shootDelay });
 
   return (
     <Img

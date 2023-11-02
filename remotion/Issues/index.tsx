@@ -1,6 +1,7 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { Poof } from "../Poof";
 import { GlowStick } from "./GlowStick";
 import { makeUfoPositions } from "./make-ufo-positions";
 import { Ufo } from "./Ufo";
@@ -14,9 +15,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,
   openIssues,
 }) => {
+  const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const positions = makeUfoPositions(totalIssues);
+  const positions = makeUfoPositions(totalIssues, frame);
 
   return (
     <AbsoluteFill
@@ -26,18 +28,37 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     >
       {positions.map((p, i) => {
         return (
-          <AbsoluteFill key={i}>
+          <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
             <GlowStick
               shootDelay={p.shootDelay}
-              shootDuration={20}
+              shootDuration={p.shootDuration}
               targetX={p.x}
               targetY={p.y}
             ></GlowStick>
-          </AbsoluteFill>
+          </Sequence>
         );
       })}
       {positions.map((p, i) => {
-        return <Ufo scale={p.scale} key={i} x={p.x} y={p.y}></Ufo>;
+        return (
+          <Sequence
+            key={i}
+            durationInFrames={p.shootDelay + p.shootDuration + 2}
+          >
+            <Ufo
+              explodeAfter={p.shootDelay + p.shootDuration}
+              scale={p.scale}
+              x={p.x}
+              y={p.y}
+            ></Ufo>
+          </Sequence>
+        );
+      })}
+      {positions.map((p, i) => {
+        return (
+          <Sequence key={i} from={p.shootDelay + p.shootDuration} layout="none">
+            <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
+          </Sequence>
+        );
       })}
     </AbsoluteFill>
   );

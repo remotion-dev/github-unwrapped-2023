@@ -1,3 +1,4 @@
+import { noise2D } from "@remotion/noise";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 export const CANVAS_WIDTH = 1080;
@@ -9,6 +10,7 @@ type UfoPosition = {
   y: number;
   scale: number;
   shootDelay: number;
+  shootDuration: number;
 };
 
 const issuesPerRow = (numberOfIssues: number) => {
@@ -24,7 +26,10 @@ const issuesPerRow = (numberOfIssues: number) => {
   return 8;
 };
 
-export const makeUfoPositions = (numberOfUfos: number): UfoPosition[] => {
+export const makeUfoPositions = (
+  numberOfUfos: number,
+  frame: number
+): UfoPosition[] => {
   const perRow = issuesPerRow(numberOfUfos);
   const spaceInbetweenUfo = 10;
 
@@ -43,10 +48,16 @@ export const makeUfoPositions = (numberOfUfos: number): UfoPosition[] => {
     const column = i % perRow;
 
     return {
-      x: width * column + PADDING + width / 2 + column * spaceInbetweenUfo,
-      y: PADDING + row * rowHeight,
+      x:
+        width * column +
+        PADDING +
+        width / 2 +
+        column * spaceInbetweenUfo +
+        noise2D("seed", frame / 100, i) * 10,
+      y: PADDING + row * rowHeight + noise2D("seedy", frame / 100, i) * 10,
       scale: ufoScale,
-      shootDelay: i * 10,
+      shootDelay: i * 5,
+      shootDuration: 10,
     };
   });
 };

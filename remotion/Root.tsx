@@ -1,11 +1,11 @@
 import { Composition } from "remotion";
 import {
-  defaultMyCompProps,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
+defaultMyCompProps,
+VIDEO_FPS,
+VIDEO_HEIGHT,
+VIDEO_WIDTH
 } from "../types/constants";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues,issuesSchema } from "./Issues";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -30,7 +30,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
-        defaultProps={{ closedIssues: 20, openIssues: 5 }}
+        defaultProps={{ closedIssues: 1, openIssues: 0 }}
       />
       <Composition
         id={"TopLanguages"}
