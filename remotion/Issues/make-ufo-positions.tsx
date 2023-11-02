@@ -44,6 +44,10 @@ export const makeUfoPositions = (
 
   const rowHeight = ufoHeight + 10;
 
+  const totalAnimationDuration = Math.max(30, Math.min(90, numberOfUfos * 14));
+
+  const delayBetweenAnimations = totalAnimationDuration / closedIssues;
+
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
   return new Array(numberOfUfos).fill(0).map((_, i) => {
@@ -61,7 +65,8 @@ export const makeUfoPositions = (
         noise2D("seed", frame / 100, i) * 10,
       y: PADDING + row * rowHeight + noise2D("seedy", frame / 100, i) * 10,
       scale: ufoScale,
-      shootDelay: (closedIssues - closedIndices.indexOf(i)) * 5,
+      shootDelay:
+        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations,
       shootDuration: 14,
       isClosed: closedIndices.includes(i),
     };
