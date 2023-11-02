@@ -59,14 +59,6 @@ const title: React.CSSProperties = {
   color: "white",
 };
 
-const description: React.CSSProperties = {
-  color: "rgba(235, 234, 238, 1)",
-  fontSize: 18,
-  fontWeight: 500,
-  margin: 0,
-  padding: 0,
-};
-
 const inputContainer: React.CSSProperties = {
   width: "100%",
   paddingTop: "auto",
@@ -103,12 +95,12 @@ const Home: NextPage = () => {
             setUserNotFound(true);
           } else {
             setUserNotFound(false);
-            // router.push(username);
+            router.push(username);
           }
         })
         .catch((error) => console.log("error", error));
     },
-    [username]
+    [router, username]
   );
 
   return (
@@ -145,7 +137,7 @@ const Home: NextPage = () => {
         />
       </div>
       <div style={content}>
-        <GradientBox>
+        <GradientBox style={{ width: 760, height: 360 }}>
           <div
             style={{
               width: "100%",
@@ -205,28 +197,6 @@ const Home: NextPage = () => {
           )}
         </GradientBox>
       </div>
-      {/* <div className="cinematics" style={player}>
-          <h1>Your coding year in review</h1>
-          <p>
-            Get a personalized video of your GitHub activity in 2023. Type your
-            username to get started!
-          </p>
-          <input
-            type="text"
-            value={username}
-            placeholder="Your GitHub username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <button onClick={() => router.push(username)}>
-            Get your unwrapped
-          </button>
-          <div>or</div>
-          <Link
-            href={`https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`}
-          >
-            Login with GitHub
-          </Link>
-        </div> */}
     </div>
   );
 };

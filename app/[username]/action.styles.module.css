@@ -1,0 +1,29 @@
+.wrapper {
+  border: 1px solid rgba(70, 195, 189, 0.5);
+  color: rgba(231, 231, 231, 1);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 12px;
+  border-radius: 24px;
+  padding: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wrapper:hover {
+  border-color: rgba(70, 195, 189, 1);
+}
+
+.iconContainer {
+  height: 100%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(70, 195, 189, 1);
+  background: rgba(0, 169, 157, 0.3);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
