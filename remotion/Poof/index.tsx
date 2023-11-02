@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 import { SVGProps } from "react";
 
@@ -8,7 +8,8 @@ const Sprite1 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 125 125",
+      width: 125,
+      height: 125,
     }}
     viewBox="0 0 125 125"
     {...props}
@@ -39,7 +40,8 @@ const Sprite2 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 215 176",
+      height: 176,
+      width: 215,
     }}
     viewBox="0 0 215 176"
     {...props}
@@ -77,7 +79,8 @@ const Sprite3 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 232 239",
+      width: 232,
+      height: 239,
     }}
     viewBox="0 0 232 239"
     {...props}
@@ -113,7 +116,8 @@ const Sprite4 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 256 284",
+      width: 256,
+      height: 284,
     }}
     viewBox="0 0 256 284"
     {...props}
@@ -167,7 +171,8 @@ const Sprite5 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 254 277",
+      width: 254,
+      height: 277,
     }}
     viewBox="0 0 254 277"
     {...props}
@@ -237,7 +242,8 @@ const Sprite6 = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     style={{
-      enableBackground: "new 0 0 249 310",
+      width: 249,
+      height: 310,
     }}
     viewBox="0 0 249 310"
     {...props}
@@ -258,12 +264,21 @@ const Sprite6 = (props: SVGProps<SVGSVGElement>) => (
 );
 
 export const Poof: React.FC = () => {
+  const frame = Math.round(useCurrentFrame() / 2);
   return (
     <AbsoluteFill
       style={{
         justifyContent: "center",
         alignItems: "center",
+        justifyItems: "center",
       }}
-    ></AbsoluteFill>
+    >
+      {frame === 0 ? <Sprite1></Sprite1> : null}
+      {frame === 1 ? <Sprite2></Sprite2> : null}
+      {frame === 2 ? <Sprite3></Sprite3> : null}
+      {frame === 3 ? <Sprite4></Sprite4> : null}
+      {frame === 4 ? <Sprite5></Sprite5> : null}
+      {frame === 5 ? <Sprite6></Sprite6> : null}
+    </AbsoluteFill>
   );
 };
