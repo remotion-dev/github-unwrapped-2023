@@ -8,6 +8,7 @@ type UfoPosition = {
   x: number;
   y: number;
   scale: number;
+  shootDelay: number;
 };
 
 const issuesPerRow = (numberOfIssues: number) => {
@@ -45,6 +46,7 @@ export const makeUfoPositions = (numberOfUfos: number): UfoPosition[] => {
       x: width * column + PADDING + width / 2 + column * spaceInbetweenUfo,
       y: PADDING + row * rowHeight,
       scale: ufoScale,
+      shootDelay: i * 10,
     };
   });
 };
