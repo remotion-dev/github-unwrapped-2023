@@ -25,19 +25,24 @@ const issuesPerRow = (numberOfIssues: number) => {
 
 export const makeUfoPositions = (numberOfUfos: number): UfoPosition[] => {
   const perRow = issuesPerRow(numberOfUfos);
-  const ufoScale = 1 / (UFO_WIDTH / (USABLE_CANVAS_WIDTH / perRow));
+  const spaceInbetweenUfo = 10;
+
+  const ufoContainerWidth =
+    (USABLE_CANVAS_WIDTH - (perRow - 1) * spaceInbetweenUfo) / perRow;
+
+  const ufoScale = 1 / (UFO_WIDTH / ufoContainerWidth);
   const ufoHeight = UFO_HEIGHT * ufoScale;
 
   const rowHeight = ufoHeight + 10;
 
   return new Array(numberOfUfos).fill(0).map((_, i) => {
-    const width = USABLE_CANVAS_WIDTH / perRow;
+    const width = ufoContainerWidth;
 
     const row = Math.floor(i / perRow);
     const column = i % perRow;
 
     return {
-      x: width * column + PADDING + width / 2,
+      x: width * column + PADDING + width / 2 + column * spaceInbetweenUfo,
       y: PADDING + row * rowHeight,
       scale: ufoScale,
     };
