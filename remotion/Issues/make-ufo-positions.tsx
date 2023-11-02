@@ -56,8 +56,8 @@ export const makeUfoPositions = (
         noise2D("seed", frame / 100, i) * 10,
       y: PADDING + row * rowHeight + noise2D("seedy", frame / 100, i) * 10,
       scale: ufoScale,
-      shootDelay: i * 5,
-      shootDuration: 10,
+      shootDelay: (numberOfUfos - i) * 5,
+      shootDuration: 14,
     };
   });
 };
