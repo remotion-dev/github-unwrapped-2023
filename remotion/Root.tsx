@@ -1,11 +1,11 @@
 import { Composition } from "remotion";
 import {
-defaultMyCompProps,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { Issues, issuesSchema } from "./Issues";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -48,7 +48,11 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          ufoScale: 1,
+          x: 0,
+          y: 0,
+        }}
       />
     </>
   );

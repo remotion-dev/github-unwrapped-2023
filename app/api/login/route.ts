@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -42,5 +42,5 @@ export async function POST(request: NextRequest) {
       throw Error(error);
     });
 
-  return Response.json(userRes);
+  return NextResponse.json(userRes);
 }

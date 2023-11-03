@@ -2,7 +2,6 @@
 
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
 import { Button } from "../components/Button/Button";
 import buttonStyles from "../components/Button/styles.module.css";
@@ -36,12 +35,6 @@ const header: React.CSSProperties = {
   position: "absolute",
 };
 
-const player: React.CSSProperties = {
-  width: 720,
-  borderRadius: 20,
-  padding: 24,
-};
-
 const content: React.CSSProperties = {
   flex: 1,
   width: "100%",
@@ -57,14 +50,6 @@ const title: React.CSSProperties = {
   fontSize: 36,
   fontWeight: 700,
   color: "white",
-};
-
-const description: React.CSSProperties = {
-  color: "rgba(235, 234, 238, 1)",
-  fontSize: 18,
-  fontWeight: 500,
-  margin: 0,
-  padding: 0,
 };
 
 const inputContainer: React.CSSProperties = {
@@ -91,7 +76,6 @@ const octocat: React.CSSProperties = {
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
-  const router = useRouter();
 
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
@@ -199,8 +183,10 @@ const Home: NextPage = () => {
 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {userNotFound ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src="/sad-octocat.svg" alt="Octocat" style={octocat} />
           ) : (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src="/octocat.svg" alt="Octocat" style={octocat} />
           )}
         </GradientBox>
