@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import { useState } from "react";
-import { GradientBox } from "../components/GradientBox";
+import { GradientBox } from "../components/GradientBox/GradientBox";
 import { Header } from "./Header";
 import { LoginOptions } from "./LoginOptions";
 import { Octocat } from "./Octocat";
@@ -18,8 +18,7 @@ const Home: NextPage = () => {
       <Header />
       <GradientBox
         style={{
-          width: 760,
-          height: 360,
+          flex: "0 0 360px",
           display: "flex",
           flexDirection: "column",
         }}
@@ -29,17 +28,7 @@ const Home: NextPage = () => {
         </h2>
         <h1 className={styles.title}>Unlock your coding year in review</h1>
         <p>Get a personalized video of your GitHub activity in 2023.</p>
-
-        <div
-          style={{
-            position: "absolute",
-            bottom: 48,
-            width: "calc(100% - 80px)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-          }}
-        >
+        <div className={styles.inputWrapper}>
           {userNotFound && <UserNotFound />}
           <LoginOptions
             userNotFound={userNotFound}

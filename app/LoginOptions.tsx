@@ -50,8 +50,14 @@ export const LoginOptions: React.FC<Props> = ({
             borderRadius: "5px 0 0 5px",
             width: 250,
           }}
+          className={styles.input}
         />
-        <Button style={{ borderRadius: "0 5px 5px 0" }}>Start Unwrapped</Button>
+        <Button
+          className={styles.button}
+          style={{ borderRadius: "0 5px 5px 0" }}
+        >
+          Start Unwrapped
+        </Button>
       </form>
 
       <div>or</div>
