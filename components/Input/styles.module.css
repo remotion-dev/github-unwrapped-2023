@@ -10,6 +10,7 @@
   align-items: center;
   caret-color: white;
   color: white;
+  flex: 1;
 }
 
 .input::placeholder {
