@@ -3,7 +3,7 @@ import Head from "next/head";
 import React, { useMemo } from "react";
 import { z } from "zod";
 import { Button } from "../../components/Button/Button";
-import { GradientBox } from "../../components/GradientBox";
+import { GradientBox } from "../../components/GradientBox/GradientBox";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
 import { CompositionProps } from "../../types/constants";

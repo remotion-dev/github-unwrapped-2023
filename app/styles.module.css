@@ -36,12 +36,21 @@
   width: 100%;
   padding-top: auto;
   display: flex;
+  gap: 24px;
   justify-content: space-between;
   align-items: center;
 }
 
+.inputWrapper {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .buttonContainer {
   display: flex;
+  width: 100%;
 }
 
 .octocat {
@@ -64,4 +73,30 @@
   padding: 0;
   margin: 0;
   margin-bottom: 32px;
+}
+
+@media screen and (max-width: 480px) {
+  .buttonContainer {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .input {
+    width: 100% !important;
+    border-radius: 5px !important;
+    flex: 0 0 48px !important;
+  }
+  .button {
+    border-radius: 5px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .inputContainer {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
 }
