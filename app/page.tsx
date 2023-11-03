@@ -27,7 +27,9 @@ const Home: NextPage = () => {
           #GitHubUnwrapped 2023
         </h2>
         <h1 className={styles.title}>Unlock your coding year in review</h1>
-        <p>Get a personalized video of your GitHub activity in 2023.</p>
+        <p style={{ fontWeight: 300 }}>
+          Get a personalized video of your GitHub activity in 2023.
+        </p>
         <div className={styles.inputWrapper}>
           {userNotFound && <UserNotFound />}
           <LoginOptions
