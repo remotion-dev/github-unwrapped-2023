@@ -20,7 +20,7 @@ const container: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   backgroundImage: 'url("/background.png")',
-  backgroundPosition: "center",
+  backgroundPosition: "bottom",
   backgroundSize: "cover",
   position: "relative",
 };
