@@ -20,15 +20,6 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const progress = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: duration,
-  });
-
   const JUMPS = 10;
   const timePerNumber = duration / (to - from);
   const desiredTimePerJump = duration / JUMPS;
