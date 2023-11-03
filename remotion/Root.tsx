@@ -1,11 +1,15 @@
 import { Composition } from "remotion";
 import {
-  defaultMyCompProps,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
+defaultMyCompProps,
+VIDEO_FPS,
+VIDEO_HEIGHT,
+VIDEO_WIDTH
 } from "../types/constants";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues,issuesSchema } from "./Issues";
+import {
+JumpingNumber,
+jumpingNumberSchema
+} from "./JumpingNumber/JumpingNumber";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -53,6 +57,21 @@ export const RemotionRoot: React.FC = () => {
           x: 0,
           y: 0,
         }}
+      />
+      <Composition
+        id={"JumpingNumber"}
+        schema={jumpingNumberSchema}
+        component={JumpingNumber}
+        durationInFrames={60}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        calculateMetadata={({ props: { duration } }) => {
+          return {
+            durationInFrames: duration,
+          };
+        }}
+        defaultProps={{ duration: 86, from: 0, to: 70 }}
       />
     </>
   );
