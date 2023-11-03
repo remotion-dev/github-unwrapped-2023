@@ -3309,8 +3309,8 @@ export const Background: React.FC = () => {
           y2="2185.54"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3B5480" />
-          <stop offset="1" stop-color="#88569E" />
+          <stop stopColor="#3B5480" />
+          <stop offset="1" stopColor="#88569E" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_11_2"
@@ -3320,8 +3320,8 @@ export const Background: React.FC = () => {
           y2="2198.69"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3B5480" />
-          <stop offset="1" stop-color="#88569E" />
+          <stop stopColor="#3B5480" />
+          <stop offset="1" stopColor="#88569E" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_11_2"
@@ -3331,8 +3331,8 @@ export const Background: React.FC = () => {
           y2="1328.88"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3B5480" />
-          <stop offset="1" stop-color="#88569E" />
+          <stop stopColor="#3B5480" />
+          <stop offset="1" stopColor="#88569E" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_11_2"
@@ -3342,8 +3342,8 @@ export const Background: React.FC = () => {
           y2="1342.03"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3B5480" />
-          <stop offset="1" stop-color="#88569E" />
+          <stop stopColor="#3B5480" />
+          <stop offset="1" stopColor="#88569E" />
         </linearGradient>
       </defs>
     </svg>
