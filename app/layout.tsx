@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import "../styles/global.css";
 
 export const metadata: Metadata = {
-  title: "Remotion and Next.js",
-  description: "Remotion and Next.js",
+  title: "GitHub Unwrapped 2023",
+  description: "Get a personalized video of your GitHub activity in 2023.",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
