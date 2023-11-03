@@ -34,7 +34,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
-        defaultProps={{ closedIssues: 1, openIssues: 0 }}
+        defaultProps={{ closedIssues: 13, openIssues: 0 }}
       />
       <Composition
         id={"TopLanguages"}

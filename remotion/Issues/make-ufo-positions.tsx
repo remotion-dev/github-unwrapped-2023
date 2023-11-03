@@ -34,6 +34,40 @@ const issuesPerRow = (numberOfIssues: number) => {
 
 export const FPS = 30;
 
+export const makeXPosition = ({
+  column,
+  frame,
+  i,
+  spaceInbetweenUfo,
+  ufoContainerWidth: ufoContainerWidth,
+  perRow,
+  totalItems,
+}: {
+  ufoContainerWidth: number;
+  column: number;
+  spaceInbetweenUfo: number;
+  frame: number;
+  i: number;
+  perRow: number;
+  totalItems: number;
+}) => {
+  const row = Math.floor(i / perRow);
+  const inLastRow = row === Math.floor(totalItems / perRow);
+  const itemsInThisRow = inLastRow ? totalItems % perRow : perRow;
+  const spaceInThisRow =
+    itemsInThisRow * ufoContainerWidth +
+    spaceInbetweenUfo * (itemsInThisRow - 1);
+  const maxSpaceInThisRow = USABLE_CANVAS_WIDTH - spaceInThisRow;
+  const extraPadding = maxSpaceInThisRow / 2;
+
+  const noise = noise2D("seed", frame / 100, i) * 10;
+
+  const ufoPosition = ufoContainerWidth * column + column * spaceInbetweenUfo;
+  const ufoMiddleOffset = ufoContainerWidth / 2;
+
+  return PADDING + ufoMiddleOffset + ufoPosition + noise + extraPadding;
+};
+
 export const makeUfoPositions = (
   numberOfUfos: number,
   closedIssues: number,
@@ -77,18 +111,19 @@ export const makeUfoPositions = (
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
   return new Array(numberOfUfos).fill(0).map((_, i) => {
-    const width = ufoContainerWidth;
-
     const row = Math.floor(i / perRow);
     const column = i % perRow;
 
     return {
-      x:
-        width * column +
-        PADDING +
-        width / 2 +
-        column * spaceInbetweenUfo +
-        noise2D("seed", frame / 100, i) * 10,
+      x: makeXPosition({
+        column,
+        frame,
+        i,
+        spaceInbetweenUfo,
+        ufoContainerWidth: ufoContainerWidth,
+        perRow,
+        totalItems: numberOfUfos,
+      }),
       y:
         PADDING +
         row * rowHeight +
