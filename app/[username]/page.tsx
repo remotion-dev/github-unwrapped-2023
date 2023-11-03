@@ -1,5 +1,6 @@
 "use client";
 
+import { Player } from "@remotion/player";
 import type { NextPage } from "next";
 import React, { useMemo, useState } from "react";
 import { z } from "zod";
@@ -9,7 +10,14 @@ import { LinkedInIcon } from "../../icons/LinkedInIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
 import { UserIcon } from "../../icons/UserIcon";
 import { XIcon } from "../../icons/XIcon";
-import { CompositionProps } from "../../types/constants";
+import { Main } from "../../remotion/MyComp/Main";
+import {
+  CompositionProps,
+  DURATION_IN_FRAMES,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
+} from "../../types/constants";
 import { GradientBox } from "../GradientBox";
 import { Action } from "./Action";
 import styles from "./styles.module.css";
@@ -33,20 +41,6 @@ const content: React.CSSProperties = {
   justifyContent: "center",
 };
 
-const container: React.CSSProperties = {
-  maxWidth: 768,
-  margin: "auto",
-  marginBottom: 20,
-};
-
-const outer: React.CSSProperties = {
-  borderRadius: "var(--geist-border-radius)",
-  overflow: "hidden",
-  boxShadow: "0 0 200px rgba(0, 0, 0, 0.15)",
-  marginBottom: 40,
-  marginTop: 60,
-};
-
 const player: React.CSSProperties = {
   width: "100%",
 };
@@ -54,7 +48,9 @@ const player: React.CSSProperties = {
 const playerPlaceholder: React.CSSProperties = {
   width: 450,
   height: 450,
-  background: "rgba(255, 255, 255, 0.5)",
+  borderRadius: 3,
+  border: "1px solid rgba(0, 169, 157, 1)",
+  overflow: "hidden",
 };
 
 const main: React.CSSProperties = {
@@ -93,8 +89,6 @@ const videoSize: React.CSSProperties = {
   fontWeight: 500,
 };
 
-const footer: React.CSSProperties = {};
-
 const Home: NextPage<{ params: { username: string } }> = ({ params }) => {
   const [text, setText] = useState<string>(params.username);
 
@@ -109,7 +103,20 @@ const Home: NextPage<{ params: { username: string } }> = ({ params }) => {
       <div style={content}>
         <GradientBox>
           <div style={main}>
-            <div style={playerPlaceholder}></div>
+            <div style={playerPlaceholder}>
+              <Player
+                component={Main}
+                inputProps={inputProps}
+                durationInFrames={DURATION_IN_FRAMES}
+                fps={VIDEO_FPS}
+                compositionHeight={VIDEO_HEIGHT}
+                compositionWidth={VIDEO_WIDTH}
+                style={player}
+                controls
+                autoPlay
+                loop
+              />
+            </div>
             <div style={information}>
               <div style={title}>
                 <h2 className={styles.gradientText} style={{ margin: 0 }}>
@@ -153,32 +160,6 @@ const Home: NextPage<{ params: { username: string } }> = ({ params }) => {
           </div>
         </GradientBox>
       </div>
-      {/* <div style={container}>
-        <div style={outer}>
-          <Player
-            component={Main}
-            inputProps={inputProps}
-            durationInFrames={DURATION_IN_FRAMES}
-            fps={VIDEO_FPS}
-            compositionHeight={VIDEO_HEIGHT}
-            compositionWidth={VIDEO_WIDTH}
-            style={player}
-            controls
-            autoPlay
-            loop
-          />
-        </div>
-        <RenderControls
-          text={text}
-          setText={setText}
-          inputProps={inputProps}
-        ></RenderControls>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Tips></Tips>
-      </div> */}
     </div>
   );
 };
