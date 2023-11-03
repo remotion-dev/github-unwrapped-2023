@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { Poof } from "../Poof";
+import { Background } from "./Background";
 import { GlowStick } from "./GlowStick";
 import { makeUfoPositions } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
@@ -24,9 +25,13 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "black",
+        background:
+          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
+      <AbsoluteFill>
+        <Background></Background>
+      </AbsoluteFill>
       {positions.map((p, i) => {
         if (!p.isClosed) {
           return null;
