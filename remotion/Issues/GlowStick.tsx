@@ -52,8 +52,6 @@ export const GlowStick: React.FC<{
     return null;
   }
 
-  console.log({ x, y, scaleY, progress, shootDuration, shootDelay });
-
   return (
     <Img
       style={{

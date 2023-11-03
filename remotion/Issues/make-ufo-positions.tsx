@@ -123,7 +123,8 @@ export const rocketRotation = (positions: UfoPosition[], frame: number) => {
 
   return interpolate(
     frame,
-    angles.map((a) => a.delay),
+    // Looks more correct with +1
+    angles.map((a) => a.delay + 1),
     angles.map((a) => a.angle),
     {
       extrapolateLeft: "clamp",

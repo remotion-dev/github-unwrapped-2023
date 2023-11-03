@@ -8,7 +8,7 @@ import {
   UfoPosition,
 } from "./make-ufo-positions";
 
-const HEIGHT = 308;
+export const ROCKET_HEIGHT = 308;
 const WIDTH = 179;
 
 const JUMP_IN_DURATION = 20;
@@ -52,11 +52,11 @@ export const Rocket = ({
       viewBox="0 0 179 308"
       {...props}
       style={{
-        height: HEIGHT,
+        height: ROCKET_HEIGHT,
         width: WIDTH,
         position: "absolute",
         left: ROCKET_ORIGIN_X - WIDTH / 2,
-        top: ROCKET_ORIGIN_Y - HEIGHT / 2 + yOffset,
+        top: ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2 + yOffset,
         transform: `rotate(${rotation}rad)`,
       }}
     >
