@@ -66,10 +66,10 @@ export const makeUfoPositions = (
         width / 2 +
         column * spaceInbetweenUfo +
         noise2D("seed", frame / 100, i) * 10,
-      y: PADDING + row * rowHeight + Math.sin(frame / 20) * 30,
+      y: PADDING + row * rowHeight + Math.sin(frame / 20 + column / 6) * 30,
       scale: ufoScale,
       shootDelay:
-        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations,
+        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations + 60,
       shootDuration: 14,
       isClosed: closedIndices.includes(i),
     };
