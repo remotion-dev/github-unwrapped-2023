@@ -1,14 +1,17 @@
 import { SVGProps } from "react";
-import { useCurrentFrame } from "remotion";
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import {
   rocketRotation,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
+  TIME_BEFORE_SHOOTING,
   UfoPosition,
 } from "./make-ufo-positions";
 
 const HEIGHT = 308;
 const WIDTH = 179;
+
+const JUMP_IN_DURATION = 20;
 
 export const Rocket = ({
   positions,
@@ -17,6 +20,30 @@ export const Rocket = ({
   positions: UfoPosition[];
 }) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const jumpIn = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: TIME_BEFORE_SHOOTING - 30,
+    durationInFrames: JUMP_IN_DURATION,
+  });
+
+  const yOffset = interpolate(jumpIn, [0, 1], [400, 0]);
+
+  const normalRocketRotation = rocketRotation(positions, frame) + Math.PI / 2;
+  const rotation = interpolate(
+    frame,
+    [TIME_BEFORE_SHOOTING - 20, TIME_BEFORE_SHOOTING],
+    [0, normalRocketRotation],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
 
   return (
     <svg
@@ -29,10 +56,8 @@ export const Rocket = ({
         width: WIDTH,
         position: "absolute",
         left: ROCKET_ORIGIN_X - WIDTH / 2,
-        top: ROCKET_ORIGIN_Y - HEIGHT / 2,
-        transform: `rotate(${
-          rocketRotation(positions, frame) + Math.PI / 2
-        }rad)`,
+        top: ROCKET_ORIGIN_Y - HEIGHT / 2 + yOffset,
+        transform: `rotate(${rotation}rad)`,
       }}
     >
       <style>{".st4{fill:#707ca5}.st5{fill:#45547f}"}</style>

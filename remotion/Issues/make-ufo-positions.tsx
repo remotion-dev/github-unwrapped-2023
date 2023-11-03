@@ -1,5 +1,5 @@
 import { noise2D } from "@remotion/noise";
-import { interpolate } from "remotion";
+import { interpolate, spring } from "remotion";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -8,6 +8,7 @@ export const PADDING = 100;
 export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
 export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
 export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
+export const TIME_BEFORE_SHOOTING = 60;
 
 export type UfoPosition = {
   x: number;
@@ -31,6 +32,8 @@ const issuesPerRow = (numberOfIssues: number) => {
   return 8;
 };
 
+export const FPS = 30;
+
 export const makeUfoPositions = (
   numberOfUfos: number,
   closedIssues: number,
@@ -39,6 +42,16 @@ export const makeUfoPositions = (
   const perRow = issuesPerRow(numberOfUfos);
   const spaceInbetweenUfo = 10;
 
+  const entrace = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+  });
+
+  const rows = Math.ceil(numberOfUfos / perRow);
+
   const ufoContainerWidth =
     (USABLE_CANVAS_WIDTH - (perRow - 1) * spaceInbetweenUfo) / perRow;
 
@@ -46,6 +59,16 @@ export const makeUfoPositions = (
   const ufoHeight = UFO_HEIGHT * ufoScale;
 
   const rowHeight = ufoHeight + 10;
+
+  const entranceYOffset = interpolate(
+    entrace,
+    [0, 1],
+    [-rows * rowHeight - 100, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
 
   const totalAnimationDuration = Math.max(30, Math.min(90, numberOfUfos * 14));
 
@@ -66,10 +89,15 @@ export const makeUfoPositions = (
         width / 2 +
         column * spaceInbetweenUfo +
         noise2D("seed", frame / 100, i) * 10,
-      y: PADDING + row * rowHeight + Math.sin(frame / 20 + column / 6) * 30,
+      y:
+        PADDING +
+        row * rowHeight +
+        Math.sin(frame / 20 + column / 6) * 30 +
+        entranceYOffset,
       scale: ufoScale,
       shootDelay:
-        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations + 60,
+        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations +
+        TIME_BEFORE_SHOOTING,
       shootDuration: 14,
       isClosed: closedIndices.includes(i),
     };
