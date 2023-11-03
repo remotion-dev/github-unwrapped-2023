@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 768px) {
   .gradientBox {
-    width: 100%;
+    margin: 0 16px;
   }
 }
 

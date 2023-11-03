@@ -88,6 +88,12 @@
   .button {
     border-radius: 5px !important;
   }
+  .h2 {
+    font-size: 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -95,6 +101,9 @@
     flex-direction: column;
     gap: 8px;
     margin-bottom: 32px;
+  }
+  .header {
+    display: none;
   }
 }
 
