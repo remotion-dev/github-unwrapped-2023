@@ -12,11 +12,15 @@
 }
 
 @media screen and (max-width: 480px) {
+  .gradientBox {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .gradientBox {
     margin: 0 16px;
+    padding: 24px;
   }
 }
 
