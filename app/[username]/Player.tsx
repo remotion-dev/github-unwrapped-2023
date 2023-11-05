@@ -8,17 +8,10 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../../types/constants";
+import styles from "./player.module.css";
 
 const player: React.CSSProperties = {
   width: "100%",
-};
-
-const playerWrapper: React.CSSProperties = {
-  width: 450,
-  height: 450,
-  borderRadius: 3,
-  border: "1px solid rgba(0, 169, 157, 1)",
-  overflow: "hidden",
 };
 
 export const Player: React.FC<{
@@ -27,7 +20,7 @@ export const Player: React.FC<{
   };
 }> = ({ inputProps }) => {
   return (
-    <div style={playerWrapper}>
+    <div className={styles.playerWrapper}>
       <RemotionPlayer
         component={Main}
         inputProps={inputProps}

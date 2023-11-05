@@ -19,3 +19,65 @@
 .footer:hover {
   text-decoration: underline;
 }
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url("/background2.png");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  display: flex;
+  gap: 48px;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileTitle {
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .mobileTitle {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    width: 100%;
+  }
+}
