@@ -35,7 +35,7 @@ export const Actions: React.FC = () => {
       />
       <Action
         icon={(params) => <UserIcon {...params} />}
-        label="Unwrapp another user"
+        label="Unwrap another user"
         onClick={() => router.push("/")}
       />
     </div>
