@@ -39,6 +39,7 @@ const Home: NextPage = () => {
         <div
           style={{
             fontSize: 32,
+            fontFamily: "Mona Sans",
           }}
           className={styles.title}
         >

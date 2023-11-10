@@ -49,6 +49,7 @@ export const LoginOptions: React.FC<Props> = ({
           style={{
             borderRadius: "5px 0 0 5px",
             width: 250,
+            fontWeight: "bold",
           }}
           className={styles.input}
         />
