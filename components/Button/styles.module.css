@@ -13,8 +13,8 @@
   border-radius: 5px;
   text-wrap: nowrap;
   cursor: pointer;
-  font-weight: 17px;
-  font-weight: 500;
+  font-family: "Mona Sans";
+  font-weight: 700;
 }
 
 .secondarybutton {
