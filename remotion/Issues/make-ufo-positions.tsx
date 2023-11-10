@@ -36,7 +36,31 @@ const issuesPerRow = (numberOfIssues: number) => {
 
 export const FPS = 30;
 
-export const makeXPosition = ({
+const makeYPosition = ({
+  correctionToTop,
+  entranceYOffset,
+  frame,
+  row,
+  column,
+  rowHeight,
+}: {
+  row: number;
+  column: number;
+  rowHeight: number;
+  frame: number;
+  entranceYOffset: number;
+  correctionToTop: number;
+}) => {
+  return (
+    PADDING +
+    row * rowHeight +
+    Math.sin(frame / 20 + column / 6) * 30 +
+    entranceYOffset +
+    correctionToTop
+  );
+};
+
+const makeXPosition = ({
   column,
   frame,
   i,
@@ -156,12 +180,14 @@ export const makeUfoPositions = (
         perRow,
         totalItems: numberOfUfos,
       }),
-      y:
-        PADDING +
-        row * rowHeight +
-        Math.sin(frame / 20 + column / 6) * 30 +
-        entranceYOffset +
+      y: makeYPosition({
+        column,
         correctionToTop,
+        entranceYOffset,
+        frame,
+        row,
+        rowHeight,
+      }),
       scale: ufoScale,
       shootDelay:
         (closedIssues - closedIndicesSortedByColumn.indexOf(i)) *
