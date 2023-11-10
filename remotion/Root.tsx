@@ -71,7 +71,7 @@ export const RemotionRoot: React.FC = () => {
             durationInFrames: duration,
           };
         }}
-        defaultProps={{ duration: 86, from: 0, to: 70 }}
+        defaultProps={{ duration: 117, from: 41, to: 70 }}
       />
     </>
   );

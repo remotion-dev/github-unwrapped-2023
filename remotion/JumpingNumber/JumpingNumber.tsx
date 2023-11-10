@@ -20,29 +20,23 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const JUMPS = 10;
-  const timePerNumber = duration / (to - from);
-  const desiredTimePerJump = duration / JUMPS;
-  const closestTimeDivisibleByJump = Math.max(
-    1,
-    Math.round(desiredTimePerJump / timePerNumber) * timePerNumber
-  );
+  const spr = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: duration,
+  });
 
-  const value = interpolate(frame, [0, duration - 1], [from, to], {
+  const value = interpolate(spr, [0, 1], [from, to], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
-  const scaleProgress = spring({
-    fps,
-    frame: frame % closestTimeDivisibleByJump,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: closestTimeDivisibleByJump,
-  });
+  const lastDigit = to % 10;
 
-  const scale = interpolate(scaleProgress, [0, 1], [0.9, 1], {
+  const scale = interpolate((value - lastDigit - 1) % 10, [0, 9], [0.7, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -57,7 +51,12 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
       }}
     >
       <h1
-        style={{ fontSize: 300, fontFamily: "Mona Sans", scale: String(scale) }}
+        style={{
+          fontSize: 300,
+          fontFamily: "Mona Sans",
+          scale: String(scale),
+          fontVariantNumeric: "tabular-nums",
+        }}
       >
         {Math.round(value)}
       </h1>
