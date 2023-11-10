@@ -7,12 +7,7 @@ export const GradientBox: React.FC<{
   className?: string;
 }> = ({ style, className, children }) => {
   return (
-    <div
-      className={[styles.gradientBox, className ? className : undefined].join(
-        " "
-      )}
-      style={style}
-    >
+    <div className={[styles.gradientBox, className].join(" ")} style={style}>
       {children}
     </div>
   );

@@ -66,12 +66,13 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        calculateMetadata={({ props: { duration } }) => {
+        calculateMetadata={({ props }) => {
           return {
-            durationInFrames: duration,
+            durationInFrames: props.duration + 30,
+            props,
           };
         }}
-        defaultProps={{ duration: 117, from: 41, to: 70 }}
+        defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
     </>
   );
