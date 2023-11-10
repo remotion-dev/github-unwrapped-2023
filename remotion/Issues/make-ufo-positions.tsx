@@ -1,5 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { interpolate, spring } from "remotion";
+import { VIDEO_HEIGHT } from "../../types/constants";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -9,6 +10,7 @@ export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
 export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
 export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
 export const TIME_BEFORE_SHOOTING = 60;
+export const SHOOT_DURATION = 14;
 
 export type UfoPosition = {
   x: number;
@@ -39,7 +41,7 @@ export const makeXPosition = ({
   frame,
   i,
   spaceInbetweenUfo,
-  ufoContainerWidth: ufoContainerWidth,
+  ufoContainerWidth,
   perRow,
   totalItems,
 }: {
@@ -84,15 +86,20 @@ export const makeUfoPositions = (
     },
   });
 
-  const rows = Math.ceil(numberOfUfos / perRow);
-
   const ufoContainerWidth =
     (USABLE_CANVAS_WIDTH - (perRow - 1) * spaceInbetweenUfo) / perRow;
-
   const ufoScale = 1 / (UFO_WIDTH / ufoContainerWidth);
   const ufoHeight = UFO_HEIGHT * ufoScale;
-
   const rowHeight = ufoHeight + 10;
+  const rows = Math.ceil(numberOfUfos / perRow);
+
+  const totalHeight = rows * rowHeight;
+
+  const allUfosShouldBeAboveThisLineInitially = VIDEO_HEIGHT / 3;
+  const maxCorrectionToTop = Math.min(
+    0,
+    allUfosShouldBeAboveThisLineInitially - totalHeight - PADDING
+  );
 
   const entranceYOffset = interpolate(
     entrace,
@@ -104,15 +111,40 @@ export const makeUfoPositions = (
     }
   );
 
-  const totalAnimationDuration = Math.max(30, Math.min(90, numberOfUfos * 14));
+  const totalShootingDuration = Math.max(30, Math.min(90, numberOfUfos * 14));
 
-  const delayBetweenAnimations = totalAnimationDuration / closedIssues;
+  const delayBetweenAnimations = totalShootingDuration / closedIssues;
 
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
+
+  const shootProgress = interpolate(
+    frame,
+    [TIME_BEFORE_SHOOTING, SHOOT_DURATION + totalShootingDuration],
+    [0, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+
+  const correctionToTop = interpolate(
+    shootProgress,
+    [0, 1],
+    [maxCorrectionToTop, 0]
+  );
 
   return new Array(numberOfUfos).fill(0).map((_, i) => {
     const row = Math.floor(i / perRow);
     const column = i % perRow;
+
+    const closedIndicesSortedByColumn = closedIndices
+      .map((i) => {
+        const row = Math.floor(i / perRow);
+        const column = i % perRow;
+        return { row, column };
+      })
+      .sort((a, b) => a.column - b.column)
+      .map((i) => i.row * perRow + i.column);
 
     return {
       x: makeXPosition({
@@ -128,12 +160,14 @@ export const makeUfoPositions = (
         PADDING +
         row * rowHeight +
         Math.sin(frame / 20 + column / 6) * 30 +
-        entranceYOffset,
+        entranceYOffset +
+        correctionToTop,
       scale: ufoScale,
       shootDelay:
-        (closedIssues - closedIndices.indexOf(i)) * delayBetweenAnimations +
+        (closedIssues - closedIndicesSortedByColumn.indexOf(i)) *
+          delayBetweenAnimations +
         TIME_BEFORE_SHOOTING,
-      shootDuration: 14,
+      shootDuration: SHOOT_DURATION,
       isClosed: closedIndices.includes(i),
     };
   });
