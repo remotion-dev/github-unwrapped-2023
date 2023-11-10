@@ -60,6 +60,27 @@ const makeYPosition = ({
   );
 };
 
+const getExtraPaddingIfInOfLastRow = ({
+  row,
+  numberOfUfos,
+  perRow,
+  ufoContainerWidth,
+  spaceInbetweenUfo,
+}: {
+  row: number;
+  numberOfUfos: number;
+  perRow: number;
+  ufoContainerWidth: number;
+  spaceInbetweenUfo: number;
+}) => {
+  const inLastRow = row === Math.floor(numberOfUfos / perRow);
+  const itemsInThisRow = inLastRow ? numberOfUfos % perRow : perRow;
+  const spaceInThisRow =
+    itemsInThisRow * ufoContainerWidth +
+    spaceInbetweenUfo * (itemsInThisRow - 1);
+  return (USABLE_CANVAS_WIDTH - spaceInThisRow) / 2;
+};
+
 const makeXPosition = ({
   column,
   frame,
@@ -67,7 +88,7 @@ const makeXPosition = ({
   spaceInbetweenUfo,
   ufoContainerWidth,
   perRow,
-  totalItems,
+  numberOfUfos,
 }: {
   ufoContainerWidth: number;
   column: number;
@@ -75,16 +96,16 @@ const makeXPosition = ({
   frame: number;
   i: number;
   perRow: number;
-  totalItems: number;
+  numberOfUfos: number;
 }) => {
   const row = Math.floor(i / perRow);
-  const inLastRow = row === Math.floor(totalItems / perRow);
-  const itemsInThisRow = inLastRow ? totalItems % perRow : perRow;
-  const spaceInThisRow =
-    itemsInThisRow * ufoContainerWidth +
-    spaceInbetweenUfo * (itemsInThisRow - 1);
-  const maxSpaceInThisRow = USABLE_CANVAS_WIDTH - spaceInThisRow;
-  const extraPadding = maxSpaceInThisRow / 2;
+  const extraPadding = getExtraPaddingIfInOfLastRow({
+    perRow,
+    row,
+    spaceInbetweenUfo,
+    numberOfUfos,
+    ufoContainerWidth,
+  });
 
   const noise = noise2D("seed", frame / 100, i) * 10;
 
@@ -157,18 +178,9 @@ export const makeUfoPositions = (
     [maxCorrectionToTop, 0]
   );
 
-  return new Array(numberOfUfos).fill(0).map((_, i) => {
+  const ufos = new Array(numberOfUfos).fill(0).map((_, i) => {
     const row = Math.floor(i / perRow);
     const column = i % perRow;
-
-    const closedIndicesSortedByColumn = closedIndices
-      .map((i) => {
-        const row = Math.floor(i / perRow);
-        const column = i % perRow;
-        return { row, column };
-      })
-      .sort((a, b) => a.column - b.column)
-      .map((i) => i.row * perRow + i.column);
 
     return {
       x: makeXPosition({
@@ -178,7 +190,7 @@ export const makeUfoPositions = (
         spaceInbetweenUfo,
         ufoContainerWidth: ufoContainerWidth,
         perRow,
-        totalItems: numberOfUfos,
+        numberOfUfos: numberOfUfos,
       }),
       y: makeYPosition({
         column,
@@ -189,12 +201,27 @@ export const makeUfoPositions = (
         rowHeight,
       }),
       scale: ufoScale,
-      shootDelay:
-        (closedIssues - closedIndicesSortedByColumn.indexOf(i)) *
-          delayBetweenAnimations +
-        TIME_BEFORE_SHOOTING,
       shootDuration: SHOOT_DURATION,
       isClosed: closedIndices.includes(i),
+    };
+  });
+
+  const sortedByDistanceFromRocket = closedIndices.sort((indexA, indexB) => {
+    const a = ufos[indexA];
+    const b = ufos[indexB];
+
+    const angleA = getAngleForShoot(a.x, a.y);
+    const angleB = getAngleForShoot(b.x, b.y);
+    return angleA - angleB;
+  });
+
+  return ufos.map((p, i) => {
+    return {
+      ...p,
+      shootDelay:
+        (closedIssues - sortedByDistanceFromRocket.indexOf(i)) *
+          delayBetweenAnimations +
+        TIME_BEFORE_SHOOTING,
     };
   });
 };
