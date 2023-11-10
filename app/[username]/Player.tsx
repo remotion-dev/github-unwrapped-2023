@@ -1,7 +1,7 @@
 "use client";
 
 import { Player as RemotionPlayer } from "@remotion/player";
-import { Main } from "../../remotion/MyComp/Main";
+import { Main } from "../../remotion/Main";
 import {
   DURATION_IN_FRAMES,
   VIDEO_FPS,
