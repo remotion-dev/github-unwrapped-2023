@@ -74,7 +74,7 @@ export const makeUfoPositions = (
   frame: number
 ): UfoPosition[] => {
   const perRow = issuesPerRow(numberOfUfos);
-  const spaceInbetweenUfo = 10;
+  const spaceInbetweenUfo = 30;
 
   const entrace = spring({
     fps: FPS,
