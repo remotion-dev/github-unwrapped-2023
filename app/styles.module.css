@@ -3,7 +3,6 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("/background.png");
   background-position: bottom;
   background-size: cover;
   position: relative;
@@ -26,10 +25,10 @@
 .title {
   margin: 0;
   padding: 0;
-  margin-bottom: 16px;
   font-size: 32px;
   font-weight: 700;
   color: white;
+  margin-bottom: 10px
 }
 
 .inputContainer {
@@ -65,14 +64,16 @@
 .gradientText {
   background: linear-gradient(270.02deg, #c0b1e5 3.63%, #c5be81 99.87%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .h2 {
-  font-size: 24px;
+  font-size: 18px;
   padding: 0;
   margin: 0;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
+  font-weight: bolder;
 }
 
 @media screen and (max-width: 480px) {
