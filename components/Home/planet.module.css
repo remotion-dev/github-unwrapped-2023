@@ -1,0 +1,25 @@
+.planet {
+    --radius-x: 50vw;
+    --radius-y: calc(var(--radius-x) * 0.2);
+    position: absolute;
+    overflow: hidden;
+    top: calc(var(--radius-y) + 100px);
+    animation: rotate 600s linear infinite;
+    rotate: calc(var(--progress) * 360deg + 150deg);
+    translate: calc(sin(var(--progress) * 6.28rad) * var(--radius-x)) calc(cos(var(--progress) * 6.28rad) * var(--radius-y));
+}
+
+@keyframes rotate {
+    from {
+        --progress: 0.65;
+    }
+    to {
+        --progress: -0.35;
+    }
+}
+
+@property --progress {
+    syntax: '<number>'; 
+    initial-value: 0;
+    inherits: false;
+}

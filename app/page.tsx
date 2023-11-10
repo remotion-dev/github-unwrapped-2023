@@ -3,10 +3,11 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { GradientBox } from "../components/GradientBox/GradientBox";
-import { HomeBackground } from "../components/HomeBackground";
-import { HomeForeground } from "../components/HomeForeground";
+import { HomeBackground } from "../components/Home/HomeBackground";
+import { HomeForeground } from "../components/Home/HomeForeground";
+import { Planet } from "../components/Home/Planet";
+import { Stars } from "../components/Home/Stars";
 import { RadialGradient } from "../components/RadialGradient";
-import { Stars } from "../components/Stars";
 import { Header } from "./Header";
 import { LoginOptions } from "./LoginOptions";
 import { Octocat } from "./Octocat";
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
       <Stars></Stars>
       <HomeBackground></HomeBackground>
       <HomeForeground></HomeForeground>
+      <Planet></Planet>
       <Header />
       <GradientBox
         style={{
