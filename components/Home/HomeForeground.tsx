@@ -3,7 +3,7 @@ export const HomeForeground: React.FC<{}> = ({}) => {
     <svg
       style={{
         position: "fixed",
-        width: "100%",
+        width: 1800,
         bottom: 0,
       }}
       viewBox="0 0 1442 997"
