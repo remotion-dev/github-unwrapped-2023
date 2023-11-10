@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolateColors } from "remotion";
+import styles from "./homebackground.module.css";
 
 const backgroundColor = "#090A1D";
 
@@ -16,6 +17,7 @@ export const HomeBackground: React.FC = () => {
           position: "fixed",
           bottom: 0,
         }}
+        className={styles.homebackground}
         viewBox="0 0 1442 997"
         fill="none"
       >
