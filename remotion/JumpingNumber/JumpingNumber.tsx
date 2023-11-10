@@ -36,6 +36,45 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
 
   const lastDigit = to % 10;
 
+  const scale = interpolate((value - lastDigit - 1) % 10, [0, 9], [0.8, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  return (
+    <span
+      style={{
+        scale: String(scale),
+        display: "inline-block",
+      }}
+    >
+      {Math.round(value)}
+    </span>
+  );
+};
+
+export const JumpingNumberDemo: React.FC<
+  z.infer<typeof jumpingNumberSchema>
+> = ({ duration, from, to }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const spr = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: duration,
+  });
+
+  const value = interpolate(spr, [0, 1], [from, to], {
+    extrapolateRight: "clamp",
+    extrapolateLeft: "clamp",
+  });
+
+  const lastDigit = to % 10;
+
   const scale = interpolate((value - lastDigit - 1) % 10, [0, 9], [0.7, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -55,10 +94,9 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
           fontSize: 300,
           fontFamily: "Mona Sans",
           scale: String(scale),
-          fontVariantNumeric: "tabular-nums",
         }}
       >
-        {Math.round(value)}
+        <JumpingNumber duration={duration} from={from} to={to}></JumpingNumber>
       </h1>
     </div>
   );

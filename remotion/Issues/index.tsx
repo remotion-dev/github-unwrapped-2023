@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Poof } from "../Poof";
 import { Background } from "./Background";
 import { GlowStick } from "./GlowStick";
@@ -77,6 +78,23 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       })}
       <AbsoluteFill>
         <Rocket positions={positions}></Rocket>
+      </AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          fontSize: 100,
+          color: "white",
+          fontFamily: "Mona Sans",
+          fontWeight: "800",
+          justifyContent: "flex-end",
+          alignItems: "flex-end",
+          padding: 40,
+        }}
+      >
+        <JumpingNumber
+          duration={40}
+          from={0}
+          to={closedIssues + openIssues}
+        ></JumpingNumber>
       </AbsoluteFill>
     </AbsoluteFill>
   );

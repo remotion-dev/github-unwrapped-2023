@@ -1,14 +1,14 @@
 import { Composition } from "remotion";
 import {
-defaultMyCompProps,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { Issues, issuesSchema } from "./Issues";
 import {
-JumpingNumber,
-jumpingNumberSchema
+  JumpingNumberDemo,
+  jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
@@ -61,7 +61,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"JumpingNumber"}
         schema={jumpingNumberSchema}
-        component={JumpingNumber}
+        component={JumpingNumberDemo}
         durationInFrames={60}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
