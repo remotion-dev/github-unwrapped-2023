@@ -1,6 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { interpolate, spring } from "remotion";
 import { VIDEO_HEIGHT } from "../../types/constants";
+import { getShotsToFire } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -12,10 +13,13 @@ export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
 
-export type UfoPosition = {
+export type BaseUfoPosition = {
   x: number;
   y: number;
   scale: number;
+};
+
+export type UfoPosition = BaseUfoPosition & {
   shootDelay: number;
   shootDuration: number;
   isClosed: boolean;
@@ -178,7 +182,7 @@ export const makeUfoPositions = (
     [maxCorrectionToTop, 0]
   );
 
-  const ufos = new Array(numberOfUfos).fill(0).map((_, i) => {
+  const ufos = new Array(numberOfUfos).fill(0).map((_, i): BaseUfoPosition => {
     const row = Math.floor(i / perRow);
     const column = i % perRow;
 
@@ -201,8 +205,6 @@ export const makeUfoPositions = (
         rowHeight,
       }),
       scale: ufoScale,
-      shootDuration: SHOOT_DURATION,
-      isClosed: closedIndices.includes(i),
     };
   });
 
@@ -215,13 +217,17 @@ export const makeUfoPositions = (
     return angleA - angleB;
   });
 
-  return ufos.map((p, i) => {
+  console.log(getShotsToFire(closedIndices, ufos));
+
+  return ufos.map((p, i): UfoPosition => {
     return {
       ...p,
       shootDelay:
         (closedIssues - sortedByDistanceFromRocket.indexOf(i)) *
           delayBetweenAnimations +
         TIME_BEFORE_SHOOTING,
+      shootDuration: SHOOT_DURATION,
+      isClosed: closedIndices.includes(i),
     };
   });
 };
