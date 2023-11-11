@@ -1,6 +1,7 @@
 import { Composition } from "remotion";
 import {
   defaultMyCompProps,
+  TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
@@ -10,7 +11,6 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { Planet } from "./Planet";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -37,7 +37,7 @@ export const RemotionRoot: React.FC = () => {
         schema={issuesSchema}
         defaultProps={{ closedIssues: 75, openIssues: 0 }}
       />
-      <Composition
+      {/* <Composition
         id={"TopLanguages"}
         component={TopLanguages}
         durationInFrames={12 * 30}
@@ -45,7 +45,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
-      />
+      /> */}
       <Composition
         id={"Poof"}
         component={Poof}
@@ -76,12 +76,12 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
       <Composition
-        id={"JavaPlanet"}
-        component={Planet}
-        durationInFrames={40}
+        id={"TopLanguages"}
+        component={TopLanguages}
+        durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
+        width={VIDEO_WIDTH * 2}
+        height={VIDEO_HEIGHT * 2}
       />
     </>
   );
