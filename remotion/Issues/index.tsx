@@ -22,7 +22,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const { ufos: ufos, closedIndices } = makeUfoPositions({
+  const { ufos, closedIndices } = makeUfoPositions({
     numberOfUfos: totalIssues,
     closedIssues,
     frame,

@@ -46,7 +46,6 @@ const issuesPerRow = (numberOfIssues: number) => {
 export const FPS = 30;
 
 const makeYPosition = ({
-  correctionToTop,
   entranceYOffset,
   row,
   rowHeight,
@@ -55,9 +54,8 @@ const makeYPosition = ({
   column: number;
   rowHeight: number;
   entranceYOffset: number;
-  correctionToTop: number;
 }) => {
-  return PADDING + row * rowHeight + entranceYOffset + correctionToTop;
+  return PADDING + row * rowHeight + entranceYOffset;
 };
 
 const getExtraPaddingIfInOfLastRow = ({
@@ -138,14 +136,6 @@ export const makeUfoPositions = ({
   const rowHeight = ufoHeight + 10;
   const rows = Math.ceil(numberOfUfos / perRow);
 
-  // const totalHeight = rows * rowHeight;
-
-  // const allUfosShouldBeAboveThisLineInitially = VIDEO_HEIGHT / 3;
-  // const maxCorrectionToTop = Math.min(
-  //   0,
-  //   allUfosShouldBeAboveThisLineInitially - totalHeight - PADDING
-  // );
-
   const entranceYOffset = interpolate(
     entrace,
     [0, 1],
@@ -162,24 +152,6 @@ export const makeUfoPositions = ({
 
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
-  // const shootProgress = interpolate(
-  //   frame,
-  //   [TIME_BEFORE_SHOOTING, SHOOT_DURATION + totalShootingDuration],
-  //   [0, 1],
-  //   {
-  //     extrapolateLeft: "clamp",
-  //     extrapolateRight: "clamp",
-  //   }
-  // );
-
-  // const correctionToTop = interpolate(
-  //   shootProgress,
-  //   [0, 1],
-  //   [maxCorrectionToTop, 0]
-  // );
-
-  const correctionToTop = 0;
-
   const ufos = new Array(numberOfUfos).fill(0).map((_, i): BaseUfoPosition => {
     const row = Math.floor(i / perRow);
     const column = i % perRow;
@@ -195,7 +167,6 @@ export const makeUfoPositions = ({
       }),
       y: makeYPosition({
         column,
-        correctionToTop,
         entranceYOffset,
         row,
         rowHeight,
