@@ -29,6 +29,16 @@ export const RemotionRoot: React.FC = () => {
       />
       <Folder name="Issues">
         <Composition
+          id={"Issues0-0"}
+          component={Issues}
+          durationInFrames={16 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={issuesSchema}
+          defaultProps={{ closedIssues: 0, openIssues: 0 }}
+        />
+        <Composition
           id={"Issues2-0"}
           component={Issues}
           durationInFrames={16 * 30}
@@ -57,6 +67,16 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
           defaultProps={{ closedIssues: 80, openIssues: 20 }}
+        />
+        <Composition
+          id={"Issues500-500"}
+          component={Issues}
+          durationInFrames={16 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={issuesSchema}
+          defaultProps={{ closedIssues: 500, openIssues: 500 }}
         />
       </Folder>
       <Composition
