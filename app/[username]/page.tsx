@@ -1,78 +1,84 @@
-"use client";
-
-import { Player } from "@remotion/player";
-import type { NextPage } from "next";
-import React, { useMemo, useState } from "react";
+import type { Metadata, NextPage } from "next";
+import React, { useMemo } from "react";
 import { z } from "zod";
-import { RenderControls } from "../../components/RenderControls";
-import { Spacing } from "../../components/Spacing";
-import { Tips } from "../../components/Tips/Tips";
-import { Main } from "../../remotion/MyComp/Main";
-import {
-  CompositionProps,
-  DURATION_IN_FRAMES,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
-} from "../../types/constants";
+import { Button } from "../../components/Button/Button";
+import { GradientBox } from "../../components/GradientBox/GradientBox";
+import { DownloadIcon } from "../../icons/DownloadIcon";
+import { RocketIcon } from "../../icons/RocketIcon";
+import { CompositionProps } from "../../types/constants";
+import { Actions } from "./Actions";
+import { Player } from "./Player";
+import styles from "./styles.module.css";
 
-const container: React.CSSProperties = {
-  maxWidth: 768,
-  margin: "auto",
-  marginBottom: 20,
+const downloadContent: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 8,
 };
 
-const outer: React.CSSProperties = {
-  borderRadius: "var(--geist-border-radius)",
-  overflow: "hidden",
-  boxShadow: "0 0 200px rgba(0, 0, 0, 0.15)",
-  marginBottom: 40,
-  marginTop: 60,
+const videoSize: React.CSSProperties = {
+  color: "rgba(211, 211, 211, 1)",
+  fontSize: 14,
+  fontWeight: 500,
 };
 
-const player: React.CSSProperties = {
-  width: "100%",
-};
+type Props = { params: { username: string } };
 
-const Home: NextPage<{ params: { username: string } }> = ({ params }) => {
-  const [text, setText] = useState<string>(params.username);
-
+const Home: NextPage<Props> = ({ params }) => {
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
-      title: text,
+      title: params.username,
     };
-  }, [text]);
+  }, [params.username]);
 
   return (
-    <div>
-      <div style={container}>
-        <div className="cinematics" style={outer}>
-          <Player
-            component={Main}
-            inputProps={inputProps}
-            durationInFrames={DURATION_IN_FRAMES}
-            fps={VIDEO_FPS}
-            compositionHeight={VIDEO_HEIGHT}
-            compositionWidth={VIDEO_WIDTH}
-            style={player}
-            controls
-            autoPlay
-            loop
-          />
-        </div>
-        <RenderControls
-          text={text}
-          setText={setText}
-          inputProps={inputProps}
-        ></RenderControls>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Tips></Tips>
+    <div className={styles.wrapper}>
+      <div className={styles.mobileTitle}>
+        <h2 className={styles.gradientText} style={{ margin: 0 }}>
+          #GitHubUnwrapped 2023
+        </h2>
+        <h2 style={{ margin: 0 }}>@{params.username}</h2>
       </div>
+      <GradientBox style={{ display: "flex", flexDirection: "column" }}>
+        <div className={styles.main}>
+          <Player inputProps={inputProps} />
+          <div className={styles.information}>
+            <div className={styles.title}>
+              <h2 className={styles.gradientText} style={{ margin: 0 }}>
+                #GitHubUnwrapped 2023
+              </h2>
+              <h2 style={{ margin: 0 }}>@{params.username}</h2>
+            </div>
+            <div style={downloadContent}>
+              <Button
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 8,
+                  alignItems: "center",
+                  fontWeight: 700,
+                }}
+              >
+                Download Video <DownloadIcon width={20} color="white" />
+              </Button>
+              <div style={videoSize}>This MP4 has 11.4 MB.</div>
+            </div>
+            <Actions />
+          </div>
+        </div>
+        <div className={styles.footer}>
+          <RocketIcon />
+          How we made Unwrapped
+        </div>
+      </GradientBox>
     </div>
   );
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  return {
+    title: `${params.username}'s #GitHubUnwrapped`,
+  };
+}
 
 export default Home;

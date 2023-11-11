@@ -1,12 +1,16 @@
 import { Composition } from "remotion";
 import {
-  defaultMyCompProps,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
+defaultMyCompProps,
+VIDEO_FPS,
+VIDEO_HEIGHT,
+VIDEO_WIDTH
 } from "../types/constants";
-import { CommitHistory } from "./CommitHistory";
-import { Issues } from "./Issues";
+import { Issues,issuesSchema } from "./Issues";
+import {
+JumpingNumberDemo,
+jumpingNumberSchema
+} from "./JumpingNumber/JumpingNumber";
+import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
 
@@ -29,7 +33,8 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        schema={issuesSchema}
+        defaultProps={{ closedIssues: 75, openIssues: 0 }}
       />
       <Composition
         id={"TopLanguages"}
@@ -40,15 +45,34 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
       />
-
       <Composition
-        id={"CommitHistory"}
-        component={CommitHistory}
-        durationInFrames={12 * 30}
+        id={"Poof"}
+        component={Poof}
+        durationInFrames={40}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          ufoScale: 1,
+          x: 0,
+          y: 0,
+        }}
+      />
+      <Composition
+        id={"JumpingNumber"}
+        schema={jumpingNumberSchema}
+        component={JumpingNumberDemo}
+        durationInFrames={60}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        calculateMetadata={({ props }) => {
+          return {
+            durationInFrames: props.duration + 30,
+            props,
+          };
+        }}
+        defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
     </>
   );

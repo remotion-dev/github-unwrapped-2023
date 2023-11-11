@@ -1,0 +1,26 @@
+.upanddown {
+    --radius-x: 100px;
+    --radius-y: calc(var(--radius-x) * 0.2);
+    animation: translate 15s linear infinite;
+    translate: 0 calc(cos(var(--progress) * 6.28rad) * var(--radius-y) + 50px);
+}
+
+.blink {
+    animation: translate 3s linear infinite alternate-reverse;
+    opacity: calc(var(--progress));
+}
+
+@keyframes translate {
+    from {
+        --progress: 0;
+    }
+    to {
+        --progress: 1;
+    }
+}
+
+@property --progress {
+    syntax: '<number>'; 
+    initial-value: 0;
+    inherits: false;
+}

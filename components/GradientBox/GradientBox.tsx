@@ -1,0 +1,14 @@
+import React, { ReactNode } from "react";
+import styles from "./styles.module.css";
+
+export const GradientBox: React.FC<{
+  children: ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+}> = ({ style, className, children }) => {
+  return (
+    <div className={[styles.gradientBox, className].join(" ")} style={style}>
+      {children}
+    </div>
+  );
+};

@@ -8,7 +8,8 @@ export const Input: React.FC<{
   placeHolder?: string;
   style?: React.CSSProperties;
   invalid?: boolean;
-}> = ({ text, setText, disabled, placeHolder, style, invalid }) => {
+  className?: string;
+}> = ({ text, setText, disabled, placeHolder, style, invalid, className }) => {
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       setText(e.currentTarget.value);
@@ -18,7 +19,11 @@ export const Input: React.FC<{
 
   return (
     <input
-      className={[styles.input, invalid ? styles.invalid : undefined].join(" ")}
+      className={[
+        className ? className : undefined,
+        styles.input,
+        invalid ? styles.invalid : undefined,
+      ].join(" ")}
       disabled={disabled}
       name="title"
       value={text}
