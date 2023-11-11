@@ -1,14 +1,14 @@
 import { interpolate, spring } from "remotion";
+import { VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
 import { Shot } from "./get-shots-to-fire";
 import { ROCKET_HEIGHT } from "./Rocket";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
-export const CANVAS_WIDTH = 1080;
-export const PADDING = 100;
-export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
-export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
-const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
+export const PADDING = 150;
+export const USABLE_CANVAS_WIDTH = VIDEO_WIDTH - PADDING * 2;
+export const ROCKET_ORIGIN_X = VIDEO_WIDTH / 2;
+const ROCKET_ORIGIN_Y = VIDEO_WIDTH - 150;
 export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
@@ -105,6 +105,8 @@ const makeXPosition = ({
   return PADDING + ufoMiddleOffset + ufoPosition + extraPadding;
 };
 
+const UFOS_MUST_BE_ABOVE_LINE = VIDEO_HEIGHT * 0.4;
+
 export const makeUfoPositions = ({
   numberOfUfos,
   closedIssues,
@@ -142,6 +144,9 @@ export const makeUfoPositions = ({
     }
   );
 
+  const totalHeight = rows * rowHeight + PADDING;
+  const moveUp = Math.min(0, UFOS_MUST_BE_ABOVE_LINE - totalHeight);
+
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
   const ufos = new Array(numberOfUfos).fill(0).map((_, i): UfoPosition => {
@@ -157,12 +162,13 @@ export const makeUfoPositions = ({
         perRow,
         numberOfUfos: numberOfUfos,
       }),
-      y: makeYPosition({
-        column,
-        entranceYOffset,
-        row,
-        rowHeight,
-      }),
+      y:
+        makeYPosition({
+          column,
+          entranceYOffset,
+          row,
+          rowHeight,
+        }) + moveUp,
       scale: ufoScale,
       isClosed: closedIndices.includes(i),
     };
