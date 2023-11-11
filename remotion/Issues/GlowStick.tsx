@@ -6,7 +6,6 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { HelperPoint } from "./HelperPoint";
 import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
@@ -61,8 +60,7 @@ export const GlowStick: React.FC<{
           transformOrigin: `${IMAGE_WIDTH / 2}px ${STICK_PADDING_TOP}px`,
         }}
         src={staticFile("glow-stick.png")}
-      />{" "}
-      <HelperPoint x={x} y={y}></HelperPoint>
+      />
     </AbsoluteFill>
   );
 };

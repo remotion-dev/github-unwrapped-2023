@@ -27,7 +27,7 @@ export type Shot = {
   shootDelay: number;
 };
 
-const HIT_BOX_SCALE = 0.8;
+const HIT_BOX_SCALE = 0.7;
 
 export const getShotsToFire = ({
   closedIndices,
