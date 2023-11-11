@@ -1,6 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { interpolate, spring } from "remotion";
 import { VIDEO_HEIGHT } from "../../types/constants";
+import { Shot } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -236,13 +237,11 @@ export const makeUfoPositions = ({
   };
 };
 
-export const rocketRotation = (positions: UfoPosition[], frame: number) => {
-  const sortedByDelay = positions
-    .filter((p) => p.isClosed)
-    .sort((a, b) => a.shootDelay - b.shootDelay);
+export const rocketRotation = (positions: Shot[], frame: number) => {
+  const sortedByDelay = positions.sort((a, b) => a.shootDelay - b.shootDelay);
 
   const angles = sortedByDelay.map((p) => {
-    const angle = getAngleForShoot(p.x, p.y);
+    const angle = getAngleForShoot(p.endX, p.endY);
     return { angle, delay: p.shootDelay };
   });
   if (angles.length === 0) {

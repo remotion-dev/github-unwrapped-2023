@@ -73,7 +73,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         );
       })}
       <AbsoluteFill>
-        <Rocket positions={ufos}></Rocket>
+        <Rocket shots={shots}></Rocket>
       </AbsoluteFill>
       <AbsoluteFill
         style={{

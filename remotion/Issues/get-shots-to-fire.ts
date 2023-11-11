@@ -14,7 +14,7 @@ type Explosion = {
   explodeAfterProgress: number;
 };
 
-type Shot = {
+export type Shot = {
   startX: number;
   startY: number;
   endX: number;
@@ -54,7 +54,7 @@ export const getShotsToFire = ({
       startX: ROCKET_ORIGIN_X,
       startY: ROCKET_ORIGIN_Y,
       explosions: [{ index: indexToShoot, explodeAfterProgress: 1 }],
-      shootDelay: TIME_BEFORE_SHOOTING + i * 10,
+      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 10,
       shootDuration: SHOOT_DURATION,
     };
 

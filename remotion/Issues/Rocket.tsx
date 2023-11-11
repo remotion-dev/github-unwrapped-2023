@@ -1,11 +1,11 @@
 import { SVGProps } from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { Shot } from "./get-shots-to-fire";
 import {
   rocketRotation,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
   TIME_BEFORE_SHOOTING,
-  UfoPosition,
 } from "./make-ufo-positions";
 
 export const ROCKET_HEIGHT = 308;
@@ -14,10 +14,10 @@ const WIDTH = 179;
 const JUMP_IN_DURATION = 20;
 
 export const Rocket = ({
-  positions,
+  shots,
   ...props
 }: SVGProps<SVGSVGElement> & {
-  positions: UfoPosition[];
+  shots: Shot[];
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -34,7 +34,7 @@ export const Rocket = ({
 
   const yOffset = interpolate(jumpIn, [0, 1], [400, 0]);
 
-  const normalRocketRotation = rocketRotation(positions, frame) + Math.PI / 2;
+  const normalRocketRotation = rocketRotation(shots, frame) + Math.PI / 2;
   const rotation = interpolate(
     frame,
     [TIME_BEFORE_SHOOTING - 20, TIME_BEFORE_SHOOTING],
