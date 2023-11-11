@@ -4,7 +4,7 @@ import { Shot } from "./get-shots-to-fire";
 import {
   rocketRotation,
   ROCKET_ORIGIN_X,
-  ROCKET_ORIGIN_Y,
+  ROCKET_TOP_Y,
   TIME_BEFORE_SHOOTING,
 } from "./make-ufo-positions";
 
@@ -53,7 +53,7 @@ export const Rocket = ({
         width: ROCKET_WIDTH,
         position: "absolute",
         left: ROCKET_ORIGIN_X - ROCKET_WIDTH / 2,
-        top: ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2 + yOffset,
+        top: ROCKET_TOP_Y + yOffset,
         transform: `rotate(${rotation}rad)`,
         transformOrigin: `${ROCKET_WIDTH / 2}px 0`,
       }}

@@ -41,10 +41,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       </AbsoluteFill>
       {shots.map((p, i) => {
         return (
-          <Sequence
-            durationInFrames={SHOOT_DURATION + p.shootDelay + 1}
-            key={i}
-          >
+          <Sequence durationInFrames={SHOOT_DURATION + p.shootDelay} key={i}>
             <GlowStick
               shootDelay={p.shootDelay}
               targetX={p.endX}

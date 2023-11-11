@@ -8,7 +8,7 @@ export const CANVAS_WIDTH = 1080;
 export const PADDING = 100;
 export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
 export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
-export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
+const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
 export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
@@ -259,7 +259,7 @@ export const rocketRotation = (positions: Shot[], frame: number) => {
 
 export const getAngleForShoot = (targetX: number, targetY: number) => {
   const deltaX = targetX - ROCKET_ORIGIN_X;
-  const deltaY = targetY - ROCKET_ORIGIN_Y;
+  const deltaY = targetY - ROCKET_TOP_Y;
   let angleRadians = Math.atan2(deltaY, deltaX);
   return angleRadians;
 };

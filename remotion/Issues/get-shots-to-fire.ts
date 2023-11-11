@@ -4,7 +4,6 @@ import {
   BaseUfoPosition,
   getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
-  ROCKET_ORIGIN_Y,
   ROCKET_TOP_Y,
   SHOOT_DURATION,
   TIME_BEFORE_SHOOTING,
@@ -29,6 +28,29 @@ export type Shot = {
 
 const HIT_BOX_SCALE = 0.7;
 
+const findClosestUfoRemaining = ({
+  referenceUfo,
+  remainingUfos,
+}: {
+  referenceUfo: BaseUfoPosition;
+  remainingUfos: BaseUfoPosition[];
+}) => {
+  let closestUfo: BaseUfoPosition | null = null;
+  let closestDistance = Infinity;
+
+  for (const ufo of remainingUfos) {
+    const distance = Math.sqrt(
+      Math.pow(referenceUfo.x - ufo.x, 2) + Math.pow(referenceUfo.y - ufo.y, 2)
+    );
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestUfo = ufo;
+    }
+  }
+
+  return closestUfo ?? null;
+};
+
 export const getShotsToFire = ({
   closedIndices,
   ufos,
@@ -38,20 +60,30 @@ export const getShotsToFire = ({
 }) => {
   let ufosHit: number[] = [];
   const shots: Shot[] = [];
-  let i = 0;
+  let ufoToShoot: number | null = closedIndices[0];
 
   while (true) {
     if (ufosHit.length === closedIndices.length) {
       break;
     }
-    const indexToShoot = closedIndices[i];
-    if (ufosHit.includes(indexToShoot)) {
-      i++;
+    if (ufoToShoot === null) {
+      break;
+    }
+    if (ufosHit.includes(ufoToShoot)) {
+      const closest = findClosestUfoRemaining({
+        referenceUfo: ufos[ufoToShoot],
+        remainingUfos: ufos.filter((ufo, index) => !ufosHit.includes(index)),
+      });
+      if (closest === null) {
+        ufoToShoot = null;
+      } else {
+        ufoToShoot = ufos.indexOf(closest);
+      }
       continue;
     }
-    ufosHit.push(indexToShoot);
+    ufosHit.push(ufoToShoot);
 
-    const ufo = ufos[indexToShoot];
+    const ufo = ufos[ufoToShoot];
 
     const shot: Shot = {
       endX: ufo.x,
@@ -60,12 +92,12 @@ export const getShotsToFire = ({
       startY: ROCKET_TOP_Y,
       explosions: [
         {
-          index: indexToShoot,
+          index: ufoToShoot,
           explodeAfterProgress: 1,
           explodeAfterFrames: SHOOT_DURATION,
         },
       ],
-      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 7,
+      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 2,
     };
 
     const otherUfosHit = ufos
@@ -90,7 +122,7 @@ export const getShotsToFire = ({
 
         const distanceToRocket = Math.sqrt(
           Math.pow(ROCKET_ORIGIN_X - intersection.x, 2) +
-            Math.pow(ROCKET_ORIGIN_Y - intersection.y, 2)
+            Math.pow(ROCKET_TOP_Y - intersection.y, 2)
         );
         const distanceToShotEnd = Math.sqrt(
           Math.pow(shot.endX - intersection.x, 2) +
@@ -115,8 +147,6 @@ export const getShotsToFire = ({
     }
 
     shots.push(shot);
-
-    i++;
   }
 
   return shots;

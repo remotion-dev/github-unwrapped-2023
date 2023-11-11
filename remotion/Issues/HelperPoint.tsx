@@ -5,7 +5,8 @@ const RADIUS = 10;
 export const HelperPoint: React.FC<{
   x: number;
   y: number;
-}> = ({ x, y }) => {
+  color: string;
+}> = ({ x, y, color }) => {
   return (
     <AbsoluteFill>
       <div
@@ -15,7 +16,7 @@ export const HelperPoint: React.FC<{
           height: RADIUS,
           width: RADIUS,
           position: "absolute",
-          backgroundColor: "red",
+          backgroundColor: color,
           borderRadius: RADIUS / 2,
         }}
       ></div>
