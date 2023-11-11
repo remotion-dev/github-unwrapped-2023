@@ -1,7 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { interpolate, spring } from "remotion";
 import { VIDEO_HEIGHT } from "../../types/constants";
-import { getShotsToFire } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -17,12 +16,11 @@ export type BaseUfoPosition = {
   x: number;
   y: number;
   scale: number;
+  isClosed: boolean;
 };
 
 export type UfoPosition = BaseUfoPosition & {
   shootDelay: number;
-  shootDuration: number;
-  isClosed: boolean;
 };
 
 const issuesPerRow = (numberOfIssues: number) => {
@@ -119,11 +117,15 @@ const makeXPosition = ({
   return PADDING + ufoMiddleOffset + ufoPosition + noise + extraPadding;
 };
 
-export const makeUfoPositions = (
-  numberOfUfos: number,
-  closedIssues: number,
-  frame: number
-): UfoPosition[] => {
+export const makeUfoPositions = ({
+  numberOfUfos,
+  closedIssues,
+  frame,
+}: {
+  numberOfUfos: number;
+  closedIssues: number;
+  frame: number;
+}): { ufos: UfoPosition[]; closedIndices: number[] } => {
   const perRow = issuesPerRow(numberOfUfos);
   const spaceInbetweenUfo = 30;
 
@@ -205,6 +207,7 @@ export const makeUfoPositions = (
         rowHeight,
       }),
       scale: ufoScale,
+      isClosed: closedIndices.includes(i),
     };
   });
 
@@ -219,19 +222,18 @@ export const makeUfoPositions = (
       return angleA - angleB;
     });
 
-  console.log(getShotsToFire(closedIndices, ufos));
-
-  return ufos.map((p, i): UfoPosition => {
-    return {
-      ...p,
-      shootDelay:
-        (closedIssues - sortedByDistanceFromRocket.indexOf(i)) *
-          delayBetweenAnimations +
-        TIME_BEFORE_SHOOTING,
-      shootDuration: SHOOT_DURATION,
-      isClosed: closedIndices.includes(i),
-    };
-  });
+  return {
+    closedIndices,
+    ufos: ufos.map((p, i): UfoPosition => {
+      return {
+        ...p,
+        shootDelay:
+          (closedIssues - sortedByDistanceFromRocket.indexOf(i)) *
+            delayBetweenAnimations +
+          TIME_BEFORE_SHOOTING,
+      };
+    }),
+  };
 };
 
 export const rocketRotation = (positions: UfoPosition[], frame: number) => {

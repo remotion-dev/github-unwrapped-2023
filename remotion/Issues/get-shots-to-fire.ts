@@ -4,6 +4,8 @@ import {
   BaseUfoPosition,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
+  SHOOT_DURATION,
+  TIME_BEFORE_SHOOTING,
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -18,12 +20,17 @@ type Shot = {
   endX: number;
   endY: number;
   explosions: Explosion[];
+  shootDelay: number;
+  shootDuration: number;
 };
 
-export const getShotsToFire = (
-  closedIndices: number[],
-  ufos: BaseUfoPosition[]
-) => {
+export const getShotsToFire = ({
+  closedIndices,
+  ufos,
+}: {
+  closedIndices: number[];
+  ufos: BaseUfoPosition[];
+}) => {
   let ufosHit: number[] = [];
   const shots: Shot[] = [];
   let i = 0;
@@ -47,6 +54,8 @@ export const getShotsToFire = (
       startX: ROCKET_ORIGIN_X,
       startY: ROCKET_ORIGIN_Y,
       explosions: [{ index: indexToShoot, explodeAfterProgress: 1 }],
+      shootDelay: TIME_BEFORE_SHOOTING + i * 10,
+      shootDuration: SHOOT_DURATION,
     };
 
     const otherUfosHit = ufos

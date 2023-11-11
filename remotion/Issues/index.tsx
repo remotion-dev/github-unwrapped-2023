@@ -4,6 +4,7 @@ import { z } from "zod";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Poof } from "../Poof";
 import { Background } from "./Background";
+import { getShotsToFire } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
 import { makeUfoPositions } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
@@ -21,7 +22,12 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const positions = makeUfoPositions(totalIssues, closedIssues, frame);
+  const { ufos: ufos, closedIndices } = makeUfoPositions({
+    numberOfUfos: totalIssues,
+    closedIssues,
+    frame,
+  });
+  const shots = getShotsToFire({ closedIndices, ufos });
 
   return (
     <AbsoluteFill
@@ -33,51 +39,41 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Background></Background>
       </AbsoluteFill>
-      {positions.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
-
+      {shots.map((p, i) => {
         return (
           <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
             <GlowStick
               shootDelay={p.shootDelay}
               shootDuration={p.shootDuration}
-              targetX={p.x}
-              targetY={p.y}
+              targetX={p.endX}
+              targetY={p.endY}
             ></GlowStick>
           </Sequence>
         );
       })}
-      {positions.map((p, i) => {
+      {ufos.map((p, i) => {
         return (
-          <Sequence
+          <Ufo
             key={i}
-            durationInFrames={
-              p.isClosed ? p.shootDelay + p.shootDuration + 2 : Infinity
-            }
-          >
-            <Ufo
-              explodeAfter={p.shootDelay + p.shootDuration}
-              scale={p.scale}
-              x={p.x}
-              y={p.y}
-            ></Ufo>
-          </Sequence>
+            explodeAfter={p.shootDelay}
+            scale={p.scale}
+            x={p.x}
+            y={p.y}
+          ></Ufo>
         );
       })}
-      {positions.map((p, i) => {
+      {ufos.map((p, i) => {
         if (!p.isClosed) {
           return null;
         }
         return (
-          <Sequence key={i} from={p.shootDelay + p.shootDuration} layout="none">
+          <Sequence key={i} from={p.shootDelay} layout="none">
             <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
           </Sequence>
         );
       })}
       <AbsoluteFill>
-        <Rocket positions={positions}></Rocket>
+        <Rocket positions={ufos}></Rocket>
       </AbsoluteFill>
       <AbsoluteFill
         style={{
