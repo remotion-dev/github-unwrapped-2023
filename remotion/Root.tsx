@@ -1,15 +1,16 @@
 import { Composition } from "remotion";
 import {
-defaultMyCompProps,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { Issues, issuesSchema } from "./Issues";
 import {
-JumpingNumberDemo,
-jumpingNumberSchema
+  JumpingNumberDemo,
+  jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
+import { Planet } from "./Planet";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -73,6 +74,14 @@ export const RemotionRoot: React.FC = () => {
           };
         }}
         defaultProps={{ duration: 73, from: 41, to: 70 }}
+      />
+      <Composition
+        id={"JavaPlanet"}
+        component={Planet}
+        durationInFrames={40}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
       />
     </>
   );
