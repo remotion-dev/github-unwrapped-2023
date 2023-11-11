@@ -103,16 +103,16 @@ export const Ufo = ({
         <path
           d="M80.1201 145.96C83.0601 144.49 86.4701 143.79 90.3301 143.51"
           stroke="#A2E2B7"
-          stroke-width="3"
+          strokeWidth="3"
           strokeMiterlimit="10"
-          stroke-linecap="round"
+          strokeLinecap="round"
         />
         <path
           d="M94.6599 135.05C99.4599 133.89 103.79 132.96 108.59 133.12"
           stroke="#A2E2B7"
-          stroke-width="5"
+          strokeWidth="5"
           strokeMiterlimit="10"
-          stroke-linecap="round"
+          strokeLinecap="round"
         />
         <path
           d="M176.29 197.43C178.466 197.43 180.23 195.666 180.23 193.49C180.23 191.314 178.466 189.55 176.29 189.55C174.114 189.55 172.35 191.314 172.35 193.49C172.35 195.666 174.114 197.43 176.29 197.43Z"
@@ -139,8 +139,8 @@ export const Ufo = ({
             y2="223.88"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0.38" stop-color="#469E57" />
-            <stop offset="1" stop-color="#A2E2B7" />
+            <stop offset="0.38" stopColor="#469E57" />
+            <stop offset="1" stopColor="#A2E2B7" />
           </linearGradient>
         </defs>
       </svg>

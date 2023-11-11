@@ -2,10 +2,11 @@ import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
-import { Poof } from "../Poof";
+import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
+import { getExplosions, getShotsToFire } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { makeUfoPositions } from "./make-ufo-positions";
+import { makeUfoPositions, SHOOT_DURATION } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -21,8 +22,13 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const positions = makeUfoPositions(totalIssues, closedIssues, frame);
-
+  const { ufos, closedIndices } = makeUfoPositions({
+    numberOfUfos: totalIssues,
+    closedIssues,
+    frame,
+  });
+  const shots = getShotsToFire({ closedIndices, ufos });
+  const explosions = getExplosions({ shots, ufos });
   return (
     <AbsoluteFill
       style={{
@@ -33,32 +39,28 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Background></Background>
       </AbsoluteFill>
-      {positions.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
-
+      {shots.map((p, i) => {
         return (
-          <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
+          <Sequence durationInFrames={SHOOT_DURATION + p.shootDelay} key={i}>
             <GlowStick
               shootDelay={p.shootDelay}
-              shootDuration={p.shootDuration}
-              targetX={p.x}
-              targetY={p.y}
+              targetX={p.endX}
+              targetY={p.endY}
             ></GlowStick>
           </Sequence>
         );
       })}
-      {positions.map((p, i) => {
+      {ufos.map((p, i) => {
+        const explosion = explosions.find((e) => e.index === i);
         return (
           <Sequence
             key={i}
             durationInFrames={
-              p.isClosed ? p.shootDelay + p.shootDuration + 2 : Infinity
+              explosion ? explosion.explodeAfterFrames + 3 : Infinity
             }
           >
             <Ufo
-              explodeAfter={p.shootDelay + p.shootDuration}
+              explodeAfter={p.shootDelay}
               scale={p.scale}
               x={p.x}
               y={p.y}
@@ -66,18 +68,24 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           </Sequence>
         );
       })}
-      {positions.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
+      {explosions.map((explosion, i) => {
         return (
-          <Sequence key={i} from={p.shootDelay + p.shootDuration} layout="none">
-            <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
+          <Sequence
+            key={i}
+            from={explosion.explodeAfterFrames}
+            durationInFrames={POOF_DURATION}
+            layout="none"
+          >
+            <Poof
+              ufoScale={ufos[0].scale}
+              x={explosion.x}
+              y={explosion.y}
+            ></Poof>
           </Sequence>
         );
       })}
       <AbsoluteFill>
-        <Rocket positions={positions}></Rocket>
+        <Rocket shots={shots}></Rocket>
       </AbsoluteFill>
       <AbsoluteFill
         style={{

@@ -30,12 +30,12 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"Issues"}
         component={Issues}
-        durationInFrames={12 * 30}
+        durationInFrames={16 * 30}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
-        defaultProps={{ closedIssues: 75, openIssues: 0 }}
+        defaultProps={{ closedIssues: 59, openIssues: 20 }}
       />
       <Composition
         id={"TopLanguages"}
