@@ -2,11 +2,17 @@ import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
-import { Poof } from "../Poof";
+import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
-import { getShotsToFire } from "./get-shots-to-fire";
+import { getExplosions, getShotsToFire } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { makeUfoPositions, SHOOT_DURATION } from "./make-ufo-positions";
+import { HelperPoint } from "./HelperPoint";
+import {
+  makeUfoPositions,
+  ROCKET_ORIGIN_X,
+  ROCKET_ORIGIN_Y,
+  SHOOT_DURATION,
+} from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -28,7 +34,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     frame,
   });
   const shots = getShotsToFire({ closedIndices, ufos });
-
+  const explosions = getExplosions({ shots, ufos });
   return (
     <AbsoluteFill
       style={{
@@ -51,29 +57,43 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         );
       })}
       {ufos.map((p, i) => {
+        const explosion = explosions.find((e) => e.index === i);
         return (
-          <Ufo
+          <Sequence
             key={i}
-            explodeAfter={p.shootDelay}
-            scale={p.scale}
-            x={p.x}
-            y={p.y}
-          ></Ufo>
+            durationInFrames={
+              explosion ? explosion.explodeAfterFrames + 3 : Infinity
+            }
+          >
+            <Ufo
+              explodeAfter={p.shootDelay}
+              scale={p.scale}
+              x={p.x}
+              y={p.y}
+            ></Ufo>
+          </Sequence>
         );
       })}
-      {ufos.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
+      {explosions.map((explosion, i) => {
         return (
-          <Sequence key={i} from={p.shootDelay} layout="none">
-            <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
+          <Sequence
+            key={i}
+            from={explosion.explodeAfterFrames}
+            durationInFrames={POOF_DURATION}
+            layout="none"
+          >
+            <Poof
+              ufoScale={ufos[0].scale}
+              x={explosion.x}
+              y={explosion.y}
+            ></Poof>
           </Sequence>
         );
       })}
       <AbsoluteFill>
         <Rocket shots={shots}></Rocket>
       </AbsoluteFill>
+      <HelperPoint x={ROCKET_ORIGIN_X} y={ROCKET_ORIGIN_Y}></HelperPoint>
       <AbsoluteFill
         style={{
           fontSize: 100,

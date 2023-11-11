@@ -7,12 +7,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { SHOT_SPRING_CONFIG } from "./get-shots-to-fire";
 import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
   SHOOT_DURATION,
+  SHOT_SPRING_CONFIG,
 } from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
@@ -24,9 +24,6 @@ export const GlowStick: React.FC<{
   shootDelay: number;
 }> = ({ targetX, targetY, shootDelay }) => {
   const angleRadians = getAngleForShoot(targetX, targetY);
-
-  // Make the glowstick only reach the bottom
-  const actualTargetY = targetY;
 
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -41,11 +38,7 @@ export const GlowStick: React.FC<{
   });
 
   const x = interpolate(progress, [0, 1], [ROCKET_ORIGIN_X, targetX]);
-  const y = interpolate(progress, [0, 1], [ROCKET_ORIGIN_Y, actualTargetY]);
-
-  const scaleY = interpolate(progress, [0.8, 1], [1, 0.3], {
-    extrapolateLeft: "clamp",
-  });
+  const y = interpolate(progress, [0, 1], [ROCKET_ORIGIN_Y, targetY]);
 
   if (progress === 0) {
     return null;
@@ -58,8 +51,9 @@ export const GlowStick: React.FC<{
         height: IMAGE_HEIGHT,
         position: "absolute",
         left: x - IMAGE_WIDTH / 2,
-        top: y - IMAGE_HEIGHT / 2,
-        transform: `rotate(${angleRadians + Math.PI / 2}rad) scaleY(${scaleY})`,
+        top: y,
+        transform: `rotate(${angleRadians + Math.PI / 2}rad)`,
+        transformOrigin: "center 0",
       }}
       src={staticFile("glowstick.png")}
     />

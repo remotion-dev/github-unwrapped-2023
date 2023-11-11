@@ -1,6 +1,6 @@
 import { noise2D } from "@remotion/noise";
-import { interpolate, spring } from "remotion";
-import { VIDEO_HEIGHT } from "../../types/constants";
+import { interpolate, spring, SpringConfig } from "remotion";
+import { VIDEO_FPS } from "../../types/constants";
 import { Shot } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
@@ -12,6 +12,36 @@ export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
 export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
+
+export const SHOT_SPRING_CONFIG: Partial<SpringConfig> = {
+  damping: 200,
+};
+
+const makeShotSpringProgression = () => {
+  let progression: number[] = [];
+  for (let frame = 0; frame < SHOOT_DURATION; frame++) {
+    const value = spring({
+      fps: VIDEO_FPS,
+      frame,
+      config: SHOT_SPRING_CONFIG,
+      durationInFrames: SHOOT_DURATION,
+    });
+    progression.push(value);
+  }
+  return progression;
+};
+
+export const SHOOT_SPRING_PROGRESSION = makeShotSpringProgression();
+
+export const getFramesAfterWhichShootProgressIsReached = (
+  progressToReach: number
+) => {
+  const index = SHOOT_SPRING_PROGRESSION.findIndex((p) => p >= progressToReach);
+  if (index === -1) {
+    return Infinity;
+  }
+  return index;
+};
 
 export type BaseUfoPosition = {
   x: number;
@@ -145,13 +175,13 @@ export const makeUfoPositions = ({
   const rowHeight = ufoHeight + 10;
   const rows = Math.ceil(numberOfUfos / perRow);
 
-  const totalHeight = rows * rowHeight;
+  // const totalHeight = rows * rowHeight;
 
-  const allUfosShouldBeAboveThisLineInitially = VIDEO_HEIGHT / 3;
-  const maxCorrectionToTop = Math.min(
-    0,
-    allUfosShouldBeAboveThisLineInitially - totalHeight - PADDING
-  );
+  // const allUfosShouldBeAboveThisLineInitially = VIDEO_HEIGHT / 3;
+  // const maxCorrectionToTop = Math.min(
+  //   0,
+  //   allUfosShouldBeAboveThisLineInitially - totalHeight - PADDING
+  // );
 
   const entranceYOffset = interpolate(
     entrace,
@@ -169,21 +199,23 @@ export const makeUfoPositions = ({
 
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
-  const shootProgress = interpolate(
-    frame,
-    [TIME_BEFORE_SHOOTING, SHOOT_DURATION + totalShootingDuration],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    }
-  );
+  // const shootProgress = interpolate(
+  //   frame,
+  //   [TIME_BEFORE_SHOOTING, SHOOT_DURATION + totalShootingDuration],
+  //   [0, 1],
+  //   {
+  //     extrapolateLeft: "clamp",
+  //     extrapolateRight: "clamp",
+  //   }
+  // );
 
-  const correctionToTop = interpolate(
-    shootProgress,
-    [0, 1],
-    [maxCorrectionToTop, 0]
-  );
+  // const correctionToTop = interpolate(
+  //   shootProgress,
+  //   [0, 1],
+  //   [maxCorrectionToTop, 0]
+  // );
+
+  const correctionToTop = 0;
 
   const ufos = new Array(numberOfUfos).fill(0).map((_, i): BaseUfoPosition => {
     const row = Math.floor(i / perRow);

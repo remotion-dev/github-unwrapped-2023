@@ -1,16 +1,20 @@
-import { Internals, SpringConfig } from "remotion";
+import { Internals } from "remotion";
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import {
   BaseUfoPosition,
+  getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
+  SHOOT_DURATION,
   TIME_BEFORE_SHOOTING,
+  UfoPosition,
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 type Explosion = {
   index: number;
   explodeAfterProgress: number;
+  explodeAfterFrames: number;
 };
 
 export type Shot = {
@@ -20,10 +24,6 @@ export type Shot = {
   endY: number;
   explosions: Explosion[];
   shootDelay: number;
-};
-
-export const SHOT_SPRING_CONFIG: Partial<SpringConfig> = {
-  damping: 200,
 };
 
 export const getShotsToFire = ({
@@ -55,7 +55,13 @@ export const getShotsToFire = ({
       endY: ufo.y,
       startX: ROCKET_ORIGIN_X,
       startY: ROCKET_ORIGIN_Y,
-      explosions: [{ index: indexToShoot, explodeAfterProgress: 1 }],
+      explosions: [
+        {
+          index: indexToShoot,
+          explodeAfterProgress: 1,
+          explodeAfterFrames: SHOOT_DURATION,
+        },
+      ],
       shootDelay: TIME_BEFORE_SHOOTING + shots.length * 10,
     };
 
@@ -83,13 +89,13 @@ export const getShotsToFire = ({
           Math.pow(ROCKET_ORIGIN_X - intersection.x, 2) +
             Math.pow(ROCKET_ORIGIN_Y - intersection.y, 2)
         );
-        const distanceToUfo = Math.sqrt(
-          Math.pow(otherUfo.x - intersection.x, 2) +
-            Math.pow(otherUfo.y - intersection.y, 2)
+        const distanceToShotEnd = Math.sqrt(
+          Math.pow(shot.endX - intersection.x, 2) +
+            Math.pow(shot.endY - intersection.y, 2)
         );
 
         const explodeAfterProgress =
-          distanceToRocket / (distanceToRocket + distanceToUfo);
+          distanceToRocket / (distanceToRocket + distanceToShotEnd);
 
         return { intersection, index, explodeAfterProgress };
       })
@@ -100,6 +106,8 @@ export const getShotsToFire = ({
       shot.explosions.push({
         index,
         explodeAfterProgress,
+        explodeAfterFrames:
+          getFramesAfterWhichShootProgressIsReached(explodeAfterProgress),
       });
     }
 
@@ -109,4 +117,23 @@ export const getShotsToFire = ({
   }
 
   return shots;
+};
+
+export const getExplosions = ({
+  shots,
+  ufos,
+}: {
+  shots: Shot[];
+  ufos: UfoPosition[];
+}) => {
+  return shots.flatMap((shot) => {
+    return shot.explosions.map((explosion) => {
+      return {
+        index: explosion.index,
+        explodeAfterFrames: explosion.explodeAfterFrames + shot.shootDelay,
+        x: ufos[explosion.index].x,
+        y: ufos[explosion.index].y,
+      };
+    });
+  });
 };
