@@ -11,7 +11,7 @@ export const ROCKET_ORIGIN_X = VIDEO_WIDTH / 2;
 const ROCKET_ORIGIN_Y = VIDEO_WIDTH - 150;
 export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
-export const TOTAL_SHOOT_DURATION = 14;
+export const TOTAL_SHOOT_DURATION = 60;
 
 export const getFramesAfterWhichShootProgressIsReached = (
   progressToReach: number,
