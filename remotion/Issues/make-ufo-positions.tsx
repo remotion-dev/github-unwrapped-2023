@@ -208,14 +208,16 @@ export const makeUfoPositions = (
     };
   });
 
-  const sortedByDistanceFromRocket = closedIndices.sort((indexA, indexB) => {
-    const a = ufos[indexA];
-    const b = ufos[indexB];
+  const sortedByDistanceFromRocket = closedIndices
+    .slice()
+    .sort((indexA, indexB) => {
+      const a = ufos[indexA];
+      const b = ufos[indexB];
 
-    const angleA = getAngleForShoot(a.x, a.y);
-    const angleB = getAngleForShoot(b.x, b.y);
-    return angleA - angleB;
-  });
+      const angleA = getAngleForShoot(a.x, a.y);
+      const angleB = getAngleForShoot(b.x, b.y);
+      return angleA - angleB;
+    });
 
   console.log(getShotsToFire(closedIndices, ufos));
 
