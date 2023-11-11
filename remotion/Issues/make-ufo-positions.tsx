@@ -2,6 +2,7 @@ import { noise2D } from "@remotion/noise";
 import { interpolate, spring, SpringConfig } from "remotion";
 import { VIDEO_FPS } from "../../types/constants";
 import { Shot } from "./get-shots-to-fire";
+import { ROCKET_HEIGHT } from "./Rocket";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -10,6 +11,7 @@ export const PADDING = 100;
 export const USABLE_CANVAS_WIDTH = CANVAS_WIDTH - PADDING * 2;
 export const ROCKET_ORIGIN_X = CANVAS_WIDTH / 2;
 export const ROCKET_ORIGIN_Y = CANVAS_WIDTH - 150;
+export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
 

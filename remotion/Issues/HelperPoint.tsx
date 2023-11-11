@@ -1,6 +1,6 @@
 import { AbsoluteFill } from "remotion";
 
-const RADIUS = 20;
+const RADIUS = 10;
 
 export const HelperPoint: React.FC<{
   x: number;
