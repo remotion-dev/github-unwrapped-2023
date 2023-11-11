@@ -51,7 +51,7 @@ export const getShotsToFire = (
 
     const otherUfosHit = ufos
       .map((otherUfo, index) => {
-        const isIntersecting = findLineRectangleIntersection({
+        const intersection = findLineRectangleIntersection({
           startX: shot.startX,
           startY: shot.startY,
           endX: shot.endX,
@@ -65,25 +65,38 @@ export const getShotsToFire = (
         if (ufosHit.includes(index)) {
           return null;
         }
-        if (!isIntersecting) {
+        if (!intersection) {
           return null;
         }
 
-        return { intersection: isIntersecting, index };
+        const distanceToRocket = Math.sqrt(
+          Math.pow(ROCKET_ORIGIN_X - intersection.x, 2) +
+            Math.pow(ROCKET_ORIGIN_Y - intersection.y, 2)
+        );
+        const distanceToUfo = Math.sqrt(
+          Math.pow(otherUfo.x - intersection.x, 2) +
+            Math.pow(otherUfo.y - intersection.y, 2)
+        );
+
+        const explodeAfterProgress =
+          distanceToRocket / (distanceToRocket + distanceToUfo);
+
+        return { intersection, index, explodeAfterProgress };
       })
       .filter(Internals.truthy);
 
-    for (const { index } of otherUfosHit) {
+    for (const { index, explodeAfterProgress } of otherUfosHit) {
       ufosHit.push(index);
       shot.explosions.push({
         index,
-        explodeAfterProgress: 0.5,
+        explodeAfterProgress,
       });
     }
 
     shots.push(shot);
 
-    console.log({ otherUfosHit, ufosHit, shots });
     i++;
   }
+
+  return shots;
 };
