@@ -7,11 +7,17 @@ import {
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
+type Explosion = {
+  index: number;
+  explodeAfterProgress: number;
+};
+
 type Shot = {
   startX: number;
   startY: number;
   endX: number;
   endY: number;
+  explosions: Explosion[];
 };
 
 export const getShotsToFire = (
@@ -40,6 +46,7 @@ export const getShotsToFire = (
       endY: ufo.y,
       startX: ROCKET_ORIGIN_X,
       startY: ROCKET_ORIGIN_Y,
+      explosions: [{ index: indexToShoot, explodeAfterProgress: 1 }],
     };
 
     const otherUfosHit = ufos
@@ -54,18 +61,24 @@ export const getShotsToFire = (
           width: UFO_WIDTH * otherUfo.scale,
           height: UFO_HEIGHT * otherUfo.scale,
         });
+
         if (ufosHit.includes(index)) {
           return null;
         }
         if (!isIntersecting) {
           return null;
         }
+
         return { intersection: isIntersecting, index };
       })
       .filter(Internals.truthy);
 
     for (const { index } of otherUfosHit) {
       ufosHit.push(index);
+      shot.explosions.push({
+        index,
+        explodeAfterProgress: 0.5,
+      });
     }
 
     shots.push(shot);
