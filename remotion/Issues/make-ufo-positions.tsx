@@ -19,15 +19,11 @@ export const getFramesAfterWhichShootProgressIsReached = (
   return Math.ceil(progressToReach * SHOOT_DURATION);
 };
 
-export type BaseUfoPosition = {
+export type UfoPosition = {
   x: number;
   y: number;
   scale: number;
   isClosed: boolean;
-};
-
-export type UfoPosition = BaseUfoPosition & {
-  shootDelay: number;
 };
 
 const issuesPerRow = (numberOfIssues: number) => {
@@ -146,13 +142,9 @@ export const makeUfoPositions = ({
     }
   );
 
-  const totalShootingDuration = Math.max(30, Math.min(90, numberOfUfos * 14));
-
-  const delayBetweenAnimations = totalShootingDuration / closedIssues;
-
   const closedIndices = sampleUniqueIndices(numberOfUfos, closedIssues);
 
-  const ufos = new Array(numberOfUfos).fill(0).map((_, i): BaseUfoPosition => {
+  const ufos = new Array(numberOfUfos).fill(0).map((_, i): UfoPosition => {
     const row = Math.floor(i / perRow);
     const column = i % perRow;
 
@@ -176,28 +168,9 @@ export const makeUfoPositions = ({
     };
   });
 
-  const sortedByDistanceFromRocket = closedIndices
-    .slice()
-    .sort((indexA, indexB) => {
-      const a = ufos[indexA];
-      const b = ufos[indexB];
-
-      const angleA = getAngleForShoot(a.x, a.y);
-      const angleB = getAngleForShoot(b.x, b.y);
-      return angleA - angleB;
-    });
-
   return {
     closedIndices,
-    ufos: ufos.map((p, i): UfoPosition => {
-      return {
-        ...p,
-        shootDelay:
-          (closedIssues - sortedByDistanceFromRocket.indexOf(i)) *
-            delayBetweenAnimations +
-          TIME_BEFORE_SHOOTING,
-      };
-    }),
+    ufos: ufos,
   };
 };
 

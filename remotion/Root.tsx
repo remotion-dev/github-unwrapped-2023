@@ -1,4 +1,4 @@
-import { Composition } from "remotion";
+import { Composition, Folder } from "remotion";
 import {
   defaultMyCompProps,
   VIDEO_FPS,
@@ -27,16 +27,38 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
       />
-      <Composition
-        id={"Issues"}
-        component={Issues}
-        durationInFrames={16 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        schema={issuesSchema}
-        defaultProps={{ closedIssues: 59, openIssues: 20 }}
-      />
+      <Folder name="Issues">
+        <Composition
+          id={"Issues2-0"}
+          component={Issues}
+          durationInFrames={16 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={issuesSchema}
+          defaultProps={{ closedIssues: 2, openIssues: 0 }}
+        />
+        <Composition
+          id={"Issues20-15"}
+          component={Issues}
+          durationInFrames={16 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={issuesSchema}
+          defaultProps={{ closedIssues: 20, openIssues: 15 }}
+        />
+        <Composition
+          id={"Issues80-20"}
+          component={Issues}
+          durationInFrames={16 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={issuesSchema}
+          defaultProps={{ closedIssues: 80, openIssues: 20 }}
+        />
+      </Folder>
       <Composition
         id={"TopLanguages"}
         component={TopLanguages}

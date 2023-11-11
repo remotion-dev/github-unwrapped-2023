@@ -60,7 +60,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             }
           >
             <Ufo
-              explodeAfter={p.shootDelay}
+              explodeAfter={explosion ? explosion.explodeAfterFrames : Infinity}
               scale={p.scale}
               x={p.x}
               y={p.y}

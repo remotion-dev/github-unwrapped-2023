@@ -1,7 +1,6 @@
 import { Internals } from "remotion";
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import {
-  BaseUfoPosition,
   getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
@@ -32,10 +31,10 @@ const findClosestUfoRemaining = ({
   referenceUfo,
   remainingUfos,
 }: {
-  referenceUfo: BaseUfoPosition;
-  remainingUfos: BaseUfoPosition[];
+  referenceUfo: UfoPosition;
+  remainingUfos: UfoPosition[];
 }) => {
-  let closestUfo: BaseUfoPosition | null = null;
+  let closestUfo: UfoPosition | null = null;
   let closestDistance = Infinity;
 
   for (const ufo of remainingUfos) {
@@ -56,14 +55,14 @@ export const getShotsToFire = ({
   ufos,
 }: {
   closedIndices: number[];
-  ufos: BaseUfoPosition[];
+  ufos: UfoPosition[];
 }) => {
   let ufosHit: number[] = [];
   const shots: Shot[] = [];
   let ufoToShoot: number | null = closedIndices[0];
 
   while (true) {
-    if (ufosHit.length === closedIndices.length) {
+    if (ufosHit.length >= closedIndices.length) {
       break;
     }
     if (ufoToShoot === null) {
