@@ -6,7 +6,7 @@ import { Poof } from "../Poof";
 import { Background } from "./Background";
 import { getShotsToFire } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { makeUfoPositions } from "./make-ufo-positions";
+import { makeUfoPositions, SHOOT_DURATION } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -41,10 +41,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       </AbsoluteFill>
       {shots.map((p, i) => {
         return (
-          <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
+          <Sequence durationInFrames={SHOOT_DURATION + p.shootDelay} key={i}>
             <GlowStick
               shootDelay={p.shootDelay}
-              shootDuration={p.shootDuration}
               targetX={p.endX}
               targetY={p.endY}
             ></GlowStick>

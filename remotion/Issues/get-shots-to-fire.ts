@@ -1,10 +1,9 @@
-import { Internals } from "remotion";
+import { Internals, SpringConfig } from "remotion";
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import {
   BaseUfoPosition,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
-  SHOOT_DURATION,
   TIME_BEFORE_SHOOTING,
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
@@ -21,7 +20,10 @@ export type Shot = {
   endY: number;
   explosions: Explosion[];
   shootDelay: number;
-  shootDuration: number;
+};
+
+export const SHOT_SPRING_CONFIG: Partial<SpringConfig> = {
+  damping: 200,
 };
 
 export const getShotsToFire = ({
@@ -55,7 +57,6 @@ export const getShotsToFire = ({
       startY: ROCKET_ORIGIN_Y,
       explosions: [{ index: indexToShoot, explodeAfterProgress: 1 }],
       shootDelay: TIME_BEFORE_SHOOTING + shots.length * 10,
-      shootDuration: SHOOT_DURATION,
     };
 
     const otherUfosHit = ufos

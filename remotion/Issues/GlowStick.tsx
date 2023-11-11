@@ -7,10 +7,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { SHOT_SPRING_CONFIG } from "./get-shots-to-fire";
 import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
+  SHOOT_DURATION,
 } from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
@@ -20,8 +22,7 @@ export const GlowStick: React.FC<{
   targetX: number;
   targetY: number;
   shootDelay: number;
-  shootDuration: number;
-}> = ({ targetX, targetY, shootDelay, shootDuration }) => {
+}> = ({ targetX, targetY, shootDelay }) => {
   const angleRadians = getAngleForShoot(targetX, targetY);
 
   // Make the glowstick only reach the bottom
@@ -33,10 +34,8 @@ export const GlowStick: React.FC<{
   const progress = spring({
     fps,
     frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: shootDuration,
+    config: SHOT_SPRING_CONFIG,
+    durationInFrames: SHOOT_DURATION,
     delay: shootDelay,
     durationRestThreshold: 0.1,
   });
