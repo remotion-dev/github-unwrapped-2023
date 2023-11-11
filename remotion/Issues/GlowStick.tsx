@@ -6,6 +6,7 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import { HelperPoint } from "./HelperPoint";
 import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
@@ -15,6 +16,7 @@ import {
 
 const IMAGE_WIDTH = 30;
 const IMAGE_HEIGHT = 165;
+const STICK_PADDING_TOP = 10;
 
 export const GlowStick: React.FC<{
   targetX: number;
@@ -39,7 +41,10 @@ export const GlowStick: React.FC<{
   const y = interpolate(progress, [0, 1], [ROCKET_TOP_Y, targetY]);
 
   const translateX = -IMAGE_WIDTH / 2;
-  const translateY = 0;
+
+  if (progress === 0) {
+    return null;
+  }
 
   return (
     <AbsoluteFill>
@@ -50,13 +55,14 @@ export const GlowStick: React.FC<{
           position: "absolute",
           left: x,
           top: y,
-          transform: `rotate(${
+          transform: `translateY(-${STICK_PADDING_TOP}px) translateX(${translateX}px) rotate(${
             angleRadians + Math.PI / 2
-          }rad) translateX(${translateX}px) translateY(${translateY}px)`,
-          transformOrigin: `${IMAGE_WIDTH / 2}px 0`,
+          }rad)`,
+          transformOrigin: `${IMAGE_WIDTH / 2}px ${STICK_PADDING_TOP}px`,
         }}
-        src={staticFile("glowstick.png")}
-      />
+        src={staticFile("glow-stick.png")}
+      />{" "}
+      <HelperPoint x={x} y={y}></HelperPoint>
     </AbsoluteFill>
   );
 };

@@ -6,13 +6,7 @@ import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
 import { getExplosions, getShotsToFire } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { HelperPoint } from "./HelperPoint";
-import {
-  makeUfoPositions,
-  ROCKET_ORIGIN_X,
-  ROCKET_TOP_Y,
-  SHOOT_DURATION,
-} from "./make-ufo-positions";
+import { makeUfoPositions, SHOOT_DURATION } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -96,7 +90,6 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Rocket shots={shots}></Rocket>
       </AbsoluteFill>
-      <HelperPoint x={ROCKET_ORIGIN_X} y={ROCKET_TOP_Y}></HelperPoint>
       <AbsoluteFill
         style={{
           fontSize: 100,

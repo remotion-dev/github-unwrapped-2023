@@ -5,6 +5,7 @@ import {
   getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
   ROCKET_ORIGIN_Y,
+  ROCKET_TOP_Y,
   SHOOT_DURATION,
   TIME_BEFORE_SHOOTING,
   UfoPosition,
@@ -26,7 +27,7 @@ export type Shot = {
   shootDelay: number;
 };
 
-const HIT_BOX_SCALE = 0.6;
+const HIT_BOX_SCALE = 0.8;
 
 export const getShotsToFire = ({
   closedIndices,
@@ -56,7 +57,7 @@ export const getShotsToFire = ({
       endX: ufo.x,
       endY: ufo.y,
       startX: ROCKET_ORIGIN_X,
-      startY: ROCKET_ORIGIN_Y,
+      startY: ROCKET_TOP_Y,
       explosions: [
         {
           index: indexToShoot,
