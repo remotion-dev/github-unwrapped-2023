@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { Shot } from "./get-shots-to-fire";
+import { ShotWithShootDelay } from "./get-shots-to-fire";
 import {
   rocketRotation,
   ROCKET_ORIGIN_X,
@@ -17,7 +17,7 @@ export const Rocket = ({
   shots,
   ...props
 }: SVGProps<SVGSVGElement> & {
-  shots: Shot[];
+  shots: ShotWithShootDelay[];
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();

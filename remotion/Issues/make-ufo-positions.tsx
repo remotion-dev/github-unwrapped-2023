@@ -1,22 +1,23 @@
 import { interpolate, spring } from "remotion";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
-import { Shot } from "./get-shots-to-fire";
+import { ShotWithShootDelay } from "./get-shots-to-fire";
 import { ROCKET_HEIGHT } from "./Rocket";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
-export const PADDING = 150;
+export const PADDING = 120;
 export const USABLE_CANVAS_WIDTH = VIDEO_WIDTH - PADDING * 2;
 export const ROCKET_ORIGIN_X = VIDEO_WIDTH / 2;
 const ROCKET_ORIGIN_Y = VIDEO_WIDTH - 150;
 export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
-export const SHOOT_DURATION = 14;
+export const TOTAL_SHOOT_DURATION = 14;
 
 export const getFramesAfterWhichShootProgressIsReached = (
-  progressToReach: number
+  progressToReach: number,
+  shootDuration: number
 ) => {
-  return Math.ceil(progressToReach * SHOOT_DURATION);
+  return Math.ceil(progressToReach * shootDuration);
 };
 
 export type UfoPosition = {
@@ -180,7 +181,10 @@ export const makeUfoPositions = ({
   };
 };
 
-export const rocketRotation = (positions: Shot[], frame: number) => {
+export const rocketRotation = (
+  positions: ShotWithShootDelay[],
+  frame: number
+) => {
   const sortedByDelay = positions.sort((a, b) => a.shootDelay - b.shootDelay);
 
   const angles = sortedByDelay.map((p) => {

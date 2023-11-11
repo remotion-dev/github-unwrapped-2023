@@ -4,9 +4,14 @@ import { z } from "zod";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
-import { getExplosions, getShotsToFire } from "./get-shots-to-fire";
+import {
+  addShootDelays,
+  getExplosions,
+  getShootDuration,
+  getShotsToFire,
+} from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { makeUfoPositions, SHOOT_DURATION } from "./make-ufo-positions";
+import { makeUfoPositions } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -28,7 +33,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     frame,
   });
   const shots = getShotsToFire({ closedIndices, ufos });
-  const explosions = getExplosions({ shots, ufos });
+  const withShootDurations = addShootDelays(shots);
+  const explosions = getExplosions({ shots: withShootDurations, ufos });
+  console.log({ explosions, withShootDurations });
+
   return (
     <AbsoluteFill
       style={{
@@ -39,13 +47,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Background></Background>
       </AbsoluteFill>
-      {shots.map((p, i) => {
+      {withShootDurations.map((p, i) => {
         return (
-          <Sequence durationInFrames={SHOOT_DURATION + p.shootDelay} key={i}>
+          <Sequence
+            durationInFrames={getShootDuration(shots) + p.shootDelay}
+            key={i}
+          >
             <GlowStick
               shootDelay={p.shootDelay}
               targetX={p.endX}
               targetY={p.endY}
+              duration={getShootDuration(shots)}
             ></GlowStick>
           </Sequence>
         );
@@ -85,7 +97,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         );
       })}
       <AbsoluteFill>
-        <Rocket shots={shots}></Rocket>
+        <Rocket shots={withShootDurations}></Rocket>
       </AbsoluteFill>
       <AbsoluteFill
         style={{

@@ -10,7 +10,6 @@ import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
-  SHOOT_DURATION,
 } from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
@@ -21,14 +20,15 @@ export const GlowStick: React.FC<{
   targetX: number;
   targetY: number;
   shootDelay: number;
-}> = ({ targetX, targetY, shootDelay }) => {
+  duration: number;
+}> = ({ targetX, targetY, shootDelay, duration }) => {
   const angleRadians = getAngleForShoot(targetX, targetY);
 
   const frame = useCurrentFrame();
 
   const progress = interpolate(
     frame,
-    [shootDelay, SHOOT_DURATION + shootDelay],
+    [shootDelay, duration + shootDelay],
     [0, 1],
     {
       extrapolateLeft: "clamp",

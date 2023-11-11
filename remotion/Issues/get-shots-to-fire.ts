@@ -4,8 +4,8 @@ import {
   getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
-  SHOOT_DURATION,
   TIME_BEFORE_SHOOTING,
+  TOTAL_SHOOT_DURATION,
   UfoPosition,
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
@@ -13,7 +13,6 @@ import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 type Explosion = {
   index: number;
   explodeAfterProgress: number;
-  explodeAfterFrames: number;
 };
 
 export type Shot = {
@@ -22,6 +21,9 @@ export type Shot = {
   endX: number;
   endY: number;
   explosions: Explosion[];
+};
+
+export type ShotWithShootDelay = Shot & {
   shootDelay: number;
 };
 
@@ -48,6 +50,19 @@ const findClosestUfoRemaining = ({
   }
 
   return closestUfo ?? null;
+};
+
+export const getShootDuration = (shots: Shot[]) => {
+  return TOTAL_SHOOT_DURATION / shots.length;
+};
+
+export const addShootDelays = (shots: Shot[]) => {
+  return shots.map((shot, index) => {
+    return {
+      ...shot,
+      shootDelay: TIME_BEFORE_SHOOTING + index * getShootDuration(shots),
+    };
+  });
 };
 
 export const getShotsToFire = ({
@@ -93,10 +108,8 @@ export const getShotsToFire = ({
         {
           index: ufoToShoot,
           explodeAfterProgress: 1,
-          explodeAfterFrames: SHOOT_DURATION,
         },
       ],
-      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 2,
     };
 
     const otherUfosHit = ufos
@@ -140,8 +153,6 @@ export const getShotsToFire = ({
       shot.explosions.push({
         index,
         explodeAfterProgress,
-        explodeAfterFrames:
-          getFramesAfterWhichShootProgressIsReached(explodeAfterProgress),
       });
     }
 
@@ -155,14 +166,18 @@ export const getExplosions = ({
   shots,
   ufos,
 }: {
-  shots: Shot[];
+  shots: ShotWithShootDelay[];
   ufos: UfoPosition[];
 }) => {
   return shots.flatMap((shot) => {
     return shot.explosions.map((explosion) => {
+      const explodeAfterFrames = getFramesAfterWhichShootProgressIsReached(
+        explosion.explodeAfterProgress,
+        getShootDuration(shots)
+      );
       return {
         index: explosion.index,
-        explodeAfterFrames: explosion.explodeAfterFrames + shot.shootDelay,
+        explodeAfterFrames: explodeAfterFrames + shot.shootDelay,
         x: ufos[explosion.index].x,
         y: ufos[explosion.index].y,
       };
