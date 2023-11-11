@@ -1,14 +1,15 @@
 import { Composition } from "remotion";
 import {
-defaultMyCompProps,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { ContributionsScene } from "./Contributions";
+import { Issues, issuesSchema } from "./Issues";
 import {
-JumpingNumberDemo,
-jumpingNumberSchema
+  JumpingNumberDemo,
+  jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { Poof } from "./Poof";
 import { Spaceship } from "./Spaceship";
@@ -17,6 +18,15 @@ import { TopLanguages } from "./TopLanguages";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id={"Contributions"}
+        component={ContributionsScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      />
       <Composition
         id={"Spaceship"}
         component={Spaceship}
