@@ -1,6 +1,4 @@
-import { noise2D } from "@remotion/noise";
-import { interpolate, spring, SpringConfig } from "remotion";
-import { VIDEO_FPS } from "../../types/constants";
+import { interpolate, spring } from "remotion";
 import { Shot } from "./get-shots-to-fire";
 import { ROCKET_HEIGHT } from "./Rocket";
 import { sampleUniqueIndices } from "./sample-indices";
@@ -15,34 +13,10 @@ export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
 export const TIME_BEFORE_SHOOTING = 60;
 export const SHOOT_DURATION = 14;
 
-export const SHOT_SPRING_CONFIG: Partial<SpringConfig> = {
-  damping: 200,
-};
-
-const makeShotSpringProgression = () => {
-  let progression: number[] = [];
-  for (let frame = 0; frame < SHOOT_DURATION; frame++) {
-    const value = spring({
-      fps: VIDEO_FPS,
-      frame,
-      config: SHOT_SPRING_CONFIG,
-      durationInFrames: SHOOT_DURATION,
-    });
-    progression.push(value);
-  }
-  return progression;
-};
-
-export const SHOOT_SPRING_PROGRESSION = makeShotSpringProgression();
-
 export const getFramesAfterWhichShootProgressIsReached = (
   progressToReach: number
 ) => {
-  const index = SHOOT_SPRING_PROGRESSION.findIndex((p) => p >= progressToReach);
-  if (index === -1) {
-    return Infinity;
-  }
-  return index;
+  return Math.ceil(progressToReach * SHOOT_DURATION);
 };
 
 export type BaseUfoPosition = {
@@ -74,25 +48,16 @@ export const FPS = 30;
 const makeYPosition = ({
   correctionToTop,
   entranceYOffset,
-  frame,
   row,
-  column,
   rowHeight,
 }: {
   row: number;
   column: number;
   rowHeight: number;
-  frame: number;
   entranceYOffset: number;
   correctionToTop: number;
 }) => {
-  return (
-    PADDING +
-    row * rowHeight +
-    Math.sin(frame / 20 + column / 6) * 30 +
-    entranceYOffset +
-    correctionToTop
-  );
+  return PADDING + row * rowHeight + entranceYOffset + correctionToTop;
 };
 
 const getExtraPaddingIfInOfLastRow = ({
@@ -118,7 +83,6 @@ const getExtraPaddingIfInOfLastRow = ({
 
 const makeXPosition = ({
   column,
-  frame,
   i,
   spaceInbetweenUfo,
   ufoContainerWidth,
@@ -128,7 +92,6 @@ const makeXPosition = ({
   ufoContainerWidth: number;
   column: number;
   spaceInbetweenUfo: number;
-  frame: number;
   i: number;
   perRow: number;
   numberOfUfos: number;
@@ -142,12 +105,10 @@ const makeXPosition = ({
     ufoContainerWidth,
   });
 
-  const noise = noise2D("seed", frame / 100, i) * 10;
-
   const ufoPosition = ufoContainerWidth * column + column * spaceInbetweenUfo;
   const ufoMiddleOffset = ufoContainerWidth / 2;
 
-  return PADDING + ufoMiddleOffset + ufoPosition + noise + extraPadding;
+  return PADDING + ufoMiddleOffset + ufoPosition + extraPadding;
 };
 
 export const makeUfoPositions = ({
@@ -226,7 +187,6 @@ export const makeUfoPositions = ({
     return {
       x: makeXPosition({
         column,
-        frame,
         i,
         spaceInbetweenUfo,
         ufoContainerWidth: ufoContainerWidth,
@@ -237,7 +197,6 @@ export const makeUfoPositions = ({
         column,
         correctionToTop,
         entranceYOffset,
-        frame,
         row,
         rowHeight,
       }),

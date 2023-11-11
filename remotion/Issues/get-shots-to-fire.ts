@@ -26,6 +26,8 @@ export type Shot = {
   shootDelay: number;
 };
 
+const HIT_BOX_SCALE = 0.6;
+
 export const getShotsToFire = ({
   closedIndices,
   ufos,
@@ -62,7 +64,7 @@ export const getShotsToFire = ({
           explodeAfterFrames: SHOOT_DURATION,
         },
       ],
-      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 10,
+      shootDelay: TIME_BEFORE_SHOOTING + shots.length * 7,
     };
 
     const otherUfosHit = ufos
@@ -74,8 +76,8 @@ export const getShotsToFire = ({
           endY: shot.endY,
           centerX: otherUfo.x,
           centerY: otherUfo.y,
-          width: UFO_WIDTH * otherUfo.scale,
-          height: UFO_HEIGHT * otherUfo.scale,
+          width: UFO_WIDTH * otherUfo.scale * HIT_BOX_SCALE,
+          height: UFO_HEIGHT * otherUfo.scale * HIT_BOX_SCALE,
         });
 
         if (ufosHit.includes(index)) {

@@ -3,18 +3,14 @@ import {
   AbsoluteFill,
   Img,
   interpolate,
-  spring,
   staticFile,
   useCurrentFrame,
-  useVideoConfig,
 } from "remotion";
-import { HelperPoint } from "./HelperPoint";
 import {
   getAngleForShoot,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
   SHOOT_DURATION,
-  SHOT_SPRING_CONFIG,
 } from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
@@ -28,15 +24,16 @@ export const GlowStick: React.FC<{
   const angleRadians = getAngleForShoot(targetX, targetY);
 
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  const progress = spring({
-    fps,
+  const progress = interpolate(
     frame,
-    config: SHOT_SPRING_CONFIG,
-    durationInFrames: SHOOT_DURATION,
-    delay: shootDelay,
-  });
+    [shootDelay, SHOOT_DURATION + shootDelay],
+    [0, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
 
   const x = interpolate(progress, [0, 1], [ROCKET_ORIGIN_X, targetX]);
   const y = interpolate(progress, [0, 1], [ROCKET_TOP_Y, targetY]);
@@ -46,7 +43,6 @@ export const GlowStick: React.FC<{
 
   return (
     <AbsoluteFill>
-      <HelperPoint x={x} y={y}></HelperPoint>
       <Img
         style={{
           width: IMAGE_WIDTH,
