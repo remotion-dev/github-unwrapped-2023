@@ -1,16 +1,19 @@
 import React, { useMemo } from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   interpolate,
   Sequence,
   spring,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
 import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
+import { getAudioHits } from "./get-audio-hits";
 import {
   addShootDelays,
   getExplosions,
@@ -68,16 +71,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   }, [closedIndices, ufos]);
 
   const withShootDurations = addShootDelays(shots);
+  const audioHits = getAudioHits(withShootDurations);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
 
   const yOffset = interpolate(
     frame,
     [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
-    [0, -offsetDueToManyUfos + 540],
+    [0, -offsetDueToManyUfos + 400],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.inOut(Easing.ease),
+      easing: Easing.out(Easing.ease),
     }
   );
 
@@ -89,7 +93,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       }}
     >
       <AbsoluteFill>
-        <Background></Background>
+        <Background />
       </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
         {withShootDurations.map((p, i) => {
@@ -144,6 +148,13 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
                 x={explosion.x}
                 y={explosion.y}
               ></Poof>
+            </Sequence>
+          );
+        })}
+        {audioHits.map((audioHit, i) => {
+          return (
+            <Sequence key={i} from={audioHit}>
+              <Audio src={staticFile("laser-shoot.mp3")}></Audio>)
             </Sequence>
           );
         })}

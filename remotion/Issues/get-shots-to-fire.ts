@@ -164,13 +164,20 @@ export const getShotsToFire = ({
   return shots;
 };
 
+export type ExplosionExpanded = {
+  index: number;
+  explodeAfterFrames: number;
+  x: number;
+  y: number;
+};
+
 export const getExplosions = ({
   shots,
   ufos,
 }: {
   shots: ShotWithShootDelay[];
   ufos: UfoPosition[];
-}) => {
+}): ExplosionExpanded[] => {
   return shots.flatMap((shot) => {
     return shot.explosions.map((explosion) => {
       const explodeAfterFrames = getFramesAfterWhichShootProgressIsReached(

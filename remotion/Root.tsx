@@ -1,14 +1,14 @@
-import { Composition, Folder } from "remotion";
+import { Composition,Folder } from "remotion";
 import {
-  defaultMyCompProps,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
+defaultMyCompProps,
+VIDEO_FPS,
+VIDEO_HEIGHT,
+VIDEO_WIDTH
 } from "../types/constants";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues,issuesSchema } from "./Issues";
 import {
-  JumpingNumberDemo,
-  jumpingNumberSchema,
+JumpingNumberDemo,
+jumpingNumberSchema
 } from "./JumpingNumber/JumpingNumber";
 import { Planet } from "./Planet";
 import { Poof } from "./Poof";
@@ -76,7 +76,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 500, openIssues: 500 }}
+          defaultProps={{ closedIssues: 100, openIssues: 900 }}
         />
       </Folder>
       <Composition

@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Audio, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 import { SVGProps } from "react";
 
@@ -285,7 +285,6 @@ export const Poof: React.FC<{
         justifyItems: "center",
       }}
     >
-      <Audio src={staticFile("laser-hit.mp3")}></Audio>
       <div
         style={{
           width: BIGGEST_WIDTH,
