@@ -6,11 +6,8 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import {
-  getAngleForShoot,
-  ROCKET_ORIGIN_X,
-  ROCKET_TOP_Y,
-} from "./make-ufo-positions";
+import { ROCKET_ORIGIN_X, ROCKET_TOP_Y } from "./constants";
+import { getAngleForShoot } from "./make-ufo-positions";
 
 const IMAGE_WIDTH = 30;
 const IMAGE_HEIGHT = 165;

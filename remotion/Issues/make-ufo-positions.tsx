@@ -1,17 +1,14 @@
 import { interpolate, spring } from "remotion";
-import { VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
+import { VIDEO_HEIGHT } from "../../types/constants";
+import {
+  PADDING,
+  ROCKET_ORIGIN_X,
+  ROCKET_TOP_Y,
+  USABLE_CANVAS_WIDTH,
+} from "./constants";
 import { ShotWithShootDelay } from "./get-shots-to-fire";
-import { ROCKET_HEIGHT } from "./Rocket";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
-
-export const PADDING = 120;
-export const USABLE_CANVAS_WIDTH = VIDEO_WIDTH - PADDING * 2;
-export const ROCKET_ORIGIN_X = VIDEO_WIDTH / 2;
-const ROCKET_ORIGIN_Y = VIDEO_WIDTH - 150;
-export const ROCKET_TOP_Y = ROCKET_ORIGIN_Y - ROCKET_HEIGHT / 2;
-export const TIME_BEFORE_SHOOTING = 60;
-export const TOTAL_SHOOT_DURATION = 60;
 
 export const getFramesAfterWhichShootProgressIsReached = (
   progressToReach: number,
@@ -108,6 +105,9 @@ const makeXPosition = ({
 
 const UFOS_MUST_BE_ABOVE_LINE = VIDEO_HEIGHT * 0.4;
 
+export const UFO_ENTRANCE_DURATION = 30;
+export const UFO_ENTRANCE_DELAY = 0;
+
 export const makeUfoPositions = ({
   numberOfUfos,
   closedIssues,
@@ -126,6 +126,8 @@ export const makeUfoPositions = ({
     config: {
       damping: 200,
     },
+    durationInFrames: UFO_ENTRANCE_DURATION,
+    delay: UFO_ENTRANCE_DELAY,
   });
 
   const ufoContainerWidth =

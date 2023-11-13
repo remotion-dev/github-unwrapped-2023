@@ -1,7 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
 import {
@@ -11,6 +10,7 @@ import {
   getShotsToFire,
 } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
+import { IssueNumber } from "./IssueNumber";
 import { makeUfoPositions } from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
@@ -35,7 +35,6 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const shots = getShotsToFire({ closedIndices, ufos });
   const withShootDurations = addShootDelays(shots);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
-  console.log({ explosions, withShootDurations });
 
   return (
     <AbsoluteFill
@@ -99,23 +98,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Rocket shots={withShootDurations}></Rocket>
       </AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          fontSize: 100,
-          color: "white",
-          fontFamily: "Mona Sans",
-          fontWeight: "800",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          padding: 40,
-        }}
-      >
-        <JumpingNumber
-          duration={40}
-          from={0}
-          to={closedIssues + openIssues}
-        ></JumpingNumber>
-      </AbsoluteFill>
+      <IssueNumber
+        closedIssues={closedIssues}
+        openIssues={openIssues}
+      ></IssueNumber>
     </AbsoluteFill>
   );
 };

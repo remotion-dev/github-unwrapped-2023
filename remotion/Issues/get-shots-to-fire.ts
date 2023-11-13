@@ -1,11 +1,13 @@
 import { Internals } from "remotion";
-import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import {
-  getFramesAfterWhichShootProgressIsReached,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
   TIME_BEFORE_SHOOTING,
   TOTAL_SHOOT_DURATION,
+} from "./constants";
+import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
+import {
+  getFramesAfterWhichShootProgressIsReached,
   UfoPosition,
 } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
@@ -27,7 +29,7 @@ export type ShotWithShootDelay = Shot & {
   shootDelay: number;
 };
 
-const HIT_BOX_SCALE = 0.7;
+const HIT_BOX_SCALE = 0.6;
 
 const findClosestUfoRemaining = ({
   referenceUfo,
