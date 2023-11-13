@@ -1,8 +1,16 @@
-import React from "react";
-import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
+import React, { useMemo } from "react";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  Sequence,
+  spring,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
+import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
 import {
   addShootDelays,
   getExplosions,
@@ -11,7 +19,12 @@ import {
 } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
 import { IssueNumber } from "./IssueNumber";
-import { makeUfoPositions } from "./make-ufo-positions";
+import {
+  FPS,
+  makeUfoPositions,
+  UFO_ENTRANCE_DELAY,
+  UFO_ENTRANCE_DURATION,
+} from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -27,14 +40,46 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const { ufos, closedIndices } = makeUfoPositions({
-    numberOfUfos: totalIssues,
-    closedIssues,
+  const { ufos, closedIndices, offsetDueToManyUfos, rowHeight, rows } =
+    useMemo(() => {
+      return makeUfoPositions({
+        numberOfUfos: totalIssues,
+        closedIssues,
+      });
+    }, [closedIssues, totalIssues]);
+
+  const entrace = spring({
+    fps: FPS,
     frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: UFO_ENTRANCE_DURATION,
+    delay: UFO_ENTRANCE_DELAY,
   });
-  const shots = getShotsToFire({ closedIndices, ufos });
+
+  const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const shots = useMemo(() => {
+    return getShotsToFire({ closedIndices, ufos });
+  }, [closedIndices, ufos]);
+
   const withShootDurations = addShootDelays(shots);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
+
+  const yOffset = interpolate(
+    frame,
+    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
+    [0, -offsetDueToManyUfos + 540],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.inOut(Easing.ease),
+    }
+  );
 
   return (
     <AbsoluteFill
@@ -46,62 +91,70 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       <AbsoluteFill>
         <Background></Background>
       </AbsoluteFill>
-      {withShootDurations.map((p, i) => {
-        return (
-          <Sequence
-            durationInFrames={getShootDuration(shots) + p.shootDelay}
-            key={i}
-          >
-            <GlowStick
-              shootDelay={p.shootDelay}
-              targetX={p.endX}
-              targetY={p.endY}
-              duration={getShootDuration(shots)}
-            ></GlowStick>
-          </Sequence>
-        );
-      })}
-      {ufos.map((p, i) => {
-        const explosion = explosions.find((e) => e.index === i);
-        return (
-          <Sequence
-            key={i}
-            durationInFrames={
-              explosion ? explosion.explodeAfterFrames + 3 : Infinity
-            }
-          >
-            <Ufo
-              explodeAfter={explosion ? explosion.explodeAfterFrames : Infinity}
-              scale={p.scale}
-              x={p.x}
-              y={p.y}
-            ></Ufo>
-          </Sequence>
-        );
-      })}
-      {explosions.map((explosion, i) => {
-        return (
-          <Sequence
-            key={i}
-            from={explosion.explodeAfterFrames}
-            durationInFrames={POOF_DURATION}
-            layout="none"
-          >
-            <Poof
-              ufoScale={ufos[0].scale}
-              x={explosion.x}
-              y={explosion.y}
-            ></Poof>
-          </Sequence>
-        );
-      })}
-      <AbsoluteFill>
-        <Rocket shots={withShootDurations}></Rocket>
+      <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
+        {withShootDurations.map((p, i) => {
+          return (
+            <Sequence
+              showInTimeline={false}
+              durationInFrames={getShootDuration(shots) + p.shootDelay}
+              key={i}
+            >
+              <GlowStick
+                shootDelay={p.shootDelay}
+                targetX={p.endX}
+                targetY={p.endY}
+                duration={getShootDuration(shots)}
+              ></GlowStick>
+            </Sequence>
+          );
+        })}
+        {ufos.map((p, i) => {
+          const explosion = explosions.find((e) => e.index === i);
+          return (
+            <Sequence
+              showInTimeline={false}
+              key={i}
+              durationInFrames={
+                explosion ? explosion.explodeAfterFrames + 3 : Infinity
+              }
+            >
+              <Ufo
+                explodeAfter={
+                  explosion ? explosion.explodeAfterFrames : Infinity
+                }
+                scale={p.scale}
+                x={p.x}
+                y={p.y}
+                yOffset={entranceYOffset}
+              ></Ufo>
+            </Sequence>
+          );
+        })}
+        {explosions.map((explosion, i) => {
+          return (
+            <Sequence
+              showInTimeline={false}
+              key={i}
+              from={explosion.explodeAfterFrames}
+              durationInFrames={POOF_DURATION}
+              layout="none"
+            >
+              <Poof
+                ufoScale={ufos[0].scale}
+                x={explosion.x}
+                y={explosion.y}
+              ></Poof>
+            </Sequence>
+          );
+        })}
+        <AbsoluteFill>
+          <Rocket shots={withShootDurations}></Rocket>
+        </AbsoluteFill>
+        <IssueNumber
+          closedIssues={closedIssues}
+          openIssues={openIssues}
+        ></IssueNumber>
       </AbsoluteFill>
-      <IssueNumber
-        closedIssues={closedIssues}
-        openIssues={openIssues}
-      ></IssueNumber>
     </AbsoluteFill>
   );
 };

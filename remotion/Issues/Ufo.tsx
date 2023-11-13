@@ -8,12 +8,14 @@ export const Ufo = ({
   y,
   scale,
   explodeAfter,
+  yOffset,
   ...props
 }: SVGProps<SVGSVGElement> & {
   x: number;
   y: number;
   scale: number;
   explodeAfter: number;
+  yOffset: number;
 }) => {
   const actualUfoWidth = UFO_WIDTH * scale;
   const actualUfoHeight = UFO_HEIGHT * scale;
@@ -30,7 +32,7 @@ export const Ufo = ({
           height: actualUfoHeight,
           position: "absolute",
           left: x - actualUfoWidth / 2,
-          top: y - actualUfoHeight / 2,
+          top: y - actualUfoHeight / 2 + yOffset,
         }}
         viewBox="0 0 322 208"
         fill="none"
