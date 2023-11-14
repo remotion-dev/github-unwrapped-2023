@@ -1,6 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { TRANSFORM_PATH_Y } from "../../types/constants";
 import {
   ACTION_DURATION,
   complexCurvePathLength,
@@ -16,8 +17,8 @@ const getPlanetPosition = (
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
   return {
-    x: point.x - boundingBox.width / 4,
-    y: point.y - boundingBox.height / 4,
+    x: point.x - boundingBox.width / 2,
+    y: point.y - boundingBox.height / 2 + TRANSFORM_PATH_Y,
   };
 };
 
@@ -35,7 +36,7 @@ export const Planet: React.FC<{
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
-  const planetPosition = getPlanetPosition(rate, boundingBox);
+  const planetPosition = getPlanetPosition(rate, { width: 100, height: 100 });
 
   const shrinkSpring = spring({
     frame,
@@ -59,17 +60,23 @@ export const Planet: React.FC<{
         position: "absolute",
         transform: isAction
           ? `scale(${
-              1 - shrinkSpring * 0.2 + growSpring * 0.2
+              (1 - shrinkSpring * 0.2 + growSpring * 0.2) * 0.5
             }) rotate(${noise}deg)`
-          : undefined,
+          : `scale(0.5)`,
         top: planetPosition.y,
         left: planetPosition.x,
         // ...style,
       }}
     >
-      {/* <JavaPlanetSVG /> */}
-      {/* <PythonPlanetSVG /> */}
-      <PlanetSVG />
+      {/* <PlanetSVG /> */}
+      <div
+        style={{
+          background: "white",
+          height: 100,
+          width: 100,
+          borderRadius: "50%",
+        }}
+      />
     </div>
   );
 };
