@@ -12,6 +12,10 @@ jumpingNumberSchema
 } from "./JumpingNumber/JumpingNumber";
 import { Planet } from "./Planet";
 import { Poof } from "./Poof";
+import {
+SevenSegment,
+sevenSegmentSchema
+} from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
 
@@ -124,6 +128,16 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id={"SevenSegment"}
+        component={SevenSegment}
+        durationInFrames={40}
+        fps={VIDEO_FPS}
+        schema={sevenSegmentSchema}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{ num: 43, fontSize: 100 }}
       />
     </>
   );
