@@ -1,20 +1,20 @@
-import { Composition,Folder } from "remotion";
+import { Composition, Folder } from "remotion";
 import {
-defaultMyCompProps,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { Issues, issuesSchema } from "./Issues";
 import {
-JumpingNumberDemo,
-jumpingNumberSchema
+  JumpingNumberDemo,
+  jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { Planet } from "./Planet";
 import { Poof } from "./Poof";
 import {
-SevenSegment,
-sevenSegmentSchema
+  SevenSegment,
+  sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
 import { TopLanguages } from "./TopLanguages";
@@ -137,7 +137,7 @@ export const RemotionRoot: React.FC = () => {
         schema={sevenSegmentSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ num: 43, fontSize: 100 }}
+        defaultProps={{ num: 15, fontSize: 100, max: null }}
       />
     </>
   );

@@ -161,11 +161,11 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         <AbsoluteFill>
           <Rocket shots={withShootDurations}></Rocket>
         </AbsoluteFill>
-        <IssueNumber
-          closedIssues={closedIssues}
-          openIssues={openIssues}
-        ></IssueNumber>
       </AbsoluteFill>
+      <IssueNumber
+        closedIssues={closedIssues}
+        openIssues={openIssues}
+      ></IssueNumber>
     </AbsoluteFill>
   );
 };
