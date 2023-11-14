@@ -3,12 +3,12 @@ import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_Y } from "../../types/constants";
 import {
-  ACTION_DURATION,
   complexCurvePathLength,
   Language,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";
+import { getActionFrames } from "./Rocket";
 
 const getPlanetPosition = (
   rate: number,
@@ -23,20 +23,23 @@ const getPlanetPosition = (
 };
 
 export const Planet: React.FC<{
-  actionFrame: number;
-  rate: number;
+  actionIndex: number;
+  actionPositions: number[];
   language: Language;
   style?: React.CSSProperties;
-}> = ({ actionFrame, style, rate, language }) => {
+}> = ({ actionIndex, actionPositions, language }) => {
+  const actionPosition = actionPositions[actionIndex];
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const noise = noise2D("seed", frame / 10, 1) * 10;
+  const actionFrames = getActionFrames(actionPositions);
   const isAction =
-    frame >= actionFrame && frame < actionFrame + ACTION_DURATION;
+    actionFrames[actionIndex][0] <= frame &&
+    frame < actionFrames[actionIndex][1];
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
-  const planetPosition = getPlanetPosition(rate, { width: 100, height: 100 });
+  const planetPosition = getPlanetPosition(actionPosition, boundingBox);
 
   const shrinkSpring = spring({
     frame,
@@ -45,13 +48,13 @@ export const Planet: React.FC<{
       damping: 14,
     },
     durationInFrames: 20,
-    delay: actionFrame,
+    delay: actionFrames[actionIndex][0],
   });
 
   const growSpring = spring({
     frame,
     fps,
-    delay: actionFrame + 2,
+    delay: actionFrames[actionIndex][0],
   });
 
   return (
@@ -68,15 +71,15 @@ export const Planet: React.FC<{
         // ...style,
       }}
     >
-      {/* <PlanetSVG /> */}
-      <div
+      <PlanetSVG />
+      {/* <div
         style={{
           background: "white",
           height: 100,
           width: 100,
           borderRadius: "50%",
         }}
-      />
+      /> */}
     </div>
   );
 };

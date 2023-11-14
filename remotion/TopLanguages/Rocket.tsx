@@ -1,36 +1,53 @@
 import { getPointAtLength, getTangentAtLength } from "@remotion/paths";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { RATE_DECREASE, TRANSFORM_PATH_Y } from "../../types/constants";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  RATE_DECREASE,
+  TOP_LANGUAGES_DURATION,
+  TRANSFORM_PATH_Y,
+} from "../../types/constants";
 import {
   ACTION_DURATION,
   complexCurvePathLength,
   newPath,
-  PLANET_1_ACTION_FRAME,
+  PLANET_POSITIONS,
 } from "./constants";
 import { RocketSVG, TL_ROCKET_HEIGHT, TL_ROCKET_WIDTH } from "./RocketSVG";
 
+export const getActionFrames = (actionLocations: number[]) => {
+  return (
+    actionLocations
+      //sort ascending
+      .sort((a, b) => a - b)
+      .map((percentage, index) => {
+        // index must be added because the duration from every previous action should be considered
+        const actionStartFrame =
+          Math.floor(percentage * TOP_LANGUAGES_DURATION) - ACTION_DURATION / 2;
+        const actionEndFrame = actionStartFrame + ACTION_DURATION;
+        // start frame is included in action time, actionEndFrame is not
+        return [actionStartFrame, actionEndFrame];
+      })
+  );
+};
+
 const getRate = ({
   frame,
-  stopAtFrames,
+  actionLocations,
 }: {
   frame: number;
-  stopAtFrames: number[];
+  actionLocations: number[];
 }) => {
-  // sort descending
-  stopAtFrames = stopAtFrames.sort((a, b) => b - a);
-  const timesStopped = stopAtFrames.filter(
-    (f, index) => f + ACTION_DURATION * (index + 1) <= frame
-  ).length;
-  const isStopped = stopAtFrames.find(
-    (f) => frame >= f && frame < f + ACTION_DURATION
+  // [ [25, 30], [45,50] ]
+  const actionFrames = getActionFrames(actionLocations.sort((a, b) => a - b));
+
+  return interpolate(
+    frame,
+    [0, ...actionFrames.flat(), TOP_LANGUAGES_DURATION],
+    [0, ...actionLocations.flatMap((l) => [l, l]), 1]
   );
-
-  const f = (isStopped ? isStopped : frame) - timesStopped * ACTION_DURATION;
-
-  return f * RATE_DECREASE;
 };
 
 export const getRates = (stopAtFrames: number[]) => {
+  // sort descending
   stopAtFrames = stopAtFrames.sort((a, b) => a - b);
   return stopAtFrames.map((f, i) => (f - i * ACTION_DURATION) * RATE_DECREASE);
 };
@@ -39,11 +56,7 @@ export const Rocket: React.FC<{}> = () => {
   const frame = useCurrentFrame();
   const rate = getRate({
     frame,
-    stopAtFrames: [
-      PLANET_1_ACTION_FRAME,
-      // PLANET_2_ACTION_FRAME,
-      // PLANET_3_ACTION_FRAME,
-    ],
+    actionLocations: PLANET_POSITIONS,
   });
 
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
@@ -56,8 +69,6 @@ export const Rocket: React.FC<{}> = () => {
   const rocketY = point.y - TL_ROCKET_HEIGHT / 2;
 
   return (
-    // todo: uncomment
-    // <AbsoluteFill style={{ transform: "translateY(160px)" }}>
     <AbsoluteFill style={{ transform: `translateY(${TRANSFORM_PATH_Y}px)` }}>
       <AbsoluteFill style={{}}>
         <svg
@@ -66,7 +77,7 @@ export const Rocket: React.FC<{}> = () => {
           fill="none"
           overflow="visible"
         >
-          <path d={newPath} stroke="white" strokeWidth="3" />
+          <path d={newPath} stroke="white" strokeWidth="0" />
         </svg>
       </AbsoluteFill>
       <RocketSVG
