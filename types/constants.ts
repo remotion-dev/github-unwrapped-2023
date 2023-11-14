@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 export const COMP_NAME = "MyComp";
 
 export const CompositionProps = z.object({
@@ -13,3 +14,6 @@ export const DURATION_IN_FRAMES = 200;
 export const VIDEO_WIDTH = 1080;
 export const VIDEO_HEIGHT = 1080;
 export const VIDEO_FPS = 30;
+export const TOP_LANGUAGES_DURATION = 20 * 30;
+
+export const RATE_DECREASE = 1 / TOP_LANGUAGES_DURATION;

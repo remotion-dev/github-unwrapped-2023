@@ -1,6 +1,7 @@
 import { Composition, Folder } from "remotion";
 import {
   defaultMyCompProps,
+  TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
@@ -11,7 +12,6 @@ import {
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { WholePaths } from "./Paths";
-import { Planet } from "./Planet";
 import { Poof } from "./Poof";
 import {
   SevenSegment,
@@ -85,6 +85,16 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Composition
+        id={"Issues"}
+        component={Issues}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        schema={issuesSchema}
+        defaultProps={{ closedIssues: 75, openIssues: 0 }}
+      />
+      {/* <Composition
         id={"TopLanguages"}
         component={TopLanguages}
         durationInFrames={12 * 30}
@@ -92,7 +102,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
-      />
+      /> */}
       <Composition
         id={"Poof"}
         component={Poof}
@@ -123,12 +133,12 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
       <Composition
-        id={"JavaPlanet"}
-        component={Planet}
-        durationInFrames={40}
+        id={"TopLanguages"}
+        component={TopLanguages}
+        durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
+        width={VIDEO_WIDTH * 2}
+        height={VIDEO_HEIGHT * 2}
       />
       <Composition
         id={"SevenSegment"}

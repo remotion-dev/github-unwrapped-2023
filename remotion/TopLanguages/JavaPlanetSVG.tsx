@@ -1,18 +1,13 @@
-import { noise2D } from "@remotion/noise";
 import { SVGProps } from "react";
-import {
-  AbsoluteFill,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
 
-const JavaPlanet = (props: SVGProps<SVGSVGElement>) => (
+export const JavaPlanetBoundingBox = {
+  width: 513,
+  height: 333,
+};
+
+export const JavaPlanetSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    style={{
-      width: 513,
-      height: 333,
-    }}
+    style={JavaPlanetBoundingBox}
     viewBox="0 0 513 333"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -1068,43 +1063,3 @@ const JavaPlanet = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export const Planet: React.FC<{}> = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const noise = noise2D("seed", frame / 10, 1) * 10;
-
-  const spr = spring({
-    frame,
-    fps,
-    config: {
-      damping: 14,
-    },
-    durationInFrames: 20,
-  });
-
-  const spr2 = spring({
-    frame,
-    fps,
-    delay: 20,
-  });
-
-  return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        justifyItems: "center",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          transform: `scale(${1 - spr * 0.2 + spr2 * 0.2}) rotate(${noise}deg)`,
-        }}
-      >
-        <JavaPlanet />
-      </div>
-    </AbsoluteFill>
-  );
-};
