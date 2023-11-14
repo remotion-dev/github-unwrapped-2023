@@ -13,12 +13,18 @@ export const makeRandomPath = (seed: string | number) => {
   const points = new Array(numberOfItems).fill(1).map((a, i) => {
     const progress = interpolate(i, [0, numberOfItems - 1], [0, 1]);
 
-    const x = (noise2D(seed, i / 50, 0) * width) / 2;
+    const x = (noise2D(seed, i / 30, 0) * width) / 2;
+    const loweredX = interpolate(progress, [0.6, 0.9], [x, 0], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
 
-    return {
+    const st = {
       y: interpolate(progress, [0, 1], [start.y, end.y]),
-      x: width / 2 + x,
+      x: interpolate(progress, [0, 1], [start.x, end.x]) + loweredX,
     };
+
+    return st;
   });
 
   const p = points
