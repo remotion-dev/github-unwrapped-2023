@@ -31,8 +31,8 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
               display: "inline-block",
               height: fontSize,
               textAlign: "right",
-              marginLeft: -fontSize / 20,
-              marginRight: -fontSize / 20,
+              marginLeft: -fontSize / 15,
+              marginRight: -fontSize / 15,
               position: "relative",
             }}
           >
