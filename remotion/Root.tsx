@@ -10,6 +10,7 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
+import { WholePaths } from "./Paths";
 import { Planet } from "./Planet";
 import { Poof } from "./Poof";
 import {
@@ -139,6 +140,17 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{ num: 15, fontSize: 100, max: null }}
       />
+      <Folder name="Paths">
+        <Composition
+          id="WholePaths"
+          component={WholePaths}
+          fps={30}
+          durationInFrames={120}
+          // eslint-disable-next-line @remotion/even-dimensions
+          height={4275}
+          width={1080}
+        ></Composition>
+      </Folder>
     </>
   );
 };
