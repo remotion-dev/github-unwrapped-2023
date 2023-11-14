@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { makeRandomPath } from "./make-random-path";
 import { Path1 } from "./Path1";
 
 export const WholePaths: React.FC = () => {
@@ -12,6 +13,11 @@ export const WholePaths: React.FC = () => {
 
   return (
     <AbsoluteFill>
+      <Path1
+        progress={evolution}
+        d={makeRandomPath("seed")}
+        stroke="yellow"
+      ></Path1>
       <Path1
         progress={evolution}
         d={
