@@ -42,8 +42,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(690.349 273.13) scale(742.461 742.461)"
       >
-        <stop stop-color="#B7A6D3" />
-        <stop offset="1" stop-color="#594A87" />
+        <stop stopColor="#B7A6D3" />
+        <stop offset="1" stopColor="#594A87" />
       </radialGradient>
       <radialGradient
         id="paint1_radial_138_38"
@@ -53,8 +53,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(703.248 825.236) scale(165.461 165.461)"
       >
-        <stop offset="0.6378" stop-color="#594A87" />
-        <stop offset="1" stop-color="#B7A6D3" />
+        <stop offset="0.6378" stopColor="#594A87" />
+        <stop offset="1" stopColor="#B7A6D3" />
       </radialGradient>
       <radialGradient
         id="paint2_radial_138_38"
@@ -64,8 +64,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(340.968 599.591) scale(141.293 141.293)"
       >
-        <stop offset="0.2965" stop-color="#594A87" />
-        <stop offset="1" stop-color="#B7A6D3" />
+        <stop offset="0.2965" stopColor="#594A87" />
+        <stop offset="1" stopColor="#B7A6D3" />
       </radialGradient>
       <radialGradient
         id="paint3_radial_138_38"
@@ -75,8 +75,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(87.7619 14.6886) scale(54.4351 54.4351)"
       >
-        <stop offset="0.5569" stop-color="#594A87" />
-        <stop offset="1" stop-color="#B7A6D3" />
+        <stop offset="0.5569" stopColor="#594A87" />
+        <stop offset="1" stopColor="#B7A6D3" />
       </radialGradient>
       <radialGradient
         id="paint4_radial_138_38"
@@ -86,8 +86,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(283.09 410.723) scale(72.2945 72.2946)"
       >
-        <stop offset="0.2933" stop-color="#594A87" />
-        <stop offset="1" stop-color="#B7A6D3" />
+        <stop offset="0.2933" stopColor="#594A87" />
+        <stop offset="1" stopColor="#B7A6D3" />
       </radialGradient>
       <radialGradient
         id="paint5_radial_138_38"
@@ -97,8 +97,8 @@ export const Cloud2SVG = (props: SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(108.052 22.4337) scale(60.3198 60.3199)"
       >
-        <stop offset="0.2967" stop-color="#594A87" />
-        <stop offset="1" stop-color="#B7A6D3" />
+        <stop offset="0.2967" stopColor="#594A87" />
+        <stop offset="1" stopColor="#B7A6D3" />
       </radialGradient>
     </defs>
   </svg>

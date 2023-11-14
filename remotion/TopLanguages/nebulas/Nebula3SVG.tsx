@@ -38,8 +38,8 @@ export const Nebula3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="552.86"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_138_166"
@@ -49,8 +49,8 @@ export const Nebula3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="1568.09"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0.3373" stop-color="#765B80" />
-        <stop offset="1" stop-color="#ABEAC6" />
+        <stop offset="0.3373" stopColor="#765B80" />
+        <stop offset="1" stopColor="#ABEAC6" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_138_166"
@@ -60,8 +60,8 @@ export const Nebula3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="993.021"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_138_166"
@@ -71,8 +71,8 @@ export const Nebula3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="922.545"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
       <linearGradient
         id="paint4_linear_138_166"
@@ -82,8 +82,8 @@ export const Nebula3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="964.391"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
     </defs>
   </svg>

@@ -30,8 +30,8 @@ export const Cloud3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="155.776"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_138_71"
@@ -41,8 +41,8 @@ export const Cloud3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="20.6335"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_138_71"
@@ -52,8 +52,8 @@ export const Cloud3SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="33.778"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#3B5482" />
-        <stop offset="1" stop-color="#8A56A0" />
+        <stop stopColor="#3B5482" />
+        <stop offset="1" stopColor="#8A56A0" />
       </linearGradient>
     </defs>
   </svg>

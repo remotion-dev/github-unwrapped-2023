@@ -26,8 +26,8 @@ export const Nebula2SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="635.762"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#597A9C" />
-        <stop offset="0.9994" stop-color="#B0EEC4" />
+        <stop stopColor="#597A9C" />
+        <stop offset="0.9994" stopColor="#B0EEC4" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_138_136"
@@ -37,8 +37,8 @@ export const Nebula2SVG = (props: SVGProps<SVGSVGElement>) => (
         y2="971.745"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#597A9C" />
-        <stop offset="0.9994" stop-color="#B0EEC4" />
+        <stop stopColor="#597A9C" />
+        <stop offset="0.9994" stopColor="#B0EEC4" />
       </linearGradient>
     </defs>
   </svg>
