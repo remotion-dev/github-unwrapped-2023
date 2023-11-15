@@ -16,6 +16,8 @@ export const MergeStat: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "column",
+        textAlign: "center",
       }}
     >
       <div
@@ -23,6 +25,7 @@ export const MergeStat: React.FC = () => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
+          marginTop: 10,
         }}
       >
         <svg
@@ -49,6 +52,18 @@ export const MergeStat: React.FC = () => {
         >
           50
         </div>
+      </div>
+      <div
+        style={{
+          fontSize: 25,
+          fontFamily: "Mona Sans",
+          fontWeight: "800",
+          color: "#3B276C",
+        }}
+      >
+        pull requests
+        <br />
+        merged
       </div>
     </div>
   );
