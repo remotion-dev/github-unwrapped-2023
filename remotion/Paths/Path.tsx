@@ -7,7 +7,8 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { PATHS_COMP_HEIGHT } from "./Paths";
+
+export const PATHS_COMP_HEIGHT = 4275;
 
 export const Path: React.FC<{
   d: string;

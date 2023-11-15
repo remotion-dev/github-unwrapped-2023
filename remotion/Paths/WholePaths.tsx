@@ -45,9 +45,9 @@ export const WholePaths: React.FC<{
       <div
         style={{
           backgroundColor: "white",
-          height: 150,
-          width: 150,
-          borderRadius: 100,
+          height: 250,
+          width: 250,
+          borderRadius: "50%",
           position: "absolute",
           left: PATH_TARGET.x,
           top: PATH_TARGET.y,

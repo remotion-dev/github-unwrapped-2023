@@ -1,6 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { Easing, Internals, interpolate, random } from "remotion";
-import { PATHS_COMP_HEIGHT } from "./Paths";
+import { PATHS_COMP_HEIGHT } from "./Path";
 
 const width = 1080;
 
@@ -18,7 +18,7 @@ function bellCurve(x: number): number {
 
 const PATH_START = {
   x: width / 2,
-  y: PATHS_COMP_HEIGHT,
+  y: PATHS_COMP_HEIGHT + 100,
 };
 
 export const PATH_TARGET = {
@@ -27,7 +27,7 @@ export const PATH_TARGET = {
 };
 
 const getX = (seed: string | number, noiseRatio: number) => {
-  return (noise2D(seed, noiseRatio, random(seed)) * width) / 2;
+  return (noise2D(seed, noiseRatio, random(seed) * noiseRatio) * width) / 2;
 };
 
 const getNoiseRatio = ({
@@ -66,7 +66,7 @@ const shouldBendInwards = ({
   const noiseRatio = getNoiseRatio({ i, itemsToOffset, numberOfItems });
   const x = getX(seed, noiseRatio);
 
-  return Math.abs(x) < 100;
+  return Math.abs(x) < 150;
 };
 
 export const makeRandomPath = (seed: string | number) => {

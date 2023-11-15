@@ -1,8 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { PATHS_COMP_HEIGHT } from "./Path";
 import { WholePaths } from "./WholePaths";
-
-export const PATHS_COMP_HEIGHT = 4275;
 
 const endHeight = 1080;
 
@@ -22,6 +21,8 @@ export const Paths: React.FC = () => {
         height: PATHS_COMP_HEIGHT,
         width: 1080,
         marginTop: -offset,
+        background:
+          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
       <WholePaths extraPaths={15}></WholePaths>;
