@@ -1,7 +1,9 @@
 import React from "react";
 import { PATH_TARGET } from "./make-random-path";
 
-export const MergeStat: React.FC = () => {
+export const MergeStat: React.FC<{
+  num: number;
+}> = ({ num }) => {
   return (
     <div
       style={{
@@ -48,9 +50,10 @@ export const MergeStat: React.FC = () => {
             fontWeight: "800",
             marginLeft: 10,
             color: "#3B276C",
+            fontVariantNumeric: "tabular-nums",
           }}
         >
-          50
+          {num}
         </div>
       </div>
       <div

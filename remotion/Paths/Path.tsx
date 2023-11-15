@@ -9,6 +9,7 @@ import {
 } from "remotion";
 
 export const PATHS_COMP_HEIGHT = 4275;
+export const PATH_ANIMATION_DURATION = 200;
 
 export const Path: React.FC<{
   d: string;
@@ -17,11 +18,16 @@ export const Path: React.FC<{
 }> = ({ d, stroke, delay }) => {
   const frame = useCurrentFrame();
 
-  const progress = interpolate(frame, [0 + delay, 200 + delay], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.ease),
-  });
+  const progress = interpolate(
+    frame,
+    [0 + delay, PATH_ANIMATION_DURATION + delay],
+    [0, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.ease),
+    }
+  );
   const { strokeDasharray, strokeDashoffset } = evolvePath(progress, d);
   const length = getLength(d);
   const pointAtLength = getPointAtLength(d, progress * length);

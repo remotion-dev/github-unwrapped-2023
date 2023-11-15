@@ -1,12 +1,18 @@
 import React, { useMemo } from "react";
-import { AbsoluteFill, interpolateColors, random } from "remotion";
+import {
+  AbsoluteFill,
+  interpolateColors,
+  random,
+  useCurrentFrame,
+} from "remotion";
 import { makeRandomPath } from "./make-random-path";
 import { MergeStat } from "./MergeStat";
-import { Path } from "./Path";
+import { Path, PATH_ANIMATION_DURATION } from "./Path";
 
 export const WholePaths: React.FC<{
   extraPaths: number;
 }> = ({ extraPaths }) => {
+  const frame = useCurrentFrame();
   const paths = useMemo(() => {
     return Array.from({ length: extraPaths }).map((_, i) => {
       const seed = `seed${random(i)}`;
@@ -31,6 +37,10 @@ export const WholePaths: React.FC<{
     });
   }, [extraPaths]);
 
+  const merged = paths.filter((p) => {
+    return frame >= p.delay + PATH_ANIMATION_DURATION - 30 ? p : null;
+  }).length;
+
   return (
     <AbsoluteFill>
       {paths.map((path, i) => {
@@ -43,7 +53,7 @@ export const WholePaths: React.FC<{
           ></Path>
         );
       })}
-      <MergeStat></MergeStat>
+      <MergeStat num={merged}></MergeStat>
     </AbsoluteFill>
   );
 };
