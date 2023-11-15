@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, interpolateColors, random } from "remotion";
-import { makeRandomPath, PATH_TARGET } from "./make-random-path";
+import { makeRandomPath } from "./make-random-path";
+import { MergeStat } from "./MergeStat";
 import { Path } from "./Path";
 
 export const WholePaths: React.FC<{
@@ -42,18 +43,7 @@ export const WholePaths: React.FC<{
           ></Path>
         );
       })}
-      <div
-        style={{
-          backgroundColor: "white",
-          height: 250,
-          width: 250,
-          borderRadius: "50%",
-          position: "absolute",
-          left: PATH_TARGET.x,
-          top: PATH_TARGET.y,
-          transform: "translate(-50%, -50%)",
-        }}
-      ></div>
+      <MergeStat></MergeStat>
     </AbsoluteFill>
   );
 };
