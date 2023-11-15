@@ -11,7 +11,7 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { Paths } from "./Paths/Paths";
+import { Paths, PATHS_COMP_HEIGHT } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import {
@@ -158,10 +158,9 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           durationInFrames={250}
           // eslint-disable-next-line @remotion/even-dimensions
-          height={4275}
+          height={PATHS_COMP_HEIGHT}
           width={1080}
           defaultProps={{
-            evolution: null,
             extraPaths: 8,
           }}
         ></Composition>

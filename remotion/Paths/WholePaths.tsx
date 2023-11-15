@@ -1,25 +1,59 @@
-import React from "react";
-import { AbsoluteFill, Sequence } from "remotion";
-import { makeRandomPath } from "./make-random-path";
-import { Path1 } from "./Path1";
+import React, { useMemo } from "react";
+import { AbsoluteFill, interpolateColors, random } from "remotion";
+import { makeRandomPath, PATH_TARGET } from "./make-random-path";
+import { Path } from "./Path";
 
 export const WholePaths: React.FC<{
-  evolution: number | null;
   extraPaths: number;
-}> = ({ evolution: _evolution, extraPaths }) => {
+}> = ({ extraPaths }) => {
+  const paths = useMemo(() => {
+    return Array.from({ length: extraPaths }).map((_, i) => {
+      const seed = `seed${random(i)}`;
+
+      return {
+        id: seed,
+        d: makeRandomPath(`seed${random(i)}`),
+        delay: random(seed + "delay") * 25,
+        stroke: interpolateColors(
+          random(seed + "x"),
+          [-1, 2],
+          [
+            interpolateColors(
+              random(seed + "2"),
+              [0, 1],
+              ["#7E52E4", "#3A2A73"]
+            ),
+            "black",
+          ]
+        ),
+      };
+    });
+  }, [extraPaths]);
+
   return (
     <AbsoluteFill>
-      {Array.from({ length: extraPaths }).map((_, i) => {
+      {paths.map((path, i) => {
         return (
-          <Sequence key={i}>
-            <Path1
-              key={i}
-              d={makeRandomPath(`seed${i * 43234}`)}
-              stroke="rgba(255, 255, 255, 0.2)"
-            ></Path1>
-          </Sequence>
+          <Path
+            key={path.id}
+            d={path.d}
+            delay={path.delay}
+            stroke={path.stroke}
+          ></Path>
         );
       })}
+      <div
+        style={{
+          backgroundColor: "white",
+          height: 150,
+          width: 150,
+          borderRadius: 100,
+          position: "absolute",
+          left: PATH_TARGET.x,
+          top: PATH_TARGET.y,
+          transform: "translate(-50%, -50%)",
+        }}
+      ></div>
     </AbsoluteFill>
   );
 };
