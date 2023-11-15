@@ -6,8 +6,8 @@ export const MergeStat: React.FC = () => {
     <div
       style={{
         backgroundColor: "white",
-        height: 250,
-        width: 250,
+        height: 350,
+        width: 350,
         borderRadius: "50%",
         position: "absolute",
         left: PATH_TARGET.x,
@@ -33,7 +33,7 @@ export const MergeStat: React.FC = () => {
           height="1em"
           viewBox="0 0 448 512"
           style={{
-            height: 55,
+            height: 80,
           }}
         >
           <path
@@ -43,7 +43,7 @@ export const MergeStat: React.FC = () => {
         </svg>
         <div
           style={{
-            fontSize: 70,
+            fontSize: 110,
             fontFamily: "Mona Sans",
             fontWeight: "800",
             marginLeft: 10,
@@ -55,7 +55,7 @@ export const MergeStat: React.FC = () => {
       </div>
       <div
         style={{
-          fontSize: 25,
+          fontSize: 30,
           fontFamily: "Mona Sans",
           fontWeight: "800",
           color: "#3B276C",
