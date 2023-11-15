@@ -1,11 +1,17 @@
 import { evolvePath } from "@remotion/paths";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 
 export const Path1: React.FC<{
-  progress: number;
   d: string;
   stroke: string;
-}> = ({ progress, d, stroke }) => {
+}> = ({ d, stroke }) => {
+  const frame = useCurrentFrame();
+
+  const progress = interpolate(frame, [0, 100], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.ease),
+  });
   const { strokeDasharray, strokeDashoffset } = evolvePath(progress, d);
 
   return (

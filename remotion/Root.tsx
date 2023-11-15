@@ -11,7 +11,8 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { WholePaths } from "./Paths";
+import { Paths } from "./Paths/Paths";
+import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import {
   SevenSegment,
@@ -158,6 +159,19 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={120}
           // eslint-disable-next-line @remotion/even-dimensions
           height={4275}
+          width={1080}
+          defaultProps={{
+            evolution: null,
+            extraPaths: 0,
+          }}
+        ></Composition>
+        <Composition
+          id="Paths"
+          component={Paths}
+          fps={30}
+          durationInFrames={240}
+          // eslint-disable-next-line @remotion/even-dimensions
+          height={1080}
           width={1080}
         ></Composition>
       </Folder>
