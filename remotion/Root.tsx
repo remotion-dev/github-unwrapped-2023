@@ -156,7 +156,7 @@ export const RemotionRoot: React.FC = () => {
           id="WholePaths"
           component={WholePaths}
           fps={30}
-          durationInFrames={200}
+          durationInFrames={250}
           // eslint-disable-next-line @remotion/even-dimensions
           height={4275}
           width={1080}

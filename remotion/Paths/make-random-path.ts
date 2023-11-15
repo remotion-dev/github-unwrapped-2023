@@ -1,5 +1,5 @@
 import { noise2D } from "@remotion/noise";
-import { interpolate, random } from "remotion";
+import { Internals, interpolate, random } from "remotion";
 
 const width = 1080;
 
@@ -28,6 +28,8 @@ export const makeRandomPath = (seed: string | number) => {
 
   const numberOfItems = 70;
 
+  let bendInwards = false;
+
   const points = new Array(numberOfItems).fill(1).map((a, i) => {
     const progress = interpolate(i, [0, numberOfItems - 1], [0, 1]);
 
@@ -44,6 +46,12 @@ export const makeRandomPath = (seed: string | number) => {
       (numberOfItems - 10);
 
     const x = (noise2D(seed, noiseRatio, 0) * width) / 2;
+    if (
+      i === Math.round(numberOfItems * 0.7) &&
+      Math.abs(x - width / 2) < 220
+    ) {
+      bendInwards = true;
+    }
 
     const normalY = interpolate(
       progress,
@@ -51,13 +59,20 @@ export const makeRandomPath = (seed: string | number) => {
       [start.y, end.y - random(seed) * 200 - 50]
     );
 
+    const bentInwardsX = bendInwards
+      ? interpolate(progress, [0.7, 0.9], [x, 0], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
+      : x;
+
     const st = {
       y: normalY,
       x:
         interpolate(progress, [0, 1], [start.x, end.x], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
-        }) + x,
+        }) + bentInwardsX,
     };
 
     return st;
@@ -66,7 +81,7 @@ export const makeRandomPath = (seed: string | number) => {
   const lastPoint = points[points.length - 1];
   const signedDistanceToMiddle = lastPoint.x - width / 2;
   const distanceToMiddle = Math.abs(signedDistanceToMiddle);
-  const morePointsToAdd = Math.round(distanceToMiddle / 5);
+  const morePointsToAdd = Math.floor(distanceToMiddle / 10);
   const drawArcToMiddle = new Array(morePointsToAdd).fill(true).map((_, i) => {
     const angle = (i / morePointsToAdd) * Math.PI;
     const y = lastPoint.y - (Math.sin(angle) * distanceToMiddle) / 2;
@@ -79,7 +94,12 @@ export const makeRandomPath = (seed: string | number) => {
     return { x, y };
   });
 
-  const p = [...points, ...drawArcToMiddle, end]
+  const p = [
+    ...points,
+    ...drawArcToMiddle,
+    morePointsToAdd === 0 ? undefined : end,
+  ]
+    .filter(Internals.truthy)
     .map((p) => {
       if (p === points[0]) {
         return `M${p.x} ${p.y}`;

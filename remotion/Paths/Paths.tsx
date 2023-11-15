@@ -3,17 +3,17 @@ import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { WholePaths } from "./WholePaths";
 
 const initialHeight = 4275;
-const initialWidth = 1080;
+const endHeight = 1080;
 
 export const Paths: React.FC = () => {
-  const initialOffset = initialHeight - initialWidth;
+  const initialOffset = initialHeight - endHeight;
   const frame = useCurrentFrame();
-  const evolution = interpolate(frame, [0, 100], [0, 1], {
+  const evolution = interpolate(frame, [0, 200], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.ease),
   });
-  const offset = interpolate(evolution, [0, 1], [initialOffset, 0], {});
+  const offset = interpolate(evolution, [0, 1], [initialOffset, -450], {});
 
   return (
     <AbsoluteFill
