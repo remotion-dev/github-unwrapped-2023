@@ -11,10 +11,10 @@ export const WholePaths: React.FC<{
     <AbsoluteFill>
       {Array.from({ length: extraPaths }).map((_, i) => {
         return (
-          <Sequence from={i * 10 + 10} key={i}>
+          <Sequence from={i * 2 + 10} key={i}>
             <Path1
               key={i}
-              d={makeRandomPath(`seed${i}`)}
+              d={makeRandomPath(`seed${i * 43234}`)}
               stroke="white"
             ></Path1>
           </Sequence>

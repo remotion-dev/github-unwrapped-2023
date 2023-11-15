@@ -23,7 +23,7 @@ export const Paths: React.FC = () => {
         marginTop: -offset,
       }}
     >
-      <WholePaths extraPaths={8} evolution={evolution}></WholePaths>;
+      <WholePaths extraPaths={15} evolution={evolution}></WholePaths>;
     </AbsoluteFill>
   );
 };
