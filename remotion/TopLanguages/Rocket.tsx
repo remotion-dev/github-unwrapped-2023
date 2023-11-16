@@ -3,6 +3,7 @@ import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import {
   RATE_DECREASE,
   TOP_LANGUAGES_DURATION,
+  TRANSFORM_PATH_X,
   TRANSFORM_PATH_Y,
 } from "../../types/constants";
 import {
@@ -33,7 +34,7 @@ export const getActionFrames = (actionLocations: number[]) => {
   );
 };
 
-const getRate = ({
+export const getRate = ({
   frame,
   actionLocations,
 }: {
@@ -56,10 +57,11 @@ export const getRates = (stopAtFrames: number[]) => {
   return stopAtFrames.map((f, i) => (f - i * ACTION_DURATION) * RATE_DECREASE);
 };
 
-export const Rocket: React.FC<{}> = () => {
+export const Rocket: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
   const frame = useCurrentFrame();
+  const frameWithOffset = frame + frameOffset;
   const rate = getRate({
-    frame,
+    frame: frameWithOffset,
     actionLocations: PLANET_POSITIONS,
   });
 
@@ -73,7 +75,11 @@ export const Rocket: React.FC<{}> = () => {
   const rocketY = point.y - TL_ROCKET_HEIGHT / 2;
 
   return (
-    <AbsoluteFill style={{ transform: `translateY(${TRANSFORM_PATH_Y}px)` }}>
+    <AbsoluteFill
+      style={{
+        transform: `translateY(${TRANSFORM_PATH_Y}px) translateX(${TRANSFORM_PATH_X})`,
+      }}
+    >
       <AbsoluteFill style={{}}>
         <svg
           style={{ width: 2160, height: 2160 }}
@@ -81,7 +87,7 @@ export const Rocket: React.FC<{}> = () => {
           fill="none"
           overflow="visible"
         >
-          <path d={newPath} stroke="white" strokeWidth="0" />
+          <path d={newPath} stroke="white" strokeWidth="3" />
         </svg>
       </AbsoluteFill>
       <NewRocketSVG

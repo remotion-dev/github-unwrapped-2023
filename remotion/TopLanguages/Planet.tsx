@@ -1,7 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { TRANSFORM_PATH_Y } from "../../types/constants";
+import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import {
   complexCurvePathLength,
   LanguageEnumType,
@@ -17,7 +17,7 @@ const getPlanetPosition = (
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
   return {
-    x: point.x - boundingBox.width / 2,
+    x: point.x - boundingBox.width / 2 + TRANSFORM_PATH_X,
     y: point.y - boundingBox.height / 2 + TRANSFORM_PATH_Y,
   };
 };
@@ -28,22 +28,24 @@ export const Planet: React.FC<{
   language: LanguageEnumType;
   style?: React.CSSProperties;
   isMain: boolean;
-}> = ({ actionIndex, actionPositions, language, isMain }) => {
+  frameOffset: number;
+}> = ({ actionIndex, actionPositions, language, isMain, frameOffset }) => {
   const actionPosition = actionPositions[actionIndex];
   const frame = useCurrentFrame();
+  const frameWithOffset = frame + frameOffset;
   const { fps } = useVideoConfig();
-  const noise = noise2D("seed", frame / 10, 1) * 10;
+  const noise = noise2D("seed", frameWithOffset / 10, 1) * 10;
   const actionFrames = getActionFrames(actionPositions);
   const isAction =
-    actionFrames[actionIndex][0] <= frame &&
-    frame < actionFrames[actionIndex][1];
+    actionFrames[actionIndex][0] <= frameWithOffset &&
+    frameWithOffset < actionFrames[actionIndex][1];
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
   const planetPosition = getPlanetPosition(actionPosition, boundingBox);
 
   const shrinkSpring = spring({
-    frame,
+    frame: frameWithOffset,
     fps,
     config: {
       damping: 14,
@@ -53,7 +55,7 @@ export const Planet: React.FC<{
   });
 
   const growSpring = spring({
-    frame,
+    frame: frameWithOffset,
     fps,
     delay: actionFrames[actionIndex][0],
   });
