@@ -1,12 +1,15 @@
 import { getBoundingBox, getLength, scalePath } from "@remotion/paths";
 import { SVGProps } from "react";
 import { z } from "zod";
-import { JavaPlanetBoundingBox, JavaPlanetSVG } from "./JavaPlanetSVG";
+import { JavaPlanetBoundingBox, JavaPlanetSVG } from "./svgs/JavaPlanetSVG";
 import {
   JavaScriptPlanetBoundingBox,
   JavaScriptPlanetSVG,
-} from "./JavaScriptPlanetSVG";
-import { PythonPlanetBoundingBox, PythonPlanetSVG } from "./PythonPlanetSVG";
+} from "./svgs/JavaScriptPlanetSVG";
+import {
+  PythonPlanetBoundingBox,
+  PythonPlanetSVG,
+} from "./svgs/PythonPlanetSVG";
 
 export const ACTION_DURATION = 60;
 

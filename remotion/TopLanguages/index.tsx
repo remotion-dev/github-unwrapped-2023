@@ -4,7 +4,7 @@ import { Description } from "./Description";
 import { Nebulas } from "./nebulas/Nebulas";
 import { Planets } from "./Planets";
 import { Rocket } from "./Rocket";
-import SkySVG from "./SkySVG";
+import SkySVG from "./svgs/SkySVG";
 
 export const topLanguagesSchema = z.object({
   first: z.string(),

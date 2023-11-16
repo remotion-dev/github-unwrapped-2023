@@ -11,7 +11,11 @@ import {
   newPath,
   PLANET_POSITIONS,
 } from "./constants";
-import { RocketSVG, TL_ROCKET_HEIGHT, TL_ROCKET_WIDTH } from "./RocketSVG";
+import {
+  NewRocketSVG,
+  TL_ROCKET_HEIGHT,
+  TL_ROCKET_WIDTH,
+} from "./svgs/NewRocketSVG";
 
 export const getActionFrames = (actionLocations: number[]) => {
   return (
@@ -63,7 +67,7 @@ export const Rocket: React.FC<{}> = () => {
 
   const tan = getTangentAtLength(newPath, complexCurvePathLength * rate);
   const angleInRadians = Math.atan2(tan.y, tan.x);
-  const angleInDegrees = angleInRadians * (180 / Math.PI) - 45;
+  const angleInDegrees = angleInRadians * (180 / Math.PI) + 90;
 
   const rocketX = point.x - TL_ROCKET_WIDTH / 2;
   const rocketY = point.y - TL_ROCKET_HEIGHT / 2;
@@ -80,7 +84,7 @@ export const Rocket: React.FC<{}> = () => {
           <path d={newPath} stroke="white" strokeWidth="0" />
         </svg>
       </AbsoluteFill>
-      <RocketSVG
+      <NewRocketSVG
         style={{
           transform: `translateX(${rocketX}px) translateY(${rocketY}px) rotate(${angleInDegrees}deg)`,
           transformBox: "fill-box",

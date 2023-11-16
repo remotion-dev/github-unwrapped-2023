@@ -64,23 +64,14 @@ export const Planet: React.FC<{
         position: "absolute",
         transform: isAction
           ? `scale(${
-              (1 - shrinkSpring * 0.2 + growSpring * 0.2) * (isMain ? 1 : 0.5)
+              (1 - shrinkSpring * 0.9 + growSpring * 0.9) * (isMain ? 1 : 0.5)
             }) rotate(${noise}deg)`
           : `scale(${isMain ? 1 : 0.5})`,
         top: planetPosition.y,
         left: planetPosition.x,
-        // ...style,
       }}
     >
       <PlanetSVG />
-      {/* <div
-        style={{
-          background: "white",
-          height: 100,
-          width: 100,
-          borderRadius: "50%",
-        }}
-      /> */}
     </div>
   );
 };
