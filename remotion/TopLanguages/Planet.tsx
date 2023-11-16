@@ -60,15 +60,17 @@ export const Planet: React.FC<{
     delay: actionFrames[actionIndex][0],
   });
 
+  const scale =
+    (isAction ? 1 - shrinkSpring * 0.9 + growSpring * 0.9 : 1) *
+    (isMain ? 1 : 0.7);
+
+  const rotate = isAction ? noise : 0;
+
   return (
     <div
       style={{
         position: "absolute",
-        transform: isAction
-          ? `scale(${
-              (1 - shrinkSpring * 0.9 + growSpring * 0.9) * (isMain ? 1 : 0.5)
-            }) rotate(${noise}deg)`
-          : `scale(${isMain ? 1 : 0.5})`,
+        transform: `scale(${scale}) rotate(${rotate}deg)`,
         top: planetPosition.y,
         left: planetPosition.x,
       }}
