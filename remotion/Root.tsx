@@ -18,7 +18,7 @@ import {
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
-import { TopLanguages } from "./TopLanguages";
+import { TopLanguages, topLanguagesSchema } from "./TopLanguages";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -135,10 +135,16 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"TopLanguages"}
         component={TopLanguages}
+        schema={topLanguagesSchema}
         durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH * 2}
         height={VIDEO_HEIGHT * 2}
+        defaultProps={{
+          first: "JavaScript",
+          second: "TypeScript",
+          third: "Python",
+        }}
       />
       <Composition
         id={"SevenSegment"}

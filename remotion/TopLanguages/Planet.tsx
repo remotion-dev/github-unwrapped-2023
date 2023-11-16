@@ -4,7 +4,7 @@ import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_Y } from "../../types/constants";
 import {
   complexCurvePathLength,
-  Language,
+  LanguageEnumType,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";
@@ -25,9 +25,10 @@ const getPlanetPosition = (
 export const Planet: React.FC<{
   actionIndex: number;
   actionPositions: number[];
-  language: Language;
+  language: LanguageEnumType;
   style?: React.CSSProperties;
-}> = ({ actionIndex, actionPositions, language }) => {
+  isMain: boolean;
+}> = ({ actionIndex, actionPositions, language, isMain }) => {
   const actionPosition = actionPositions[actionIndex];
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -63,9 +64,9 @@ export const Planet: React.FC<{
         position: "absolute",
         transform: isAction
           ? `scale(${
-              (1 - shrinkSpring * 0.2 + growSpring * 0.2) * 0.5
+              (1 - shrinkSpring * 0.2 + growSpring * 0.2) * (isMain ? 1 : 0.5)
             }) rotate(${noise}deg)`
-          : `scale(0.5)`,
+          : `scale(${isMain ? 1 : 0.5})`,
         top: planetPosition.y,
         left: planetPosition.x,
         // ...style,

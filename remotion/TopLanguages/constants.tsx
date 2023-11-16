@@ -1,5 +1,6 @@
 import { getBoundingBox, getLength, scalePath } from "@remotion/paths";
 import { SVGProps } from "react";
+import { z } from "zod";
 import { JavaPlanetBoundingBox, JavaPlanetSVG } from "./JavaPlanetSVG";
 import {
   JavaScriptPlanetBoundingBox,
@@ -30,14 +31,13 @@ const scale = boundingBox.width / 2160;
 export const newPath = scalePath(rocketPath, 1 / scale, 1 / scale);
 export const complexCurvePathLength = getLength(newPath);
 
-export enum Language {
-  Java,
-  Python,
-  JavaScript,
-}
+export const LanguagesEnum = z.enum(["Java", "Python", "JavaScript"]);
+
+const LanguageOptions = LanguagesEnum.options;
+export type LanguageEnumType = (typeof LanguageOptions)[number];
 
 export const mapLanguageToPlanet: Record<
-  Language,
+  LanguageEnumType,
   {
     boundingBox: {
       width: number;
@@ -46,15 +46,15 @@ export const mapLanguageToPlanet: Record<
     PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
   }
 > = {
-  [Language.Java]: {
+  [LanguagesEnum.enum.Java]: {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
   },
-  [Language.Python]: {
+  [LanguagesEnum.enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
   },
-  [Language.JavaScript]: {
+  [LanguagesEnum.enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
   },
