@@ -1,18 +1,23 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { ZoomedOutTopLanguages } from "..";
+import { z } from "zod";
+import { topLanguagesSchema, ZoomedOutTopLanguages } from "..";
 import {
   complexCurvePathLength,
   newPath,
   PLANET_POSITIONS,
 } from "../constants";
+import { LangugageDescription } from "../LanguageDescription";
 import { getRate } from "../Rocket";
+
+const FRAME_OFFSET = 40;
+const SCALE_BREAKPOINT = 140;
 
 const computeTranslation = (
   frame: number,
   scale = 1
 ): { marginLeft: number; marginTop: number } => {
-  if (frame < 250) {
+  if (frame < SCALE_BREAKPOINT + FRAME_OFFSET) {
     return { marginLeft: -860, marginTop: -250 };
   }
 
@@ -36,28 +41,37 @@ const computeTranslation = (
   };
 };
 
-export const ShowDescription: React.FC = (props) => {
-  const frameOffset = 80;
+export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
+  props
+) => {
   const frame = useCurrentFrame();
-  const scale = frame < 170 ? 0.8 : 1.6;
+  const scale = frame < SCALE_BREAKPOINT ? 0.8 : 1.6;
   const { marginLeft, marginTop } = computeTranslation(
-    frame + frameOffset,
+    frame + FRAME_OFFSET,
     scale
   );
+
+  const languages = [props.first, props.second, props.third];
 
   return (
     <AbsoluteFill>
       <ZoomedOutTopLanguages
-        first={""}
-        second={""}
-        third={""}
+        {...props}
         style={{
           marginLeft: marginLeft,
           marginTop: marginTop,
           transform: `scale(${scale})`,
         }}
-        frameOffset={frameOffset}
+        frameOffset={FRAME_OFFSET}
       />
+      {languages.map((l, index) => (
+        <LangugageDescription
+          key={l + index}
+          language={l}
+          position={index}
+          frameOffset={FRAME_OFFSET}
+        />
+      ))}
     </AbsoluteFill>
   );
 };

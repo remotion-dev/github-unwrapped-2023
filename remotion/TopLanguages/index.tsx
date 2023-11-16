@@ -1,6 +1,7 @@
 import { Sequence } from "remotion";
 import { z } from "zod";
 import { Background } from "./Background";
+import { LanguagesEnum } from "./constants";
 import { Description } from "./Description";
 import { Nebulas } from "./nebulas/Nebulas";
 import { Planets } from "./Planets";
@@ -10,9 +11,9 @@ import { ShowDescription } from "./sequences/ShowDescription";
 import SkySVG from "./svgs/SkySVG";
 
 export const topLanguagesSchema = z.object({
-  first: z.string(),
-  second: z.string(),
-  third: z.string(),
+  first: LanguagesEnum,
+  second: LanguagesEnum,
+  third: LanguagesEnum,
 });
 
 export const ZoomedOutTopLanguages: React.FC<
@@ -27,7 +28,7 @@ export const ZoomedOutTopLanguages: React.FC<
       <Nebulas />
       <Description />
       <Rocket frameOffset={props.frameOffset ?? 0} />
-      <Planets frameOffset={props.frameOffset ?? 0} />
+      <Planets frameOffset={props.frameOffset ?? 0} {...props} />
     </Background>
   );
 };
@@ -37,11 +38,11 @@ export const TopLanguages: React.FC<
 > = (props) => {
   return (
     <>
-      <Sequence durationInFrames={90}>
-        <Intro />
+      <Sequence durationInFrames={73}>
+        <Intro {...props} />
       </Sequence>
-      <Sequence from={90}>
-        <ShowDescription />
+      <Sequence from={73}>
+        <ShowDescription {...props} />
       </Sequence>
     </>
   );

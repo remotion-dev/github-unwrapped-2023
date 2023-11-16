@@ -1,28 +1,29 @@
-import { Composition, Folder } from "remotion";
+import { Composition,Folder } from "remotion";
 import {
-  defaultMyCompProps,
-  TOP_LANGUAGES_DURATION,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
+defaultMyCompProps,
+TOP_LANGUAGES_DURATION,
+VIDEO_FPS,
+VIDEO_HEIGHT,
+VIDEO_WIDTH
 } from "../types/constants";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues,issuesSchema } from "./Issues";
 import {
-  JumpingNumberDemo,
-  jumpingNumberSchema,
+JumpingNumberDemo,
+jumpingNumberSchema
 } from "./JumpingNumber/JumpingNumber";
 import { WholePaths } from "./Paths";
 import { Poof } from "./Poof";
 import {
-  SevenSegment,
-  sevenSegmentSchema,
+SevenSegment,
+sevenSegmentSchema
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
 import {
-  TopLanguages,
-  topLanguagesSchema,
-  ZoomedOutTopLanguages,
+TopLanguages,
+topLanguagesSchema,
+ZoomedOutTopLanguages
 } from "./TopLanguages";
+import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -145,9 +146,9 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH * 2}
         height={VIDEO_HEIGHT * 2}
         defaultProps={{
-          first: "JavaScript",
-          second: "TypeScript",
-          third: "Python",
+          first: LanguagesEnum.enum.JavaScript,
+          second: LanguagesEnum.enum.Python,
+          third: LanguagesEnum.enum.Java,
         }}
       />
       <Composition
@@ -159,9 +160,9 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{
-          first: "JavaScript",
-          second: "TypeScript",
-          third: "Python",
+          first: "Java" as const,
+          second: "Python" as const,
+          third: "Java" as const,
         }}
       />
       <Composition

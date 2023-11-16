@@ -1,29 +1,33 @@
 import { AbsoluteFill } from "remotion";
-import { LanguagesEnum, PLANET_POSITIONS } from "./constants";
+import { z } from "zod";
+import { topLanguagesSchema } from ".";
+import { PLANET_POSITIONS } from "./constants";
 import { Planet } from "./Planet";
 
-export const Planets: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
+export const Planets: React.FC<
+  z.infer<typeof topLanguagesSchema> & { frameOffset: number }
+> = ({ frameOffset, first, second, third }) => {
   return (
     <AbsoluteFill>
       <Planet
-        actionIndex={0}
+        actionIndex={2}
         actionPositions={PLANET_POSITIONS}
-        language={LanguagesEnum.enum.Java}
-        isMain={false}
+        language={third}
+        isMain={true}
         frameOffset={frameOffset}
       />
       <Planet
         actionIndex={1}
         actionPositions={PLANET_POSITIONS}
-        language={LanguagesEnum.enum.JavaScript}
+        language={second}
         isMain={false}
         frameOffset={frameOffset}
       />
       <Planet
-        actionIndex={2}
+        actionIndex={0}
         actionPositions={PLANET_POSITIONS}
-        language={LanguagesEnum.enum.Python}
-        isMain={true}
+        language={first}
+        isMain={false}
         frameOffset={frameOffset}
       />
     </AbsoluteFill>

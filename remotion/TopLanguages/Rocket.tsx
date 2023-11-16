@@ -87,7 +87,7 @@ export const Rocket: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
           fill="none"
           overflow="visible"
         >
-          <path d={newPath} stroke="white" strokeWidth="3" />
+          <path d={newPath} stroke="white" strokeWidth="0" />
         </svg>
       </AbsoluteFill>
       <NewRocketSVG
