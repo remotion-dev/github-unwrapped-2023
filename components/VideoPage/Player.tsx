@@ -1,5 +1,3 @@
-"use client";
-
 import { Player as RemotionPlayer } from "@remotion/player";
 import { Main } from "../../remotion/Main";
 import {

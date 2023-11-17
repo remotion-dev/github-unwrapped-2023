@@ -1,5 +1,3 @@
-"use client";
-
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
 import { UserIcon } from "../../icons/UserIcon";
 import { XIcon } from "../../icons/XIcon";
