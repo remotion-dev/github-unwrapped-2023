@@ -17,13 +17,10 @@ const computeTranslation = (
   frame: number,
   scale = 1
 ): { marginLeft: number; marginTop: number } => {
-  // return { marginLeft: -860, marginTop: -250 };
-
   const rate = getNewRate(frame);
-  console.log(frame);
 
   if (frame < SCALE_BREAKPOINT) {
-    return { marginLeft: -860, marginTop: -250 };
+    return { marginLeft: -1030, marginTop: -0 };
   }
 
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
@@ -45,8 +42,8 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
   props
 ) => {
   const frame = useCurrentFrame();
-  const scale = frame < SCALE_BREAKPOINT ? 0.8 : 1.6;
-  const { marginLeft, marginTop } = computeTranslation(frame, scale);
+  const scale = frame < SCALE_BREAKPOINT ? 1 : 1.6;
+  const translation = computeTranslation(frame, scale);
 
   const languages = [props.first, props.second, props.third];
 
@@ -55,8 +52,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
       <ZoomedOutTopLanguages
         {...props}
         style={{
-          marginLeft: marginLeft,
-          marginTop: marginTop,
+          ...translation,
           transform: `scale(${scale})`,
         }}
       />

@@ -124,7 +124,7 @@ export const Rocket: React.FC = () => {
         transform: `translateY(${TRANSFORM_PATH_Y}px) translateX(${TRANSFORM_PATH_X})`,
       }}
     >
-      <AbsoluteFill style={{}}>
+      <AbsoluteFill>
         <svg
           style={{ width: 2160, height: 2160 }}
           viewBox="0 0 2160 2160"

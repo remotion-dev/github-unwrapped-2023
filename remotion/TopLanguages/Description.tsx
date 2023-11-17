@@ -6,8 +6,8 @@ export const Description: React.FC = () => {
       <div
         style={{
           color: "white",
-          fontSize: 180,
-          top: 300,
+          fontSize: 150,
+          top: 200,
           position: "absolute",
           right: 200,
           fontFamily: "Mona Sans",
