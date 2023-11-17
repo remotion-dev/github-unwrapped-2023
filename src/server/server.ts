@@ -18,7 +18,7 @@ const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
-    root: path.join(__dirname, "..", "..", "components"),
+    root: path.join(__dirname, "..", "..", "vite"),
     server: {
       middlewareMode: true,
     },
@@ -45,7 +45,7 @@ export const startServer = async () => {
   if (backendCredentials().NODE_ENV === "development") {
     await startViteDevelopmentServer(app);
   } else {
-    const dir = path.join(__dirname, "../../components/dist");
+    const dir = path.join(__dirname, "../../vite/dist");
     app.use(serveStatic(dir));
 
     app.get("*", (req, response) => {

@@ -10,7 +10,7 @@ config();
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 await build({
-  root: path.resolve(__dirname, "./components"),
+  root: path.resolve(__dirname, "./vite"),
   base: "/",
   plugins: [react()],
   publicDir: path.join(__dirname, "public"),
