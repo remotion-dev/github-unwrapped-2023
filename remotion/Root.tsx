@@ -1,27 +1,27 @@
-import { Composition,Folder } from "remotion";
+import { Composition, Folder } from "remotion";
 import {
-defaultMyCompProps,
-TOP_LANGUAGES_DURATION,
-VIDEO_FPS,
-VIDEO_HEIGHT,
-VIDEO_WIDTH
+  defaultMyCompProps,
+  TOP_LANGUAGES_DURATION,
+  VIDEO_FPS,
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
 } from "../types/constants";
-import { Issues,issuesSchema } from "./Issues";
+import { Issues, issuesSchema } from "./Issues";
 import {
-JumpingNumberDemo,
-jumpingNumberSchema
+  JumpingNumberDemo,
+  jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { WholePaths } from "./Paths";
 import { Poof } from "./Poof";
 import {
-SevenSegment,
-sevenSegmentSchema
+  SevenSegment,
+  sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
 import {
-TopLanguages,
-topLanguagesSchema,
-ZoomedOutTopLanguages
+  TopLanguagesCamera,
+  TopLanguagesCanvas,
+  topLanguagesSchema,
 } from "./TopLanguages";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
@@ -138,8 +138,8 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
       <Composition
-        id={"TopLanguages"}
-        component={ZoomedOutTopLanguages}
+        id={"TopLanguagesCanvas"}
+        component={TopLanguagesCanvas}
         schema={topLanguagesSchema}
         durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}
@@ -152,8 +152,8 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
-        id={"ZoomedTopLanguages"}
-        component={TopLanguages}
+        id={"TopLanguagesCamera"}
+        component={TopLanguagesCamera}
         schema={topLanguagesSchema}
         durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}

@@ -16,7 +16,7 @@ export const topLanguagesSchema = z.object({
   third: LanguagesEnum,
 });
 
-export const ZoomedOutTopLanguages: React.FC<
+export const TopLanguagesCanvas: React.FC<
   z.infer<typeof topLanguagesSchema> & {
     style?: React.CSSProperties;
   }
@@ -32,7 +32,7 @@ export const ZoomedOutTopLanguages: React.FC<
   );
 };
 
-export const TopLanguages: React.FC<
+export const TopLanguagesCamera: React.FC<
   z.infer<typeof topLanguagesSchema> & { style?: React.CSSProperties }
 > = (props) => {
   return (

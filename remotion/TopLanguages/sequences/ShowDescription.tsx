@@ -1,7 +1,7 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { topLanguagesSchema, ZoomedOutTopLanguages } from "..";
+import { TopLanguagesCanvas, topLanguagesSchema } from "..";
 import {
   actionPositions,
   ACTION_DURATION,
@@ -49,7 +49,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
 
   return (
     <AbsoluteFill>
-      <ZoomedOutTopLanguages
+      <TopLanguagesCanvas
         {...props}
         style={{
           ...translation,

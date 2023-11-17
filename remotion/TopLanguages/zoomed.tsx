@@ -1,7 +1,7 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { ZoomedOutTopLanguages } from ".";
+import { TopLanguagesCanvas } from ".";
 import { complexCurvePathLength, newPath, PLANET_POSITIONS } from "./constants";
 import { getRate } from "./Rocket";
 
@@ -24,7 +24,7 @@ export const ZoomedTopLanguages: React.FC<
 
   return (
     <AbsoluteFill>
-      <ZoomedOutTopLanguages
+      <TopLanguagesCanvas
         {...props}
         style={{ marginTop: -point.y + 520, marginLeft: -point.x + 520 }}
       />
