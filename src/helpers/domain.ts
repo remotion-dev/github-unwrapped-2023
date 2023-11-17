@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import { z } from "zod";
+import { REDIRECT_URL_ENDPOINT } from "./redirect-url.js";
 
 export const backendCredentials = () => {
   config();
@@ -13,8 +14,6 @@ export const backendCredentials = () => {
     })
     .parse(process.env);
 };
-
-export const REDIRECT_URL_ENDPOINT = "/login";
 
 export const makeRedirectUriBackend = () => {
   return `${backendCredentials().VITE_HOST}${REDIRECT_URL_ENDPOINT}`;

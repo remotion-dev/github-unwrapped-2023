@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { REDIRECT_URL_ENDPOINT } from "../src/helpers/domain";
+import { REDIRECT_URL_ENDPOINT } from "../src/helpers/redirect-url";
 
 const frontendSchema = z.object({
   VITE_CLIENT_ID: z.string(),

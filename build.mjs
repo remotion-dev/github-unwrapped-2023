@@ -10,6 +10,7 @@ await build({
   root: path.resolve(__dirname, "./components"),
   base: "/",
   plugins: [react()],
+  publicDir: path.join(__dirname, "public"),
 });
 
 await execSync("npx tsc -p tsconfig.node.json", {

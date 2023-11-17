@@ -6,10 +6,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
-import {
-  backendCredentials,
-  REDIRECT_URL_ENDPOINT,
-} from "../helpers/domain.js";
+import { backendCredentials } from "../helpers/domain.js";
+import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
 import { loginEndPoint } from "./login.js";
 import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
@@ -20,11 +18,12 @@ const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
-    root: path.join(__dirname, "..", ".."),
+    root: path.join(__dirname, "..", "..", "components"),
     server: {
       middlewareMode: true,
     },
     plugins: [react()],
+    publicDir: path.join(__dirname, "..", "..", "public"),
   });
 
   app.use((req, res, next) => {
