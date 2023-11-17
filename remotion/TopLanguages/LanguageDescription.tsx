@@ -49,13 +49,13 @@ export const LangugageDescription: React.FC<{
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",
-        paddingBottom: 80,
-        transform: `translateY(${(1 - slideIn + slideOut) * 250}px)`,
+        paddingBottom: 240,
+        transform: `translateY(${(1 - slideIn + slideOut) * 360}px)`,
       }}
     >
       <div
         style={{
-          fontSize: 110,
+          fontSize: 84,
           color: mapLanguagesToTitleColor[language],
           fontFamily: "Mona Sans",
           fontWeight: 800,
@@ -66,7 +66,7 @@ export const LangugageDescription: React.FC<{
       <div
         style={{
           fontFamily: "Mona Sans",
-          fontSize: 48,
+          fontSize: 30,
           color: "white",
           fontWeight: 300,
         }}

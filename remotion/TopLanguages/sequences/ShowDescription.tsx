@@ -13,9 +13,19 @@ import { getNewRate } from "../Rocket";
 
 const SCALE_BREAKPOINT = 130;
 
+const withinBoundaries = (boundaries: [number, number], value: number) => {
+  const [min, max] = boundaries;
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+};
+
 const computeTranslation = (
-  frame: number,
-  scale = 1
+  frame: number
 ): { marginLeft: number; marginTop: number } => {
   const rate = getNewRate(frame);
 
@@ -25,16 +35,9 @@ const computeTranslation = (
 
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
-  const center = 1080;
-
-  const scaledPoint = {
-    x: 1080 + (point.x - center) * scale,
-    y: 1080 + (point.y - center) * scale,
-  };
-
   return {
-    marginLeft: -scaledPoint.x + 520,
-    marginTop: -scaledPoint.y + 520,
+    marginLeft: withinBoundaries([-1080, 0], -point.x + 520),
+    marginTop: withinBoundaries([-1080, 0], -point.y + 520),
   };
 };
 
@@ -43,17 +46,16 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
 ) => {
   const frame = useCurrentFrame();
   const scale = frame < SCALE_BREAKPOINT ? 1 : 1.6;
-  const translation = computeTranslation(frame, scale);
+  const translation = computeTranslation(frame);
 
   const languages = [props.first, props.second, props.third];
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${scale})` }}>
       <TopLanguagesCanvas
         {...props}
         style={{
           ...translation,
-          transform: `scale(${scale})`,
         }}
       />
       {languages.map((l, index) => {

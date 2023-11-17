@@ -131,7 +131,7 @@ export const Rocket: React.FC = () => {
           fill="none"
           overflow="visible"
         >
-          <path d={newPath} stroke="white" strokeWidth="2" />
+          <path d={newPath} stroke="white" strokeWidth="0" />
         </svg>
       </AbsoluteFill>
       <NewRocketSVG
