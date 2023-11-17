@@ -13,7 +13,7 @@ const makeRequest = async <Res>(
   endpoint: string,
   body: unknown
 ): Promise<Res> => {
-  const result = await fetch(frontendCredentials().VITE_API_URL + endpoint, {
+  const result = await fetch(frontendCredentials().VITE_HOST + endpoint, {
     method: "post",
     body: JSON.stringify(body),
     headers: {

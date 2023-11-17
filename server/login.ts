@@ -1,20 +1,22 @@
 import type { Request, Response } from "express";
-import { backendCredentials } from "../helpers/domain";
-import { enableCors } from "./cors";
+import { z } from "zod";
+import { backendCredentials, makeRedirectUriBackend } from "../helpers/domain";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
-  enableCors(response);
   if (request.method === "OPTIONS") return response.end();
-  const { body } = request;
+  const query = z
+    .object({
+      code: z.string(),
+    })
+    .parse(request.query);
 
-  const { CLIENT_SECRET, VITE_CLIENT_ID, VITE_REDIRECT_URI } =
-    backendCredentials();
+  const { CLIENT_SECRET, VITE_CLIENT_ID } = backendCredentials();
 
   const formdata = new FormData();
   formdata.append("client_id", VITE_CLIENT_ID);
   formdata.append("client_secret", CLIENT_SECRET);
-  formdata.append("redirect_uri", VITE_REDIRECT_URI);
-  formdata.append("code", body.code);
+  formdata.append("redirect_uri", makeRedirectUriBackend());
+  formdata.append("code", query.code);
 
   const paramsString = await fetch(
     "https://github.com/login/oauth/access_token",
@@ -37,7 +39,12 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     },
   });
   const json = await userRes.json();
-  console.log({ json, paramsStringText, body });
 
-  return response.json(json);
+  const userData = z
+    .object({
+      login: z.string(),
+    })
+    .parse(json);
+
+  return response.redirect(`/${userData.login}`);
 };

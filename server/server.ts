@@ -4,6 +4,7 @@ import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
+import { REDIRECT_URL_ENDPOINT } from "../helpers/domain";
 import { loginEndPoint } from "./login";
 import { progressEndPoint } from "./progress";
 import { renderEndPoint } from "./render";
@@ -24,19 +25,16 @@ export const startServer = async () => {
 
   app.use(bodyParser.json());
 
-  app.options("/api/render", renderEndPoint);
   app.post("/api/render", renderEndPoint);
 
-  app.options("/api/progress", progressEndPoint);
   app.post("/api/progress", progressEndPoint);
 
-  app.options("/api/login", loginEndPoint);
-  app.post("/api/login", loginEndPoint);
+  app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
 
   app.use((req, res, next) => {
     server.middlewares.handle(req, res, next);
   });
 
   app.listen(8080);
-  console.log("Listening on port 8080");
+  console.log("Listening on http://localhost:8080");
 };

@@ -1,6 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import buttonStyles from "../components/Button/styles.module.css";
-import { frontendCredentials } from "../helpers/domain";
+import {
+  frontendCredentials,
+  makeRedirectUriFrontend,
+} from "../helpers/domain";
 import { Button } from "./Button/Button";
 import { Input } from "./Input/Input";
 import styles from "./styles.module.css";
@@ -36,6 +39,18 @@ export const LoginOptions: React.FC<Props> = ({
     [setUserNotFound, username]
   );
 
+  const href = useMemo(() => {
+    const params = new URLSearchParams();
+    params.append("redirect_uri", makeRedirectUriFrontend());
+    params.append("client_id", frontendCredentials().VITE_CLIENT_ID);
+    params.append("scope", "user");
+
+    const url = new URL("https://github.com/login/oauth/authorize");
+    url.search = params.toString();
+
+    return url.toString();
+  }, []);
+
   return (
     <div className={styles.inputContainer}>
       <form className={styles.buttonContainer} onSubmit={handleClick}>
@@ -63,9 +78,7 @@ export const LoginOptions: React.FC<Props> = ({
       <a
         style={{ textDecoration: "none" }}
         className={buttonStyles.secondarybutton}
-        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
-          frontendCredentials().VITE_CLIENT_ID
-        }&redirect_uri=${frontendCredentials().VITE_REDIRECT_URI}`}
+        href={href}
       >
         Sign in with GitHub
       </a>
