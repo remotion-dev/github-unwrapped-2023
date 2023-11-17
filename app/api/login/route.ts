@@ -27,10 +27,7 @@ export async function POST(request: NextRequest) {
   ).then((res) => res.text());
 
   const params = new URLSearchParams(paramsString);
-  console.log("params", params);
   const access_token = params.get("access_token");
-
-  console.log("access_token", access_token);
 
   const userRes = await fetch(`https://api.github.com/user`, {
     headers: {
