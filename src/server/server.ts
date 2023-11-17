@@ -2,33 +2,38 @@ import react from "@vitejs/plugin-react-swc";
 import bodyParser from "body-parser";
 import type { Express } from "express";
 import express from "express";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
-import { backendCredentials } from "../helpers/domain.js";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
+import {
+  handleIndexHtmlDev,
+  handleIndexHtmlProduction,
+  nodeEnv,
+  publicDir,
+  viteDir,
+  viteDistDir,
+} from "./index-html.js";
 import { loginEndPoint } from "./login.js";
 import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-
 const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
-    // any valid user config options, plus `mode` and `configFile`
     configFile: false,
-    root: path.join(__dirname, "..", "..", "vite"),
+    root: viteDir,
     server: {
       middlewareMode: true,
     },
+    appType: "custom",
     plugins: [react()],
-    publicDir: path.join(__dirname, "..", "..", "public"),
+    publicDir,
   });
 
   app.use((req, res, next) => {
     server.middlewares.handle(req, res, next);
   });
+
+  return server;
 };
 
 export const startServer = async () => {
@@ -42,16 +47,14 @@ export const startServer = async () => {
 
   app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
 
-  if (backendCredentials().NODE_ENV === "development") {
-    await startViteDevelopmentServer(app);
-  } else {
-    const dir = path.join(__dirname, "../../vite/dist");
-    app.use(serveStatic(dir));
+  if (nodeEnv === "development") {
+    const vite = await startViteDevelopmentServer(app);
 
-    app.get("*", (req, response) => {
-      const index = path.join(dir, "index.html");
-      response.sendFile(index);
-    });
+    app.get("*", handleIndexHtmlDev(vite));
+  } else {
+    app.use(serveStatic(viteDistDir));
+
+    app.get("*", handleIndexHtmlProduction);
   }
 
   const port = process.env.PORT || 8080;
