@@ -1,5 +1,5 @@
 {
-  "extends": "next",
+  "extends": "@jonny",
   "plugins": ["@remotion"],
   "overrides": [
     {

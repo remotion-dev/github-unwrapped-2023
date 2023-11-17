@@ -1,11 +1,11 @@
 import type { Metadata, NextPage } from "next";
 import React, { useMemo } from "react";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "../../components/Button/Button";
 import { GradientBox } from "../../components/GradientBox/GradientBox";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
-import { CompositionProps } from "../../types/constants";
+import type { CompositionProps } from "../../types/constants";
 import { Actions } from "./Actions";
 import { Player } from "./Player";
 import styles from "./styles.module.css";

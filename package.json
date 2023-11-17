@@ -34,6 +34,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@jonny/eslint-config": "3.0.276",
     "@remotion/eslint-config": "4.0.68",
     "@svgr/cli": "^8.1.0",
     "@types/node": "18.7.23",
