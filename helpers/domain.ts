@@ -14,6 +14,7 @@ export const backendCredentials = () => {
   return z
     .object({
       CLIENT_SECRET: z.string(),
+      NODE_ENV: z.enum(["development", "production"]),
     })
     .merge(frontendSchema)
     .parse(process.env);
