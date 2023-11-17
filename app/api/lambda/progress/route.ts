@@ -3,7 +3,7 @@ import {
   getRenderProgress,
   speculateFunctionName,
 } from "@remotion/lambda/client";
-import { DISK, RAM, REGION, TIMEOUT } from "../../../../config.mjs";
+import { DISK, RAM, REGION, TIMEOUT } from "../../../../config";
 import { executeApi } from "../../../../helpers/api-response";
 import type { ProgressResponse } from "../../../../types/schema";
 import { ProgressRequest } from "../../../../types/schema";
