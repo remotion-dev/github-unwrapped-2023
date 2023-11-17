@@ -35,10 +35,10 @@
   width: 100%;
   padding-top: auto;
   display: flex;
-  gap: 24px;
+  gap: 40px;
   justify-content: space-between;
-  align-items: center;
   font-family: "Mona Sans";
+  align-items: flex-end;
 }
 
 .inputWrapper {
@@ -51,7 +51,8 @@
 
 .buttonContainer {
   display: flex;
-  width: 100%;
+  flex: 1;
+  flex-direction: column;
 }
 
 .octocat {
@@ -76,29 +77,6 @@
   margin: 0;
   margin-bottom: 10px;
   font-weight: bolder;
-}
-
-@media screen and (max-width: 480px) {
-  .buttonContainer {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .input {
-    width: 100% !important;
-    border-radius: 5px !important;
-    flex: 0 0 48px !important;
-  }
-  .button {
-    border-radius: 5px !important;
-    font-weight: bold;
-    font-family: "Mona Sans";
-  }
-  .h2 {
-    font-size: 20px;
-  }
-  .title {
-    font-size: 24px;
-  }
 }
 
 @media screen and (max-width: 900px) {

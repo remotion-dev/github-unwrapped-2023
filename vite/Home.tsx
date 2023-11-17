@@ -8,8 +8,8 @@ import { Stars } from "./Home/Stars";
 import { LoginOptions } from "./LoginOptions";
 import { Octocat } from "./Octocat";
 import { RadialGradient } from "./RadialGradient";
-import styles from "./styles.module.css";
 import { UserNotFound } from "./UserNotFound";
+import styles from "./styles.module.css";
 
 const Home = () => {
   const [username, setUsername] = useState<string>("");
@@ -25,7 +25,7 @@ const Home = () => {
       <Header />
       <GradientBox
         style={{
-          flex: "0 0 360px",
+          flex: "0 0 450px",
           display: "flex",
           flexDirection: "column",
         }}

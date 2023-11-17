@@ -34,11 +34,29 @@
   font-weight: 500;
 }
 
-.invalidInput {
-  border: 2px solid red;
+.loginwithgithub {
+  background: radial-gradient(
+    121.11% 121.11% at 47.08% 100%,
+    #0f102e 0%,
+    #000 100%
+  );
+  text-align: center;
+  font-family: "Mona Sans";
+  font-weight: bold;
+  border-radius: 5px;
+  height: 56px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  font-size: 16px;
+  text-wrap: nowrap;
+  cursor: pointer;
 }
 
-.button:hover {
+.invalidInput {
+  border: 2px solid red;
 }
 
 .button:disabled {

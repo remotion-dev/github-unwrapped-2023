@@ -1,9 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Button } from "./Button/Button";
-import buttonStyles from "./Button/styles.module.css";
 import { Input } from "./Input/Input";
-import { frontendCredentials, makeRedirectUriFrontend } from "./env";
+import { SignInWithGitHub } from "./SignInWithiGitHub";
 import { $usernamePath } from "./routing";
 import styles from "./styles.module.css";
 
@@ -40,18 +39,6 @@ export const LoginOptions: React.FC<Props> = ({
     [navigate, setUserNotFound, username]
   );
 
-  const href = useMemo(() => {
-    const params = new URLSearchParams();
-    params.append("redirect_uri", makeRedirectUriFrontend());
-    params.append("client_id", frontendCredentials().VITE_CLIENT_ID);
-    params.append("scope", "user");
-
-    const url = new URL("https://github.com/login/oauth/authorize");
-    url.search = params.toString();
-
-    return url.toString();
-  }, []);
-
   return (
     <div className={styles.inputContainer}>
       <form className={styles.buttonContainer} onSubmit={handleClick}>
@@ -61,28 +48,19 @@ export const LoginOptions: React.FC<Props> = ({
           setText={(s) => setUsername(s)}
           invalid={userNotFound}
           style={{
-            borderRadius: "5px 0 0 5px",
-            width: 250,
             fontWeight: "bold",
+            padding: 15,
           }}
           className={styles.input}
         />
         <Button
           className={styles.button}
-          style={{ borderRadius: "0 5px 5px 0" }}
+          style={{ borderRadius: 5, height: 56, marginTop: 8 }}
         >
           Start Unwrapped
         </Button>
       </form>
-
-      <div>or</div>
-      <a
-        style={{ textDecoration: "none" }}
-        className={buttonStyles.secondarybutton}
-        href={href}
-      >
-        Sign in with GitHub
-      </a>
+      <SignInWithGitHub />
     </div>
   );
 };
