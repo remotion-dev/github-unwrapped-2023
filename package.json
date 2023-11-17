@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "remotion": "remotion studio",
     "render": "remotion render",
-    "deploy": "node deploy.mjs"
+    "deploy": "bun deploy.ts"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.68",

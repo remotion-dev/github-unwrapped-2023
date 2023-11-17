@@ -5,7 +5,7 @@ import {
 } from "@remotion/lambda";
 import dotenv from "dotenv";
 import path from "path";
-import { RAM, REGION, SITE_NAME, TIMEOUT } from "./config.mjs";
+import { RAM, REGION, SITE_NAME, TIMEOUT } from "./config";
 
 console.log("Selected region:", REGION);
 dotenv.config();
@@ -20,6 +20,7 @@ if (!process.env.AWS_ACCESS_KEY_ID && !process.env.REMOTION_AWS_ACCESS_KEY_ID) {
   );
   process.exit(0);
 }
+
 if (
   !process.env.AWS_SECRET_ACCESS_KEY &&
   !process.env.REMOTION_AWS_SECRET_ACCESS_KEY
@@ -42,7 +43,6 @@ const { functionName, alreadyExisted: functionAlreadyExisted } =
     memorySizeInMb: RAM,
     region: REGION,
     timeoutInSeconds: TIMEOUT,
-    architecture: "arm64",
   });
 console.log(
   functionName,
