@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import React, { useMemo } from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../icons/DownloadIcon";
@@ -8,7 +8,7 @@ import { Button } from "../Button/Button";
 import { GradientBox } from "../GradientBox/GradientBox";
 import { userRoute } from "../routing";
 import { Actions } from "./Actions";
-import { Player } from "./Player";
+import { PlayerContainer } from "./Player";
 import styles from "./styles.module.css";
 
 const downloadContent: React.CSSProperties = {
@@ -35,18 +35,21 @@ const UserPage = () => {
     <div className={styles.wrapper}>
       <div className={styles.mobileTitle}>
         <h2 className={styles.gradientText} style={{ margin: 0 }}>
-          #GitHubUnwrapped 2023
+          <Link to={"/"}>#GitHubUnwrapped 2023</Link>
         </h2>
         <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
       </div>
       <GradientBox style={{ display: "flex", flexDirection: "column" }}>
         <div className={styles.main}>
-          <Player inputProps={inputProps} />
+          <PlayerContainer inputProps={inputProps} />
           <div className={styles.information}>
             <div className={styles.title}>
-              <h2 className={styles.gradientText} style={{ margin: 0 }}>
-                #GitHubUnwrapped 2023
-              </h2>
+              <Link to={"/"}>
+                {" "}
+                <h2 className={styles.gradientText} style={{ margin: 0 }}>
+                  #GitHubUnwrapped 2023
+                </h2>
+              </Link>
               <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
             </div>
             <div style={downloadContent}>

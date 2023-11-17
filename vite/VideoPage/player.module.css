@@ -1,21 +1,11 @@
 .playerWrapper {
-  width: 450px;
+  width: 600px;
   aspect-ratio: 1;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 169, 157, 1);
   overflow: hidden;
+  border-radius: 15px;
 }
 
 @media screen and (max-width: 1024px) {
-}
-
-@media screen and (max-width: 768px) {
-  .playerWrapper {
-    width: 400px;
-  }
-}
-
-@media screen and (max-width: 480px) {
   .playerWrapper {
     width: 100%;
   }

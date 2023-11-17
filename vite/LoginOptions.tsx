@@ -1,8 +1,10 @@
+import { useNavigate } from "@tanstack/react-router";
 import React, { useCallback, useMemo } from "react";
 import { Button } from "./Button/Button";
 import buttonStyles from "./Button/styles.module.css";
-import { frontendCredentials, makeRedirectUriFrontend } from "./env";
 import { Input } from "./Input/Input";
+import { frontendCredentials, makeRedirectUriFrontend } from "./env";
+import { $usernamePath } from "./routing";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -18,6 +20,8 @@ export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
 }) => {
+  const navigate = useNavigate();
+
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
@@ -28,12 +32,12 @@ export const LoginOptions: React.FC<Props> = ({
             setUserNotFound(true);
           } else {
             setUserNotFound(false);
-            window.location.href = "/" + username;
+            navigate({ to: $usernamePath, params: { username } });
           }
         })
         .catch((error) => console.log("error", error));
     },
-    [setUserNotFound, username]
+    [navigate, setUserNotFound, username]
   );
 
   const href = useMemo(() => {

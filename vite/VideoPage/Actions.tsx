@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
 import { UserIcon } from "../../icons/UserIcon";
 import { XIcon } from "../../icons/XIcon";
@@ -28,14 +29,12 @@ export const Actions: React.FC = () => {
         label="Share to LinkedIn Network"
         onClick={() => window.open("https://www.linkedin.com/")}
       />
-      <Action
-        icon={(params) => <UserIcon {...params} />}
-        label="Unwrap another user"
-        // TODO: Use router
-        onClick={() => {
-          window.location.href = "/";
-        }}
-      />
+      <Link to="/">
+        <Action
+          icon={(params) => <UserIcon {...params} />}
+          label="Unwrap another user"
+        />
+      </Link>
     </div>
   );
 };

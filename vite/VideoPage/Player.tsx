@@ -1,5 +1,7 @@
-import { Player as RemotionPlayer } from "@remotion/player";
+import { Player } from "@remotion/player";
+import type { z } from "zod";
 import { Main } from "../../remotion/Main";
+import type { CompositionProps } from "../../types/constants";
 import {
   DURATION_IN_FRAMES,
   VIDEO_FPS,
@@ -12,14 +14,12 @@ const player: React.CSSProperties = {
   width: "100%",
 };
 
-export const Player: React.FC<{
-  inputProps: {
-    title: string;
-  };
+export const PlayerContainer: React.FC<{
+  inputProps: z.infer<typeof CompositionProps>;
 }> = ({ inputProps }) => {
   return (
     <div className={styles.playerWrapper}>
-      <RemotionPlayer
+      <Player
         // TODO: Optimize
         numberOfSharedAudioTags={10}
         component={Main}
@@ -29,7 +29,6 @@ export const Player: React.FC<{
         compositionHeight={VIDEO_HEIGHT}
         compositionWidth={VIDEO_WIDTH}
         style={player}
-        controls
         autoPlay
         loop
       />

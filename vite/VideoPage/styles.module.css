@@ -34,11 +34,6 @@
   align-items: center;
 }
 
-.main {
-  display: flex;
-  gap: 48px;
-}
-
 .information {
   display: flex;
   flex-direction: column;
@@ -59,25 +54,22 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+.main {
+  display: flex;
+  gap: 48px;
+}
+
+@media screen and (max-width: 900px) {
   .mobileTitle {
     display: flex;
   }
-}
-
-@media screen and (max-width: 768px) {
   .main {
     flex-direction: column;
     gap: 16px;
+    width: 100%;
   }
 
   .title {
     display: none;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .main {
-    width: 100%;
   }
 }

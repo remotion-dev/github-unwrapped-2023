@@ -11,18 +11,10 @@
   backdrop-filter: blur(5px);
 }
 
-@media screen and (max-width: 480px) {
-  .gradientBox {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .gradientBox {
     margin: 0 16px;
     padding: 24px;
+    width: 100%;
   }
-}
-
-@media screen and (max-width: 1024px) {
 }
