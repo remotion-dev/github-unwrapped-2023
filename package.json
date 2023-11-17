@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx server/dev.ts",
+    "dev": "node dev.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",

@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import { Button } from "../components/Button/Button";
 import buttonStyles from "../components/Button/styles.module.css";
 import { Input } from "../components/Input/Input";
+import { frontendCredentials } from "../helpers/domain";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -65,7 +66,9 @@ export const LoginOptions: React.FC<Props> = ({
       <Link
         style={{ textDecoration: "none" }}
         className={buttonStyles.secondarybutton}
-        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`}
+        href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
+          frontendCredentials().NEXT_PUBLIC_CLIENT_ID
+        }&redirect_uri=${frontendCredentials().NEXT_PUBLIC_REDIRECT_URI}`}
       >
         Sign in with GitHub
       </Link>

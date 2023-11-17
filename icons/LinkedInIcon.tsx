@@ -7,7 +7,7 @@ export const LinkedInIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g clip-path="url(#clip0_359_380)">
+    <g clipPath="url(#clip0_359_380)">
       <path
         d="M8.99112 6.99925C10.6687 4.24849 15.9251 4.59022 15.9251 9.11064V15.921H12.7476V9.95872C12.7476 8.98129 11.9565 8.18906 10.9805 8.18906C10.0045 8.18906 9.21347 8.98129 9.21347 9.95872V15.921H5.97656V5.57132H8.98672L8.99039 6.99852L8.99112 6.99925Z"
         fill="currentColor"
