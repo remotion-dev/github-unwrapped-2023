@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { frontendCredentials } from "../../helpers/domain";
 
@@ -24,20 +23,18 @@ const login = async (code: string) => {
 };
 
 const LoginRedirectPage = () => {
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code");
-  const router = useRouter();
+  const code = new URLSearchParams(window.location.search).get("code");
 
   useEffect(() => {
     const effectLogin = async () => {
       if (code) {
         const user = await login(code);
-        router.push(`/${user.login}`);
+        window.location.href = `/${user.login}`;
       }
     };
 
     effectLogin();
-  }, [code, router]);
+  }, [code]);
 
   if (!code) {
     return <div>authentication failed</div>;
