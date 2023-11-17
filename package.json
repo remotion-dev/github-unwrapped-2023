@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development tsx watch server/index.ts",
+    "dev": "NODE_ENV=development tsx watch src/server/index.ts",
     "build": "next build",
     "start": "NODE_ENV=production",
     "lint": "eslint .",

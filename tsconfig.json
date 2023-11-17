@@ -14,7 +14,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
   },
   "references": [{ "path": "./tsconfig.node.json" }],
   "include": ["**/*.ts", "**/*.tsx", "optimize-svgbin.ts"],

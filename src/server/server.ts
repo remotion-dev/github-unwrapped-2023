@@ -17,7 +17,7 @@ const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
-    root: path.join(__dirname, ".."),
+    root: path.join(__dirname, "..", ".."),
     server: {
       middlewareMode: true,
     },

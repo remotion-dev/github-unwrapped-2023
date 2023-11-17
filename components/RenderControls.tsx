@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import { useRendering } from "../helpers/use-rendering";
+import { useRendering } from "../src/helpers/use-rendering";
 import type { CompositionProps } from "../types/constants";
 import { COMP_NAME } from "../types/constants";
 import { AlignEnd } from "./AlignEnd";

@@ -1,7 +1,7 @@
 import type { RenderMediaOnLambdaOutput } from "@remotion/lambda/client";
 import type { z } from "zod";
-import type { ApiResponse } from "../helpers/api-response";
-import { frontendCredentials } from "../helpers/domain";
+import type { ApiResponse } from "../src/helpers/api-response";
+import { frontendCredentials } from "../src/helpers/domain";
 import type { CompositionProps } from "../types/constants";
 import type {
   ProgressRequest,

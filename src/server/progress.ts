@@ -4,7 +4,7 @@ import {
   speculateFunctionName,
 } from "@remotion/lambda/client";
 import type { Request, Response } from "express";
-import { DISK, RAM, REGION, TIMEOUT } from "../config";
+import { DISK, RAM, REGION, TIMEOUT } from "../../config";
 
 export const progressEndPoint = async (
   request: Request,

@@ -3,7 +3,7 @@ import buttonStyles from "../components/Button/styles.module.css";
 import {
   frontendCredentials,
   makeRedirectUriFrontend,
-} from "../helpers/domain";
+} from "../src/helpers/domain";
 import { Button } from "./Button/Button";
 import { Input } from "./Input/Input";
 import styles from "./styles.module.css";
