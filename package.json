@@ -52,5 +52,8 @@
     "prettier": "^2.8.8",
     "prettier-plugin-organize-imports": "^3.2.3",
     "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }
