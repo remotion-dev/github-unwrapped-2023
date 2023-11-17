@@ -36,8 +36,8 @@ const computeTranslation = (
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
   return {
-    marginLeft: withinBoundaries([-1080, 0], -point.x + 520),
-    marginTop: withinBoundaries([-1080, 0], -point.y + 520),
+    marginLeft: Math.max(-1080, -point.x + 520),
+    marginTop: -point.y + 520,
   };
 };
 
