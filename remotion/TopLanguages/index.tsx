@@ -38,10 +38,10 @@ export const TopLanguages: React.FC<
 > = (props) => {
   return (
     <>
-      <Sequence durationInFrames={73}>
+      <Sequence durationInFrames={50}>
         <Intro {...props} />
       </Sequence>
-      <Sequence from={73}>
+      <Sequence from={50}>
         <ShowDescription {...props} />
       </Sequence>
     </>
