@@ -29,26 +29,23 @@ export const Planet: React.FC<{
   language: LanguageEnumType;
   style?: React.CSSProperties;
   isMain: boolean;
-  frameOffset: number;
-}> = ({ actionIndex, language, isMain, frameOffset, planetPositionRates }) => {
+}> = ({ actionIndex, language, isMain, planetPositionRates }) => {
   const planetPositionRate = planetPositionRates[actionIndex];
   const frame = useCurrentFrame();
-  const frameWithOffset = frame + frameOffset;
   const { fps } = useVideoConfig();
-  const noise = noise2D("seed", frameWithOffset / 10, 1) * 10;
+  const noise = noise2D("seed", frame / 10, 1) * 10;
   const actionFrames = [
     actionPositions[actionIndex],
     actionPositions[actionIndex] + ACTION_DURATION,
   ];
-  const isAction =
-    actionFrames[0] <= frameWithOffset && frameWithOffset < actionFrames[1];
+  const isAction = actionFrames[0] <= frame && frame < actionFrames[1];
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
   const planetPosition = getPlanetPosition(planetPositionRate, boundingBox);
 
   const shrinkSpring = spring({
-    frame: frameWithOffset,
+    frame,
     fps,
     config: {
       damping: 14,
@@ -58,7 +55,7 @@ export const Planet: React.FC<{
   });
 
   const growSpring = spring({
-    frame: frameWithOffset,
+    frame,
     fps,
     delay: actionPositions[actionIndex],
   });

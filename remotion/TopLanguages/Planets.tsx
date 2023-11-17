@@ -4,9 +4,11 @@ import { topLanguagesSchema } from ".";
 import { PLANET_POSITIONS } from "./constants";
 import { Planet } from "./Planet";
 
-export const Planets: React.FC<
-  z.infer<typeof topLanguagesSchema> & { frameOffset: number }
-> = ({ frameOffset, first, second, third }) => {
+export const Planets: React.FC<z.infer<typeof topLanguagesSchema>> = ({
+  first,
+  second,
+  third,
+}) => {
   return (
     <AbsoluteFill>
       <Planet
@@ -14,21 +16,18 @@ export const Planets: React.FC<
         planetPositionRates={PLANET_POSITIONS}
         language={third}
         isMain={true}
-        frameOffset={frameOffset}
       />
       <Planet
         actionIndex={1}
         planetPositionRates={PLANET_POSITIONS}
         language={second}
         isMain={false}
-        frameOffset={frameOffset}
       />
       <Planet
         actionIndex={0}
         planetPositionRates={PLANET_POSITIONS}
         language={first}
         isMain={false}
-        frameOffset={frameOffset}
       />
     </AbsoluteFill>
   );

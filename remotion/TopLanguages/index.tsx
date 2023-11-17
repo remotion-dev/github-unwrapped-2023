@@ -19,7 +19,6 @@ export const topLanguagesSchema = z.object({
 export const ZoomedOutTopLanguages: React.FC<
   z.infer<typeof topLanguagesSchema> & {
     style?: React.CSSProperties;
-    frameOffset?: number;
   }
 > = (props) => {
   return (
@@ -27,8 +26,8 @@ export const ZoomedOutTopLanguages: React.FC<
       <SkySVG style={{ transform: "scale(3)" }} />
       <Nebulas />
       <Description />
-      <Rocket frameOffset={props.frameOffset ?? 0} />
-      <Planets frameOffset={props.frameOffset ?? 0} {...props} />
+      <Rocket />
+      <Planets {...props} />
     </Background>
   );
 };
@@ -42,7 +41,9 @@ export const TopLanguages: React.FC<
         <Intro {...props} />
       </Sequence>
       <Sequence from={50}>
-        <ShowDescription {...props} />
+        <Sequence from={-45}>
+          <ShowDescription {...props} />
+        </Sequence>
       </Sequence>
     </>
   );

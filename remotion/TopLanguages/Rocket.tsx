@@ -105,10 +105,9 @@ export const getRates = (stopAtFrames: number[]) => {
   return stopAtFrames.map((f, i) => (f - i * ACTION_DURATION) * RATE_DECREASE);
 };
 
-export const Rocket: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
+export const Rocket: React.FC = () => {
   const frame = useCurrentFrame();
-  const frameWithOffset = frame + frameOffset;
-  const newRate = getNewRate(frameWithOffset);
+  const newRate = getNewRate(frame);
 
   const point = getPointAtLength(newPath, complexCurvePathLength * newRate);
 
@@ -132,7 +131,7 @@ export const Rocket: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
           fill="none"
           overflow="visible"
         >
-          <path d={newPath} stroke="white" strokeWidth="0" />
+          <path d={newPath} stroke="white" strokeWidth="2" />
         </svg>
       </AbsoluteFill>
       <NewRocketSVG

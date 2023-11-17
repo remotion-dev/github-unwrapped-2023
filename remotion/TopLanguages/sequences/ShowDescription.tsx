@@ -6,22 +6,23 @@ import {
   actionPositions,
   ACTION_DURATION,
   complexCurvePathLength,
-  firstPushEnd,
   newPath,
 } from "../constants";
 import { LangugageDescription } from "../LanguageDescription";
 import { getNewRate } from "../Rocket";
 
-const FRAME_OFFSET = 45;
-const SCALE_BREAKPOINT = 90;
+const SCALE_BREAKPOINT = 130;
 
 const computeTranslation = (
   frame: number,
   scale = 1
 ): { marginLeft: number; marginTop: number } => {
-  const rate = getNewRate(frame);
+  // return { marginLeft: -860, marginTop: -250 };
 
-  if (frame < SCALE_BREAKPOINT + FRAME_OFFSET) {
+  const rate = getNewRate(frame);
+  console.log(frame);
+
+  if (frame < SCALE_BREAKPOINT) {
     return { marginLeft: -860, marginTop: -250 };
   }
 
@@ -45,10 +46,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
 ) => {
   const frame = useCurrentFrame();
   const scale = frame < SCALE_BREAKPOINT ? 0.8 : 1.6;
-  const { marginLeft, marginTop } = computeTranslation(
-    frame + FRAME_OFFSET,
-    scale
-  );
+  const { marginLeft, marginTop } = computeTranslation(frame, scale);
 
   const languages = [props.first, props.second, props.third];
 
@@ -61,16 +59,8 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
           marginTop: marginTop,
           transform: `scale(${scale})`,
         }}
-        frameOffset={FRAME_OFFSET}
       />
       {languages.map((l, index) => {
-        console.log(firstPushEnd);
-        console.log(
-          index,
-          actionPositions[index],
-          actionPositions[index] + ACTION_DURATION
-        );
-
         return (
           <LangugageDescription
             key={l + index}
@@ -80,7 +70,6 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
             ]}
             language={l}
             position={index}
-            frameOffset={FRAME_OFFSET}
           />
         );
       })}

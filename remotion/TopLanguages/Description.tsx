@@ -14,8 +14,7 @@ export const Description: React.FC = () => {
           fontWeight: 800,
         }}
       >
-        Your t<span style={{ fontWeight: 200 }}>o</span>p <br /> languages{" "}
-        <br /> of 2023
+        Your top <br /> languages <br /> of 2023
       </div>
     </AbsoluteFill>
   );

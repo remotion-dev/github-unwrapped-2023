@@ -15,16 +15,14 @@ const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
 export const LangugageDescription: React.FC<{
   language: LanguageEnumType;
   position: number;
-  frameOffset?: number;
   actionFrames: [number, number];
-}> = ({ language, position, frameOffset, actionFrames }) => {
+}> = ({ language, position, actionFrames }) => {
   const frame = useCurrentFrame();
-  const frameWithOffset = frame + (frameOffset ?? 0);
   const { fps } = useVideoConfig();
 
   const slideIn = spring({
     fps,
-    frame: frameWithOffset,
+    frame,
     config: {
       mass: 1,
       stiffness: 50,
@@ -36,7 +34,7 @@ export const LangugageDescription: React.FC<{
 
   const slideOut = spring({
     fps,
-    frame: frameWithOffset,
+    frame,
     config: {
       mass: 1,
       stiffness: 50,
