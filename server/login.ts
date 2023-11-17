@@ -7,15 +7,13 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();
   const body = request.body;
 
-  const { CLIENT_SECRET } = backendCredentials();
+  const { CLIENT_SECRET, NEXT_PUBLIC_CLIENT_ID, NEXT_PUBLIC_REDIRECT_URI } =
+    backendCredentials();
 
   var formdata = new FormData();
-  formdata.append("client_id", backendCredentials().NEXT_PUBLIC_CLIENT_ID);
+  formdata.append("client_id", NEXT_PUBLIC_CLIENT_ID);
   formdata.append("client_secret", CLIENT_SECRET);
-  formdata.append(
-    "redirect_uri",
-    backendCredentials().NEXT_PUBLIC_REDIRECT_URI
-  );
+  formdata.append("redirect_uri", NEXT_PUBLIC_REDIRECT_URI);
   formdata.append("code", body.code);
 
   const paramsString = await fetch(
@@ -25,9 +23,10 @@ export const loginEndPoint = async (request: Request, response: Response) => {
       body: formdata,
       redirect: "follow",
     }
-  ).then((res) => res.text());
+  );
 
-  const params = new URLSearchParams(paramsString);
+  const params = new URLSearchParams(await paramsString.text());
+
   const access_token = params.get("access_token");
 
   const userRes = await fetch(`https://api.github.com/user`, {
