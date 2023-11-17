@@ -1,6 +1,7 @@
-import { z } from "zod";
+import type { z } from "zod";
 import { useRendering } from "../helpers/use-rendering";
-import { CompositionProps, COMP_NAME } from "../types/constants";
+import type { CompositionProps } from "../types/constants";
+import { COMP_NAME } from "../types/constants";
 import { AlignEnd } from "./AlignEnd";
 import { Button } from "./Button/Button";
 import { InputContainer } from "./Container";
@@ -27,8 +28,8 @@ export const RenderControls: React.FC<{
             disabled={state.status === "invoking"}
             setText={setText}
             text={text}
-          ></Input>
-          <Spacing></Spacing>
+          />
+          <Spacing />
           <AlignEnd>
             <Button
               disabled={state.status === "invoking"}
@@ -39,7 +40,7 @@ export const RenderControls: React.FC<{
             </Button>
           </AlignEnd>
           {state.status === "error" ? (
-            <ErrorComp message={state.error.message}></ErrorComp>
+            <ErrorComp message={state.error.message} />
           ) : null}
         </>
       ) : null}
@@ -48,9 +49,9 @@ export const RenderControls: React.FC<{
           <ProgressBar
             progress={state.status === "rendering" ? state.progress : 1}
           />
-          <Spacing></Spacing>
+          <Spacing />
           <AlignEnd>
-            <DownloadButton undo={undo} state={state}></DownloadButton>
+            <DownloadButton undo={undo} state={state} />
           </AlignEnd>
         </>
       ) : null}

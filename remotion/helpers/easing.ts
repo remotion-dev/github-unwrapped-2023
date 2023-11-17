@@ -3,7 +3,7 @@ import { Easing } from "remotion";
 export type EasingType = "ease-in" | "ease-out" | "linear" | "easy-ease";
 
 export const getEasingFunction = ({
-  nextEasing: nextEasing,
+  nextEasing,
   previousEasing,
 }: {
   nextEasing: EasingType;

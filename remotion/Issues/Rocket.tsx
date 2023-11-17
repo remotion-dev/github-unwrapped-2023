@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import {
   ROCKET_HEIGHT,
@@ -7,7 +7,7 @@ import {
   ROCKET_WIDTH,
   TIME_BEFORE_SHOOTING,
 } from "./constants";
-import { ShotWithShootDelay } from "./get-shots-to-fire";
+import type { ShotWithShootDelay } from "./get-shots-to-fire";
 import { rocketRotation } from "./make-ufo-positions";
 
 export const ROCKET_JUMP_IN_DURATION = 20;

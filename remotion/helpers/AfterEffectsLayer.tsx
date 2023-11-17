@@ -23,7 +23,7 @@ export const AfterEffectsImg: React.FC<{
   scale: scaleFactor,
   anchorPoint,
   position,
-  rotationInDegrees: rotationInDegrees,
+  rotationInDegrees,
 }) => {
   const style: React.CSSProperties = useMemo(() => {
     return {

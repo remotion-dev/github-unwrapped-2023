@@ -98,7 +98,7 @@ export const SkyDark: React.FC = () => {
           },
         ])}
       >
-        <Img src={staticFile("Spaceship/Sky-dark.png")}></Img>
+        <Img src={staticFile("Spaceship/Sky-dark.png")} />
       </AfterEffectsLayer>
     </AbsoluteFill>
   );

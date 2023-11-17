@@ -1,9 +1,9 @@
+import type { AwsRegion } from "@remotion/lambda/client";
 import {
-  AwsRegion,
   renderMediaOnLambda,
   speculateFunctionName,
 } from "@remotion/lambda/client";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { DISK, RAM, REGION, SITE_NAME, TIMEOUT } from "../config.mjs";
 import { enableCors } from "./cors";
 
@@ -11,7 +11,7 @@ export const renderEndPoint = async (request: Request, response: Response) => {
   enableCors(response);
   if (request.method === "OPTIONS") return response.end();
 
-  const body = request.body;
+  const { body } = request;
 
   if (
     !process.env.AWS_ACCESS_KEY_ID &&
@@ -21,6 +21,7 @@ export const renderEndPoint = async (request: Request, response: Response) => {
       "Set up Remotion Lambda to render videos. See the README.md for how to do so."
     );
   }
+
   if (
     !process.env.AWS_SECRET_ACCESS_KEY &&
     !process.env.REMOTION_AWS_SECRET_ACCESS_KEY

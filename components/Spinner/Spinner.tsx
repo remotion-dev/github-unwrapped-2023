@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
-import { makeRect } from "@remotion/shapes";
 import { translatePath } from "@remotion/paths";
+import { makeRect } from "@remotion/shapes";
+import React, { useMemo } from "react";
 import styles from "./styles.module.css";
 
 const viewBox = 100;
@@ -30,16 +30,17 @@ export const Spinner: React.FC<{
       {new Array(lines).fill(true).map((_, index) => {
         return (
           <path
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             className={styles.line}
             style={{
               rotate: `${(index * Math.PI * 2) / lines}rad`,
               transformOrigin: "center center",
               animationDelay: `${index * 0.1 - lines * 0.1}s`,
             }}
-            key={index}
             d={translated}
             fill="var(--foreground)"
-          ></path>
+          />
         );
       })}
     </svg>

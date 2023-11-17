@@ -1,7 +1,7 @@
-import { z } from "zod";
 import { useCallback, useMemo, useState } from "react";
+import type { z } from "zod";
 import { getProgress, renderVideo } from "../lambda/api";
-import { CompositionProps } from "../types/constants";
+import type { CompositionProps } from "../types/constants";
 
 export type State =
   | {
@@ -52,8 +52,8 @@ export const useRendering = (
       setState({
         status: "rendering",
         progress: 0,
-        renderId: renderId,
-        bucketName: bucketName,
+        renderId,
+        bucketName,
       });
 
       let pending = true;
@@ -61,18 +61,19 @@ export const useRendering = (
       while (pending) {
         const result = await getProgress({
           id: renderId,
-          bucketName: bucketName,
+          bucketName,
         });
         switch (result.type) {
           case "error": {
             setState({
               status: "error",
-              renderId: renderId,
+              renderId,
               error: new Error(result.message),
             });
             pending = false;
             break;
           }
+
           case "done": {
             setState({
               size: result.size,
@@ -82,15 +83,20 @@ export const useRendering = (
             pending = false;
             break;
           }
+
           case "progress": {
             setState({
               status: "rendering",
-              bucketName: bucketName,
+              bucketName,
               progress: result.progress,
-              renderId: renderId,
+              renderId,
             });
             await wait(1000);
+            break;
           }
+
+          default:
+            throw new Error("Unknown type");
         }
       }
     } catch (err) {

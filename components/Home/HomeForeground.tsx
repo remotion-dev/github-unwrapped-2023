@@ -1,4 +1,4 @@
-export const HomeForeground: React.FC<{}> = ({}) => {
+export const HomeForeground: React.FC = () => {
   return (
     <svg
       style={{

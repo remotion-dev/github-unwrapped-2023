@@ -1,4 +1,4 @@
-import type { Metadata, NextPage } from "next";
+import type { NextPage } from "next";
 import React, { useMemo } from "react";
 import type { z } from "zod";
 import { Button } from "../../components/Button/Button";
@@ -74,11 +74,5 @@ const Home: NextPage<Props> = ({ params }) => {
     </div>
   );
 };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return {
-    title: `${params.username}'s #GitHubUnwrapped`,
-  };
-}
 
 export default Home;

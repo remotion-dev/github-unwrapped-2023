@@ -99,16 +99,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         {withShootDurations.map((p, i) => {
           return (
             <Sequence
+              // eslint-disable-next-line react/no-array-index-key
+              key={i}
               showInTimeline={false}
               durationInFrames={getShootDuration(shots) + p.shootDelay}
-              key={i}
             >
               <GlowStick
                 shootDelay={p.shootDelay}
                 targetX={p.endX}
                 targetY={p.endY}
                 duration={getShootDuration(shots)}
-              ></GlowStick>
+              />
             </Sequence>
           );
         })}
@@ -116,8 +117,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           const explosion = explosions.find((e) => e.index === i);
           return (
             <Sequence
-              showInTimeline={false}
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
+              showInTimeline={false}
               durationInFrames={
                 explosion ? explosion.explodeAfterFrames + 3 : Infinity
               }
@@ -130,42 +132,37 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
                 x={p.x}
                 y={p.y}
                 yOffset={entranceYOffset}
-              ></Ufo>
+              />
             </Sequence>
           );
         })}
         {explosions.map((explosion, i) => {
           return (
             <Sequence
-              showInTimeline={false}
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
+              showInTimeline={false}
               from={explosion.explodeAfterFrames}
               durationInFrames={POOF_DURATION}
               layout="none"
             >
-              <Poof
-                ufoScale={ufos[0].scale}
-                x={explosion.x}
-                y={explosion.y}
-              ></Poof>
+              <Poof ufoScale={ufos[0].scale} x={explosion.x} y={explosion.y} />
             </Sequence>
           );
         })}
         {audioHits.map((audioHit, i) => {
           return (
+            // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit}>
-              <Audio src={staticFile("laser-shoot.mp3")}></Audio>)
+              <Audio src={staticFile("laser-shoot.mp3")} />)
             </Sequence>
           );
         })}
         <AbsoluteFill>
-          <Rocket shots={withShootDurations}></Rocket>
+          <Rocket shots={withShootDurations} />
         </AbsoluteFill>
       </AbsoluteFill>
-      <IssueNumber
-        closedIssues={closedIssues}
-        openIssues={openIssues}
-      ></IssueNumber>
+      <IssueNumber closedIssues={closedIssues} openIssues={openIssues} />
     </AbsoluteFill>
   );
 };

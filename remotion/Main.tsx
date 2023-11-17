@@ -8,7 +8,7 @@ export const Main: React.FC = () => {
       {/**
        * TODO: Hardcoded
        */}
-      <Issues openIssues={10} closedIssues={10}></Issues>
+      <Issues openIssues={10} closedIssues={10} />
     </AbsoluteFill>
   );
 };

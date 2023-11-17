@@ -1,4 +1,4 @@
-import { Response } from "express";
+import type { Response } from "express";
 import { backendCredentials } from "../helpers/domain";
 
 export const enableCors = (response: Response) => {

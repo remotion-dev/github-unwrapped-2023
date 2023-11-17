@@ -4,7 +4,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { LanguageEnumType, LanguagesEnum } from "./constants";
+import type { LanguageEnumType } from "./constants";
+import { LanguagesEnum } from "./constants";
 
 const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
   [LanguagesEnum.enum.Java]: "rgb(201, 246, 253)",

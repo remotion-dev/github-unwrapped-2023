@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { backendCredentials } from "../helpers/domain";
 import { enableCors } from "./cors";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
   enableCors(response);
   if (request.method === "OPTIONS") return response.end();
-  const body = request.body;
+  const { body } = request;
 
   const { CLIENT_SECRET, NEXT_PUBLIC_CLIENT_ID, NEXT_PUBLIC_REDIRECT_URI } =
     backendCredentials();
 
-  var formdata = new FormData();
+  const formdata = new FormData();
   formdata.append("client_id", NEXT_PUBLIC_CLIENT_ID);
   formdata.append("client_secret", CLIENT_SECRET);
   formdata.append("redirect_uri", NEXT_PUBLIC_REDIRECT_URI);

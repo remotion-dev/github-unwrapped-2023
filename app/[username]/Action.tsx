@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./action.styles.module.css";
 
 export const Action: React.FC<{

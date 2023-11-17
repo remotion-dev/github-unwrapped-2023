@@ -23,7 +23,7 @@ const login = async (code: string) => {
     throw new Error("Failed to login");
   }
 
-  return await res.json();
+  return res.json();
 };
 
 const LoginRedirectPage = () => {
@@ -38,6 +38,7 @@ const LoginRedirectPage = () => {
         router.push(`/${user.login}`);
       }
     };
+
     effectLogin();
   }, [code, router]);
 

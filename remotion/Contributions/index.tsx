@@ -2,6 +2,7 @@ import {
   AbsoluteFill,
   interpolate,
   interpolateColors,
+  random,
   spring,
   useCurrentFrame,
 } from "remotion";
@@ -34,10 +35,7 @@ const MIN_OPACITY = 1;
 
 const data = new Array(364)
   .fill(0)
-  .map((_, i) => [
-    i,
-    Math.random() < 0.25 ? 0 : Math.floor(Math.random() * 128),
-  ]);
+  .map((_, i) => [i, random(i) < 0.25 ? 0 : Math.floor(random(i) * 128)]);
 
 const sampleData: Record<number, number> = Object.fromEntries(data);
 
@@ -70,7 +68,7 @@ const computePositions = (params: {
     const moveFrame = START_SPREAD + noise * SPREAD_DURATION;
     const move = params.frame > moveFrame;
 
-    let maxOpacity = interpolate(
+    const maxOpacity = interpolate(
       params.data[i],
       [0, 128],
       [0.2, i === maxIndex ? 1 : 0.9],
@@ -216,7 +214,7 @@ export const ContributionsScene: React.FC = () => {
       }}
     >
       <AbsoluteFill>
-        <Background></Background>
+        <Background />
       </AbsoluteFill>
       <h1
         style={{
@@ -239,6 +237,8 @@ export const ContributionsScene: React.FC = () => {
       >
         {positions.map((p, i) => (
           <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
             style={{
               position: "absolute",
               left: p.x,
@@ -257,6 +257,7 @@ export const ContributionsScene: React.FC = () => {
             }}
           >
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               style={{
                 height: p.height,
@@ -265,7 +266,7 @@ export const ContributionsScene: React.FC = () => {
                 borderRadius: p.borderRadius,
                 background: p.color,
               }}
-            ></div>
+            />
           </div>
         ))}
       </div>
@@ -287,7 +288,7 @@ export const ContributionsScene: React.FC = () => {
           padding: 40,
         }}
       >
-        <JumpingNumber duration={60} from={0} to={13239}></JumpingNumber>
+        <JumpingNumber duration={60} from={0} to={13239} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

@@ -1,9 +1,9 @@
 import type { RenderMediaOnLambdaOutput } from "@remotion/lambda/client";
-import { z } from "zod";
-import { ApiResponse } from "../helpers/api-response";
+import type { z } from "zod";
+import type { ApiResponse } from "../helpers/api-response";
 import { frontendCredentials } from "../helpers/domain";
-import { CompositionProps } from "../types/constants";
-import {
+import type { CompositionProps } from "../types/constants";
+import type {
   ProgressRequest,
   ProgressResponse,
   RenderRequest,
@@ -31,7 +31,7 @@ const makeRequest = async <Res>(
   return json.data;
 };
 
-export const renderVideo = async ({
+export const renderVideo = ({
   id,
   inputProps,
 }: {
@@ -46,7 +46,7 @@ export const renderVideo = async ({
   return makeRequest<RenderMediaOnLambdaOutput>("/api/render", body);
 };
 
-export const getProgress = async ({
+export const getProgress = ({
   id,
   bucketName,
 }: {

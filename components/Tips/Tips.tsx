@@ -30,7 +30,7 @@ const Tip: React.FC<{
       <div className={styles.item}>
         <div style={titlerow}>
           <h4 style={titlestyle}>{title}</h4>
-          <div className={styles.flex}></div>
+          <div className={styles.flex} />
           <svg className={styles.icon} height="1em" viewBox="0 0 448 512">
             <path
               fill="var(--foreground)"
@@ -51,17 +51,17 @@ export const Tips: React.FC = () => {
         href="https://www.remotion.dev/docs/the-fundamentals"
         title="Learn Remotion"
         description="Learn how to customize this video written in React."
-      ></Tip>
+      />
       <Tip
         href="https://github.com/remotion-dev/template-next-app-dir"
         title="See source"
         description="Visit the GitHub repository for this app."
-      ></Tip>
+      />
       <Tip
         href="https://remotion.dev/discord"
         title="Join the community"
         description="Chat with others builders on Discord."
-      ></Tip>
+      />
     </div>
   );
 };

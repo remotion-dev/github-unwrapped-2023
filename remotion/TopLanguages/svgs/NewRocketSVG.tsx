@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 export const ROCKET_SCALE = 0.3;
 export const TL_ROCKET_WIDTH = 338 * ROCKET_SCALE;

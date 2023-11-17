@@ -28,7 +28,7 @@ export const ProgressBar: React.FC<{
   return (
     <div>
       <div style={style}>
-        <div style={fill}></div>
+        <div style={fill} />
       </div>
     </div>
   );

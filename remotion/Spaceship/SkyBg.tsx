@@ -88,7 +88,7 @@ export const SkyBg: React.FC = () => {
         },
       ])}
     >
-      <Img src={staticFile("Spaceship/Sky-BG.png")}></Img>
+      <Img src={staticFile("Spaceship/Sky-BG.png")} />
     </AfterEffectsImg>
   );
 };

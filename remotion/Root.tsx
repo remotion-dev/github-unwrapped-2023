@@ -198,7 +198,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             extraPaths: 8,
           }}
-        ></Composition>
+        />
         <Composition
           id="Paths"
           component={Paths}
@@ -206,7 +206,7 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={240}
           height={1080}
           width={1080}
-        ></Composition>
+        />
       </Folder>
     </>
   );

@@ -51,6 +51,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
       {languages.map((l, index) => {
         return (
           <LangugageDescription
+            // eslint-disable-next-line react/no-array-index-key
             key={l + index}
             actionFrames={[
               actionPositions[index],

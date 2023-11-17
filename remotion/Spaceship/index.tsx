@@ -6,8 +6,8 @@ import { SkyDark } from "./SkyDark";
 export const Spaceship: React.FC = () => {
   return (
     <AbsoluteFill>
-      <SkyBg></SkyBg>
-      <SkyDark></SkyDark>
+      <SkyBg />
+      <SkyDark />
     </AbsoluteFill>
   );
 };

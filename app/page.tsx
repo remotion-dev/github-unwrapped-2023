@@ -20,11 +20,11 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <RadialGradient></RadialGradient>
-      <Stars></Stars>
-      <HomeBackground></HomeBackground>
-      <HomeForeground></HomeForeground>
-      <Planet></Planet>
+      <RadialGradient />
+      <Stars />
+      <HomeBackground />
+      <HomeForeground />
+      <Planet />
       <Header />
       <GradientBox
         style={{

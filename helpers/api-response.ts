@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { z, ZodType } from "zod";
+import type { z, ZodType } from "zod";
 
 export type ApiResponse<Res> =
   | {
@@ -23,7 +23,7 @@ export const executeApi =
       const data = await handler(req, parsed);
       return NextResponse.json({
         type: "success",
-        data: data,
+        data,
       });
     } catch (err) {
       return NextResponse.json(

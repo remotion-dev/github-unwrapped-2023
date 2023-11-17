@@ -6,10 +6,8 @@ import {
   TOTAL_SHOOT_DURATION,
 } from "./constants";
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
-import {
-  getFramesAfterWhichShootProgressIsReached,
-  UfoPosition,
-} from "./make-ufo-positions";
+import type { UfoPosition } from "./make-ufo-positions";
+import { getFramesAfterWhichShootProgressIsReached } from "./make-ufo-positions";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 type Explosion = {
@@ -43,7 +41,7 @@ const findClosestUfoRemaining = ({
 
   for (const ufo of remainingUfos) {
     const distance = Math.sqrt(
-      Math.pow(referenceUfo.x - ufo.x, 2) + Math.pow(referenceUfo.y - ufo.y, 2)
+      (referenceUfo.x - ufo.x) ** 2 + (referenceUfo.y - ufo.y) ** 2
     );
     if (distance < closestDistance) {
       closestDistance = distance;
@@ -74,29 +72,34 @@ export const getShotsToFire = ({
   closedIndices: number[];
   ufos: UfoPosition[];
 }) => {
-  let ufosHit: number[] = [];
+  const ufosHit: number[] = [];
   const shots: Shot[] = [];
   let ufoToShoot: number | null = closedIndices[0];
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (ufosHit.length >= closedIndices.length) {
       break;
     }
+
     if (ufoToShoot === null) {
       break;
     }
+
     if (ufosHit.includes(ufoToShoot)) {
       const closest = findClosestUfoRemaining({
         referenceUfo: ufos[ufoToShoot],
-        remainingUfos: ufos.filter((ufo, index) => !ufosHit.includes(index)),
+        remainingUfos: ufos.filter((_, index) => !ufosHit.includes(index)),
       });
       if (closest === null) {
         ufoToShoot = null;
       } else {
         ufoToShoot = ufos.indexOf(closest);
       }
+
       continue;
     }
+
     ufosHit.push(ufoToShoot);
 
     const ufo = ufos[ufoToShoot];
@@ -130,17 +133,17 @@ export const getShotsToFire = ({
         if (ufosHit.includes(index)) {
           return null;
         }
+
         if (!intersection) {
           return null;
         }
 
         const distanceToRocket = Math.sqrt(
-          Math.pow(ROCKET_ORIGIN_X - intersection.x, 2) +
-            Math.pow(ROCKET_TOP_Y - intersection.y, 2)
+          (ROCKET_ORIGIN_X - intersection.x) ** 2 +
+            (ROCKET_TOP_Y - intersection.y) ** 2
         );
         const distanceToShotEnd = Math.sqrt(
-          Math.pow(shot.endX - intersection.x, 2) +
-            Math.pow(shot.endY - intersection.y, 2)
+          (shot.endX - intersection.x) ** 2 + (shot.endY - intersection.y) ** 2
         );
 
         const explodeAfterProgress =

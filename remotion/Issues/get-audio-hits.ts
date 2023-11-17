@@ -1,4 +1,4 @@
-import { ShotWithShootDelay } from "./get-shots-to-fire";
+import type { ShotWithShootDelay } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 
 export const getAudioHits = (shots: ShotWithShootDelay[]) => {

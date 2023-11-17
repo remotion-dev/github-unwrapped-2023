@@ -2,11 +2,11 @@ import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
+import type { LanguageEnumType } from "./constants";
 import {
   actionPositions,
   ACTION_DURATION,
   complexCurvePathLength,
-  LanguageEnumType,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";

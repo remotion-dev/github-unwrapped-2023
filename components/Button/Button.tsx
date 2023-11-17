@@ -21,6 +21,7 @@ const ButtonForward: React.ForwardRefRenderFunction<
   return (
     <button
       ref={ref}
+      type="button"
       className={[
         styles.button,
         secondary ? styles.secondarybutton : undefined,
@@ -32,8 +33,8 @@ const ButtonForward: React.ForwardRefRenderFunction<
     >
       {loading && (
         <>
-          <Spinner size={20}></Spinner>
-          <Spacing></Spacing>
+          <Spinner size={20} />
+          <Spacing />
         </>
       )}
       {children}

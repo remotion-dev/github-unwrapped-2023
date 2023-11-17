@@ -1,4 +1,4 @@
-import { Keyframe } from "./keyframes";
+import type { Keyframe } from "./keyframes";
 
 type KeyframeData = {
   transform: string;
@@ -23,6 +23,7 @@ export const convertAfterEffectsKeyFrames = (
       "Not a valid After Effects keyframe data (does not start with 'Adobe After Effects 8.0 Keyframe Data'"
     );
   }
+
   if (lines.at(-1) !== "End of Keyframe Data") {
     throw new Error(
       "Not a valid After Effects keyframe data (does not end with 'End of Keyframe Data'"
@@ -33,7 +34,7 @@ export const convertAfterEffectsKeyFrames = (
   let sourceWidth: number | null = null;
   let sourceHeight: number | null = null;
 
-  let keyframes: KeyframeData[] = [];
+  const keyframes: KeyframeData[] = [];
   let isInKeyFrameMode = false;
   let isInKeyFrameHeaderMode = false;
 
@@ -43,6 +44,7 @@ export const convertAfterEffectsKeyFrames = (
       isInKeyFrameHeaderMode = false;
       continue;
     }
+
     if (line.startsWith("End of Keyframe Data")) {
       isInKeyFrameMode = false;
       isInKeyFrameHeaderMode = false;
@@ -81,16 +83,20 @@ export const convertAfterEffectsKeyFrames = (
     if (tabs[1] === "Units Per Second") {
       fps = Number(tabs[2]);
     }
+
     if (tabs[1] === "Source Height") {
       sourceHeight = Number(tabs[2]);
     }
+
     if (tabs[1] === "Source Width") {
       sourceWidth = Number(tabs[2]);
     }
+
     if (tabs[0] === "Transform") {
       keyframes.push({ transform: tabs[1], keyframeArray: [] });
       isInKeyFrameHeaderMode = true;
     }
   }
+
   return { fps, sourceWidth, sourceHeight, keyframes };
 };
