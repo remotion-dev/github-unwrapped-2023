@@ -1,7 +1,9 @@
+import { useParams } from "@tanstack/react-router";
 import React, { useMemo } from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
+import { userRoute } from "../../src/routing";
 import type { CompositionProps } from "../../types/constants";
 import { Button } from "../Button/Button";
 import { GradientBox } from "../GradientBox/GradientBox";
@@ -21,9 +23,8 @@ const videoSize: React.CSSProperties = {
   fontWeight: 500,
 };
 
-type Props = { params: { username: string } };
-
-const Home = ({ params }: Props) => {
+const UserPage = () => {
+  const params = useParams({ from: userRoute });
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
       title: params.username,
@@ -36,7 +37,7 @@ const Home = ({ params }: Props) => {
         <h2 className={styles.gradientText} style={{ margin: 0 }}>
           #GitHubUnwrapped 2023
         </h2>
-        <h2 style={{ margin: 0 }}>@{params.username}</h2>
+        <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
       </div>
       <GradientBox style={{ display: "flex", flexDirection: "column" }}>
         <div className={styles.main}>
@@ -46,7 +47,7 @@ const Home = ({ params }: Props) => {
               <h2 className={styles.gradientText} style={{ margin: 0 }}>
                 #GitHubUnwrapped 2023
               </h2>
-              <h2 style={{ margin: 0 }}>@{params.username}</h2>
+              <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
             </div>
             <div style={downloadContent}>
               <Button
@@ -74,4 +75,4 @@ const Home = ({ params }: Props) => {
   );
 };
 
-export default Home;
+export default UserPage;
