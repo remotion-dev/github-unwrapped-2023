@@ -12,9 +12,9 @@ import { loginEndPoint } from "./login.js";
 import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
 
-const startViteDevelopmentServer = async (app: Express) => {
-  const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
+const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
@@ -45,7 +45,13 @@ export const startServer = async () => {
   if (backendCredentials().NODE_ENV === "development") {
     await startViteDevelopmentServer(app);
   } else {
-    app.use(serveStatic("dist"));
+    const dir = path.join(__dirname, "../../components/dist");
+    app.use(serveStatic(dir));
+
+    app.get("*", (req, response) => {
+      const index = path.join(dir, "index.html");
+      response.sendFile(index);
+    });
   }
 
   const port = process.env.PORT || 8080;
