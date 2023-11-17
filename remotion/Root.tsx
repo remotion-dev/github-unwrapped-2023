@@ -20,7 +20,12 @@ import {
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
-import { TopLanguages } from "./TopLanguages";
+import {
+  TopLanguagesCamera,
+  TopLanguagesCanvas,
+  topLanguagesSchema,
+} from "./TopLanguages";
+import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -135,12 +140,32 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
       <Composition
-        id={"TopLanguages"}
-        component={TopLanguages}
+        id={"TopLanguagesCanvas"}
+        component={TopLanguagesCanvas}
+        schema={topLanguagesSchema}
         durationInFrames={TOP_LANGUAGES_DURATION}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH * 2}
         height={VIDEO_HEIGHT * 2}
+        defaultProps={{
+          first: LanguagesEnum.enum.JavaScript,
+          second: LanguagesEnum.enum.Python,
+          third: LanguagesEnum.enum.Java,
+        }}
+      />
+      <Composition
+        id={"TopLanguagesCamera"}
+        component={TopLanguagesCamera}
+        schema={topLanguagesSchema}
+        durationInFrames={TOP_LANGUAGES_DURATION}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{
+          first: "Java" as const,
+          second: "Python" as const,
+          third: "Java" as const,
+        }}
       />
       <Composition
         id={"SevenSegment"}

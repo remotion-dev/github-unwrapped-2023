@@ -1,10 +1,12 @@
 import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import {
+  actionPositions,
   ACTION_DURATION,
   complexCurvePathLength,
-  Language,
+  LanguageEnumType,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";
@@ -16,26 +18,31 @@ const getPlanetPosition = (
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
   return {
-    x: point.x - boundingBox.width / 4,
-    y: point.y - boundingBox.height / 4,
+    x: point.x - boundingBox.width / 2 + TRANSFORM_PATH_X,
+    y: point.y - boundingBox.height / 2 + TRANSFORM_PATH_Y,
   };
 };
 
 export const Planet: React.FC<{
-  actionFrame: number;
-  rate: number;
-  language: Language;
+  actionIndex: number;
+  planetPositionRates: number[];
+  language: LanguageEnumType;
   style?: React.CSSProperties;
-}> = ({ actionFrame, style, rate, language }) => {
+  isMain: boolean;
+}> = ({ actionIndex, language, isMain, planetPositionRates }) => {
+  const planetPositionRate = planetPositionRates[actionIndex];
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const noise = noise2D("seed", frame / 10, 1) * 10;
-  const isAction =
-    frame >= actionFrame && frame < actionFrame + ACTION_DURATION;
+  const actionFrames = [
+    actionPositions[actionIndex],
+    actionPositions[actionIndex] + ACTION_DURATION,
+  ];
+  const isAction = actionFrames[0] <= frame && frame < actionFrames[1];
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
-  const planetPosition = getPlanetPosition(rate, boundingBox);
+  const planetPosition = getPlanetPosition(planetPositionRate, boundingBox);
 
   const shrinkSpring = spring({
     frame,
@@ -44,31 +51,30 @@ export const Planet: React.FC<{
       damping: 14,
     },
     durationInFrames: 20,
-    delay: actionFrame,
+    delay: actionPositions[actionIndex],
   });
 
   const growSpring = spring({
     frame,
     fps,
-    delay: actionFrame + 2,
+    delay: actionPositions[actionIndex],
   });
+
+  const scale =
+    (isAction ? 1 - shrinkSpring * 0.9 + growSpring * 0.9 : 1) *
+    (isMain ? 1 : 0.7);
+
+  const rotate = isAction ? noise : 0;
 
   return (
     <div
       style={{
         position: "absolute",
-        transform: isAction
-          ? `scale(${
-              1 - shrinkSpring * 0.2 + growSpring * 0.2
-            }) rotate(${noise}deg)`
-          : undefined,
+        transform: `scale(${scale}) rotate(${rotate}deg)`,
         top: planetPosition.y,
         left: planetPosition.x,
-        // ...style,
       }}
     >
-      {/* <JavaPlanetSVG /> */}
-      {/* <PythonPlanetSVG /> */}
       <PlanetSVG />
     </div>
   );

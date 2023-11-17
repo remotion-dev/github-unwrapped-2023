@@ -6,16 +6,15 @@ export const Description: React.FC = () => {
       <div
         style={{
           color: "white",
-          fontSize: 180,
-          top: 260,
+          fontSize: 150,
+          top: 200,
           position: "absolute",
-          right: 160,
+          right: 200,
           fontFamily: "Mona Sans",
           fontWeight: 800,
         }}
       >
-        Your t<span style={{ fontWeight: 200 }}>o</span>p <br /> languages{" "}
-        <br /> of 2023:
+        Your top <br /> languages <br /> of 2023
       </div>
     </AbsoluteFill>
   );
