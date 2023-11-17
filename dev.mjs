@@ -6,7 +6,7 @@ spawn("npx", ["tsx", "watch", "server/index.ts"], {
 });
 
 console.log("Starting frontend...");
-spawn("npx", ["next", "dev"], {
+spawn("npx", ["vite"], {
   stdio: "inherit",
   shell: process.platform === "win32" ? "cmd.exe" : undefined,
 });

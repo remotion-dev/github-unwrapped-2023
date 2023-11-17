@@ -13,16 +13,13 @@ const makeRequest = async <Res>(
   endpoint: string,
   body: unknown
 ): Promise<Res> => {
-  const result = await fetch(
-    frontendCredentials().NEXT_PUBLIC_API_URL + endpoint,
-    {
-      method: "post",
-      body: JSON.stringify(body),
-      headers: {
-        "content-type": "application/json",
-      },
-    }
-  );
+  const result = await fetch(frontendCredentials().VITE_API_URL + endpoint, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
   const json = (await result.json()) as ApiResponse<Res>;
   if (json.type === "error") {
     throw new Error(json.message);

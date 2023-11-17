@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
-import { Button } from "../components/Button/Button";
 import buttonStyles from "../components/Button/styles.module.css";
-import { Input } from "../components/Input/Input";
 import { frontendCredentials } from "../helpers/domain";
+import { Button } from "./Button/Button";
+import { Input } from "./Input/Input";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -20,7 +18,6 @@ export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
 }) => {
-  const router = useRouter();
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
@@ -31,12 +28,12 @@ export const LoginOptions: React.FC<Props> = ({
             setUserNotFound(true);
           } else {
             setUserNotFound(false);
-            router.push(username);
+            window.location.href = "/" + username;
           }
         })
         .catch((error) => console.log("error", error));
     },
-    [router, setUserNotFound, username]
+    [setUserNotFound, username]
   );
 
   return (
@@ -63,15 +60,15 @@ export const LoginOptions: React.FC<Props> = ({
       </form>
 
       <div>or</div>
-      <Link
+      <a
         style={{ textDecoration: "none" }}
         className={buttonStyles.secondarybutton}
         href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
-          frontendCredentials().NEXT_PUBLIC_CLIENT_ID
-        }&redirect_uri=${frontendCredentials().NEXT_PUBLIC_REDIRECT_URI}`}
+          frontendCredentials().VITE_CLIENT_ID
+        }&redirect_uri=${frontendCredentials().VITE_REDIRECT_URI}`}
       >
         Sign in with GitHub
-      </Link>
+      </a>
     </div>
   );
 };

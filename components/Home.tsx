@@ -1,20 +1,17 @@
-"use client";
-
-import type { NextPage } from "next";
 import { useState } from "react";
-import { GradientBox } from "../components/GradientBox/GradientBox";
-import { HomeBackground } from "../components/Home/HomeBackground";
-import { HomeForeground } from "../components/Home/HomeForeground";
-import { Planet } from "../components/Home/Planet";
-import { Stars } from "../components/Home/Stars";
-import { RadialGradient } from "../components/RadialGradient";
+import { GradientBox } from "./GradientBox/GradientBox";
 import { Header } from "./Header";
+import { HomeBackground } from "./Home/HomeBackground";
+import { HomeForeground } from "./Home/HomeForeground";
+import { Planet } from "./Home/Planet";
+import { Stars } from "./Home/Stars";
 import { LoginOptions } from "./LoginOptions";
 import { Octocat } from "./Octocat";
+import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
 import { UserNotFound } from "./UserNotFound";
 
-const Home: NextPage = () => {
+const Home = () => {
   const [username, setUsername] = useState<string>("");
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
 

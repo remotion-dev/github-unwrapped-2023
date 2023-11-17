@@ -7,13 +7,13 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();
   const { body } = request;
 
-  const { CLIENT_SECRET, NEXT_PUBLIC_CLIENT_ID, NEXT_PUBLIC_REDIRECT_URI } =
+  const { CLIENT_SECRET, VITE_CLIENT_ID, VITE_REDIRECT_URI } =
     backendCredentials();
 
   const formdata = new FormData();
-  formdata.append("client_id", NEXT_PUBLIC_CLIENT_ID);
+  formdata.append("client_id", VITE_CLIENT_ID);
   formdata.append("client_secret", CLIENT_SECRET);
-  formdata.append("redirect_uri", NEXT_PUBLIC_REDIRECT_URI);
+  formdata.append("redirect_uri", VITE_REDIRECT_URI);
   formdata.append("code", body.code);
 
   const paramsString = await fetch(

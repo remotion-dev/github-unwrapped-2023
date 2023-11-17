@@ -1,7 +1,7 @@
-import { HomeLink } from "../components/HomeLink";
 import { GithubIcon } from "../icons/GithubIcon";
 import { RemotionIcon } from "../icons/RemotionIcon";
 import { RocketIcon } from "../icons/RocketIcon";
+import { HomeLink } from "./HomeLink";
 import styles from "./styles.module.css";
 
 export const Header: React.FC = () => {

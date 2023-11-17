@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import React, { useMemo } from "react";
 import type { z } from "zod";
 import { Button } from "../../components/Button/Button";
@@ -24,7 +23,7 @@ const videoSize: React.CSSProperties = {
 
 type Props = { params: { username: string } };
 
-const Home: NextPage<Props> = ({ params }) => {
+const Home = ({ params }: Props) => {
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
       title: params.username,

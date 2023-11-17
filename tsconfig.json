@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -9,24 +9,14 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noUnusedLocals": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "noUnusedLocals": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "optimize-svgbin.ts"
-  ],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": ["**/*.ts", "**/*.tsx", "optimize-svgbin.ts"],
   "exclude": ["node_modules"]
 }
