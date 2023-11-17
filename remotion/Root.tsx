@@ -6,6 +6,7 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../types/constants";
+import { ContributionsScene } from "./Contributions";
 import { Issues, issuesSchema } from "./Issues";
 import {
   JumpingNumberDemo,
@@ -30,6 +31,15 @@ import { LanguagesEnum } from "./TopLanguages/constants";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id={"Contributions"}
+        component={ContributionsScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      />
       <Composition
         id={"Spaceship"}
         component={Spaceship}
