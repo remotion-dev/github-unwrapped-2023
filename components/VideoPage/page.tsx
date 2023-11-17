@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
-import { Button } from "../../components/Button/Button";
-import { GradientBox } from "../../components/GradientBox/GradientBox";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
 import type { CompositionProps } from "../../types/constants";
+import { Button } from "../Button/Button";
+import { GradientBox } from "../GradientBox/GradientBox";
 import { Actions } from "./Actions";
 import { Player } from "./Player";
 import styles from "./styles.module.css";

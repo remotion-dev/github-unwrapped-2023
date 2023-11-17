@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
 import { UserIcon } from "../../icons/UserIcon";
 import { XIcon } from "../../icons/XIcon";
@@ -13,8 +12,6 @@ const actionsWrapper: React.CSSProperties = {
 };
 
 export const Actions: React.FC = () => {
-  const router = useRouter();
-
   return (
     <div style={actionsWrapper}>
       <Action
@@ -36,7 +33,10 @@ export const Actions: React.FC = () => {
       <Action
         icon={(params) => <UserIcon {...params} />}
         label="Unwrap another user"
-        onClick={() => router.push("/")}
+        // TODO: Use router
+        onClick={() => {
+          window.location.href = "/";
+        }}
       />
     </div>
   );

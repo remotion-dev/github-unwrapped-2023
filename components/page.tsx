@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { frontendCredentials } from "../../helpers/domain";
+import { frontendCredentials } from "../helpers/domain";
 
 const login = async (code: string) => {
   const res = await fetch(`${frontendCredentials().VITE_API_URL}/api/login`, {
