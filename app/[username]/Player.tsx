@@ -22,6 +22,8 @@ export const Player: React.FC<{
   return (
     <div className={styles.playerWrapper}>
       <RemotionPlayer
+        // TODO: Optimize
+        numberOfSharedAudioTags={10}
         component={Main}
         inputProps={inputProps}
         durationInFrames={DURATION_IN_FRAMES}
