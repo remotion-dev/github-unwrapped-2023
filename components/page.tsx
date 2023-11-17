@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { frontendCredentials } from "../helpers/domain";
 
 const login = async (code: string) => {
@@ -25,16 +25,16 @@ const login = async (code: string) => {
 const LoginRedirectPage = () => {
   const code = new URLSearchParams(window.location.search).get("code");
 
-  useEffect(() => {
-    const effectLogin = async () => {
-      if (code) {
-        const user = await login(code);
-        window.location.href = `/${user.login}`;
-      }
-    };
-
-    effectLogin();
+  const doLogin = useCallback(async () => {
+    if (code) {
+      const user = await login(code);
+      window.location.href = `/${user.login}`;
+    }
   }, [code]);
+
+  useEffect(() => {
+    doLogin();
+  }, [code, doLogin]);
 
   if (!code) {
     return <div>authentication failed</div>;

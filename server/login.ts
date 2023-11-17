@@ -25,7 +25,9 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     }
   );
 
-  const params = new URLSearchParams(await paramsString.text());
+  const paramsStringText = await paramsString.text();
+
+  const params = new URLSearchParams(paramsStringText);
 
   const access_token = params.get("access_token");
 
@@ -35,6 +37,7 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     },
   });
   const json = await userRes.json();
+  console.log({ json, paramsStringText, body });
 
   return response.json(json);
 };
