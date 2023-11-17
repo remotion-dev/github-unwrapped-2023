@@ -3,12 +3,13 @@ import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import {
+  actionPositions,
+  ACTION_DURATION,
   complexCurvePathLength,
   LanguageEnumType,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";
-import { getActionFrames } from "./Rocket";
 
 const getPlanetPosition = (
   rate: number,
@@ -24,25 +25,27 @@ const getPlanetPosition = (
 
 export const Planet: React.FC<{
   actionIndex: number;
-  actionPositions: number[];
+  planetPositionRates: number[];
   language: LanguageEnumType;
   style?: React.CSSProperties;
   isMain: boolean;
   frameOffset: number;
-}> = ({ actionIndex, actionPositions, language, isMain, frameOffset }) => {
-  const actionPosition = actionPositions[actionIndex];
+}> = ({ actionIndex, language, isMain, frameOffset, planetPositionRates }) => {
+  const planetPositionRate = planetPositionRates[actionIndex];
   const frame = useCurrentFrame();
   const frameWithOffset = frame + frameOffset;
   const { fps } = useVideoConfig();
   const noise = noise2D("seed", frameWithOffset / 10, 1) * 10;
-  const actionFrames = getActionFrames(actionPositions);
+  const actionFrames = [
+    actionPositions[actionIndex],
+    actionPositions[actionIndex] + ACTION_DURATION,
+  ];
   const isAction =
-    actionFrames[actionIndex][0] <= frameWithOffset &&
-    frameWithOffset < actionFrames[actionIndex][1];
+    actionFrames[0] <= frameWithOffset && frameWithOffset < actionFrames[1];
 
   const { PlanetSVG, boundingBox } = mapLanguageToPlanet[language];
 
-  const planetPosition = getPlanetPosition(actionPosition, boundingBox);
+  const planetPosition = getPlanetPosition(planetPositionRate, boundingBox);
 
   const shrinkSpring = spring({
     frame: frameWithOffset,
@@ -51,13 +54,13 @@ export const Planet: React.FC<{
       damping: 14,
     },
     durationInFrames: 20,
-    delay: actionFrames[actionIndex][0],
+    delay: actionPositions[actionIndex],
   });
 
   const growSpring = spring({
     frame: frameWithOffset,
     fps,
-    delay: actionFrames[actionIndex][0],
+    delay: actionPositions[actionIndex],
   });
 
   const scale =

@@ -9,8 +9,17 @@ import {
 import {
   ACTION_DURATION,
   complexCurvePathLength,
+  firstPushEnd,
+  fourthPushEnd,
+  fourthPushStart,
   newPath,
-  PLANET_POSITIONS,
+  PLANET_1_POSITION,
+  PLANET_2_POSITION,
+  PLANET_3_POSITION,
+  secondPushEnd,
+  secondPushStart,
+  thirdPushEnd,
+  thirdPushStart,
 } from "./constants";
 import {
   NewRocketSVG,
@@ -51,6 +60,45 @@ export const getRate = ({
   );
 };
 
+export const getNewRate = (frame: number) => {
+  const push1 = interpolate(frame, [0, firstPushEnd], [0, PLANET_1_POSITION], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const push2 = interpolate(
+    frame,
+    [secondPushStart, secondPushEnd],
+    [0, PLANET_2_POSITION - PLANET_1_POSITION],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+
+  const push3 = interpolate(
+    frame,
+    [thirdPushStart, thirdPushEnd],
+    [0, PLANET_3_POSITION - PLANET_2_POSITION],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+
+  const push4 = interpolate(
+    frame,
+    [fourthPushStart, fourthPushEnd],
+    [0, 1 - PLANET_3_POSITION],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+
+  return push1 + push2 + push3 + push4;
+};
+
 export const getRates = (stopAtFrames: number[]) => {
   // sort descending
   stopAtFrames = stopAtFrames.sort((a, b) => a - b);
@@ -60,14 +108,11 @@ export const getRates = (stopAtFrames: number[]) => {
 export const Rocket: React.FC<{ frameOffset: number }> = ({ frameOffset }) => {
   const frame = useCurrentFrame();
   const frameWithOffset = frame + frameOffset;
-  const rate = getRate({
-    frame: frameWithOffset,
-    actionLocations: PLANET_POSITIONS,
-  });
+  const newRate = getNewRate(frameWithOffset);
 
-  const point = getPointAtLength(newPath, complexCurvePathLength * rate);
+  const point = getPointAtLength(newPath, complexCurvePathLength * newRate);
 
-  const tan = getTangentAtLength(newPath, complexCurvePathLength * rate);
+  const tan = getTangentAtLength(newPath, complexCurvePathLength * newRate);
   const angleInRadians = Math.atan2(tan.y, tan.x);
   const angleInDegrees = angleInRadians * (180 / Math.PI) + 90;
 

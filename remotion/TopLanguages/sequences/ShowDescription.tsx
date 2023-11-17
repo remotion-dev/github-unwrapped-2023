@@ -3,28 +3,27 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { topLanguagesSchema, ZoomedOutTopLanguages } from "..";
 import {
+  actionPositions,
+  ACTION_DURATION,
   complexCurvePathLength,
+  firstPushEnd,
   newPath,
-  PLANET_POSITIONS,
 } from "../constants";
 import { LangugageDescription } from "../LanguageDescription";
-import { getRate } from "../Rocket";
+import { getNewRate } from "../Rocket";
 
-const FRAME_OFFSET = 40;
-const SCALE_BREAKPOINT = 140;
+const FRAME_OFFSET = 45;
+const SCALE_BREAKPOINT = 90;
 
 const computeTranslation = (
   frame: number,
   scale = 1
 ): { marginLeft: number; marginTop: number } => {
+  const rate = getNewRate(frame);
+
   if (frame < SCALE_BREAKPOINT + FRAME_OFFSET) {
     return { marginLeft: -860, marginTop: -250 };
   }
-
-  const rate = getRate({
-    frame,
-    actionLocations: PLANET_POSITIONS,
-  });
 
   const point = getPointAtLength(newPath, complexCurvePathLength * rate);
 
@@ -64,14 +63,27 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
         }}
         frameOffset={FRAME_OFFSET}
       />
-      {languages.map((l, index) => (
-        <LangugageDescription
-          key={l + index}
-          language={l}
-          position={index}
-          frameOffset={FRAME_OFFSET}
-        />
-      ))}
+      {languages.map((l, index) => {
+        console.log(firstPushEnd);
+        console.log(
+          index,
+          actionPositions[index],
+          actionPositions[index] + ACTION_DURATION
+        );
+
+        return (
+          <LangugageDescription
+            key={l + index}
+            actionFrames={[
+              actionPositions[index],
+              actionPositions[index] + ACTION_DURATION,
+            ]}
+            language={l}
+            position={index}
+            frameOffset={FRAME_OFFSET}
+          />
+        );
+      })}
     </AbsoluteFill>
   );
 };

@@ -11,21 +11,21 @@ export const Planets: React.FC<
     <AbsoluteFill>
       <Planet
         actionIndex={2}
-        actionPositions={PLANET_POSITIONS}
+        planetPositionRates={PLANET_POSITIONS}
         language={third}
         isMain={true}
         frameOffset={frameOffset}
       />
       <Planet
         actionIndex={1}
-        actionPositions={PLANET_POSITIONS}
+        planetPositionRates={PLANET_POSITIONS}
         language={second}
         isMain={false}
         frameOffset={frameOffset}
       />
       <Planet
         actionIndex={0}
-        actionPositions={PLANET_POSITIONS}
+        planetPositionRates={PLANET_POSITIONS}
         language={first}
         isMain={false}
         frameOffset={frameOffset}

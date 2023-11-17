@@ -4,8 +4,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { LanguageEnumType, LanguagesEnum, PLANET_POSITIONS } from "./constants";
-import { getActionFrames } from "./Rocket";
+import { LanguageEnumType, LanguagesEnum } from "./constants";
 
 const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
   [LanguagesEnum.enum.Java]: "rgb(201, 246, 253)",
@@ -17,9 +16,8 @@ export const LangugageDescription: React.FC<{
   language: LanguageEnumType;
   position: number;
   frameOffset?: number;
-}> = ({ language, position, frameOffset }) => {
-  const allActionFrames = getActionFrames(PLANET_POSITIONS);
-  const actionFrames = allActionFrames[position];
+  actionFrames: [number, number];
+}> = ({ language, position, frameOffset, actionFrames }) => {
   const frame = useCurrentFrame();
   const frameWithOffset = frame + (frameOffset ?? 0);
   const { fps } = useVideoConfig();
