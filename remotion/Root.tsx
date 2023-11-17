@@ -21,7 +21,7 @@ import {
 } from "./SevenSegment/SevenSegmentNumber";
 import { Spaceship } from "./Spaceship";
 import { StarSprite } from "./StarSprite";
-import { StarsReceived } from "./StarsReceived";
+import { StarsReceived, starsReceivedSchema } from "./StarsReceived";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,
@@ -140,6 +140,7 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={starsReceivedSchema}
         defaultProps={{
           starsReceived: 5,
         }}

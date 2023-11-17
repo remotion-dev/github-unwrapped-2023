@@ -11,12 +11,41 @@ import StarSprite7SVG from "./sprites/Stars7SVG";
 const BIGGEST_WIDTH = 256;
 const BIGGEST_HEIGHT = 284;
 
-export const POOF_DURATION = 6;
+export const STAR_DURATION = 7;
 
-export const StarSprite: React.FC = () => {
-  const frame = Math.round(useCurrentFrame() / 2);
+export const StarSprite: React.FC<{ burstFrame?: number }> = ({
+  burstFrame,
+}) => {
+  const frame = useCurrentFrame();
+  const actualFrame = Math.round((frame - (burstFrame ?? 0)) / 2);
 
   const actualScale = 1.5;
+
+  const renderSprite = () => {
+    switch (actualFrame) {
+      case 0: {
+        return <StarSprite1ASVG />;
+      }
+      case 1: {
+        return <StarSprite2SVG />;
+      }
+      case 2: {
+        return <StarSprite3SVG />;
+      }
+      case 3: {
+        return <StarSprite4SVG />;
+      }
+      case 4: {
+        return <StarSprite5SVG />;
+      }
+      case 5: {
+        return <StarSprite6SVG />;
+      }
+      case 6: {
+        return <StarSprite7SVG />;
+      }
+    }
+  };
 
   return (
     <AbsoluteFill
@@ -37,13 +66,11 @@ export const StarSprite: React.FC = () => {
           transform: `scale(${actualScale})`,
         }}
       >
-        {frame === 0 ? <StarSprite1ASVG /> : null}
-        {frame === 1 ? <StarSprite2SVG /> : null}
-        {frame === 2 ? <StarSprite3SVG /> : null}
-        {frame === 3 ? <StarSprite4SVG /> : null}
-        {frame === 4 ? <StarSprite5SVG /> : null}
-        {frame === 5 ? <StarSprite6SVG /> : null}
-        {frame === 6 ? <StarSprite7SVG /> : null}
+        {burstFrame && frame < burstFrame ? (
+          <StarSprite1ASVG />
+        ) : (
+          renderSprite()
+        )}
       </div>
     </AbsoluteFill>
   );
