@@ -1,16 +1,8 @@
-import { Link, Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
+import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import Home from "../components/Home";
 
 const Root = () => {
-  return (
-    <>
-      <div>
-        <Link to="/">Home</Link> <Link to="/about">About</Link>
-      </div>
-      <hr />
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 
 const rootRoute = new RootRoute({
