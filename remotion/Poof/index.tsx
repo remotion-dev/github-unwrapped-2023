@@ -266,6 +266,8 @@ const Sprite6 = (props: SVGProps<SVGSVGElement>) => (
 const BIGGEST_WIDTH = 256;
 const BIGGEST_HEIGHT = 284;
 
+export const POOF_DURATION = 6;
+
 export const Poof: React.FC<{
   x: number;
   y: number;

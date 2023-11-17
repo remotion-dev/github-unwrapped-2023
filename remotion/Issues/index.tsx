@@ -1,11 +1,33 @@
-import React from "react";
-import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
+import React, { useMemo } from "react";
+import {
+  AbsoluteFill,
+  Audio,
+  Easing,
+  interpolate,
+  Sequence,
+  spring,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
-import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
-import { Poof } from "../Poof";
+import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
+import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
+import { getAudioHits } from "./get-audio-hits";
+import {
+  addShootDelays,
+  getExplosions,
+  getShootDuration,
+  getShotsToFire,
+} from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { makeUfoPositions } from "./make-ufo-positions";
+import { IssueNumber } from "./IssueNumber";
+import {
+  FPS,
+  makeUfoPositions,
+  UFO_ENTRANCE_DELAY,
+  UFO_ENTRANCE_DURATION,
+} from "./make-ufo-positions";
 import { Rocket } from "./Rocket";
 import { Ufo } from "./Ufo";
 
@@ -21,7 +43,47 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const positions = makeUfoPositions(totalIssues, closedIssues, frame);
+  const { ufos, closedIndices, offsetDueToManyUfos, rowHeight, rows } =
+    useMemo(() => {
+      return makeUfoPositions({
+        numberOfUfos: totalIssues,
+        closedIssues,
+      });
+    }, [closedIssues, totalIssues]);
+
+  const entrace = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: UFO_ENTRANCE_DURATION,
+    delay: UFO_ENTRANCE_DELAY,
+  });
+
+  const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const shots = useMemo(() => {
+    return getShotsToFire({ closedIndices, ufos });
+  }, [closedIndices, ufos]);
+
+  const withShootDurations = addShootDelays(shots);
+  const audioHits = getAudioHits(withShootDurations);
+  const explosions = getExplosions({ shots: withShootDurations, ufos });
+
+  const yOffset = interpolate(
+    frame,
+    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
+    [0, -offsetDueToManyUfos + 400],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.ease),
+    }
+  );
 
   return (
     <AbsoluteFill
@@ -31,71 +93,79 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       }}
     >
       <AbsoluteFill>
-        <Background></Background>
+        <Background />
       </AbsoluteFill>
-      {positions.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
-
-        return (
-          <Sequence durationInFrames={p.shootDuration + p.shootDelay} key={i}>
-            <GlowStick
-              shootDelay={p.shootDelay}
-              shootDuration={p.shootDuration}
-              targetX={p.x}
-              targetY={p.y}
-            ></GlowStick>
-          </Sequence>
-        );
-      })}
-      {positions.map((p, i) => {
-        return (
-          <Sequence
-            key={i}
-            durationInFrames={
-              p.isClosed ? p.shootDelay + p.shootDuration + 2 : Infinity
-            }
-          >
-            <Ufo
-              explodeAfter={p.shootDelay + p.shootDuration}
-              scale={p.scale}
-              x={p.x}
-              y={p.y}
-            ></Ufo>
-          </Sequence>
-        );
-      })}
-      {positions.map((p, i) => {
-        if (!p.isClosed) {
-          return null;
-        }
-        return (
-          <Sequence key={i} from={p.shootDelay + p.shootDuration} layout="none">
-            <Poof ufoScale={p.scale} x={p.x} y={p.y}></Poof>
-          </Sequence>
-        );
-      })}
-      <AbsoluteFill>
-        <Rocket positions={positions}></Rocket>
+      <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
+        {withShootDurations.map((p, i) => {
+          return (
+            <Sequence
+              showInTimeline={false}
+              durationInFrames={getShootDuration(shots) + p.shootDelay}
+              key={i}
+            >
+              <GlowStick
+                shootDelay={p.shootDelay}
+                targetX={p.endX}
+                targetY={p.endY}
+                duration={getShootDuration(shots)}
+              ></GlowStick>
+            </Sequence>
+          );
+        })}
+        {ufos.map((p, i) => {
+          const explosion = explosions.find((e) => e.index === i);
+          return (
+            <Sequence
+              showInTimeline={false}
+              key={i}
+              durationInFrames={
+                explosion ? explosion.explodeAfterFrames + 3 : Infinity
+              }
+            >
+              <Ufo
+                explodeAfter={
+                  explosion ? explosion.explodeAfterFrames : Infinity
+                }
+                scale={p.scale}
+                x={p.x}
+                y={p.y}
+                yOffset={entranceYOffset}
+              ></Ufo>
+            </Sequence>
+          );
+        })}
+        {explosions.map((explosion, i) => {
+          return (
+            <Sequence
+              showInTimeline={false}
+              key={i}
+              from={explosion.explodeAfterFrames}
+              durationInFrames={POOF_DURATION}
+              layout="none"
+            >
+              <Poof
+                ufoScale={ufos[0].scale}
+                x={explosion.x}
+                y={explosion.y}
+              ></Poof>
+            </Sequence>
+          );
+        })}
+        {audioHits.map((audioHit, i) => {
+          return (
+            <Sequence key={i} from={audioHit}>
+              <Audio src={staticFile("laser-shoot.mp3")}></Audio>)
+            </Sequence>
+          );
+        })}
+        <AbsoluteFill>
+          <Rocket shots={withShootDurations}></Rocket>
+        </AbsoluteFill>
       </AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          fontSize: 100,
-          color: "white",
-          fontFamily: "Mona Sans",
-          fontWeight: "800",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          padding: 40,
-        }}
-      >
-        <JumpingNumber
-          duration={40}
-          from={0}
-          to={closedIssues + openIssues}
-        ></JumpingNumber>
-      </AbsoluteFill>
+      <IssueNumber
+        closedIssues={closedIssues}
+        openIssues={openIssues}
+      ></IssueNumber>
     </AbsoluteFill>
   );
 };

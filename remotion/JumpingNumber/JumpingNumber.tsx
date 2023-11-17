@@ -45,6 +45,7 @@ export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
     <span
       style={{
         scale: String(scale),
+        fontVariantNumeric: "tabular-nums",
         display: "inline-block",
       }}
     >
