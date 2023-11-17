@@ -5,7 +5,7 @@ import {
 } from "@remotion/lambda";
 import dotenv from "dotenv";
 import path from "path";
-import { RAM, REGION, SITE_NAME, TIMEOUT } from "./config";
+import { RAM, REGION, SITE_NAME, TIMEOUT } from "./src/config";
 
 console.log("Selected region:", REGION);
 dotenv.config();

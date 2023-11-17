@@ -1,10 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import buttonStyles from "../components/Button/styles.module.css";
-import {
-  frontendCredentials,
-  makeRedirectUriFrontend,
-} from "../src/helpers/domain";
 import { Button } from "./Button/Button";
+import { frontendCredentials, makeRedirectUriFrontend } from "./env";
 import { Input } from "./Input/Input";
 import styles from "./styles.module.css";
 

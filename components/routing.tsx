@@ -1,6 +1,6 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
-import Home from "../components/Home";
-import UserPage from "../components/VideoPage/page";
+import Home from "./Home.jsx";
+import UserPage from "./VideoPage/page.jsx";
 
 const Root = () => {
   return <Outlet />;

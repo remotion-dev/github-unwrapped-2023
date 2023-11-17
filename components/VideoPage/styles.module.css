@@ -25,7 +25,6 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url("/background2.png");
   background-position: center;
   background-size: cover;
   position: relative;

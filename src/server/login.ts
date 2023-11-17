@@ -1,6 +1,9 @@
 import type { Request, Response } from "express";
 import { z } from "zod";
-import { backendCredentials, makeRedirectUriBackend } from "../helpers/domain";
+import {
+  backendCredentials,
+  makeRedirectUriBackend,
+} from "../helpers/domain.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();

@@ -6,10 +6,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
-import { backendCredentials, REDIRECT_URL_ENDPOINT } from "../helpers/domain";
-import { loginEndPoint } from "./login";
-import { progressEndPoint } from "./progress";
-import { renderEndPoint } from "./render";
+import {
+  backendCredentials,
+  REDIRECT_URL_ENDPOINT,
+} from "../helpers/domain.js";
+import { loginEndPoint } from "./login.js";
+import { progressEndPoint } from "./progress.js";
+import { renderEndPoint } from "./render.js";
 
 const startViteDevelopmentServer = async (app: Express) => {
   const __dirname = fileURLToPath(new URL(".", import.meta.url));

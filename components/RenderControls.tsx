@@ -1,5 +1,4 @@
 import type { z } from "zod";
-import { useRendering } from "../src/helpers/use-rendering";
 import type { CompositionProps } from "../types/constants";
 import { COMP_NAME } from "../types/constants";
 import { AlignEnd } from "./AlignEnd";
@@ -10,6 +9,7 @@ import { ErrorComp } from "./Error";
 import { Input } from "./Input/Input";
 import { ProgressBar } from "./ProgressBar";
 import { Spacing } from "./Spacing";
+import { useRendering } from "./use-rendering";
 
 export const RenderControls: React.FC<{
   text: string;
