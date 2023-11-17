@@ -50,11 +50,13 @@ export const startServer = async () => {
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
 
+    app.get("/:username", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
     app.use(serveStatic(viteDistDir));
 
-    app.get("*", handleIndexHtmlProduction);
+    app.get("/:username", handleIndexHtmlProduction());
+    app.get("*", handleIndexHtmlProduction());
   }
 
   const port = process.env.PORT || 8080;

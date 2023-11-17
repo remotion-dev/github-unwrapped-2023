@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
 import { backendCredentials } from "../helpers/domain.js";
+import { replaceAppHead } from "./seo.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const rootDir = path.join(__dirname, "..", "..");
@@ -25,8 +26,9 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
     const template = readFileSync(index, "utf-8");
     try {
       const transformed = await vite.transformIndexHtml(req.url, template);
+
       response.status(200);
-      response.send(transformed);
+      response.send(replaceAppHead(req.params.username ?? null, transformed));
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
       console.error(err);
@@ -40,7 +42,7 @@ export const handleIndexHtmlProduction = () => {
 
   return (req: Request, response: Response) => {
     response.status(200);
-    response.send(template);
+    response.send(replaceAppHead(req.params.username ?? null, template));
     response.end();
   };
 };
