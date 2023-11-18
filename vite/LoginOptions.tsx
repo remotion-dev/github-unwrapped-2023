@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import React, { useCallback } from "react";
 import { Button } from "./Button/Button";
 import { Input } from "./Input/Input";
-import { SignInWithGitHub } from "./SignInWithiGitHub";
+import { SignInWithGitHub } from "./SignInWithGitHub";
 import { $usernamePath } from "./routing";
 import styles from "./styles.module.css";
 

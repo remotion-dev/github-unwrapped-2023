@@ -7,7 +7,7 @@ import { Action } from "./Action";
 const actionsWrapper: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  gap: 20,
+  gap: 8,
 };
 
 export const Actions: React.FC = () => {

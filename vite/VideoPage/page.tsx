@@ -17,12 +17,6 @@ const downloadContent: React.CSSProperties = {
   gap: 8,
 };
 
-const videoSize: React.CSSProperties = {
-  color: "rgba(211, 211, 211, 1)",
-  fontSize: 14,
-  fontWeight: 500,
-};
-
 const UserPage = () => {
   const params = useParams({ from: userRoute });
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
@@ -45,7 +39,6 @@ const UserPage = () => {
           <div className={styles.information}>
             <div className={styles.title}>
               <Link to={"/"}>
-                {" "}
                 <h2 className={styles.gradientText} style={{ margin: 0 }}>
                   #GitHubUnwrapped 2023
                 </h2>
@@ -64,8 +57,8 @@ const UserPage = () => {
               >
                 Download Video <DownloadIcon width={20} color="white" />
               </Button>
-              <div style={videoSize}>This MP4 has 11.4 MB.</div>
             </div>
+            <div style={{ flex: 1 }} />
             <Actions />
           </div>
         </div>

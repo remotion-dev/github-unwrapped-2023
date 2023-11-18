@@ -37,14 +37,13 @@
 .information {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 24px;
+  padding:  18px 24px;
 }
 
 .title {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .mobileTitle {
@@ -56,7 +55,7 @@
 
 .main {
   display: flex;
-  gap: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media screen and (max-width: 900px) {

@@ -27,9 +27,11 @@ const Home = () => {
         style={{
           display: "flex",
           flexDirection: "column",
+          padding: 30,
           paddingRight: 300,
           position: "fixed",
           bottom: 220,
+          overflow: "visible",
         }}
       >
         <div className={`${styles.gradientText} ${styles.h2}`}>
