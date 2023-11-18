@@ -12,7 +12,6 @@ export const GradientBox: React.FC<{
       className={[styles.gradientBox, className].join(" ")}
       style={{
         borderRadius: 10,
-        overflow: "hidden",
         ...style,
       }}
     >

@@ -4,9 +4,3 @@
   overflow: hidden;
   border-radius: 15px;
 }
-
-@media screen and (max-width: 1024px) {
-  .playerWrapper {
-    width: 100%;
-  }
-}

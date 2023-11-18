@@ -10,9 +10,10 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../../types/constants";
+import styles from "./styles.module.css";
 
 const player: React.CSSProperties = {
-  width: 600,
+  width: "100%",
   aspectRatio: 1,
   overflow: "hidden",
 };
@@ -57,6 +58,7 @@ export const PlayerContainer: React.FC<{
       compositionHeight={VIDEO_HEIGHT}
       compositionWidth={VIDEO_WIDTH}
       style={player}
+      className={styles.playerradius}
       clickToPlay
       loop
     />

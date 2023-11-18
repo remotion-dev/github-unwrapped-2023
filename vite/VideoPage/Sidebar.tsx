@@ -17,6 +17,7 @@ const information: React.CSSProperties = {
   flexDirection: "column",
   gap: 8,
   padding: 16,
+  minWidth: 350,
 };
 
 const title: React.CSSProperties = {

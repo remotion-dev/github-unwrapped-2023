@@ -4,6 +4,7 @@ import type { z } from "zod";
 import type { CompositionProps } from "../../types/constants";
 import { userRoute } from "../routing";
 import { VideoBox } from "./VideoBox";
+import styles from "./styles.module.css";
 
 const outer: React.CSSProperties = {
   width: "100vw",
@@ -30,8 +31,8 @@ const container: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   position: "absolute",
-  justifyContent: "center",
   alignItems: "center",
+  overflow: "auto",
 };
 
 export const UserPage = () => {
@@ -45,7 +46,7 @@ export const UserPage = () => {
   return (
     <div style={outer}>
       <div style={background} id="videobackground" />
-      <div style={container}>
+      <div style={container} className={styles.videobox}>
         <VideoBox inputProps={inputProps} />
       </div>
     </div>
