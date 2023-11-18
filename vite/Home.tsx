@@ -1,4 +1,3 @@
-import { Header } from "./Header";
 import { HomeBackground } from "./Home/HomeBackground";
 import { HomeForeground } from "./Home/HomeForeground";
 import { Planet } from "./Home/Planet";
@@ -15,7 +14,6 @@ const Home = () => {
       <HomeBackground />
       <HomeForeground />
       <Planet />
-      <Header />
       <HomeBox />
     </div>
   );

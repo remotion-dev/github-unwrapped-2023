@@ -1,15 +1,17 @@
 .container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  a {
-    color: white;
-    text-decoration: none;
-    transition: opacity 0.2s ease-in-out;
-    font-weight: 600;
-    font-size: 16px;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+  font-weight: 600;
+  font-size: 16px;
+}
+a:hover {
+  text-decoration: underline;
+}

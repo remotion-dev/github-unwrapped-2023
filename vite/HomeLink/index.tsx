@@ -9,9 +9,6 @@ export const HomeLink: React.FC<{
 }> = ({ label, icon, href }) => {
   return (
     <a className="container" href={href}>
-      <style>{`
-       
-      `}</style>
       {icon({ height: 16, width: 16, color: "white" })}
       {label}
     </a>
