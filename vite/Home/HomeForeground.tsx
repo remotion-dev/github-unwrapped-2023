@@ -4,7 +4,7 @@ export const HomeForeground: React.FC = () => {
       style={{
         position: "fixed",
         width: 1800,
-        bottom: 0,
+        bottom: -150,
       }}
       viewBox="0 0 1442 997"
     >

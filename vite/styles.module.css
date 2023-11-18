@@ -50,8 +50,8 @@
 
 .octocat {
   position: absolute;
-  height: 296px;
-  bottom: calc(-296px + 64px);
+  height: 236px;
+  bottom: -187px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -68,7 +68,6 @@
   font-size: 18px;
   padding: 0;
   margin: 0;
-  margin-bottom: 10px;
   font-weight: bolder;
 }
 

@@ -29,7 +29,6 @@ export const PlayerContainer: React.FC<{
         compositionHeight={VIDEO_HEIGHT}
         compositionWidth={VIDEO_WIDTH}
         style={player}
-        autoPlay
         loop
       />
     </div>
