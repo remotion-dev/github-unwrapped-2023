@@ -1,24 +1,3 @@
-.gradientText {
-  background: linear-gradient(270.02deg, #c3abff 3.63%, #eee69d 99.87%),
-    linear-gradient(0deg, #ffffff, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.footer {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  color: rgba(231, 231, 231, 1);
-  font-size: 16px;
-  font-weight: 500;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-.footer:hover {
-  text-decoration: underline;
-}
 
 .wrapper {
   width: 100vw;
@@ -34,18 +13,6 @@
   align-items: center;
 }
 
-.information {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding:  18px 24px;
-}
-
-.title {
-  display: flex;
-  flex-direction: column;
-}
-
 .mobileTitle {
   flex-direction: column;
   align-items: center;
@@ -53,22 +20,4 @@
   display: none;
 }
 
-.main {
-  display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-@media screen and (max-width: 900px) {
-  .mobileTitle {
-    display: flex;
-  }
-  .main {
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .title {
-    display: none;
-  }
-}
