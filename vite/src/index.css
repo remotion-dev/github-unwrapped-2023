@@ -43,3 +43,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
+#videobackground {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.videoplaying #videobackground {
+  opacity: 0.2;
+}

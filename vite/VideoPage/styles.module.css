@@ -1,18 +1,3 @@
-
-.wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-image: url("/background2.png");
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .mobileTitle {
   flex-direction: column;
   align-items: center;
