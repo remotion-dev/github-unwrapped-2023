@@ -2,7 +2,7 @@
   background-color: black;
   color: white;
   height: 48px;
-  padding: 0 24px;
+  padding: 0 50px;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
@@ -35,23 +35,10 @@
 }
 
 .loginwithgithub {
-  background: radial-gradient(
-    121.11% 121.11% at 47.08% 100%,
-    #0f102e 0%,
-    #000 100%
-  );
   text-align: center;
   font-family: "Mona Sans";
   font-weight: bold;
-  border-radius: 5px;
-  height: 56px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   appearance: none;
-  font-size: 16px;
-  text-wrap: nowrap;
   cursor: pointer;
 }
 

@@ -8,8 +8,8 @@ import { Stars } from "./Home/Stars";
 import { LoginOptions } from "./LoginOptions";
 import { Octocat } from "./Octocat";
 import { RadialGradient } from "./RadialGradient";
-import { UserNotFound } from "./UserNotFound";
 import styles from "./styles.module.css";
+import { UserNotFound } from "./UserNotFound";
 
 const Home = () => {
   const [username, setUsername] = useState<string>("");
@@ -28,6 +28,7 @@ const Home = () => {
           flex: "0 0 450px",
           display: "flex",
           flexDirection: "column",
+          paddingRight: 300,
         }}
       >
         <div className={`${styles.gradientText} ${styles.h2}`}>
@@ -35,15 +36,17 @@ const Home = () => {
         </div>
         <div
           style={{
-            fontSize: 32,
+            fontSize: 44,
             fontFamily: "Mona Sans",
           }}
           className={styles.title}
         >
-          Unlock your coding year in review
+          Your coding year in review
         </div>
-        <div style={{ fontWeight: 400, fontSize: 20 }}>
+        <div style={{ fontWeight: 500, fontSize: 16 }}>
           Get a personalized video of your GitHub activity in 2023.
+          <br />
+          Type your username to get started!
         </div>
         <div className={styles.inputWrapper}>
           {userNotFound && <UserNotFound />}

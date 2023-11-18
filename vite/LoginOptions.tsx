@@ -44,23 +44,26 @@ export const LoginOptions: React.FC<Props> = ({
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
-          placeHolder="Username"
+          placeHolder="GitHub Username"
           setText={(s) => setUsername(s)}
           invalid={userNotFound}
           style={{
             fontWeight: "bold",
             padding: 15,
+            fontFamily: "Mona Sans",
+            height: 56,
+            fontSize: 20,
+            marginRight: 10,
           }}
-          className={styles.input}
         />
-        <Button
-          className={styles.button}
-          style={{ borderRadius: 5, height: 56, marginTop: 8 }}
-        >
-          Start Unwrapped
-        </Button>
+        <Button style={{ borderRadius: 5, height: 56 }}>Unwrap</Button>
       </form>
-      <SignInWithGitHub />
+      <div style={{ width: 20, display: "inline-block" }} />
+      <div style={{ fontSize: 16, fontWeight: 500 }}>
+        Got private contributions?
+        <div style={{ width: 10, display: "inline-block" }} />
+        <SignInWithGitHub />
+      </div>
     </div>
   );
 };

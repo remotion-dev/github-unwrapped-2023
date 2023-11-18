@@ -25,34 +25,27 @@
 .title {
   margin: 0;
   padding: 0;
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 800;
   color: white;
-  margin-bottom: 10px;
 }
 
 .inputContainer {
-  width: 100%;
-  padding-top: auto;
-  display: flex;
-  gap: 40px;
-  justify-content: space-between;
   font-family: "Mona Sans";
-  align-items: flex-end;
 }
 
 .inputWrapper {
-  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 30px;
+  margin-top: 70px;
 }
 
 .buttonContainer {
   display: flex;
   flex: 1;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .octocat {
@@ -65,7 +58,7 @@
 }
 
 .gradientText {
-  background: linear-gradient(270.02deg, #c0b1e5 3.63%, #c5be81 99.87%);
+  background: linear-gradient(270.02deg, #645278 20.63%, #82B6C6 99.87%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

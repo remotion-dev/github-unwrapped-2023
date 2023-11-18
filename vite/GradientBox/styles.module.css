@@ -1,11 +1,7 @@
 .gradientBox {
-  background: linear-gradient(
-    to right,
-    rgba(171, 230, 195, 0.5),
-    rgba(65, 90, 135, 0.5)
-  );
-  border: 2px solid rgba(171, 230, 195, 1);
-  border-radius: 20px;
+  background: #191c29eb;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 10px;
   position: relative;
   padding: 40px;
   backdrop-filter: blur(5px);
