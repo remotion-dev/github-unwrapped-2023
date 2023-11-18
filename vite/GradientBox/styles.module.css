@@ -1,14 +1,8 @@
 .gradientBox {
   background: #191c29eb;
-  border: 1px solid rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   backdrop-filter: blur(5px);
-}
-
-@media screen and (max-width: 900px) {
-  .gradientBox {
-    margin: 0 16px;
-    padding: 24px;
-    width: 100%;
-  }
+  margin-left: 30px;
+  margin-right: 30px;
 }

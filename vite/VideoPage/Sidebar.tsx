@@ -24,7 +24,7 @@ const title: React.CSSProperties = {
   flexDirection: "column",
 };
 
-const gradientText: React.CSSProperties = {
+const hashtag: React.CSSProperties = {
   background: "linear-gradient(270.02deg, #645278 20.63%, #82B6C6 99.87%)",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
@@ -39,7 +39,7 @@ export const Sidebar: React.FC<{
     <div style={information}>
       <div style={title}>
         <Link to={"/"}>
-          <h2 style={gradientText}>#GitHubUnwrapped 2023</h2>
+          <h2 style={hashtag}>#GitHubUnwrapped 2023</h2>
         </Link>
         <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
       </div>
