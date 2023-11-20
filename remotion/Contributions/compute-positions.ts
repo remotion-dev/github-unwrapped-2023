@@ -113,27 +113,25 @@ export const computePositions = (params: {
       }
     );
 
-    const size = interpolate(
+    const finalSize = interpolate(
       dataObject[i],
       [0, 128],
       [MIN_STAR_SIZE, MAX_STAR_SIZE]
     );
 
-    const scale_ = interpolate(
-      params.frame,
-      [moveDelay, moveDelay + SPREAD_DURATION],
+    const widthOffset = SIZE * (1 - moveProgress);
+    const heightOffset = SIZE * (1 - moveProgress);
+
+    const width = interpolate(
+      moveProgress,
       [0, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      }
+      [SIZE, finalSize + widthOffset]
     );
-
-    const widthOffset = SIZE * (1 - scale_);
-    const heightOffset = SIZE * (1 - scale_);
-
-    const width = move ? size + widthOffset : SIZE;
-    const height = move ? size + heightOffset : SIZE;
+    const height = interpolate(
+      moveProgress,
+      [0, 1],
+      [SIZE, finalSize + heightOffset]
+    );
 
     const maxGlow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
     const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
