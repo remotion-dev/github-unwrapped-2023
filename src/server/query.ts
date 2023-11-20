@@ -1,10 +1,10 @@
 export const getQuery = (username: string) => {
   return `{
 		user(login: "${username}") {
-			openIssues: issues(filterBy: {since: "2022-01-01T00:00:00.000Z"}, states: OPEN) {
+			openIssues: issues(filterBy: {since: "2023-01-01T00:00:00.000Z"}, states: OPEN) {
 				totalCount
 			}
-			closedIssues: issues(filterBy: {}, states: CLOSED) {
+			closedIssues: issues(filterBy: {since: "2023-01-01T00:00:00.000Z"}, states: CLOSED) {
 				totalCount
 			}
 			avatarUrl
@@ -24,8 +24,8 @@ export const getQuery = (username: string) => {
 				}
 			}
 			contributionsCollection(
-				from: "2022-01-01T00:00:00.000Z"
-				to: "2023-01-01T00:00:00.000Z"
+				from: "2023-01-01T00:00:00.000Z"
+				to: "2024-01-01T00:00:00.000Z"
 			) {
 				totalCommitContributions
 				restrictedContributionsCount

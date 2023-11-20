@@ -1,6 +1,5 @@
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import { DB } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -12,11 +11,18 @@ export type ProfileStats = {
   loggedInWithGitHub: boolean;
 };
 
-const clientPromise = new MongoClient(backendCredentials().MONGO_URL).connect();
+const mongoUrl = () => {
+  const { DB_NAME, DB_PASSWORD, DB_HOST, DB_USER } = backendCredentials();
+  return `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
+};
+
+const clientPromise = new MongoClient(mongoUrl()).connect();
 
 const getStatsCollection = async () => {
   const client = await clientPromise;
-  return client.db(DB).collection<ProfileStats>("stats");
+  return client
+    .db(backendCredentials().DB_NAME)
+    .collection<ProfileStats>("stats");
 };
 
 export const insertProfileStats = async (

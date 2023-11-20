@@ -3,6 +3,7 @@ import { z } from "zod";
 import { REDIRECT_URL_ENDPOINT } from "./redirect-url.js";
 
 export const backendCredentials = () => {
+  // TODO: Memoize
   config();
 
   return z
@@ -11,7 +12,10 @@ export const backendCredentials = () => {
       VITE_HOST: z.string(),
       CLIENT_SECRET: z.string(),
       NODE_ENV: z.enum(["development", "production"]),
-      MONGO_URL: z.string(),
+      DB_NAME: z.string(),
+      DB_USER: z.string(),
+      DB_PASSWORD: z.string(),
+      DB_HOST: z.string(),
       DISCORD_CHANNEL: z.string(),
       DISCORD_TOKEN: z.string(),
       // TODO: Make sure it is not expired
