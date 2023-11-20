@@ -11,6 +11,7 @@ export const backendCredentials = () => {
       VITE_HOST: z.string(),
       CLIENT_SECRET: z.string(),
       NODE_ENV: z.enum(["development", "production"]),
+      MONGO_URL: z.string(),
     })
     .parse(process.env);
 };
