@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
 import { backendCredentials } from "../helpers/domain.js";
+import { sendDiscordMessage } from "./discord.js";
 import { replaceAppHead } from "./seo.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -50,6 +51,7 @@ export const handleIndexHtmlProduction = () => {
       );
       response.end();
     } catch (err) {
+      sendDiscordMessage(`Error occurred: ${(err as Error).stack}`);
       // TODO: Improve this
       response.status(500).end((err as Error).message);
     }
