@@ -52,3 +52,7 @@ button {
 .videoplaying #videobackground {
   opacity: 0.2;
 }
+
+a {
+  text-decoration: none;
+}

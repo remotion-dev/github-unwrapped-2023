@@ -10,6 +10,7 @@ const container: React.CSSProperties = {
   padding: ACTION_ROW_PADDING,
   display: "flex",
   flexDirection: "row",
+  alignItems: "center",
   background: "rgba(255, 255, 255, 0.03)",
 };
 
@@ -17,7 +18,10 @@ const hashtag: React.CSSProperties = {
   fontSize: 15,
   padding: 0,
   margin: 0,
+  marginLeft: 10,
   fontWeight: "bolder",
+  display: "inline",
+  lineHeight: 1,
 };
 
 export const HomeBoxTop: React.FC = () => {
@@ -32,7 +36,7 @@ export const HomeBoxTop: React.FC = () => {
         label={"Source"}
         icon={(props) => <GithubIcon {...props} />}
       />
-      <div style={{ width: 20 }} />
+      <div style={{ width: 6 }} />
       <HomeLink
         href={"https://github.com/remotion-dev/github-unwrapped-2023"}
         label={"About"}

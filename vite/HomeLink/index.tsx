@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React from "react";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 export const HomeLink: React.FC<{
   label: string;
@@ -8,7 +8,7 @@ export const HomeLink: React.FC<{
   href: string;
 }> = ({ label, icon, href }) => {
   return (
-    <a className="container" href={href}>
+    <a className={styles.container} href={href}>
       {icon({ height: 16, width: 16, color: "white" })}
       {label}
     </a>

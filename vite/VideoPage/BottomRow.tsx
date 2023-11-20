@@ -1,7 +1,8 @@
 import React from "react";
 import { RocketIcon } from "../../icons/RocketIcon";
+import { HomeLink } from "../HomeLink";
 
-export const ACTION_ROW_PADDING = "12px 20px";
+export const ACTION_ROW_PADDING = "8px 6px";
 
 const style: React.CSSProperties = {
   display: "flex",
@@ -19,8 +20,14 @@ const style: React.CSSProperties = {
 export const BottomRow = () => {
   return (
     <div style={style}>
-      <RocketIcon />
-      How we made Unwrapped
+      {/**
+      // TODO: Make this
+       */}
+      <HomeLink
+        href="https://example.com"
+        label="How we made Unwrapped"
+        icon={(props) => <RocketIcon {...props} />}
+      />
     </div>
   );
 };
