@@ -4,6 +4,7 @@ import {
   random,
   spring,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 
 import React from "react";
@@ -22,8 +23,9 @@ const data = new Array(364)
 
 export const ContributionsScene: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
-  const { positions, maxIndex } = computePositions({ frame, data });
+  const { positions, maxIndex } = computePositions({ frame, data, fps });
 
   const target = positions[maxIndex];
 

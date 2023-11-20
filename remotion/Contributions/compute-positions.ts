@@ -1,5 +1,5 @@
 import { noise2D } from "@remotion/noise";
-import { interpolate, interpolateColors, random } from "remotion";
+import { interpolate, interpolateColors, random, spring } from "remotion";
 import type { ContributionDotType } from "./Dot";
 
 const SIZE = 15;
@@ -22,6 +22,7 @@ const MIN_OPACITY = 1;
 
 export const computePositions = (params: {
   frame: number;
+  fps: number;
   data: number[][];
 }) => {
   const max = Math.max(...params.data.map((d) => d[1]));
@@ -46,6 +47,13 @@ export const computePositions = (params: {
 
     const moveDelay = START_SPREAD + appearDelay;
     const move = params.frame > moveDelay;
+    const moveProgress = spring({
+      fps: params.fps,
+      frame: params.frame,
+      delay: moveDelay,
+      config: {},
+      durationInFrames: SPREAD_DURATION,
+    });
 
     const maxOpacity = interpolate(
       dataObject[i],
@@ -76,7 +84,11 @@ export const computePositions = (params: {
       }
     );
 
-    const opacity = move ? scale * maxOpacity : MIN_OPACITY;
+    const opacity = interpolate(
+      moveProgress,
+      [0, 1],
+      [MIN_OPACITY, scale * maxOpacity]
+    );
 
     const xDelta = noiseX * 200;
     const yDelta = noiseY * 800 + 50;
@@ -123,11 +135,8 @@ export const computePositions = (params: {
     const width = move ? size + widthOffset : SIZE;
     const height = move ? size + heightOffset : SIZE;
 
-    let glow = 0;
-
-    if (move && dataObject[i] > 0) {
-      glow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
-    }
+    const maxGlow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
+    const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
 
     const borderRadius = move ? "50%" : 3;
 
