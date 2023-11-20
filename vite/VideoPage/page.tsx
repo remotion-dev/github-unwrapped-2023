@@ -1,8 +1,7 @@
-import { useParams } from "@tanstack/react-router";
 import React, { useMemo } from "react";
 import type { z } from "zod";
+import type { ProfileStats } from "../../src/server/db";
 import type { CompositionProps } from "../../types/constants";
-import { userRoute } from "../routing";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
@@ -35,13 +34,18 @@ const container: React.CSSProperties = {
   overflow: "auto",
 };
 
+declare global {
+  interface Window {
+    __USER__: ProfileStats;
+  }
+}
+
 export const UserPage = () => {
-  const params = useParams({ from: userRoute });
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
-      title: params.username,
+      title: window.__USER__.username,
     };
-  }, [params.username]);
+  }, []);
 
   return (
     <div style={outer}>

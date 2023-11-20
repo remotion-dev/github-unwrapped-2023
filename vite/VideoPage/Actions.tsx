@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
 import { UserIcon } from "../../icons/UserIcon";
 import { XIcon } from "../../icons/XIcon";
+import { signInWithGitHubLink } from "../sign-in-with-github";
 import { Action } from "./Action";
 
 const actionsWrapper: React.CSSProperties = {
@@ -35,6 +36,14 @@ export const Actions: React.FC = () => {
           label="Unwrap another user"
         />
       </Link>
+      {window.__USER__.loggedInWithGitHub ? null : (
+        <a href={signInWithGitHubLink()}>
+          <Action
+            icon={(params) => <UserIcon {...params} />}
+            label="Unlock private metrics"
+          />
+        </a>
+      )}
     </div>
   );
 };

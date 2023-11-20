@@ -4,6 +4,8 @@ import {
   backendCredentials,
   makeRedirectUriBackend,
 } from "../helpers/domain.js";
+import { insertProfileStats } from "./db.js";
+import { getStatsFromGitHub } from "./fetch-stats.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();
@@ -31,23 +33,20 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   );
 
   const paramsStringText = await paramsString.text();
-
   const params = new URLSearchParams(paramsStringText);
-
   const access_token = params.get("access_token");
 
-  const userRes = await fetch(`https://api.github.com/user`, {
-    headers: {
-      Authorization: `token ${access_token}`,
-    },
+  if (!access_token) {
+    throw new Error("No access token parameter");
+  }
+
+  const stats = await getStatsFromGitHub({
+    loggedInWithGitHub: true,
+    token: access_token,
+    username: null,
   });
-  const json = await userRes.json();
 
-  const userData = z
-    .object({
-      login: z.string(),
-    })
-    .parse(json);
+  await insertProfileStats(stats);
 
-  return response.redirect(`/${userData.login}`);
+  return response.redirect(`/${stats.username}`);
 };

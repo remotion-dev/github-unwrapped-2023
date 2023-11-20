@@ -28,7 +28,9 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
       const transformed = await vite.transformIndexHtml(req.url, template);
 
       response.status(200);
-      response.send(replaceAppHead(req.params.username ?? null, transformed));
+      response.send(
+        await replaceAppHead(req.params.username ?? null, transformed)
+      );
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
       console.error(err);
@@ -40,9 +42,16 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
 export const handleIndexHtmlProduction = () => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
-  return (req: Request, response: Response) => {
-    response.status(200);
-    response.send(replaceAppHead(req.params.username ?? null, template));
-    response.end();
+  return async (req: Request, response: Response) => {
+    try {
+      response.status(200);
+      response.send(
+        await replaceAppHead(req.params.username ?? null, template)
+      );
+      response.end();
+    } catch (err) {
+      // TODO: Improve this
+      response.status(500).end((err as Error).message);
+    }
   };
 };
