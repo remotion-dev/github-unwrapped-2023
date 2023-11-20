@@ -6,22 +6,19 @@ export const sendDiscordMessage = async (message: string) => {
   console.log(message);
 
   try {
-    const res = await fetch(
-      `https://discord.com/api/channels/${channel}/messages`,
-      {
-        method: "post",
-        body: JSON.stringify({
-          content: message,
-          allowed_mentions: {},
-          // eslint-disable-next-line no-bitwise
-          flags: 1 << 2,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bot ${token}`,
-        },
-      }
-    );
+    await fetch(`https://discord.com/api/channels/${channel}/messages`, {
+      method: "post",
+      body: JSON.stringify({
+        content: message,
+        allowed_mentions: {},
+        // eslint-disable-next-line no-bitwise
+        flags: 1 << 2,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bot ${token}`,
+      },
+    });
   } catch (err) {
     console.log("failed to send discord message");
     console.log(err);

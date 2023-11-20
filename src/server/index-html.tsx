@@ -51,7 +51,7 @@ export const handleIndexHtmlProduction = () => {
       );
       response.end();
     } catch (err) {
-      sendDiscordMessage(`Error occurred: ${(err as Error).stack}`);
+      sendDiscordMessage(`Error occurred:\n> ${(err as Error).stack}`);
       // TODO: Improve this
       response.status(500).end((err as Error).message);
     }
