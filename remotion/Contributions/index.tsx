@@ -54,7 +54,6 @@ const computePositions = (params: {
     let y = row * (SPACING + SIZE) + OFFSET_Y;
     let width = SIZE;
     let height = SIZE;
-    let color = "#202138";
 
     const appearDelay = random(i);
 
@@ -77,16 +76,14 @@ const computePositions = (params: {
       }
     );
 
-    if (appear) {
-      color =
-        params.data[i] > 0
-          ? interpolateColors(
-              params.data[i],
-              [0, 128],
-              ["#0c2945", params.frame < moveDelay ? "#2486ff" : "#a3d3ff"]
-            )
-          : color;
-    }
+    const color =
+      params.data[i] > 0 && appear
+        ? interpolateColors(
+            params.data[i],
+            [0, 128],
+            ["#0c2945", params.frame < moveDelay ? "#2486ff" : "#a3d3ff"]
+          )
+        : "#202138";
 
     const scale = interpolate(
       params.frame,
@@ -100,54 +97,50 @@ const computePositions = (params: {
 
     const opacity = move ? scale * maxOpacity : MIN_OPACITY;
 
-    if (move) {
-      const xDelta = noiseX * 200;
-      const yDelta = noiseY * 800 + 50;
+    const xDelta = noiseX * 200;
+    const yDelta = noiseY * 800 + 50;
 
-      const x_v = interpolate(
-        params.frame,
-        [moveDelay, moveDelay + SPREAD_DURATION],
-        [0, 1],
-        {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        }
-      );
+    const x_v = interpolate(
+      params.frame,
+      [moveDelay, moveDelay + SPREAD_DURATION],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      }
+    );
 
-      const y_v = interpolate(
-        params.frame,
-        [moveDelay, moveDelay + SPREAD_DURATION],
-        [0, 1],
-        {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        }
-      );
+    const y_v = interpolate(
+      params.frame,
+      [moveDelay, moveDelay + SPREAD_DURATION],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      }
+    );
 
-      x += xDelta * x_v;
-      y += yDelta * y_v;
-    }
+    x += xDelta * x_v;
+    y += yDelta * y_v;
 
-    if (move) {
-      const size = interpolate(
-        params.data[i],
-        [0, 128],
-        [MIN_STAR_SIZE, MAX_STAR_SIZE]
-      );
+    const size = interpolate(
+      params.data[i],
+      [0, 128],
+      [MIN_STAR_SIZE, MAX_STAR_SIZE]
+    );
 
-      const scale_ = interpolate(
-        params.frame,
-        [moveDelay, moveDelay + SPREAD_DURATION],
-        [0, 1],
-        {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        }
-      );
+    const scale_ = interpolate(
+      params.frame,
+      [moveDelay, moveDelay + SPREAD_DURATION],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      }
+    );
 
-      width = size + width * (1 - scale_);
-      height = size + height * (1 - scale_);
-    }
+    width = move ? size + width * (1 - scale_) : width;
+    height = move ? size + height * (1 - scale_) : height;
 
     let glow = 0;
 
