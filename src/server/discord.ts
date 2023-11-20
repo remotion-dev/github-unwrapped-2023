@@ -22,7 +22,6 @@ export const sendDiscordMessage = async (message: string) => {
         },
       }
     );
-    console.log(await res.text());
   } catch (err) {
     console.log("failed to send discord message");
     console.log(err);
