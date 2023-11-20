@@ -1,8 +1,22 @@
 import { noise2D } from "@remotion/noise";
 import { serializeInstructions } from "@remotion/paths";
 import React, { useEffect } from "react";
+import { bodyRef } from "./Octocat-body";
 
-const octocatLinePath = (time: number) => {
+const getBodyTranslation = (time: number) => {
+  const offsetX = noise2D("bodyx", time / 800, 0) * 5;
+  const offsetY = noise2D("bodyy", time / 800, 1) * 5;
+  return {
+    x: offsetX,
+    y: offsetY,
+  };
+};
+
+const octocatLinePath = (
+  time: number,
+  bodyTranslationX: number,
+  bodyTranslationY: number
+) => {
   const offsetX = noise2D("seed", time / 800, 0) * 10;
   const offsetY = noise2D("seedy", time / 800, 1) * 10;
 
@@ -81,22 +95,28 @@ const octocatLinePath = (time: number) => {
       cp1y: 927.11,
       cp2x: 1174.6,
       cp2y: 847.9,
-      x: 1119.44,
-      y: 825.73,
+      x: 1119.44 + bodyTranslationX,
+      y: 825.73 + bodyTranslationY,
     },
   ]);
 };
 
-export const OctocatLine: React.FC = () => {
-  const ref = React.useRef<SVGPathElement>(null);
+export const octocatLineRef = React.createRef<SVGPathElement>();
 
+export const OctocatLine: React.FC = () => {
   useEffect(() => {
     let time = 0;
     let cancel: null | number = null;
 
     const set = () => {
       time++;
-      ref.current?.setAttribute("d", octocatLinePath(time));
+      if (!bodyRef.current) {
+        throw new Error("bodyRef.current is null");
+      }
+
+      const { x, y } = getBodyTranslation(time);
+      octocatLineRef.current?.setAttribute("d", octocatLinePath(time, x, y));
+      bodyRef.current.style.transform = `translateX(${x}px) translateY(${y}px)`;
       cancel = requestAnimationFrame(set);
     };
 
@@ -113,8 +133,8 @@ export const OctocatLine: React.FC = () => {
 
   return (
     <path
-      ref={ref}
-      d={octocatLinePath(0)}
+      ref={octocatLineRef}
+      d={octocatLinePath(0, 0, 0)}
       stroke="url(#octocatgradient)"
       strokeWidth="4"
       strokeMiterlimit="10"
