@@ -18,7 +18,6 @@ export const backendCredentials = () => {
       DB_HOST: z.string(),
       DISCORD_CHANNEL: z.string(),
       DISCORD_TOKEN: z.string(),
-      // TODO: Make sure it is not expired
       GITHUB_TOKEN_1: z.string(),
       GITHUB_TOKEN_2: z.string(),
     })
