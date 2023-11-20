@@ -52,8 +52,6 @@ const computePositions = (params: {
 
     let x = col * (SPACING + SIZE) + OFFSET_X;
     let y = row * (SPACING + SIZE) + OFFSET_Y;
-    let width = SIZE;
-    let height = SIZE;
 
     const appearDelay = random(i);
 
@@ -139,8 +137,11 @@ const computePositions = (params: {
       }
     );
 
-    width = move ? size + width * (1 - scale_) : width;
-    height = move ? size + height * (1 - scale_) : height;
+    const widthOffset = SIZE * (1 - scale_);
+    const heightOffset = SIZE * (1 - scale_);
+
+    const width = move ? size + widthOffset : SIZE;
+    const height = move ? size + heightOffset : SIZE;
 
     let glow = 0;
 
