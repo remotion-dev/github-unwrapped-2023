@@ -1,9 +1,11 @@
+import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import { DB } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
   username: string;
+  lowercasedUsername: string;
   openIssues: number;
   closedIssues: number;
   fetchedAt: number;
@@ -25,7 +27,17 @@ export const insertProfileStats = async (
   return value.acknowledged;
 };
 
+export const getProfileStatsFromCache = async (
+  username: string
+): Promise<WithId<ProfileStats> | null> => {
+  const collection = await getStatsCollection();
+  const value = await collection.findOne({
+    lowercasedUsername: username.toLowerCase(),
+  });
+  return value;
+};
+
 export const ensureIndices = async () => {
   const stats = await getStatsCollection();
-  await stats.createIndex({ username: 1 }, { unique: true });
+  await stats.createIndex({ lowercasedUsername: 1 }, { unique: true });
 };

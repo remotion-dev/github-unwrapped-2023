@@ -1,4 +1,8 @@
-import type { ProfileStats } from "./db.js";
+import {
+  getProfileStatsFromCache,
+  insertProfileStats,
+  type ProfileStats,
+} from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { getQuery } from "./query.js";
 import type { GitHubResponse } from "./stats.js";
@@ -44,5 +48,29 @@ export const getStatsFromGitHub = async ({
     fetchedAt,
     loggedInWithGitHub,
     username: data.login,
+    lowercasedUsername: data.login.toLowerCase(),
   };
+};
+
+export const getStatsFromGitHubOrCache = async ({
+  username,
+  token,
+  loggedInWithGitHub,
+}: {
+  username: string;
+  token: string;
+  loggedInWithGitHub: boolean;
+}) => {
+  const fromCache = await getProfileStatsFromCache(username);
+  if (fromCache !== null) {
+    return fromCache;
+  }
+
+  const stats = await getStatsFromGitHub({
+    loggedInWithGitHub,
+    token,
+    username,
+  });
+  await insertProfileStats(stats);
+  return stats;
 };

@@ -1,7 +1,7 @@
 // organize-imports-ignore
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { getStatsFromGitHub } from "./fetch-stats.js";
+import { getStatsFromGitHubOrCache } from "./fetch-stats.js";
 import { getRandomGithubToken } from "./github-token.js";
 
 const makeAppHead = async (username: string | null) => {
@@ -10,7 +10,7 @@ const makeAppHead = async (username: string | null) => {
     return renderToString(<title>{title}</title>);
   }
 
-  const stats = await getStatsFromGitHub({
+  const stats = await getStatsFromGitHubOrCache({
     username,
     token: getRandomGithubToken(),
     // TODO: Use GitHub login token if possible
