@@ -53,10 +53,20 @@ export const LoginOptions: React.FC<Props> = ({
             fontFamily: "Mona Sans",
             height: 56,
             fontSize: 20,
-            marginRight: 10,
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
           }}
         />
-        <Button style={{ borderRadius: 5, height: 56 }}>Unwrap</Button>
+        <Button
+          style={{
+            borderRadius: 5,
+            height: 56,
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+          }}
+        >
+          Unwrap
+        </Button>
       </form>
       <div style={{ width: 20, display: "inline-block" }} />
       <div style={{ fontSize: 16, fontWeight: 500 }}>
