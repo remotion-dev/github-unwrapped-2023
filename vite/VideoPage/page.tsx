@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import type { z } from "zod";
 import type { CompositionProps } from "../../types/constants";
 import { userRoute } from "../routing";
+import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
 
@@ -19,7 +20,6 @@ const background: React.CSSProperties = {
   height: "100vh",
   display: "flex",
   flexDirection: "column",
-  backgroundImage: "url(/videopagebackground.png)",
   backgroundSize: "cover",
   backgroundPosition: "center",
   position: "absolute",
@@ -45,7 +45,9 @@ export const UserPage = () => {
 
   return (
     <div style={outer}>
-      <div style={background} id="videobackground" />
+      <div style={background} id="videobackground">
+        <VideoPageBackground />
+      </div>
       <div style={container} className={styles.videobox}>
         <VideoBox inputProps={inputProps} />
       </div>
