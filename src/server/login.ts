@@ -4,6 +4,7 @@ import {
   backendCredentials,
   makeRedirectUriBackend,
 } from "../helpers/domain.js";
+import { insertProfileStats } from "./db.js";
 import { getStatsFromGitHub } from "./fetch-stats.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
@@ -44,6 +45,8 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     token: access_token,
     username: null,
   });
+
+  await insertProfileStats(stats);
 
   return response.redirect(`/${stats.username}`);
 };
