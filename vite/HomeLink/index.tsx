@@ -8,8 +8,8 @@ export const HomeLink: React.FC<{
   href: string;
 }> = ({ label, icon, href }) => {
   return (
-    <a className={styles.container} href={href}>
-      {icon({ height: 16, width: 16, color: "white" })}
+    <a className={styles.container} style={{}} href={href}>
+      {icon({ height: 16, width: 16, color: "currentcolor" })}
       {label}
     </a>
   );

@@ -3,9 +3,10 @@
   align-items: center;
   gap: 8px;
   font-size: 15px;
-  color: white;
   text-decoration: none;
-  transition: opacity 0.2s ease-in-out, background-color 0.1s ease-in-out;
+  color: rgb(210, 211, 214);
+  transition: opacity 0.2s ease-in-out, background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   font-weight: 600;
   padding-left: 7px;
   padding-top: 2px;
@@ -16,4 +17,5 @@
 
 .container:hover {
   background-color: rgba(255, 255, 255, 0.05);
+  color: white;
 }
