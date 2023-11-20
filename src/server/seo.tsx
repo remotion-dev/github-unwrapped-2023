@@ -18,7 +18,17 @@ const makeAppHead = async (username: string | null) => {
   });
 
   const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
-  const head = renderToString(<title>{usernameTitle}</title>);
+  const head = renderToString(
+    <>
+      <title>{usernameTitle}</title>
+      <script
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: `window.__USER__ = ${JSON.stringify(stats)}`,
+        }}
+      />
+    </>
+  );
   return head;
 };
 
