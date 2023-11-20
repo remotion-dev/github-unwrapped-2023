@@ -33,18 +33,18 @@ export const computePositions = (params: {
     const col = Math.floor(i / 7);
     const row: number = i % 7;
 
-    let x = col * (SPACING + SIZE) + OFFSET_X;
-    let y = row * (SPACING + SIZE) + OFFSET_Y;
+    const x = col * (SPACING + SIZE) + OFFSET_X;
+    const y = row * (SPACING + SIZE) + OFFSET_Y;
 
-    const appearDelay = random(i);
+    const appearDelay = random(i) * 30;
 
     const noiseX = noise2D(`${i}x`, x * 10, y * 10);
     const noiseY = noise2D(`${i}y`, x * 10, y * 10);
 
-    const appearFrame = 30 + appearDelay * 30;
+    const appearFrame = 30 + appearDelay;
     const appear = params.frame > appearFrame;
 
-    const moveDelay = START_SPREAD + appearDelay * SPREAD_DURATION;
+    const moveDelay = START_SPREAD + appearDelay;
     const move = params.frame > moveDelay;
 
     const maxOpacity = interpolate(
@@ -81,7 +81,7 @@ export const computePositions = (params: {
     const xDelta = noiseX * 200;
     const yDelta = noiseY * 800 + 50;
 
-    const x_v = interpolate(
+    const xOffset = interpolate(
       params.frame,
       [moveDelay, moveDelay + SPREAD_DURATION],
       [0, 1],
@@ -91,7 +91,7 @@ export const computePositions = (params: {
       }
     );
 
-    const y_v = interpolate(
+    const yOffset = interpolate(
       params.frame,
       [moveDelay, moveDelay + SPREAD_DURATION],
       [0, 1],
@@ -100,9 +100,6 @@ export const computePositions = (params: {
         extrapolateRight: "clamp",
       }
     );
-
-    x += xDelta * x_v;
-    y += yDelta * y_v;
 
     const size = interpolate(
       dataObject[i],
@@ -137,8 +134,8 @@ export const computePositions = (params: {
     return {
       col,
       row,
-      x,
-      y,
+      x: x + xOffset * xDelta,
+      y: y + yOffset * yDelta,
       opacity,
       color,
       borderRadius,
