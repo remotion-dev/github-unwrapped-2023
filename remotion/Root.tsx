@@ -23,6 +23,9 @@ import {
   SevenSegment,
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
+import { Spaceship } from "./Spaceship";
+import { StarSprite } from "./StarSprite";
+import { StarsReceived, starsReceivedSchema } from "./StarsReceived";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,
@@ -117,6 +120,26 @@ export const RemotionRoot: React.FC = () => {
           ufoScale: 1,
           x: 0,
           y: 0,
+        }}
+      />
+      <Composition
+        id={"StarSprite"}
+        component={StarSprite}
+        durationInFrames={40}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id={"StarsReceived"}
+        component={StarsReceived}
+        durationInFrames={10 * VIDEO_FPS}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        schema={starsReceivedSchema}
+        defaultProps={{
+          starsReceived: 5,
         }}
       />
       <Composition
