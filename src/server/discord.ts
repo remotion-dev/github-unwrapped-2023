@@ -4,15 +4,6 @@ export const sendDiscordMessage = async (message: string) => {
   const channel = backendCredentials().DISCORD_CHANNEL;
   const token = backendCredentials().DISCORD_TOKEN;
   console.log(message);
-  if (!channel) {
-    console.warn("no DISCORD_CHANNEL env variable set.");
-    return;
-  }
-
-  if (!token) {
-    console.warn("no DISCORD_TOKEN env variable set.");
-    return;
-  }
 
   try {
     const res = await fetch(
