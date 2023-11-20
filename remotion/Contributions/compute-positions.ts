@@ -2,7 +2,7 @@ import { noise2D } from "@remotion/noise";
 import { interpolate, interpolateColors, random, spring } from "remotion";
 import type { ContributionDotType } from "./Dot";
 
-const SIZE = 15;
+const INITIAL_SIZE = 15;
 
 const OFFSET_X = 70;
 const OFFSET_Y = 0;
@@ -34,8 +34,8 @@ export const computePositions = (params: {
     const col = Math.floor(i / 7);
     const row: number = i % 7;
 
-    const x = col * (SPACING + SIZE) + OFFSET_X;
-    const y = row * (SPACING + SIZE) + OFFSET_Y;
+    const x = col * (SPACING + INITIAL_SIZE) + OFFSET_X;
+    const y = row * (SPACING + INITIAL_SIZE) + OFFSET_Y;
 
     const appearDelay = random(i) * 30;
 
@@ -46,7 +46,6 @@ export const computePositions = (params: {
     const appear = params.frame > appearFrame;
 
     const moveDelay = START_SPREAD + appearDelay;
-    const move = params.frame > moveDelay;
     const moveProgress = spring({
       fps: params.fps,
       frame: params.frame,
@@ -119,24 +118,18 @@ export const computePositions = (params: {
       [MIN_STAR_SIZE, MAX_STAR_SIZE]
     );
 
-    const widthOffset = SIZE * (1 - moveProgress);
-    const heightOffset = SIZE * (1 - moveProgress);
+    const sizeOffset = INITIAL_SIZE * (1 - moveProgress);
 
-    const width = interpolate(
+    const size = interpolate(
       moveProgress,
       [0, 1],
-      [SIZE, finalSize + widthOffset]
-    );
-    const height = interpolate(
-      moveProgress,
-      [0, 1],
-      [SIZE, finalSize + heightOffset]
+      [INITIAL_SIZE, finalSize + sizeOffset]
     );
 
     const maxGlow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
     const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
 
-    const borderRadius = move ? "50%" : 3;
+    const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);
 
     return {
       col,
@@ -146,8 +139,8 @@ export const computePositions = (params: {
       opacity,
       color,
       borderRadius,
-      width,
-      height,
+      width: size,
+      height: size,
       glow,
     };
   });
