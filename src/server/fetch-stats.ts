@@ -11,7 +11,7 @@ export const fetchFromGitHub = async ({
   username,
   token,
 }: {
-  username: string;
+  username: string | null;
   token: string;
 }): Promise<GitHubResponse> => {
   const res = await fetch(`https://api.github.com/graphql`, {
@@ -28,6 +28,10 @@ export const fetchFromGitHub = async ({
   }
 
   const response = await res.json();
+  if (username === null) {
+    return response.data.viewer as GitHubResponse;
+  }
+
   return response.data.user as GitHubResponse;
 };
 
@@ -36,7 +40,7 @@ export const getStatsFromGitHub = async ({
   token,
   loggedInWithGitHub,
 }: {
-  username: string;
+  username: string | null;
   token: string;
   loggedInWithGitHub: boolean;
 }): Promise<ProfileStats> => {
@@ -55,11 +59,9 @@ export const getStatsFromGitHub = async ({
 export const getStatsFromGitHubOrCache = async ({
   username,
   token,
-  loggedInWithGitHub,
 }: {
   username: string;
   token: string;
-  loggedInWithGitHub: boolean;
 }) => {
   const fromCache = await getProfileStatsFromCache(username);
   if (fromCache !== null) {
@@ -67,7 +69,7 @@ export const getStatsFromGitHubOrCache = async ({
   }
 
   const stats = await getStatsFromGitHub({
-    loggedInWithGitHub,
+    loggedInWithGitHub: false,
     token,
     username,
   });

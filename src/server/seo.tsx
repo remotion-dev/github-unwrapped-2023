@@ -13,8 +13,6 @@ const makeAppHead = async (username: string | null) => {
   const stats = await getStatsFromGitHubOrCache({
     username,
     token: getRandomGithubToken(),
-    // TODO: Use GitHub login token if possible
-    loggedInWithGitHub: false,
   });
 
   const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
