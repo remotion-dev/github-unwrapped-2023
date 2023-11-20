@@ -3,7 +3,7 @@ import { interpolate, random, Sequence, useCurrentFrame } from "remotion";
 import { StarSprite } from "../StarSprite";
 
 const MOVE_AIM = 100;
-const RADIUS = 400;
+const RADIUS = 1500;
 const BURST_FRAME = 20;
 
 export const Star: React.FC<{ initialFrame: number }> = ({ initialFrame }) => {
