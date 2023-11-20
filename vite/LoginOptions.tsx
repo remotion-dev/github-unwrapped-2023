@@ -1,9 +1,7 @@
-import { useNavigate } from "@tanstack/react-router";
 import React, { useCallback } from "react";
 import { Button } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { SignInWithGitHub } from "./SignInWithGitHub";
-import { $usernamePath } from "./routing";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -19,8 +17,6 @@ export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
 }) => {
-  const navigate = useNavigate();
-
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
@@ -31,12 +27,12 @@ export const LoginOptions: React.FC<Props> = ({
             setUserNotFound(true);
           } else {
             setUserNotFound(false);
-            navigate({ to: $usernamePath, params: { username } });
+            window.location.href = `/${username}`;
           }
         })
         .catch((error) => console.log("error", error));
     },
-    [navigate, setUserNotFound, username]
+    [setUserNotFound, username]
   );
 
   return (
