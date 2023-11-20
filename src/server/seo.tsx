@@ -1,18 +1,27 @@
 // organize-imports-ignore
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { getStatsFromGitHub } from "./fetch-stats.js";
+import { getRandomGithubToken } from "./github-token.js";
 
-const makeAppHead = (username: string | null) => {
+const makeAppHead = async (username: string | null) => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023`;
     return renderToString(<title>{title}</title>);
   }
 
-  const usernameTitle = `${username}'s #GitHubUnwrapped`;
+  const stats = await getStatsFromGitHub({
+    username,
+    token: getRandomGithubToken(),
+    // TODO: Use GitHub login token if possible
+    loggedInWithGitHub: false,
+  });
+
+  const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
   const head = renderToString(<title>{usernameTitle}</title>);
   return head;
 };
 
 export const replaceAppHead = async (username: string | null, html: string) => {
-  return html.replace("<!--app-head-->", makeAppHead(username));
+  return html.replace("<!--app-head-->", await makeAppHead(username));
 };

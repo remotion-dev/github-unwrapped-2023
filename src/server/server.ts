@@ -5,6 +5,7 @@ import express from "express";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
+import { faviconEndPoint } from "./favicon.js";
 import {
   handleIndexHtmlDev,
   handleIndexHtmlProduction,
@@ -45,6 +46,7 @@ export const startServer = async () => {
 
   app.post("/api/progress", progressEndPoint);
 
+  app.get("/favicon.ico", faviconEndPoint);
   app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
 
   if (nodeEnv === "development") {
