@@ -29,10 +29,11 @@ export const insertProfileStats = async (
   stats: ProfileStats
 ): Promise<boolean> => {
   const collection = await getStatsCollection();
+  const { lowercasedUsername, ...statsWithoutPrimary } = stats;
   const value = await collection.updateOne(
     { lowercasedUsername: stats.lowercasedUsername },
     {
-      $set: stats,
+      $set: statsWithoutPrimary,
     },
     { upsert: true }
   );
