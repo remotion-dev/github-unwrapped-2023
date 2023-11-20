@@ -1,7 +1,8 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { z } from "zod";
-import { TopLanguagesCanvas, topLanguagesSchema } from "..";
+import type { z } from "zod";
+import type { topLanguagesSchema } from "..";
+import { TopLanguagesCanvas } from "..";
 import {
   actionPositions,
   ACTION_DURATION,
@@ -12,17 +13,6 @@ import { LangugageDescription } from "../LanguageDescription";
 import { getNewRate } from "../Rocket";
 
 const SCALE_BREAKPOINT = 130;
-
-const withinBoundaries = (boundaries: [number, number], value: number) => {
-  const [min, max] = boundaries;
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
-};
 
 const computeTranslation = (
   frame: number
@@ -61,6 +51,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
       {languages.map((l, index) => {
         return (
           <LangugageDescription
+            // eslint-disable-next-line react/no-array-index-key
             key={l + index}
             actionFrames={[
               actionPositions[index],

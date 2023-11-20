@@ -31,7 +31,7 @@ export const IssueNumber: React.FC<{
         duration={30}
         from={0}
         to={closedIssues + openIssues}
-      ></SevenSegmentNumber>
+      />
     </AbsoluteFill>
   );
 };

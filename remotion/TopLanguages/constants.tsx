@@ -1,5 +1,5 @@
 import { getBoundingBox, getLength, scalePath } from "@remotion/paths";
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 import { z } from "zod";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import {

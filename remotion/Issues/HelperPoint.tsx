@@ -19,7 +19,7 @@ export const HelperPoint: React.FC<{
           backgroundColor: color,
           borderRadius: RADIUS / 2,
         }}
-      ></div>
+      />
     </AbsoluteFill>
   );
 };

@@ -64,7 +64,7 @@ export const Path: React.FC<{
           left: pointAtLength.x,
         }}
         src={staticFile("blurred-dot.png")}
-      ></Img>
+      />
     </AbsoluteFill>
   );
 };

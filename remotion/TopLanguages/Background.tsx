@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { AbsoluteFill } from "remotion";
 
 export const Background: React.FC<{

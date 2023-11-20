@@ -1,6 +1,7 @@
 import { AbsoluteFill } from "remotion";
-import { z } from "zod";
-import { TopLanguagesCanvas, topLanguagesSchema } from "..";
+import type { z } from "zod";
+import type { topLanguagesSchema } from "..";
+import { TopLanguagesCanvas } from "..";
 
 export const Intro: React.FC<z.infer<typeof topLanguagesSchema>> = (props) => {
   return (

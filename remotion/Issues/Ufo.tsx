@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 export const UFO_WIDTH = 322;
 export const UFO_HEIGHT = 208;

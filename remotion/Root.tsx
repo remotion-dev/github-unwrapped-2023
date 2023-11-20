@@ -1,18 +1,22 @@
 import { Composition, Folder } from "remotion";
 import {
-  defaultMyCompProps,
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
+  defaultMyCompProps,
 } from "../types/constants";
+import { Stars } from "../vite/Home/Stars";
+import { ContributionsScene } from "./Contributions";
 import { Issues, issuesSchema } from "./Issues";
+import { FPS } from "./Issues/make-ufo-positions";
 import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
+import { Main } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
-import { Paths } from "./Paths/Paths";
+import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import {
@@ -33,14 +37,15 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
-        id={"Spaceship"}
-        component={Spaceship}
+        id={"Contributions"}
+        component={ContributionsScene}
         durationInFrames={12 * 30}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
       />
+
       <Folder name="Issues">
         <Composition
           id={"Issues0-0"}
@@ -103,15 +108,7 @@ export const RemotionRoot: React.FC = () => {
         schema={issuesSchema}
         defaultProps={{ closedIssues: 75, openIssues: 0 }}
       />
-      {/* <Composition
-        id={"TopLanguages"}
-        component={TopLanguages}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
-      /> */}
+
       <Composition
         id={"Poof"}
         component={Poof}
@@ -210,16 +207,32 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             extraPaths: 8,
           }}
-        ></Composition>
+        />
         <Composition
           id="Paths"
-          component={Paths}
+          component={PullRequests}
           fps={30}
           durationInFrames={240}
           height={1080}
           width={1080}
-        ></Composition>
+        />
       </Folder>
+      <Composition
+        id="Main"
+        component={Main}
+        durationInFrames={60 * 30}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="Stars"
+        component={Stars}
+        durationInFrames={10 * 30}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
     </>
   );
 };

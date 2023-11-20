@@ -6,7 +6,7 @@ import {
   ROCKET_TOP_Y,
   USABLE_CANVAS_WIDTH,
 } from "./constants";
-import { ShotWithShootDelay } from "./get-shots-to-fire";
+import type { ShotWithShootDelay } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
 import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
@@ -24,16 +24,26 @@ export type UfoPosition = {
   isClosed: boolean;
 };
 
+export const getAngleForShoot = (targetX: number, targetY: number) => {
+  const deltaX = targetX - ROCKET_ORIGIN_X;
+  const deltaY = targetY - ROCKET_TOP_Y;
+  const angleRadians = Math.atan2(deltaY, deltaX);
+  return angleRadians;
+};
+
 const issuesPerRow = (numberOfIssues: number) => {
   if (numberOfIssues < 4) {
     return 3;
   }
+
   if (numberOfIssues < 15) {
     return 4;
   }
+
   if (numberOfIssues < 30) {
     return 6;
   }
+
   return 8;
 };
 
@@ -146,7 +156,7 @@ export const makeUfoPositions = ({
         column,
         i,
         spaceInbetweenUfo,
-        ufoContainerWidth: ufoContainerWidth,
+        ufoContainerWidth,
         perRow,
         numberOfUfos,
       }),
@@ -198,11 +208,4 @@ export const rocketRotation = (
       extrapolateRight: "clamp",
     }
   );
-};
-
-export const getAngleForShoot = (targetX: number, targetY: number) => {
-  const deltaX = targetX - ROCKET_ORIGIN_X;
-  const deltaY = targetY - ROCKET_TOP_Y;
-  let angleRadians = Math.atan2(deltaY, deltaX);
-  return angleRadians;
 };

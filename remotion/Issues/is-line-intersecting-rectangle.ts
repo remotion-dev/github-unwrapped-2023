@@ -3,6 +3,51 @@ type Point = {
   y: number;
 };
 
+function getLineIntersection({
+  aStartX,
+  aStartY,
+  aEndX,
+  aEndY,
+  bStartX,
+  bStartY,
+  bEndX,
+  bEndY,
+}: {
+  aStartX: number;
+  aStartY: number;
+  aEndX: number;
+  aEndY: number;
+  bStartX: number;
+  bStartY: number;
+  bEndX: number;
+  bEndY: number;
+}): Point | null {
+  const det =
+    (aEndX - aStartX) * (bEndY - bStartY) -
+    (bEndX - bStartX) * (aEndY - aStartY);
+  if (det === 0) {
+    return null; // Lines are parallel
+  }
+
+  const lambda =
+    ((bEndY - bStartY) * (bEndX - aStartX) +
+      (bStartX - bEndX) * (bEndY - aStartY)) /
+    det;
+  const gamma =
+    ((aStartY - aEndY) * (bEndX - aStartX) +
+      (aEndX - aStartX) * (bEndY - aStartY)) /
+    det;
+
+  if (lambda > 0 && lambda < 1 && gamma > 0 && gamma < 1) {
+    return {
+      x: aStartX + lambda * (aEndX - aStartX),
+      y: aStartY + lambda * (aEndY - aStartY),
+    };
+  }
+
+  return null;
+}
+
 export function findLineRectangleIntersection({
   startX,
   startY,
@@ -30,89 +75,53 @@ export function findLineRectangleIntersection({
   };
 
   // Check each side of the rectangle for intersection
-  let intersection = getLineIntersection(
-    startX,
-    startY,
-    endX,
-    endY,
-    topLeft.x,
-    topLeft.y,
-    bottomRight.x,
-    topLeft.y
-  ); // Top side
+  let intersection = getLineIntersection({
+    aStartX: startX,
+    aStartY: startY,
+    aEndX: endX,
+    aEndY: endY,
+    bStartX: topLeft.x,
+    bStartY: topLeft.y,
+    bEndX: bottomRight.x,
+    bEndY: topLeft.y,
+  }); // Top side
   if (intersection) return intersection;
 
-  intersection = getLineIntersection(
-    startX,
-    startY,
-    endX,
-    endY,
-    bottomRight.x,
-    topLeft.y,
-    bottomRight.x,
-    bottomRight.y
-  ); // Right side
+  intersection = getLineIntersection({
+    aStartX: startX,
+    aStartY: startY,
+    aEndX: endX,
+    aEndY: endY,
+    bStartX: bottomRight.x,
+    bStartY: topLeft.y,
+    bEndX: bottomRight.x,
+    bEndY: bottomRight.y,
+  }); // Right side
   if (intersection) return intersection;
 
-  intersection = getLineIntersection(
-    startX,
-    startY,
-    endX,
-    endY,
-    bottomRight.x,
-    bottomRight.y,
-    topLeft.x,
-    bottomRight.y
-  ); // Bottom side
+  intersection = getLineIntersection({
+    aStartX: startX,
+    aStartY: startY,
+    aEndX: endX,
+    aEndY: endY,
+    bStartX: bottomRight.x,
+    bStartY: bottomRight.y,
+    bEndX: topLeft.x,
+    bEndY: bottomRight.y,
+  }); // Bottom side
   if (intersection) return intersection;
 
-  intersection = getLineIntersection(
-    startX,
-    startY,
-    endX,
-    endY,
-    topLeft.x,
-    bottomRight.y,
-    topLeft.x,
-    topLeft.y
-  ); // Left side
+  intersection = getLineIntersection({
+    aStartX: startX,
+    aStartY: startY,
+    aEndX: endX,
+    aEndY: endY,
+    bStartX: topLeft.x,
+    bStartY: bottomRight.y,
+    bEndX: topLeft.x,
+    bEndY: topLeft.y,
+  }); // Left side
   if (intersection) return intersection;
-
-  return null;
-}
-
-function getLineIntersection(
-  aStartX: number,
-  aStartY: number,
-  aEndX: number,
-  aEndY: number,
-  bStartX: number,
-  bStartY: number,
-  bEndX: number,
-  bEndY: number
-): Point | null {
-  const det =
-    (aEndX - aStartX) * (bEndY - bStartY) -
-    (bEndX - bStartX) * (aEndY - aStartY);
-  if (det === 0) {
-    return null; // Lines are parallel
-  }
-
-  const lambda =
-    ((bEndY - bStartY) * (bEndX - aStartX) +
-      (bStartX - bEndX) * (bEndY - aStartY)) /
-    det;
-  const gamma =
-    ((aStartY - aEndY) * (bEndX - aStartX) +
-      (aEndX - aStartX) * (bEndY - aStartY)) /
-    det;
-
-  if (0 < lambda && lambda < 1 && 0 < gamma && gamma < 1) {
-    return {
-      x: aStartX + lambda * (aEndX - aStartX),
-      y: aStartY + lambda * (aEndY - aStartY),
-    };
-  }
 
   return null;
 }

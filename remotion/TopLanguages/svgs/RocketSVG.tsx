@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 export const TL_ROCKET_WIDTH = 109;
 export const TL_ROCKET_HEIGHT = 113;

@@ -30,9 +30,9 @@ import {
 export const getActionFrames = (actionLocations: number[]) => {
   return (
     actionLocations
-      //sort ascending
+      // sort ascending
       .sort((a, b) => a - b)
-      .map((percentage, index) => {
+      .map((percentage) => {
         // index must be added because the duration from every previous action should be considered
         const actionStartFrame =
           Math.floor(percentage * TOP_LANGUAGES_DURATION) - ACTION_DURATION / 2;
