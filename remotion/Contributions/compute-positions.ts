@@ -9,7 +9,7 @@ const OFFSET_Y = 0;
 const SPACING = 3;
 
 const START_SPREAD = 120;
-const END_SPREAD = 135;
+const END_SPREAD = 150;
 
 const SPREAD_DURATION = END_SPREAD - START_SPREAD;
 
@@ -37,80 +37,56 @@ export const computePositions = (params: {
     const x = col * (SPACING + INITIAL_SIZE) + OFFSET_X;
     const y = row * (SPACING + INITIAL_SIZE) + OFFSET_Y;
 
-    const appearDelay = random(i) * 30;
+    const appearDelay = random(i) * 30 + 15;
 
     const noiseX = noise2D(`${i}x`, x * 10, y * 10);
     const noiseY = noise2D(`${i}y`, x * 10, y * 10);
 
-    const appearFrame = 30 + appearDelay;
-    const appear = params.frame > appearFrame;
+    const appear = spring({
+      fps: params.fps,
+      frame: params.frame,
+      delay: appearDelay,
+      durationInFrames: 30,
+    });
 
     const moveDelay = START_SPREAD + appearDelay;
+
     const moveProgress = spring({
       fps: params.fps,
       frame: params.frame,
       delay: moveDelay,
-      config: {},
+      config: {
+        damping: 200,
+      },
       durationInFrames: SPREAD_DURATION,
     });
 
-    const maxOpacity = interpolate(
-      dataObject[i],
-      [0, 128],
-      [0.2, i === maxIndex ? 1 : 0.9],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      }
-    );
+    const maxOpacity = interpolate(dataObject[i], [0, 128], [0.2, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
 
-    const color =
-      dataObject[i] > 0 && appear
-        ? interpolateColors(
-            dataObject[i],
-            [0, 128],
-            ["#0c2945", params.frame < moveDelay ? "#2486ff" : "#a3d3ff"]
-          )
-        : "#202138";
+    const starColor = "#a3d3ff";
 
-    const scale = interpolate(
-      params.frame,
-      [appearFrame, appearFrame + 30],
-      [0, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      }
+    const activityColor =
+      dataObject[i] === 0
+        ? "#202138"
+        : interpolateColors(dataObject[i], [0, 128], ["#0c2945", "#2486ff"]);
+
+    const color = interpolateColors(
+      appear + moveProgress,
+      [0, 1, 2],
+      ["#202138", activityColor, starColor]
     );
 
     const opacity = interpolate(
       moveProgress,
       [0, 1],
-      [MIN_OPACITY, scale * maxOpacity]
+      [MIN_OPACITY, moveProgress * maxOpacity]
     );
 
     const xDelta = noiseX * 200;
     const yDelta = noiseY * 800 + 50;
-
-    const xOffset = interpolate(
-      params.frame,
-      [moveDelay, moveDelay + SPREAD_DURATION],
-      [0, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      }
-    );
-
-    const yOffset = interpolate(
-      params.frame,
-      [moveDelay, moveDelay + SPREAD_DURATION],
-      [0, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      }
-    );
 
     const finalSize = interpolate(
       dataObject[i],
@@ -134,8 +110,8 @@ export const computePositions = (params: {
     return {
       col,
       row,
-      x: x + xOffset * xDelta,
-      y: y + yOffset * yDelta,
+      x: x + moveProgress * xDelta,
+      y: y + moveProgress * yDelta,
       opacity,
       color,
       borderRadius,
