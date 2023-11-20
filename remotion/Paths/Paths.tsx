@@ -5,7 +5,7 @@ import { WholePaths } from "./WholePaths";
 
 const endHeight = 1080;
 
-export const Paths: React.FC = () => {
+export const PullRequests: React.FC = () => {
   const initialOffset = PATHS_COMP_HEIGHT - endHeight;
   const frame = useCurrentFrame();
   const evolution = interpolate(frame, [0, 200], [0, 1], {
