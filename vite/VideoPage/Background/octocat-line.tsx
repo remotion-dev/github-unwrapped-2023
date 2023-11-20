@@ -6,11 +6,16 @@ import { bodyRef } from "./Octocat-body";
 const getBodyTranslation = (time: number) => {
   const offsetX = noise2D("bodyx", time / 800, 0) * 5;
   const offsetY = noise2D("bodyy", time / 800, 1) * 5;
+  const offsetRotate = noise2D("rotateY", time / 1400, 1) * 5;
   return {
     x: offsetX,
     y: offsetY,
+    rotate: offsetRotate,
   };
 };
+
+const OCTOCAT_ANCHOR_X = 1119.44;
+const OCTOCAT_ANCHOR_Y = 825.73;
 
 const octocatLinePath = (
   time: number,
@@ -95,8 +100,8 @@ const octocatLinePath = (
       cp1y: 927.11,
       cp2x: 1174.6,
       cp2y: 847.9,
-      x: 1119.44 + bodyTranslationX,
-      y: 825.73 + bodyTranslationY,
+      x: OCTOCAT_ANCHOR_X + bodyTranslationX,
+      y: OCTOCAT_ANCHOR_Y + bodyTranslationY,
     },
   ]);
 };
@@ -114,9 +119,12 @@ export const OctocatLine: React.FC = () => {
         throw new Error("bodyRef.current is null");
       }
 
-      const { x, y } = getBodyTranslation(time);
+      const { x, y, rotate } = getBodyTranslation(time);
       octocatLineRef.current?.setAttribute("d", octocatLinePath(time, x, y));
-      bodyRef.current.style.transform = `translateX(${x}px) translateY(${y}px)`;
+      bodyRef.current.style.transformOrigin = `${OCTOCAT_ANCHOR_X}px ${OCTOCAT_ANCHOR_Y}px`;
+      bodyRef.current.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${
+        -rotate - 10
+      }deg)`;
       cancel = requestAnimationFrame(set);
     };
 
