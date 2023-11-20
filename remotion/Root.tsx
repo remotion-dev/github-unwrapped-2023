@@ -23,7 +23,6 @@ import {
   SevenSegment,
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
-import { Spaceship } from "./Spaceship";
 import { StarSprite } from "./StarSprite";
 import { StarsReceived, starsReceivedSchema } from "./StarsReceived";
 import {

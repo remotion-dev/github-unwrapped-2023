@@ -3,6 +3,7 @@ import { AbsoluteFill, Series } from "remotion";
 import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
 import { PullRequests } from "./Paths/Paths";
+import { StarsReceived } from "./StarsReceived";
 import { TopLanguagesCamera } from "./TopLanguages";
 
 export const Main: React.FC = () => {
@@ -20,6 +21,9 @@ export const Main: React.FC = () => {
         </Series.Sequence>
         <Series.Sequence durationInFrames={10 * 30}>
           <ContributionsScene />
+        </Series.Sequence>
+        <Series.Sequence durationInFrames={10 * 30}>
+          <StarsReceived starsReceived={10} />
         </Series.Sequence>
       </Series>
     </AbsoluteFill>
