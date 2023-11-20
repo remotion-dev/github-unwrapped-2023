@@ -13,6 +13,6 @@ const makeAppHead = (username: string | null) => {
   return head;
 };
 
-export const replaceAppHead = (username: string | null, html: string) => {
+export const replaceAppHead = async (username: string | null, html: string) => {
   return html.replace("<!--app-head-->", makeAppHead(username));
 };

@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { DB } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
-type ProfileStats = {
+export type ProfileStats = {
   username: string;
   openIssues: number;
   closedIssues: number;

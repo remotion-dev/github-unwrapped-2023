@@ -12,6 +12,8 @@ export const backendCredentials = () => {
       CLIENT_SECRET: z.string(),
       NODE_ENV: z.enum(["development", "production"]),
       MONGO_URL: z.string(),
+      DISCORD_CHANNEL: z.string(),
+      DISCORD_TOKEN: z.string(),
     })
     .parse(process.env);
 };
