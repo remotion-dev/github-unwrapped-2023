@@ -29,7 +29,13 @@ export const insertProfileStats = async (
   stats: ProfileStats
 ): Promise<boolean> => {
   const collection = await getStatsCollection();
-  const value = await collection.insertOne(stats);
+  const value = await collection.updateOne(
+    { lowercasedUsername: stats.lowercasedUsername },
+    {
+      $set: stats,
+    },
+    { upsert: true }
+  );
   return value.acknowledged;
 };
 

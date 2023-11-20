@@ -35,6 +35,14 @@ export const Actions: React.FC = () => {
           label="Unwrap another user"
         />
       </Link>
+      {window.__USER__.loggedInWithGitHub ? null : (
+        <Link to="/">
+          <Action
+            icon={(params) => <UserIcon {...params} />}
+            label="Unlock private metrics"
+          />
+        </Link>
+      )}
     </div>
   );
 };
