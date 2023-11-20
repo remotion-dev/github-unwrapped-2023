@@ -33,7 +33,6 @@ export const insertProfileStats = async (
     { lowercasedUsername: stats.lowercasedUsername },
     {
       $set: stats,
-      $setOnInsert: stats,
     },
     { upsert: true }
   );
