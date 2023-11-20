@@ -54,19 +54,18 @@ const computePositions = (params: {
     let y = row * (SPACING + SIZE) + OFFSET_Y;
     let width = SIZE;
     let height = SIZE;
-    let opacity = MIN_OPACITY;
     let color = "#202138";
 
-    const noise = noise2D(`${i}`, x * 10, y * 10);
+    const appearDelay = random(i);
 
     const noiseX = noise2D(`${i}x`, x * 10, y * 10);
     const noiseY = noise2D(`${i}y`, x * 10, y * 10);
 
-    const appearFrame = 30 + noise * 30;
+    const appearFrame = 30 + appearDelay * 30;
     const appear = params.frame > appearFrame;
 
-    const moveFrame = START_SPREAD + noise * SPREAD_DURATION;
-    const move = params.frame > moveFrame;
+    const moveDelay = START_SPREAD + appearDelay * SPREAD_DURATION;
+    const move = params.frame > moveDelay;
 
     const maxOpacity = interpolate(
       params.data[i],
@@ -84,24 +83,22 @@ const computePositions = (params: {
           ? interpolateColors(
               params.data[i],
               [0, 128],
-              ["#0c2945", params.frame < moveFrame ? "#2486ff" : "#a3d3ff"]
+              ["#0c2945", params.frame < moveDelay ? "#2486ff" : "#a3d3ff"]
             )
           : color;
     }
 
-    if (move) {
-      const scale = interpolate(
-        params.frame,
-        [appearFrame, appearFrame + 30],
-        [0, 1],
-        {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        }
-      );
+    const scale = interpolate(
+      params.frame,
+      [appearFrame, appearFrame + 30],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      }
+    );
 
-      opacity = scale * maxOpacity;
-    }
+    const opacity = move ? scale * maxOpacity : MIN_OPACITY;
 
     if (move) {
       const xDelta = noiseX * 200;
@@ -109,7 +106,7 @@ const computePositions = (params: {
 
       const x_v = interpolate(
         params.frame,
-        [moveFrame, moveFrame + SPREAD_DURATION],
+        [moveDelay, moveDelay + SPREAD_DURATION],
         [0, 1],
         {
           extrapolateLeft: "clamp",
@@ -119,7 +116,7 @@ const computePositions = (params: {
 
       const y_v = interpolate(
         params.frame,
-        [moveFrame, moveFrame + SPREAD_DURATION],
+        [moveDelay, moveDelay + SPREAD_DURATION],
         [0, 1],
         {
           extrapolateLeft: "clamp",
@@ -138,9 +135,9 @@ const computePositions = (params: {
         [MIN_STAR_SIZE, MAX_STAR_SIZE]
       );
 
-      const scale = interpolate(
+      const scale_ = interpolate(
         params.frame,
-        [moveFrame, moveFrame + SPREAD_DURATION],
+        [moveDelay, moveDelay + SPREAD_DURATION],
         [0, 1],
         {
           extrapolateLeft: "clamp",
@@ -148,8 +145,8 @@ const computePositions = (params: {
         }
       );
 
-      width = size + width * (1 - scale);
-      height = size + height * (1 - scale);
+      width = size + width * (1 - scale_);
+      height = size + height * (1 - scale_);
     }
 
     let glow = 0;
@@ -158,7 +155,6 @@ const computePositions = (params: {
       glow = interpolate(params.data[i], [0, 128], [0, MAX_STAR_GLOW]);
     }
 
-    console.log(opacity);
     return {
       col,
       row,
@@ -166,7 +162,7 @@ const computePositions = (params: {
       y,
       opacity,
       color,
-      borderRadius: move ? "50%" : undefined,
+      borderRadius: move ? "50%" : 3,
       width,
       height,
       glow,
@@ -177,7 +173,6 @@ const computePositions = (params: {
 };
 
 export const ContributionsScene: React.FC = () => {
-  // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
   const positions = computePositions({ frame, data: sampleData });
@@ -262,7 +257,6 @@ export const ContributionsScene: React.FC = () => {
               style={{
                 height: p.height,
                 width: p.width,
-
                 borderRadius: p.borderRadius,
                 background: p.color,
               }}
