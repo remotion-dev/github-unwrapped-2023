@@ -3,7 +3,7 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import type { z } from "zod";
 import type { topLanguagesSchema } from "..";
 import { TopLanguagesCanvas } from "..";
-import { LangugageDescription } from "../LanguageDescription";
+import { LanguageDescription } from "../LanguageDescription";
 import { getNewRate } from "../Rocket";
 import {
   ACTION_DURATION,
@@ -50,7 +50,7 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
       />
       {languages.map((l, index) => {
         return (
-          <LangugageDescription
+          <LanguageDescription
             // eslint-disable-next-line react/no-array-index-key
             key={l + index}
             delay={actionPositions[index]}

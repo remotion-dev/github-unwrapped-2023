@@ -9,7 +9,7 @@ import {
 } from "remotion";
 import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
-import { LangugageDescription } from "./LanguageDescription";
+import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
@@ -96,7 +96,7 @@ export const PlanetScaleOut: React.FC = () => {
         </svg>
       </AbsoluteFill>
       <AbsoluteFill>
-        <LangugageDescription
+        <LanguageDescription
           delay={60}
           duration={90}
           language="Java"

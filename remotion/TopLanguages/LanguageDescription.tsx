@@ -14,7 +14,7 @@ const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
   [LanguagesEnum.enum.Python]: "rgb(200,228,252)",
 };
 
-export const LangugageDescription: React.FC<{
+export const LanguageDescription: React.FC<{
   language: LanguageEnumType;
   position: number;
   delay: number;

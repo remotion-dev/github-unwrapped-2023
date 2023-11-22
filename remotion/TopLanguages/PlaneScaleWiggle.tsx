@@ -9,7 +9,7 @@ import {
 } from "remotion";
 import { z } from "zod";
 import { RadialGradient } from "../RadialGradient";
-import { LangugageDescription } from "./LanguageDescription";
+import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
 
 const SCALE_FACTOR = 1;
@@ -86,7 +86,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         </svg>
       </AbsoluteFill>
       <AbsoluteFill>
-        <LangugageDescription
+        <LanguageDescription
           delay={60}
           duration={90}
           language={language}
