@@ -29,8 +29,9 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
-  const _radius = interpolate(frame, [0, 100], [width / 3.5, width / 2.5]);
-  const radius = _radius;
+  const _radius = (f: number) =>
+    interpolate(f, [0, 100], [width / 3.5, width / 2.5]);
+  const radius = _radius(frame);
 
   const { path } = makeCircle({
     radius,
@@ -40,9 +41,10 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const frameOutOfOrbit = 120;
+  const frameOutOfOrbit = 112;
+  const p = frameOutOfOrbit / 3;
 
-  const progress = (f: number) => (f % 40) / 40;
+  const progress = (f: number) => (f % p) / p;
 
   const centered = translatePath(
     reversePath(path),
@@ -50,16 +52,19 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     height / 2 - radius
   );
 
-  const move = moveAlongLine(centered, progress(spedUpFrame));
   const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit));
-  const currentMove = spedUpFrame < frameOutOfOrbit ? move : moveAtEnd;
-
+  const radiusAtEnd = _radius(frameOutOfOrbit);
   const extrapolatedX =
-    moveAtEnd.offset.x + Math.cos(moveAtEnd.angleInRadians) * 900;
+    moveAtEnd.offset.x +
+    Math.cos(moveAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
   const extrapolatedY =
-    moveAtEnd.offset.y + Math.sin(moveAtEnd.angleInRadians) * 900;
-
+    moveAtEnd.offset.y +
+    Math.sin(moveAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
   const extrapolatedLine = `M ${moveAtEnd.offset.x} ${moveAtEnd.offset.y} L ${extrapolatedX} ${extrapolatedY}`;
+  const currentMove = moveAlongLine(
+    spedUpFrame > frameOutOfOrbit ? extrapolatedLine : centered,
+    progress(spedUpFrame)
+  );
 
   return (
     <AbsoluteFill>
