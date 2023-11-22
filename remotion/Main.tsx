@@ -16,14 +16,15 @@ export const Main: React.FC = () => {
         <Series.Sequence durationInFrames={5 * 30}>
           <Issues openIssues={10} closedIssues={10} />
         </Series.Sequence>
+        <Series.Sequence durationInFrames={10 * 30}>
+          <StarsReceived starsReceived={10} />
+        </Series.Sequence>
+
         <Series.Sequence durationInFrames={15 * 30}>
           <PullRequests />
         </Series.Sequence>
         <Series.Sequence durationInFrames={10 * 30}>
           <ContributionsScene />
-        </Series.Sequence>
-        <Series.Sequence durationInFrames={10 * 30}>
-          <StarsReceived starsReceived={10} />
         </Series.Sequence>
       </Series>
     </AbsoluteFill>
