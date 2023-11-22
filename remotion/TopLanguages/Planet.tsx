@@ -1,11 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
-import {
-  AbsoluteFill,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import type { LanguageEnumType } from "./constants";
 import {
@@ -70,17 +65,17 @@ export const Planet: React.FC<{
   const rotate = isAction ? noise : 0;
 
   return (
-    <AbsoluteFill
+    <div
       style={{
         position: "absolute",
         transform: `scale(${scale}) rotate(${rotate}deg)`,
-        top: planetPosition.y - height / 2 + boundingBox.width / 2,
-        left: planetPosition.x - width / 2 + boundingBox.height / 2,
+        top: planetPosition.y,
+        left: planetPosition.x,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
       <PlanetSVG />
-    </AbsoluteFill>
+    </div>
   );
 };
