@@ -29,7 +29,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
-  const radius = interpolate(frame, [0, 100], [width / 3.5, width / 2]);
+  const radius = interpolate(frame, [0, 100], [width / 3.5, width / 2.5]);
 
   const { path } = makeCircle({
     radius,
@@ -39,7 +39,9 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const progress = (spedUpFrame % 40) / 40;
+  const frameOutOfOrbit = 90;
+
+  const progress = (f: number) => (f % 40) / 40;
 
   const centered = translatePath(
     reversePath(path),
@@ -47,7 +49,9 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     height / 2 - radius
   );
 
-  const move = moveAlongLine(centered, progress);
+  const move = moveAlongLine(centered, progress(spedUpFrame));
+  const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit));
+  const currentMove = spedUpFrame < frameOutOfOrbit ? move : moveAtEnd;
 
   return (
     <AbsoluteFill>
@@ -71,10 +75,10 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
       <NewRocketSVG
         style={{
           transform: `translateX(${
-            move.offset.x - TL_ROCKET_WIDTH / 2
-          }px) translateY(${move.offset.y - TL_ROCKET_HEIGHT / 2}px) rotate(${
-            move.angleInDegrees
-          }deg) scale(0.5)`,
+            currentMove.offset.x - TL_ROCKET_WIDTH / 2
+          }px) translateY(${
+            currentMove.offset.y - TL_ROCKET_HEIGHT / 2
+          }px) rotate(${currentMove.angleInDegrees}deg) scale(0.5)`,
         }}
       />
     </AbsoluteFill>
