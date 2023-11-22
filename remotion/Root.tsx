@@ -30,6 +30,7 @@ import {
   TopLanguagesCanvas,
   topLanguagesSchema,
 } from "./TopLanguages";
+import { PlanetScaleOut } from "./TopLanguages/PlanetScaleOut";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -157,34 +158,7 @@ export const RemotionRoot: React.FC = () => {
         }}
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
-      <Composition
-        id={"TopLanguagesCanvas"}
-        component={TopLanguagesCanvas}
-        schema={topLanguagesSchema}
-        durationInFrames={TOP_LANGUAGES_DURATION}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH * 2}
-        height={VIDEO_HEIGHT * 2}
-        defaultProps={{
-          first: LanguagesEnum.enum.JavaScript,
-          second: LanguagesEnum.enum.Python,
-          third: LanguagesEnum.enum.Java,
-        }}
-      />
-      <Composition
-        id={"TopLanguagesCamera"}
-        component={TopLanguagesCamera}
-        schema={topLanguagesSchema}
-        durationInFrames={TOP_LANGUAGES_DURATION}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          first: "Java" as const,
-          second: "Python" as const,
-          third: "Java" as const,
-        }}
-      />
+
       <Composition
         id={"SevenSegment"}
         component={SevenSegment}
@@ -214,6 +188,49 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={240}
           height={1080}
           width={1080}
+        />
+      </Folder>
+      <Folder name="TopLanguages">
+        <Composition
+          id={"TopLanguagesCanvas"}
+          component={TopLanguagesCanvas}
+          schema={topLanguagesSchema}
+          durationInFrames={TOP_LANGUAGES_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH * 2}
+          height={VIDEO_HEIGHT * 2}
+          defaultProps={{
+            first: LanguagesEnum.enum.JavaScript,
+            second: LanguagesEnum.enum.Python,
+            third: LanguagesEnum.enum.Java,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesCamera"}
+          component={TopLanguagesCamera}
+          schema={topLanguagesSchema}
+          durationInFrames={TOP_LANGUAGES_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            first: "Java" as const,
+            second: "Python" as const,
+            third: "Java" as const,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesZoomOut"}
+          component={PlanetScaleOut}
+          durationInFrames={90}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            first: "Java" as const,
+            second: "Python" as const,
+            third: "Java" as const,
+          }}
         />
       </Folder>
       <Composition

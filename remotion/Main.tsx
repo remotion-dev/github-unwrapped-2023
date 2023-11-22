@@ -19,7 +19,6 @@ export const Main: React.FC = () => {
         <Series.Sequence durationInFrames={10 * 30}>
           <StarsReceived starsReceived={10} />
         </Series.Sequence>
-
         <Series.Sequence durationInFrames={15 * 30}>
           <PullRequests />
         </Series.Sequence>
