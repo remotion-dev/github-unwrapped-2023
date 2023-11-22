@@ -1,4 +1,4 @@
-import { getPointAtLength, getTangentAtLength } from "@remotion/paths";
+import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import {
   RATE_DECREASE,
@@ -6,16 +6,17 @@ import {
   TRANSFORM_PATH_X,
   TRANSFORM_PATH_Y,
 } from "../../types/constants";
+import { moveAlongLine } from "../move-along-line";
 import {
   ACTION_DURATION,
+  PLANET_1_POSITION,
+  PLANET_2_POSITION,
+  PLANET_3_POSITION,
   complexCurvePathLength,
   firstPushEnd,
   fourthPushEnd,
   fourthPushStart,
   newPath,
-  PLANET_1_POSITION,
-  PLANET_2_POSITION,
-  PLANET_3_POSITION,
   secondPushEnd,
   secondPushStart,
   thirdPushEnd,
@@ -111,9 +112,7 @@ export const Rocket: React.FC = () => {
 
   const point = getPointAtLength(newPath, complexCurvePathLength * newRate);
 
-  const tan = getTangentAtLength(newPath, complexCurvePathLength * newRate);
-  const angleInRadians = Math.atan2(tan.y, tan.x);
-  const angleInDegrees = angleInRadians * (180 / Math.PI) + 90;
+  const { angleInDegrees } = moveAlongLine(newPath, newRate);
 
   const rocketX = point.x - TL_ROCKET_WIDTH / 2;
   const rocketY = point.y - TL_ROCKET_HEIGHT / 2;
