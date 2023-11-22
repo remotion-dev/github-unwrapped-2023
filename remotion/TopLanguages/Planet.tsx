@@ -31,7 +31,7 @@ export const Planet: React.FC<{
   delay: number;
 }> = ({ actionIndex, language, isMain, planetPositionRate, delay }) => {
   const frame = useCurrentFrame();
-  const { fps, height, width } = useVideoConfig();
+  const { fps } = useVideoConfig();
   const noise = noise2D("seed", frame / 10, 1) * 10;
   const actionFrames = [
     actionPositions[actionIndex],

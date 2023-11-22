@@ -2,6 +2,7 @@ import { scalePath, translatePath } from "@remotion/paths";
 import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
+  Easing,
   interpolate,
   useCurrentFrame,
   useVideoConfig,
@@ -16,12 +17,12 @@ import {
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
 
-const SCALE_FACTOR = 0.9;
+const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
 
 export const PlanetScaleOut: React.FC = () => {
   const { PlanetSVG } = mapLanguageToPlanet.Java;
-  const { width, height } = useVideoConfig();
+  const { width, height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
   const { path } = makePie({
@@ -38,19 +39,41 @@ export const PlanetScaleOut: React.FC = () => {
 
   const remappedFrame = remapSpeed(frame, speedFunction);
 
-  const progress = interpolate(remappedFrame, [0, 100], [0, 1]);
+  const progress = interpolate(remappedFrame, [0, 80], [0, 1]);
   const move = moveAlongLine(translated2, progress);
+
+  const zoomOutJump = interpolate(frame, [40, 70], [0, 1], {
+    extrapolateRight: "clamp",
+    extrapolateLeft: "clamp",
+    easing: Easing.inOut(Easing.ease),
+  });
+
+  const zoomOutConstant = interpolate(frame, [0, 70], [0, 1], {
+    extrapolateRight: "clamp",
+    extrapolateLeft: "clamp",
+  });
+  const zoomOut = zoomOutJump * 0.8 + zoomOutConstant * 0.2;
+
+  const scale = interpolate(zoomOut, [0, 1], [3, 1.5]);
+  const left = interpolate(zoomOut, [0, 1], [-50, 0]);
+  const top = interpolate(zoomOut, [0, 1], [30, 0]);
+
+  const radialGradientScale = interpolate(zoomOut, [0, 1], [200, 100]) + "%";
 
   return (
     <AbsoluteFill style={{}}>
-      <RadialGradient />
+      <AbsoluteFill
+        style={{ width: radialGradientScale, height: radialGradientScale }}
+      >
+        <RadialGradient />
+      </AbsoluteFill>
       <AbsoluteFill
         style={{
           justifyContent: "center",
           alignItems: "center",
-          scale: "3",
-          left: "-50%",
-          top: "30%",
+          scale: String(scale),
+          left: left + "%",
+          top: top + "%",
           filter: "drop-shadow(0 0 20px rgba(0, 0, 0, 0.2))",
         }}
       >
@@ -63,7 +86,7 @@ export const PlanetScaleOut: React.FC = () => {
               move.offset.x - TL_ROCKET_WIDTH / 2
             }px) translateY(${move.offset.y - TL_ROCKET_HEIGHT / 2}px) rotate(${
               move.angleInDegrees
-            }deg)`,
+            }deg) scale(1.5)`,
           }}
         />
       </AbsoluteFill>
