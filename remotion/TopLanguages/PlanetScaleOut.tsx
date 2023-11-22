@@ -9,6 +9,7 @@ import {
 } from "remotion";
 import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
+import { LangugageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
@@ -22,7 +23,7 @@ const PATH_EXTRAPOLATION = 0.1;
 
 export const PlanetScaleOut: React.FC = () => {
   const { PlanetSVG } = mapLanguageToPlanet.Java;
-  const { width, height, fps } = useVideoConfig();
+  const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
   const { path } = makePie({
@@ -74,7 +75,6 @@ export const PlanetScaleOut: React.FC = () => {
           scale: String(scale),
           left: left + "%",
           top: top + "%",
-          filter: "drop-shadow(0 0 20px rgba(0, 0, 0, 0.2))",
         }}
       >
         <PlanetSVG />
@@ -94,6 +94,14 @@ export const PlanetScaleOut: React.FC = () => {
         <svg viewBox={`0 0 1080 1080`}>
           <path d={translated2} fill="transparent" />
         </svg>
+      </AbsoluteFill>
+      <AbsoluteFill>
+        <LangugageDescription
+          delay={60}
+          duration={90}
+          language="Java"
+          position={1}
+        />
       </AbsoluteFill>
     </AbsoluteFill>
   );

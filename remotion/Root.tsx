@@ -30,6 +30,10 @@ import {
   TopLanguagesCanvas,
   topLanguagesSchema,
 } from "./TopLanguages";
+import {
+  PlanetScaleWiggle,
+  wiggleSchema,
+} from "./TopLanguages/PlaneScaleWiggle";
 import { PlanetScaleOut } from "./TopLanguages/PlanetScaleOut";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
@@ -222,7 +226,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id={"TopLanguagesZoomOut"}
           component={PlanetScaleOut}
-          durationInFrames={90}
+          durationInFrames={150}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
@@ -230,6 +234,18 @@ export const RemotionRoot: React.FC = () => {
             first: "Java" as const,
             second: "Python" as const,
             third: "Java" as const,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesWiggle"}
+          component={PlanetScaleWiggle}
+          schema={wiggleSchema}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            language: "Java",
           }}
         />
       </Folder>

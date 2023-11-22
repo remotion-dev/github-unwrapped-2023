@@ -3,14 +3,14 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import type { z } from "zod";
 import type { topLanguagesSchema } from "..";
 import { TopLanguagesCanvas } from "..";
+import { LangugageDescription } from "../LanguageDescription";
+import { getNewRate } from "../Rocket";
 import {
-  actionPositions,
   ACTION_DURATION,
+  actionPositions,
   complexCurvePathLength,
   newPath,
 } from "../constants";
-import { LangugageDescription } from "../LanguageDescription";
-import { getNewRate } from "../Rocket";
 
 const SCALE_BREAKPOINT = 130;
 
@@ -53,10 +53,8 @@ export const ShowDescription: React.FC<z.infer<typeof topLanguagesSchema>> = (
           <LangugageDescription
             // eslint-disable-next-line react/no-array-index-key
             key={l + index}
-            actionFrames={[
-              actionPositions[index],
-              actionPositions[index] + ACTION_DURATION,
-            ]}
+            delay={actionPositions[index]}
+            duration={ACTION_DURATION / 2}
             language={l}
             position={index}
           />

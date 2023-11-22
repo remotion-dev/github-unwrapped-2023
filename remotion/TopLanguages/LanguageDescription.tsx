@@ -1,5 +1,6 @@
 import {
   AbsoluteFill,
+  interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -16,8 +17,9 @@ const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
 export const LangugageDescription: React.FC<{
   language: LanguageEnumType;
   position: number;
-  actionFrames: [number, number];
-}> = ({ language, position, actionFrames }) => {
+  delay: number;
+  duration: number;
+}> = ({ language, position, delay, duration }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -27,10 +29,9 @@ export const LangugageDescription: React.FC<{
     config: {
       mass: 1,
       stiffness: 50,
-      overshootClamping: true,
     },
-    delay: actionFrames[0],
-    durationInFrames: (actionFrames[1] - actionFrames[0]) / 2,
+    delay,
+    durationInFrames: 20,
   });
 
   const slideOut = spring({
@@ -39,10 +40,12 @@ export const LangugageDescription: React.FC<{
     config: {
       mass: 1,
       stiffness: 50,
-      overshootClamping: true,
     },
-    delay: actionFrames[1],
+    durationInFrames: 20,
+    delay: delay + duration,
   });
+
+  const translationY = interpolate(slideIn - slideOut, [0, 1], [300, 0]);
 
   return (
     <AbsoluteFill
@@ -50,8 +53,8 @@ export const LangugageDescription: React.FC<{
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",
-        paddingBottom: 240,
-        transform: `translateY(${(1 - slideIn + slideOut) * 360}px)`,
+        paddingBottom: 50,
+        transform: `translateY(${translationY}px)`,
       }}
     >
       <div
