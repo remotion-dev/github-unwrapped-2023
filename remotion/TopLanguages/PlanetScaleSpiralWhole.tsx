@@ -29,7 +29,8 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
-  const radius = interpolate(frame, [0, 100], [width / 3.5, width / 2.5]);
+  const _radius = interpolate(frame, [0, 100], [width / 3.5, width / 2.5]);
+  const radius = _radius;
 
   const { path } = makeCircle({
     radius,
@@ -39,7 +40,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const frameOutOfOrbit = 90;
+  const frameOutOfOrbit = 120;
 
   const progress = (f: number) => (f % 40) / 40;
 
@@ -52,6 +53,13 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const move = moveAlongLine(centered, progress(spedUpFrame));
   const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit));
   const currentMove = spedUpFrame < frameOutOfOrbit ? move : moveAtEnd;
+
+  const extrapolatedX =
+    moveAtEnd.offset.x + Math.cos(moveAtEnd.angleInRadians) * 900;
+  const extrapolatedY =
+    moveAtEnd.offset.y + Math.sin(moveAtEnd.angleInRadians) * 900;
+
+  const extrapolatedLine = `M ${moveAtEnd.offset.x} ${moveAtEnd.offset.y} L ${extrapolatedX} ${extrapolatedY}`;
 
   return (
     <AbsoluteFill>
@@ -81,6 +89,11 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
           }px) rotate(${currentMove.angleInDegrees}deg) scale(0.5)`,
         }}
       />
+      <AbsoluteFill>
+        <svg viewBox={`0 0 1080 1080`}>
+          <path d={extrapolatedLine} fill="transparent" stroke="white" />
+        </svg>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

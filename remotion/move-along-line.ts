@@ -11,5 +11,5 @@ export const moveAlongLine = (path: string, progress: number) => {
   const angleInDegrees = angleInRadians * (180 / Math.PI) + 90;
   const offset = getPointAtLength(path, length * progress);
 
-  return { angleInDegrees, offset };
+  return { angleInDegrees, offset, angleInRadians };
 };
