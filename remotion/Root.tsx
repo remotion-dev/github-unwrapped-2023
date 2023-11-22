@@ -39,6 +39,7 @@ import {
   PlanetScaleSpiral,
   spiralSchema,
 } from "./TopLanguages/PlanetScaleSpiral";
+import { PlanetScaleSpiralWhole } from "./TopLanguages/PlanetScaleSpiralWhole";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -244,6 +245,18 @@ export const RemotionRoot: React.FC = () => {
           id={"TopLanguagesWiggle"}
           component={PlanetScaleWiggle}
           schema={wiggleSchema}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            language: "Java",
+          }}
+        />
+        <Composition
+          id={"PlanetSpiralWhole"}
+          component={PlanetScaleSpiralWhole}
+          schema={spiralSchema}
           durationInFrames={150}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
