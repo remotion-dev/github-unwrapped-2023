@@ -19,6 +19,7 @@ import {
 } from "./svgs/NewRocketSVG";
 import SkySVG from "./svgs/SkySVG";
 
+const frameAtStart = 30;
 const frameAtEnd = 120;
 
 const progress = ({
@@ -64,16 +65,34 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 100], [width / 3.5, width / 2.5]);
 
   const radius = getRadius(frame);
+  const radiusAtStart = getRadius(frameAtStart);
   const radiusAtEnd = getRadius(frameAtEnd);
 
-  const path = getPath(radius, width, height);
+  const pathAtStart = useMemo(() => {
+    return getPath(radiusAtStart, width, height);
+  }, [height, radiusAtStart, width]);
+
+  const pathInOrbit = getPath(radius, width, height);
+
   const pathAtEnd = useMemo(() => {
     return getPath(radiusAtEnd, width, height);
   }, [height, radiusAtEnd, width]);
 
   const isOverEnd = spedUpFrame > frameAtEnd;
 
-  const positionAtend = useMemo(() => {
+  const positionAtStart = useMemo(() => {
+    return moveAlongLine(
+      pathAtStart,
+      progress({
+        f: frameAtStart,
+        start: 0,
+        loop: true,
+        offset: startRotationInRadians,
+      })
+    );
+  }, [pathAtStart, startRotationInRadians]);
+
+  const positionAtEnd = useMemo(() => {
     return moveAlongLine(
       pathAtEnd,
       progress({
@@ -85,23 +104,17 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     );
   }, [pathAtEnd, startRotationInRadians]);
 
-  const xAtEnd = useMemo(() => {
-    return (
-      positionAtend.offset.x +
-      Math.cos(positionAtend.angleInRadians) * radiusAtEnd * 2 * Math.PI
-    );
-  }, [positionAtend.angleInRadians, positionAtend.offset.x, radiusAtEnd]);
-
-  const yAtEnd = useMemo(() => {
-    return (
-      positionAtend.offset.y +
-      Math.sin(positionAtend.angleInRadians) * radiusAtEnd * 2 * Math.PI
-    );
-  }, [positionAtend.angleInRadians, positionAtend.offset.y, radiusAtEnd]);
-
   const outOfOrbitLine = useMemo(() => {
-    return `M ${positionAtend.offset.x} ${positionAtend.offset.y} L ${xAtEnd} ${yAtEnd}`;
-  }, [positionAtend.offset.x, positionAtend.offset.y, xAtEnd, yAtEnd]);
+    const xAtEnd =
+      positionAtEnd.offset.x +
+      Math.cos(positionAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
+
+    const yAtEnd =
+      positionAtEnd.offset.y +
+      Math.sin(positionAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
+
+    return `M ${positionAtEnd.offset.x} ${positionAtEnd.offset.y} L ${xAtEnd} ${yAtEnd}`;
+  }, [positionAtEnd, radiusAtEnd]);
 
   const currentPosition = useMemo(() => {
     if (isOverEnd) {
@@ -117,7 +130,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     }
 
     return moveAlongLine(
-      path,
+      pathInOrbit,
       progress({
         f: spedUpFrame,
         start: 0,
@@ -125,7 +138,13 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         offset: startRotationInRadians,
       })
     );
-  }, [isOverEnd, outOfOrbitLine, path, spedUpFrame, startRotationInRadians]);
+  }, [
+    isOverEnd,
+    outOfOrbitLine,
+    pathInOrbit,
+    spedUpFrame,
+    startRotationInRadians,
+  ]);
 
   return (
     <AbsoluteFill>
