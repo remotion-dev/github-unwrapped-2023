@@ -3,10 +3,18 @@ import { interpolate, random, Sequence, useCurrentFrame } from "remotion";
 import { StarSprite } from "../StarSprite";
 
 const MOVE_AIM = 100;
-const RADIUS = 1500;
-const BURST_FRAME = 20;
+const HIT_RADIUS = 500;
 
-export const Star: React.FC<{ initialFrame: number }> = ({ initialFrame }) => {
+const MIN_NON_HIT_RADIUS = 900  
+const MAX_NON_HIT_RADIUS = 1200;
+
+const MAX_STARS = 50
+const MAX_HITS = 10
+
+export const Star: React.FC<{ initialFrame: number; transitionDuration: number;totalStars: number }> = ({ initialFrame, transitionDuration, totalStars }) => {
+  totalStars = Math.min(totalStars, MAX_STARS)
+  const hitProbability = useMemo(() => interpolate(totalStars, [0, MAX_HITS, MAX_STARS], [1, 0.9, 0.4]),[totalStars])
+  const hitSpaceship = useMemo(() => random(null) <  hitProbability,[hitProbability])
   const frame = useCurrentFrame();
 
   const randomValue = useMemo(() => random(null), []);
@@ -15,21 +23,25 @@ export const Star: React.FC<{ initialFrame: number }> = ({ initialFrame }) => {
     [0, 1],
     [-Math.PI / 2, Math.PI / 2]
   );
-  const randomRadius = useMemo(() => random(null) * RADIUS, []);
+
+  const randomRadiusMultiplier = useMemo(() => random(null), []);
+
+  const randomRadius = hitSpaceship ? randomRadiusMultiplier * HIT_RADIUS :  randomRadiusMultiplier * (MAX_NON_HIT_RADIUS - MIN_NON_HIT_RADIUS) + MIN_NON_HIT_RADIUS;
 
   const x = Math.sin(interpolateRandom);
   const y = Math.cos(interpolateRandom);
 
-  const translateY = MOVE_AIM - y * randomRadius;
+  const translateY =  MOVE_AIM -y * randomRadius;
   const translateX = x * randomRadius;
 
-  const scale = interpolate(frame, [initialFrame, initialFrame + 30], [0, 1], {
+
+  const scale = interpolate(frame, [initialFrame, initialFrame + transitionDuration], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   return (
-    <Sequence from={initialFrame}>
+    <Sequence style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} from={initialFrame}>
       {/* <AbsoluteFill
         style={{
           display: "flex",
@@ -38,7 +50,7 @@ export const Star: React.FC<{ initialFrame: number }> = ({ initialFrame }) => {
         }}
       >
         <Pie
-          radius={RADIUS}
+          radius={HIT_RADIUS}
           progress={0.5}
           fill="white"
           rotation={-0.5 * Math.PI}
@@ -51,12 +63,16 @@ export const Star: React.FC<{ initialFrame: number }> = ({ initialFrame }) => {
 
       <Sequence
         style={{
-          transform: `scale(${
-            scale * 0.7
-          }) translateX(${translateX}px) translateY(${translateY}px) `,
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          transform: `translateX(${translateX* scale}px) translateY(${translateY*scale}px) scale(${
+            scale*0.7
+          })`,
+          opacity: frame < initialFrame + transitionDuration ? 1 : 0,
         }}
       >
-        <StarSprite burstFrame={BURST_FRAME} />
+        <StarSprite burstFrame={hitSpaceship ? transitionDuration * (2/3) : undefined} transitionDuration={transitionDuration}/>
+        {/* <StarSprite  transitionDuration={transitionDuration}/> */}
+
       </Sequence>
       {/* <AbsoluteFill
         style={{
