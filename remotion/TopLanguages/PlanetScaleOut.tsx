@@ -7,10 +7,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { z } from "zod";
 import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
-import { mapLanguageToPlanet } from "./constants";
+import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -21,8 +22,16 @@ import {
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
 
-export const PlanetScaleOut: React.FC = () => {
-  const { PlanetSVG } = mapLanguageToPlanet.Java;
+export const zoomOutSchema = z.object({
+  corner: z.enum(["top-left", "top-right", "bottom-left", "bottom-right"]),
+  language: LanguagesEnum,
+});
+
+export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
+  corner,
+  language,
+}) => {
+  const { PlanetSVG } = mapLanguageToPlanet[language];
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -99,7 +108,7 @@ export const PlanetScaleOut: React.FC = () => {
         <LanguageDescription
           delay={60}
           duration={90}
-          language="Java"
+          language={language}
           position={1}
         />
       </AbsoluteFill>

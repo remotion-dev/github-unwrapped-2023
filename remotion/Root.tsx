@@ -34,7 +34,7 @@ import {
   PlanetScaleWiggle,
   wiggleSchema,
 } from "./TopLanguages/PlaneScaleWiggle";
-import { PlanetScaleOut } from "./TopLanguages/PlanetScaleOut";
+import { PlanetScaleOut, zoomOutSchema } from "./TopLanguages/PlanetScaleOut";
 import {
   PlanetScaleSpiral,
   spiralSchema,
@@ -235,10 +235,10 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
+          schema={zoomOutSchema}
           defaultProps={{
-            first: "Java" as const,
-            second: "Python" as const,
-            third: "Java" as const,
+            corner: "top-left" as const,
+            language: "JavaScript" as const,
           }}
         />
         <Composition
