@@ -8,7 +8,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
@@ -166,7 +165,12 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
       <AbsoluteFill
         style={{ width: radialGradientScale, height: radialGradientScale }}
       >
-        <RadialGradient />
+        <AbsoluteFill
+          style={{
+            backgroundImage: "radial-gradient(#DD8B5A, #0A0A1B)",
+            opacity: 0.2,
+          }}
+        />{" "}
       </AbsoluteFill>
       <AbsoluteFill
         style={{

@@ -277,7 +277,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java" as const,
-            showHelperLine: true,
+            showHelperLine: false,
             startRotationInRadians: 37.3,
           }}
         />

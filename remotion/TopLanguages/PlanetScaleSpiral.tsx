@@ -17,15 +17,15 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
 }) => {
   const frame = useCurrentFrame();
 
-  const zoomOutProgress = interpolate(frame, [30, 80], [0, 1], {
+  const zoomOutProgress = interpolate(frame, [0, 80], [0, 1], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
     easing: Easing.inOut(Easing.ease),
   });
 
-  const translateX = interpolate(zoomOutProgress, [0, 1], [50, 0]);
-  const translateY = interpolate(zoomOutProgress, [0, 1], [50, 0]);
-  const scale = interpolate(zoomOutProgress, [0, 1], [2, 1]);
+  const translateX = interpolate(zoomOutProgress, [0, 1], [0, 0]);
+  const translateY = interpolate(zoomOutProgress, [0, 1], [0, 0]);
+  const scale = interpolate(zoomOutProgress, [0, 1], [1.5, 1]);
 
   return (
     <AbsoluteFill>
