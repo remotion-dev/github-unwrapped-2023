@@ -3,6 +3,7 @@ import { makeCircle } from "@remotion/shapes";
 import { useMemo } from "react";
 import {
   AbsoluteFill,
+  Easing,
   interpolate,
   useCurrentFrame,
   useVideoConfig,
@@ -78,6 +79,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     return getPath(radiusAtEnd, width, height);
   }, [height, radiusAtEnd, width]);
 
+  const isBeforeStart = spedUpFrame < frameAtStart;
   const isOverEnd = spedUpFrame > frameAtEnd;
 
   const positionAtStart = useMemo(() => {
@@ -118,17 +120,28 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
 
   const intoOrbitLine = useMemo(() => {
     const xAtStart =
-      positionAtStart.offset.x +
+      positionAtStart.offset.x -
       Math.cos(positionAtStart.angleInRadians) * radiusAtStart * 2 * Math.PI;
 
     const yAtStart =
-      positionAtStart.offset.y +
+      positionAtStart.offset.y -
       Math.sin(positionAtStart.angleInRadians) * radiusAtStart * 2 * Math.PI;
 
-    return `M ${positionAtStart.offset.x} ${positionAtStart.offset.y} L ${xAtStart} ${yAtStart}`;
+    return reversePath(
+      `M ${positionAtStart.offset.x} ${positionAtStart.offset.y} L ${xAtStart} ${yAtStart}`
+    );
   }, [positionAtStart, radiusAtStart]);
 
   const currentPosition = useMemo(() => {
+    if (isBeforeStart) {
+      return moveAlongLine(
+        intoOrbitLine,
+        interpolate(spedUpFrame, [0, frameAtStart], [0, 1], {
+          easing: Easing.in(Easing.ease),
+        })
+      );
+    }
+
     if (isOverEnd) {
       return moveAlongLine(
         outOfOrbitLine,
@@ -151,6 +164,8 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
       })
     );
   }, [
+    intoOrbitLine,
+    isBeforeStart,
     isOverEnd,
     outOfOrbitLine,
     pathInOrbit,
