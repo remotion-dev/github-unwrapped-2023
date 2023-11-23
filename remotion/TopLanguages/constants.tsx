@@ -57,6 +57,8 @@ export const complexCurvePathLength = getLength(newPath);
 
 export const LanguagesEnum = z.enum(["Java", "Python", "JavaScript"]);
 
+export type LanguageType = z.infer<typeof LanguagesEnum>;
+
 const LanguageOptions = LanguagesEnum.options;
 export type LanguageEnumType = (typeof LanguageOptions)[number];
 

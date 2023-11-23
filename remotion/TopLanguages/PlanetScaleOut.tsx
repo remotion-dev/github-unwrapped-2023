@@ -26,6 +26,7 @@ const PATH_EXTRAPOLATION = 0.1;
 export const zoomOutSchema = z.object({
   corner: cornerType,
   language: LanguagesEnum,
+  position: z.number().int(),
 });
 
 const initialLeft = (corner: Corner) => {
@@ -119,6 +120,7 @@ const pathTranslation = ({
 export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   corner,
   language,
+  position,
 }) => {
   const { PlanetSVG } = mapLanguageToPlanet[language];
   const { width, height } = useVideoConfig();
@@ -158,20 +160,8 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
-  const radialGradientScale = interpolate(zoomOut, [0, 1], [200, 100]) + "%";
-
   return (
     <AbsoluteFill style={{}}>
-      <AbsoluteFill
-        style={{ width: radialGradientScale, height: radialGradientScale }}
-      >
-        <AbsoluteFill
-          style={{
-            backgroundImage: "radial-gradient(#DD8B5A, #0A0A1B)",
-            opacity: 0.2,
-          }}
-        />{" "}
-      </AbsoluteFill>
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -204,7 +194,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           delay={60}
           duration={90}
           language={language}
-          position={1}
+          position={position}
         />
       </AbsoluteFill>
     </AbsoluteFill>

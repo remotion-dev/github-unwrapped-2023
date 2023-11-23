@@ -4,16 +4,20 @@ import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
 import { LanguagesEnum } from "./constants";
 
+export const startRotationInRadiansSchema = z.number().step(0.1).min(0);
+
 export const spiralSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),
-  startRotationInRadians: z.number().step(0.1).min(0)
+  startRotationInRadians: startRotationInRadiansSchema,
+  position: z.number().int(),
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
   showHelperLine,
-  startRotationInRadians
+  startRotationInRadians,
+  position,
 }) => {
   const frame = useCurrentFrame();
 
@@ -34,14 +38,19 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
           transform: `translateX(${translateX}%) translateY(${translateY}%) scale(${scale})`,
         }}
       >
-        <PlanetScaleSpiralWhole startRotationInRadians={startRotationInRadians} showHelperLine={showHelperLine} language={language} />
+        <PlanetScaleSpiralWhole
+          startRotationInRadians={startRotationInRadians}
+          showHelperLine={showHelperLine}
+          language={language}
+          position={position}
+        />
       </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
-          delay={100}
+          delay={80}
           duration={90}
           language={language}
-          position={1}
+          position={position}
         />
       </AbsoluteFill>
     </AbsoluteFill>

@@ -75,7 +75,7 @@ export const LanguageDescription: React.FC<{
           fontWeight: 300,
         }}
       >
-        Your language no. {3 - position}
+        Your language no. {position}
       </div>
     </AbsoluteFill>
   );

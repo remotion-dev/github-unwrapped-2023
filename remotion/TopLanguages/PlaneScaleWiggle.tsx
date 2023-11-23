@@ -17,10 +17,12 @@ const PATH_EXTRAPOLATION = 0.1;
 
 export const wiggleSchema = z.object({
   language: LanguagesEnum,
+  position: z.number(),
 });
 
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
+  position,
 }) => {
   const { PlanetSVG } = mapLanguageToPlanet[language];
   const { width, height, fps } = useVideoConfig();
@@ -90,7 +92,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
           delay={60}
           duration={90}
           language={language}
-          position={1}
+          position={position}
         />
       </AbsoluteFill>
     </AbsoluteFill>

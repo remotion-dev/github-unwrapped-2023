@@ -31,6 +31,11 @@ import {
   topLanguagesSchema,
 } from "./TopLanguages";
 import {
+  AllPlanets,
+  allPlanetsSchema,
+  getDurationOfAllPlanets,
+} from "./TopLanguages/AllPlanets";
+import {
   PlanetScaleWiggle,
   wiggleSchema,
 } from "./TopLanguages/PlaneScaleWiggle";
@@ -239,6 +244,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             corner: "top-right" as const,
             language: "JavaScript" as const,
+            position: 1,
           }}
         />
         <Composition
@@ -251,6 +257,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java",
+            position: 1,
           }}
         />
         <Composition
@@ -265,6 +272,7 @@ export const RemotionRoot: React.FC = () => {
             language: "Java" as const,
             showHelperLine: true,
             startRotationInRadians: 0,
+            position: 1,
           }}
         />
         <Composition
@@ -279,6 +287,33 @@ export const RemotionRoot: React.FC = () => {
             language: "Java" as const,
             showHelperLine: false,
             startRotationInRadians: 37.3,
+            position: 1,
+          }}
+        />
+        <Composition
+          id={"AllPlanets"}
+          component={AllPlanets}
+          schema={allPlanetsSchema}
+          durationInFrames={500}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          calculateMetadata={({ props: { language2, language3 } }) => {
+            return {
+              durationInFrames: getDurationOfAllPlanets({
+                language2,
+                language3,
+                fps: VIDEO_FPS,
+              }),
+            };
+          }}
+          defaultProps={{
+            corner: "bottom-left",
+            language1: "Java",
+            language2: "JavaScript",
+            language3: "Python",
+            showHelperLine: false,
+            startRotationInRadians: 0,
           }}
         />
       </Folder>
