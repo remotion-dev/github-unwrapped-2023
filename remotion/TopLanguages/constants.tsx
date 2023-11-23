@@ -2,6 +2,7 @@ import { getBoundingBox, getLength, scalePath } from "@remotion/paths";
 import type { SVGProps } from "react";
 import { z } from "zod";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
+import type { GradientType } from "../Gradients/available-gradients";
 import {
   JavaPlanetBoundingBox,
   JavaPlanetSVG,
@@ -62,26 +63,32 @@ export type LanguageType = z.infer<typeof LanguagesEnum>;
 const LanguageOptions = LanguagesEnum.options;
 export type LanguageEnumType = (typeof LanguageOptions)[number];
 
+type BoundingBox = {
+  width: number;
+  height: number;
+};
+
 export const mapLanguageToPlanet: Record<
   LanguageEnumType,
   {
-    boundingBox: {
-      width: number;
-      height: number;
-    };
+    boundingBox: BoundingBox;
     PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+    gradient: GradientType;
   }
 > = {
   [LanguagesEnum.enum.Java]: {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
+    gradient: "orange",
   },
   [LanguagesEnum.enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
+    gradient: "blue",
   },
   [LanguagesEnum.enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
+    gradient: "yellow",
   },
 };

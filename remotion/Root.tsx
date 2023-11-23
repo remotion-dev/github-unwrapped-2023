@@ -9,6 +9,7 @@ import {
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
 import { NativeGradient } from "./Gradients/NativeGradient";
+import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
@@ -308,10 +309,10 @@ export const RemotionRoot: React.FC = () => {
             };
           }}
           defaultProps={{
-            corner: "bottom-left",
-            language1: "Java",
-            language2: "JavaScript",
-            language3: "Python",
+            corner: "bottom-left" as const,
+            language1: "Java" as const,
+            language2: "Python" as const,
+            language3: "Python" as const,
             showHelperLine: false,
             startRotationInRadians: 0,
           }}
@@ -343,7 +344,7 @@ export const RemotionRoot: React.FC = () => {
               width={VIDEO_WIDTH}
               height={VIDEO_HEIGHT}
               defaultProps={{
-                gradient: gradient as keyof typeof availableGradients,
+                gradient: gradient as GradientType,
               }}
             />
           );

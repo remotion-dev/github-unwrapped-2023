@@ -8,7 +8,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { RadialGradient } from "../RadialGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
 
@@ -64,9 +63,6 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
 
   return (
     <AbsoluteFill style={{}}>
-      <AbsoluteFill>
-        <RadialGradient />
-      </AbsoluteFill>
       <AbsoluteFill
         style={{
           justifyContent: "center",

@@ -189,12 +189,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
           </svg>
         </AbsoluteFill>
       ) : null}
-      <AbsoluteFill
-        style={{
-          backgroundImage: "radial-gradient(#DD8B5A, #0A0A1B)",
-          opacity: 0.2,
-        }}
-      />
+
       <AbsoluteFill>
         <SkySVG style={{ transform: "scale(6)", opacity: 0.3 }} />
       </AbsoluteFill>

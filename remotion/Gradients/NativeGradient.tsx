@@ -6,10 +6,11 @@ import {
   staticFile,
   useVideoConfig,
 } from "remotion";
+import type { GradientType } from "./available-gradients";
 import { availableGradients } from "./available-gradients";
 
 type Props = {
-  gradient: keyof typeof availableGradients;
+  gradient: GradientType;
 };
 
 export const NativeGradient: React.FC<Props> = ({ gradient }) => {

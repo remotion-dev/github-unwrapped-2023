@@ -1,8 +1,10 @@
+import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
-import { LanguagesEnum } from "./constants";
+import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
 
 export const startRotationInRadiansSchema = z.number().step(0.1).min(0);
 
@@ -27,17 +29,20 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
     easing: Easing.inOut(Easing.ease),
   });
 
-  const translateX = interpolate(zoomOutProgress, [0, 1], [0, 0]);
-  const translateY = interpolate(zoomOutProgress, [0, 1], [0, 0]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.5, 1]);
+
+  const style: React.CSSProperties = useMemo(() => {
+    return {
+      transform: `scale(${scale})`,
+    };
+  }, [scale]);
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          transform: `translateX(${translateX}%) translateY(${translateY}%) scale(${scale})`,
-        }}
-      >
+      <AbsoluteFill style={{ opacity: 0.2 }}>
+        <Gradient gradient={mapLanguageToPlanet[language].gradient} />
+      </AbsoluteFill>
+      <AbsoluteFill style={style}>
         <PlanetScaleSpiralWhole
           startRotationInRadians={startRotationInRadians}
           showHelperLine={showHelperLine}
