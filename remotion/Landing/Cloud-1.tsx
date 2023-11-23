@@ -1,5 +1,13 @@
 import { SVGProps } from "react";
-const Cloud1 = (props: SVGProps<SVGSVGElement>) => (
+const Cloud1 = (
+  props: SVGProps<SVGSVGElement> & {
+    color1: string;
+    color2: string;
+    color3: string;
+    color4: string;
+    color5: string;
+  },
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -17,11 +25,11 @@ const Cloud1 = (props: SVGProps<SVGSVGElement>) => (
         fy={-114.77}
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset={0.72} stopColor="#cd9631" />
-        <stop offset={0.77} stopColor="#cf9b36" />
-        <stop offset={0.84} stopColor="#d7ab45" />
-        <stop offset={0.92} stopColor="#e4c65d" />
-        <stop offset={1} stopColor="#f5e87d" />
+        <stop offset={0.72} stopColor={props.color1} />
+        <stop offset={0.77} stopColor={props.color2} />
+        <stop offset={0.84} stopColor={props.color3} />
+        <stop offset={0.92} stopColor={props.color4} />
+        <stop offset={1} stopColor={props.color5} />
       </radialGradient>
       <radialGradient
         xlinkHref="#a"
