@@ -20,8 +20,8 @@ import {
 } from "./svgs/NewRocketSVG";
 import SkySVG from "./svgs/SkySVG";
 
-const frameAtStart = 30;
-const frameAtEnd = 120;
+const frameAtStart = 15;
+const frameAtEnd = 110;
 
 const progress = ({
   f,
@@ -44,7 +44,7 @@ const getPath = (r: number, canvasWidth: number, canvasHeight: number) => {
   return translatePath(
     reversePath(makeCircle({ radius: r }).path),
     canvasWidth / 2 - r,
-    canvasHeight / 2 - r
+    canvasHeight / 2 - r,
   );
 };
 
@@ -57,7 +57,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
 
   const frame = useCurrentFrame();
   const spedUpFrame = remapSpeed(frame, (f) =>
-    interpolate(f, [0, 200], [1, 2])
+    interpolate(f, [0, 200], [1, 2]),
   );
 
   const { width, height } = useVideoConfig();
@@ -90,7 +90,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         start: 0,
         loop: true,
         offset: startRotationInRadians,
-      })
+      }),
     );
   }, [pathAtStart, startRotationInRadians]);
 
@@ -102,7 +102,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         start: 0,
         loop: true,
         offset: startRotationInRadians,
-      })
+      }),
     );
   }, [pathAtEnd, startRotationInRadians]);
 
@@ -128,7 +128,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
       Math.sin(positionAtStart.angleInRadians) * radiusAtStart * 2 * Math.PI;
 
     return reversePath(
-      `M ${positionAtStart.offset.x} ${positionAtStart.offset.y} L ${xAtStart} ${yAtStart}`
+      `M ${positionAtStart.offset.x} ${positionAtStart.offset.y} L ${xAtStart} ${yAtStart}`,
     );
   }, [positionAtStart, radiusAtStart]);
 
@@ -138,7 +138,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         intoOrbitLine,
         interpolate(spedUpFrame, [0, frameAtStart], [0, 1], {
           easing: Easing.in(Easing.ease),
-        })
+        }),
       );
     }
 
@@ -150,7 +150,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
           start: frameAtEnd - frameAtStart,
           loop: false,
           offset: 0,
-        })
+        }),
       );
     }
 
@@ -161,7 +161,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         start: 0,
         loop: true,
         offset: startRotationInRadians,
-      })
+      }),
     );
   }, [
     intoOrbitLine,

@@ -47,7 +47,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
       </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
-          delay={80}
+          delay={60}
           duration={90}
           language={language}
           position={position}

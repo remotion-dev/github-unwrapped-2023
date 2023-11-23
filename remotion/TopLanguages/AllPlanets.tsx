@@ -29,7 +29,7 @@ export const allPlanetsTransitionTiming = springTiming({
 
 const FIRST_PLACE_DURATION = 120;
 const SECOND_PLACE_DURATION = 120;
-const THIRD_PLACE_DURATION = 110;
+const THIRD_PLACE_DURATION = 120;
 
 export const getDurationOfAllPlanets = ({
   language2,
