@@ -40,19 +40,19 @@ type Transform =
       skew: string;
     };
 
-export const scale = (scale: number): Transform => ({
+export const scale = (factor: number): Transform => ({
   type: "scale",
-  scale,
+  scale: factor,
 });
 
-export const scaleX = (scale: number): Transform => ({
+export const scaleX = (factor: number): Transform => ({
   type: "scale-x",
-  scale,
+  scale: factor,
 });
 
-export const scaleY = (scale: number): Transform => ({
+export const scaleY = (factor: number): Transform => ({
   type: "scale-y",
-  scale,
+  scale: factor,
 });
 
 export const rotateX = (rotation: number): Transform => ({
@@ -85,9 +85,9 @@ export const translateZ = (z: number): Transform => ({
   z,
 });
 
-export const skew = (skew: string): Transform => ({
+export const skew = (factor: string): Transform => ({
   type: "skew",
-  skew,
+  skew: factor,
 });
 
 export const transformToCss = (transform: Transform): string => {
@@ -112,6 +112,8 @@ export const transformToCss = (transform: Transform): string => {
       return `translateZ(${transform.z}px)`;
     case "skew":
       return `skew(${transform.skew})`;
+    default:
+      throw new Error(`Unknown transform type: ${transform}`);
   }
 };
 

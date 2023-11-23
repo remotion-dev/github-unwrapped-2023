@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 const Sprite1 = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -200,12 +200,12 @@ export const Sparkle: React.FC<{
           transform: `scale(${actualScale})`,
         }}
       >
-        {frame === 0 ? <Sprite1></Sprite1> : null}
-        {frame === 1 ? <Sprite2></Sprite2> : null}
-        {frame === 2 ? <Sprite3></Sprite3> : null}
-        {frame === 3 ? <Sprite4></Sprite4> : null}
-        {frame === 4 ? <Sprite5></Sprite5> : null}
-        {frame === 5 ? <Sprite6></Sprite6> : null}
+        {frame === 0 ? <Sprite1 /> : null}
+        {frame === 1 ? <Sprite2 /> : null}
+        {frame === 2 ? <Sprite3 /> : null}
+        {frame === 3 ? <Sprite4 /> : null}
+        {frame === 4 ? <Sprite5 /> : null}
+        {frame === 5 ? <Sprite6 /> : null}
       </div>
     </AbsoluteFill>
   );

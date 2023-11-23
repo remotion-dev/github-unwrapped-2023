@@ -97,7 +97,7 @@ export const JumpingNumberDemo: React.FC<
           scale: String(scale),
         }}
       >
-        <JumpingNumber duration={duration} from={from} to={to}></JumpingNumber>
+        <JumpingNumber duration={duration} from={from} to={to} />
       </h1>
     </div>
   );

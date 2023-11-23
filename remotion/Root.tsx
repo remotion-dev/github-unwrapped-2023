@@ -1,32 +1,46 @@
 import { Composition, Folder } from "remotion";
 import {
-  defaultMyCompProps,
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
+  defaultMyCompProps,
 } from "../types/constants";
+import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
 import { Issues, issuesSchema } from "./Issues";
+import { FPS } from "./Issues/make-ufo-positions";
 import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { LandingScene } from "./Landing";
+import { Main } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
-import { Paths } from "./Paths/Paths";
+import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import {
   SevenSegment,
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
-import { Spaceship } from "./Spaceship";
+import { StarSprite } from "./StarSprite";
+import { StarsReceived, starsReceivedSchema } from "./StarsReceived";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,
   topLanguagesSchema,
 } from "./TopLanguages";
+import {
+  PlanetScaleWiggle,
+  wiggleSchema,
+} from "./TopLanguages/PlaneScaleWiggle";
+import { PlanetScaleOut } from "./TopLanguages/PlanetScaleOut";
+import {
+  PlanetScaleSpiral,
+  spiralSchema,
+} from "./TopLanguages/PlanetScaleSpiral";
+import { PlanetScaleSpiralWhole } from "./TopLanguages/PlanetScaleSpiralWhole";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -50,15 +64,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={defaultMyCompProps}
       />
-      <Composition
-        id={"Spaceship"}
-        component={Spaceship}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
-      />
+
       <Folder name="Issues">
         <Composition
           id={"Issues0-0"}
@@ -121,15 +127,7 @@ export const RemotionRoot: React.FC = () => {
         schema={issuesSchema}
         defaultProps={{ closedIssues: 75, openIssues: 0 }}
       />
-      {/* <Composition
-        id={"TopLanguages"}
-        component={TopLanguages}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
-      /> */}
+
       <Composition
         id={"Poof"}
         component={Poof}
@@ -141,6 +139,26 @@ export const RemotionRoot: React.FC = () => {
           ufoScale: 1,
           x: 0,
           y: 0,
+        }}
+      />
+      <Composition
+        id={"StarSprite"}
+        component={StarSprite}
+        durationInFrames={40}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id={"StarsReceived"}
+        component={StarsReceived}
+        durationInFrames={10 * VIDEO_FPS}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        schema={starsReceivedSchema}
+        defaultProps={{
+          starsReceived: 5,
         }}
       />
       <Composition
@@ -159,34 +177,7 @@ export const RemotionRoot: React.FC = () => {
         }}
         defaultProps={{ duration: 73, from: 41, to: 70 }}
       />
-      <Composition
-        id={"TopLanguagesCanvas"}
-        component={TopLanguagesCanvas}
-        schema={topLanguagesSchema}
-        durationInFrames={TOP_LANGUAGES_DURATION}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH * 2}
-        height={VIDEO_HEIGHT * 2}
-        defaultProps={{
-          first: LanguagesEnum.enum.JavaScript,
-          second: LanguagesEnum.enum.Python,
-          third: LanguagesEnum.enum.Java,
-        }}
-      />
-      <Composition
-        id={"TopLanguagesCamera"}
-        component={TopLanguagesCamera}
-        schema={topLanguagesSchema}
-        durationInFrames={TOP_LANGUAGES_DURATION}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          first: "Java" as const,
-          second: "Python" as const,
-          third: "Java" as const,
-        }}
-      />
+
       <Composition
         id={"SevenSegment"}
         component={SevenSegment}
@@ -208,16 +199,111 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             extraPaths: 8,
           }}
-        ></Composition>
+        />
         <Composition
           id="Paths"
-          component={Paths}
+          component={PullRequests}
           fps={30}
           durationInFrames={240}
           height={1080}
           width={1080}
-        ></Composition>
+        />
       </Folder>
+      <Folder name="TopLanguages">
+        <Composition
+          id={"TopLanguagesCanvas"}
+          component={TopLanguagesCanvas}
+          schema={topLanguagesSchema}
+          durationInFrames={TOP_LANGUAGES_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH * 2}
+          height={VIDEO_HEIGHT * 2}
+          defaultProps={{
+            first: LanguagesEnum.enum.JavaScript,
+            second: LanguagesEnum.enum.Python,
+            third: LanguagesEnum.enum.Java,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesCamera"}
+          component={TopLanguagesCamera}
+          schema={topLanguagesSchema}
+          durationInFrames={TOP_LANGUAGES_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            first: "Java" as const,
+            second: "Python" as const,
+            third: "Java" as const,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesZoomOut"}
+          component={PlanetScaleOut}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            first: "Java" as const,
+            second: "Python" as const,
+            third: "Java" as const,
+          }}
+        />
+        <Composition
+          id={"TopLanguagesWiggle"}
+          component={PlanetScaleWiggle}
+          schema={wiggleSchema}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            language: "Java",
+          }}
+        />
+        <Composition
+          id={"PlanetSpiralWhole"}
+          component={PlanetScaleSpiralWhole}
+          schema={spiralSchema}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            language: "Java",
+          }}
+        />
+        <Composition
+          id={"TopLanguagesSpiral"}
+          component={PlanetScaleSpiral}
+          schema={spiralSchema}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            language: "Java",
+          }}
+        />
+      </Folder>
+      <Composition
+        id="Main"
+        component={Main}
+        durationInFrames={60 * 30}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="Stars"
+        component={Stars}
+        durationInFrames={10 * 30}
+        fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
     </>
   );
 };

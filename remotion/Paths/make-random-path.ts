@@ -12,7 +12,7 @@ function bellCurve(x: number): number {
   // Gaussian function
   return (
     (1 / Math.sqrt(2 * Math.PI * variance)) *
-    Math.exp(-Math.pow(x - mean, 2) / (2 * variance))
+    Math.exp(-((x - mean) ** 2) / (2 * variance))
   );
 }
 
@@ -42,7 +42,7 @@ const getNoiseRatio = ({
   return (
     new Array(i)
       .fill(true)
-      .map((_, i) => i - itemsToOffset)
+      .map((_, index) => index - itemsToOffset)
       .map((b) => {
         return bellCurve(b / (numberOfItems - itemsToOffset));
       })
@@ -73,7 +73,7 @@ export const makeRandomPath = (seed: string | number) => {
   const numberOfItems = 140;
   const itemsToOffset = Math.round(numberOfItems / 7);
 
-  let bendInwards = shouldBendInwards({ itemsToOffset, numberOfItems, seed });
+  const bendInwards = shouldBendInwards({ itemsToOffset, numberOfItems, seed });
 
   const points = new Array(numberOfItems).fill(1).map((a, i) => {
     const progress = interpolate(i, [0, numberOfItems - 1], [0, 1]);
@@ -132,12 +132,12 @@ export const makeRandomPath = (seed: string | number) => {
 
   const p = [...points, ...drawArcToMiddle, PATH_TARGET]
     .filter(Internals.truthy)
-    .map((p) => {
-      if (p === points[0]) {
-        return `M${p.x} ${p.y}`;
+    .map((point) => {
+      if (point === points[0]) {
+        return `M${point.x} ${point.y}`;
       }
 
-      return `L${p.x} ${p.y}`;
+      return `L${point.x} ${point.y}`;
     })
     .join(" ");
 

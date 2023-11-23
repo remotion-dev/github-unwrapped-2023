@@ -43,17 +43,17 @@ export const WholePaths: React.FC<{
 
   return (
     <AbsoluteFill>
-      {paths.map((path, i) => {
+      {paths.map((path) => {
         return (
           <Path
             key={path.id}
             d={path.d}
             delay={path.delay}
             stroke={path.stroke}
-          ></Path>
+          />
         );
       })}
-      <MergeStat num={merged}></MergeStat>
+      <MergeStat num={merged} />
     </AbsoluteFill>
   );
 };

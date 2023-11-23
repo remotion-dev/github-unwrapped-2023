@@ -2,11 +2,11 @@ import { noise2D } from "@remotion/noise";
 import { getPointAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
+import type { LanguageEnumType } from "./constants";
 import {
-  actionPositions,
   ACTION_DURATION,
+  actionPositions,
   complexCurvePathLength,
-  LanguageEnumType,
   mapLanguageToPlanet,
   newPath,
 } from "./constants";
@@ -25,12 +25,11 @@ const getPlanetPosition = (
 
 export const Planet: React.FC<{
   actionIndex: number;
-  planetPositionRates: number[];
+  planetPositionRate: number;
   language: LanguageEnumType;
-  style?: React.CSSProperties;
   isMain: boolean;
-}> = ({ actionIndex, language, isMain, planetPositionRates }) => {
-  const planetPositionRate = planetPositionRates[actionIndex];
+  delay: number;
+}> = ({ actionIndex, language, isMain, planetPositionRate, delay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const noise = noise2D("seed", frame / 10, 1) * 10;
@@ -51,18 +50,17 @@ export const Planet: React.FC<{
       damping: 14,
     },
     durationInFrames: 20,
-    delay: actionPositions[actionIndex],
+    delay: delay - 1,
   });
 
   const growSpring = spring({
     frame,
     fps,
-    delay: actionPositions[actionIndex],
+    delay,
   });
 
   const scale =
-    (isAction ? 1 - shrinkSpring * 0.9 + growSpring * 0.9 : 1) *
-    (isMain ? 1 : 0.7);
+    (1 - shrinkSpring * 0.9 + growSpring * 0.9) * (isMain ? 1 : 0.7);
 
   const rotate = isAction ? noise : 0;
 
@@ -73,6 +71,8 @@ export const Planet: React.FC<{
         transform: `scale(${scale}) rotate(${rotate}deg)`,
         top: planetPosition.y,
         left: planetPosition.x,
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <PlanetSVG />

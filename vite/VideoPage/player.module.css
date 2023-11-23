@@ -1,0 +1,6 @@
+.playerWrapper {
+  width: 600px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 15px;
+}

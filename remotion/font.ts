@@ -15,7 +15,7 @@ const style = `
 let injected = false;
 
 export const injectFont = () => {
-  if (!injected) {
+  if (!injected && typeof document !== "undefined") {
     const handle = delayRender();
     const styleTag = document.createElement("style");
     styleTag.innerHTML = style;

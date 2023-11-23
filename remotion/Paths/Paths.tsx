@@ -5,7 +5,7 @@ import { WholePaths } from "./WholePaths";
 
 const endHeight = 1080;
 
-export const Paths: React.FC = () => {
+export const PullRequests: React.FC = () => {
   const initialOffset = PATHS_COMP_HEIGHT - endHeight;
   const frame = useCurrentFrame();
   const evolution = interpolate(frame, [0, 200], [0, 1], {
@@ -25,7 +25,7 @@ export const Paths: React.FC = () => {
           "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
-      <WholePaths extraPaths={15}></WholePaths>;
+      <WholePaths extraPaths={15} />;
     </AbsoluteFill>
   );
 };

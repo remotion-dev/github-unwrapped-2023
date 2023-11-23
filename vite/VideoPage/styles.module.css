@@ -1,0 +1,32 @@
+.mobileTitle {
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.roworcolumn {
+  display: flex;
+  flex-direction: row;
+}
+
+.videobox {
+  align-items: center;
+  justify-content: center;
+}
+
+.playerradius {
+  border-top-left-radius: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .roworcolumn {
+    flex-direction: column;
+  }
+  .videobox {
+    justify-content: flex-start;
+  }
+  .playerradius {
+    border-top-right-radius: 10px;
+  }
+}

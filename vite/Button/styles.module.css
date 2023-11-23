@@ -1,0 +1,54 @@
+.button {
+  background-color: black;
+  color: white;
+  height: 48px;
+  padding: 0 50px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  font-size: 16px;
+  border: 2px solid black;
+  border-radius: 5px;
+  text-wrap: nowrap;
+  cursor: pointer;
+  font-family: "Mona Sans";
+  font-weight: 700;
+}
+
+.secondarybutton {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  height: 48px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  appearance: none;
+  font-size: 16px;
+  text-wrap: nowrap;
+  cursor: pointer;
+  font-weight: 17px;
+  font-weight: 500;
+}
+
+.loginwithgithub {
+  text-align: center;
+  font-family: "Mona Sans";
+  font-weight: bold;
+  appearance: none;
+  cursor: pointer;
+}
+
+.invalidInput {
+  border: 2px solid red;
+}
+
+.button:disabled {
+  background-color: var(--button-disabled-color);
+  color: var(--disabled-text-color);
+  border-color: var(--unfocused-border-color);
+  cursor: not-allowed;
+}

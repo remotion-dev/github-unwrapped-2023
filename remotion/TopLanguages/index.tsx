@@ -1,11 +1,10 @@
 import { Sequence } from "remotion";
 import { z } from "zod";
 import { Background } from "./Background";
-import { LanguagesEnum } from "./constants";
 import { Description } from "./Description";
-import { Nebulas } from "./nebulas/Nebulas";
 import { Planets } from "./Planets";
 import { Rocket } from "./Rocket";
+import { LanguagesEnum } from "./constants";
 import { Intro } from "./sequences/Intro";
 import { ShowDescription } from "./sequences/ShowDescription";
 import SkySVG from "./svgs/SkySVG";
@@ -23,8 +22,7 @@ export const TopLanguagesCanvas: React.FC<
 > = (props) => {
   return (
     <Background style={props.style}>
-      <SkySVG style={{ transform: "scale(3)" }} />
-      <Nebulas />
+      <SkySVG style={{ transform: "scale(6)", opacity: 0.3 }} />
       <Description />
       <Rocket />
       <Planets {...props} />

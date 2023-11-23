@@ -1,8 +1,8 @@
 import { AbsoluteFill } from "remotion";
-import { z } from "zod";
-import { topLanguagesSchema } from ".";
-import { PLANET_POSITIONS } from "./constants";
+import type { z } from "zod";
+import type { topLanguagesSchema } from ".";
 import { Planet } from "./Planet";
+import { PLANET_POSITIONS, actionPositions } from "./constants";
 
 export const Planets: React.FC<z.infer<typeof topLanguagesSchema>> = ({
   first,
@@ -13,21 +13,24 @@ export const Planets: React.FC<z.infer<typeof topLanguagesSchema>> = ({
     <AbsoluteFill>
       <Planet
         actionIndex={2}
-        planetPositionRates={PLANET_POSITIONS}
+        planetPositionRate={PLANET_POSITIONS[2]}
         language={third}
-        isMain={true}
+        isMain
+        delay={actionPositions[2]}
       />
       <Planet
         actionIndex={1}
-        planetPositionRates={PLANET_POSITIONS}
+        planetPositionRate={PLANET_POSITIONS[1]}
         language={second}
         isMain={false}
+        delay={actionPositions[1]}
       />
       <Planet
         actionIndex={0}
-        planetPositionRates={PLANET_POSITIONS}
+        planetPositionRate={PLANET_POSITIONS[0]}
         language={first}
         isMain={false}
+        delay={actionPositions[0]}
       />
     </AbsoluteFill>
   );

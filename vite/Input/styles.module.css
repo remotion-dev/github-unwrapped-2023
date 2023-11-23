@@ -1,0 +1,28 @@
+.input,
+.input:focus {
+  font-size: 16px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  caret-color: white;
+  color: white;
+  flex: 1;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.invalid,
+.invalid:focus {
+  border-color: rgba(175, 6, 47, 1);
+  background: linear-gradient(
+    102.95deg,
+    rgba(239, 88, 124, 0.37) -0.37%,
+    rgba(129, 65, 135, 0.37) 104.38%
+  );
+}

@@ -1,5 +1,6 @@
 import { interpolate } from "remotion";
-import { EasingType, getEasingFunction } from "./easing";
+import type { EasingType } from "./easing";
+import { getEasingFunction } from "./easing";
 
 type KeyframeType = number | [number, number] | [number, number, number];
 
