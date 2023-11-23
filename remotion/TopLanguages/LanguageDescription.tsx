@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AbsoluteFill,
   interpolate,
@@ -5,13 +6,36 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { LanguageEnumType } from "./constants";
-import { LanguagesEnum } from "./constants";
+import { mapLanguageToPlanet, type LanguageEnumType } from "./constants";
 
-const mapLanguagesToTitleColor: Record<LanguageEnumType, string> = {
-  [LanguagesEnum.enum.Java]: "rgb(201, 246, 253)",
-  [LanguagesEnum.enum.JavaScript]: "rgb(253,241,190)",
-  [LanguagesEnum.enum.Python]: "rgb(200,228,252)",
+const Inner: React.FC<{
+  language: LanguageEnumType;
+  position: number;
+}> = ({ language, position }) => {
+  return (
+    <div>
+      <div
+        style={{
+          fontSize: 84,
+          color: mapLanguageToPlanet[language].textColor,
+          fontFamily: "Mona Sans",
+          fontWeight: 800,
+        }}
+      >
+        {language}
+      </div>
+      <div
+        style={{
+          fontFamily: "Mona Sans",
+          fontSize: 30,
+          color: "white",
+          fontWeight: 300,
+        }}
+      >
+        Your language no. {position}
+      </div>
+    </div>
+  );
 };
 
 export const LanguageDescription: React.FC<{
@@ -57,26 +81,7 @@ export const LanguageDescription: React.FC<{
         transform: `translateY(${translationY}px)`,
       }}
     >
-      <div
-        style={{
-          fontSize: 84,
-          color: mapLanguagesToTitleColor[language],
-          fontFamily: "Mona Sans",
-          fontWeight: 800,
-        }}
-      >
-        {language}
-      </div>
-      <div
-        style={{
-          fontFamily: "Mona Sans",
-          fontSize: 30,
-          color: "white",
-          fontWeight: 300,
-        }}
-      >
-        Your language no. {position}
-      </div>
+      <Inner language={language} position={position} />
     </AbsoluteFill>
   );
 };

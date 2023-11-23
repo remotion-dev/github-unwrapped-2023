@@ -8,6 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
@@ -31,19 +32,19 @@ export const zoomOutSchema = z.object({
 
 const initialLeft = (corner: Corner) => {
   if (corner === "top-left") {
-    return -50;
+    return -40;
   }
 
   if (corner === "top-right") {
-    return 50;
+    return 40;
   }
 
   if (corner === "bottom-left") {
-    return -50;
+    return -40;
   }
 
   if (corner === "bottom-right") {
-    return 50;
+    return 40;
   }
 
   throw new Error("Invalid corner");
@@ -122,7 +123,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   language,
   position,
 }) => {
-  const { PlanetSVG } = mapLanguageToPlanet[language];
+  const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -156,7 +157,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   });
   const zoomOut = zoomOutJump * 0.8 + zoomOutConstant * 0.2;
 
-  const scale = interpolate(zoomOut, [0, 1], [3, 1.5]);
+  const scale = interpolate(zoomOut, [0, 1], [3, 1]);
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
@@ -164,14 +165,26 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
     <AbsoluteFill style={{}}>
       <AbsoluteFill
         style={{
-          justifyContent: "center",
-          alignItems: "center",
           scale: String(scale),
           left: left + "%",
           top: top + "%",
         }}
       >
-        <PlanetSVG />
+        <AbsoluteFill
+          style={{
+            opacity: 0.2,
+          }}
+        >
+          <Gradient gradient={gradient} />
+        </AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <PlanetSVG />
+        </AbsoluteFill>
       </AbsoluteFill>
       <AbsoluteFill>
         <NewRocketSVG

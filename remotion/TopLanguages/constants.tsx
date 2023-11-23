@@ -68,27 +68,30 @@ type BoundingBox = {
   height: number;
 };
 
-export const mapLanguageToPlanet: Record<
-  LanguageEnumType,
-  {
-    boundingBox: BoundingBox;
-    PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
-    gradient: GradientType;
-  }
-> = {
+type PlanetInfo = {
+  boundingBox: BoundingBox;
+  PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  gradient: GradientType;
+  textColor: string;
+};
+
+export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   [LanguagesEnum.enum.Java]: {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
     gradient: "orange",
+    textColor: "rgb(201, 246, 253)",
   },
   [LanguagesEnum.enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
     gradient: "blue",
+    textColor: "rgb(200,228,252)",
   },
   [LanguagesEnum.enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
     gradient: "yellow",
+    textColor: "rgb(253,241,190)",
   },
 };
