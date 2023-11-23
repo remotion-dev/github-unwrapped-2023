@@ -49,6 +49,7 @@ import {
   spiralSchema,
 } from "./TopLanguages/PlanetScaleSpiral";
 import { PlanetScaleSpiralWhole } from "./TopLanguages/PlanetScaleSpiralWhole";
+import { TopLanguagesTitleCard } from "./TopLanguages/TitleCard";
 import { LanguagesEnum } from "./TopLanguages/constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -221,6 +222,14 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Folder name="TopLanguages">
+        <Composition
+          id={"TopLanguagesTitleCard"}
+          component={TopLanguagesTitleCard}
+          durationInFrames={TOP_LANGUAGES_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+        />
         <Composition
           id={"TopLanguagesCanvas"}
           component={TopLanguagesCanvas}

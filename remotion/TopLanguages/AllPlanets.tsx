@@ -50,10 +50,13 @@ export const getDurationOfAllPlanets = ({
   const transitionBetween1And2 = language2 ? -transitionDuration : 0;
   const transitionBetween2And3 = language3 ? -transitionDuration : 0;
 
+  const thirdDuration = language3 ? THIRD_PLACE_DURATION : 0;
+  const secondDuration = language2 ? SECOND_PLACE_DURATION : 0;
+
   return (
     TITLE_CARD_DURATION +
-    THIRD_PLACE_DURATION +
-    SECOND_PLACE_DURATION +
+    thirdDuration +
+    secondDuration +
     FIRST_PLACE_DURATION +
     transitionBetween1And2 +
     transitionBetween2And3 -

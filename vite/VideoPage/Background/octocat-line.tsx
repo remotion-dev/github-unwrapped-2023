@@ -20,7 +20,7 @@ const OCTOCAT_ANCHOR_Y = 825.73;
 const octocatLinePath = (
   time: number,
   bodyTranslationX: number,
-  bodyTranslationY: number
+  bodyTranslationY: number,
 ) => {
   const offsetX = noise2D("seed", time / 800, 0) * 10;
   const offsetY = noise2D("seedy", time / 800, 1) * 10;
@@ -140,12 +140,27 @@ export const OctocatLine: React.FC = () => {
   }, []);
 
   return (
-    <path
-      ref={octocatLineRef}
-      d={octocatLinePath(0, 0, 0)}
-      stroke="url(#octocatgradient)"
-      strokeWidth="4"
-      strokeMiterlimit="10"
-    />
+    <>
+      <path
+        ref={octocatLineRef}
+        d={octocatLinePath(0, 0, 0)}
+        stroke="url(#octocatgradient)"
+        strokeWidth="4"
+        strokeMiterlimit="10"
+      />
+      <defs>
+        <linearGradient
+          id="octocatgradient"
+          x1="1118.7"
+          y1="720.3"
+          x2="1450.77"
+          y2="720.3"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#3772A8" />
+          <stop offset="1" stopColor="#8FB0B3" />
+        </linearGradient>
+      </defs>
+    </>
   );
 };
