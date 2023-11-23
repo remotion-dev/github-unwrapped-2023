@@ -5,7 +5,7 @@ import { mapLanguageToPlanet } from "./constants";
 const label: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
-  justifyContent: "center",
+  alignItems: "center",
 };
 
 export const InnerLanguageDescription: React.FC<{
@@ -17,9 +17,16 @@ export const InnerLanguageDescription: React.FC<{
       <div
         style={{
           fontFamily: "Mona Sans",
-          fontSize: 30,
+          fontSize: 60,
           color: "white",
-          fontWeight: 300,
+          fontWeight: 500,
+          width: 80,
+          height: 80,
+          border: "1px solid white",
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+          borderRadius: 10,
         }}
       >
         {position}

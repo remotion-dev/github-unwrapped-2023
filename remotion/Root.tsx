@@ -17,7 +17,7 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { LandingScene } from "./Landing";
+import { LandingScene, planetSchema } from "./Landing";
 import { Main } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -59,9 +59,12 @@ export const RemotionRoot: React.FC = () => {
         component={LandingScene}
         durationInFrames={12 * 30}
         fps={VIDEO_FPS}
+        schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          planetType: "Ice",
+        }}
       />
       <Composition
         id={"Contributions"}
