@@ -6,37 +6,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { mapLanguageToPlanet, type LanguageEnumType } from "./constants";
-
-const Inner: React.FC<{
-  language: LanguageEnumType;
-  position: number;
-}> = ({ language, position }) => {
-  return (
-    <div>
-      <div
-        style={{
-          fontSize: 84,
-          color: mapLanguageToPlanet[language].textColor,
-          fontFamily: "Mona Sans",
-          fontWeight: 800,
-        }}
-      >
-        {language}
-      </div>
-      <div
-        style={{
-          fontFamily: "Mona Sans",
-          fontSize: 30,
-          color: "white",
-          fontWeight: 300,
-        }}
-      >
-        Your language no. {position}
-      </div>
-    </div>
-  );
-};
+import { InnerLanguageDescription } from "./InnerLanguageDescription";
+import { type LanguageEnumType } from "./constants";
 
 export const LanguageDescription: React.FC<{
   language: LanguageEnumType;
@@ -81,7 +52,7 @@ export const LanguageDescription: React.FC<{
         transform: `translateY(${translationY}px)`,
       }}
     >
-      <Inner language={language} position={position} />
+      <InnerLanguageDescription language={language} position={position} />
     </AbsoluteFill>
   );
 };
