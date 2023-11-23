@@ -7,10 +7,13 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { z } from "zod";
 import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
-import { mapLanguageToPlanet } from "./constants";
+import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import type { Corner } from "./corner";
+import { cornerType } from "./corner";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -21,8 +24,56 @@ import {
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
 
-export const PlanetScaleOut: React.FC = () => {
-  const { PlanetSVG } = mapLanguageToPlanet.Java;
+export const zoomOutSchema = z.object({
+  corner: cornerType,
+  language: LanguagesEnum,
+});
+
+const initialLeft = (corner: Corner) => {
+  if (corner === "top-left") {
+    return -50;
+  }
+
+  if (corner === "top-right") {
+    return 50;
+  }
+
+  if (corner === "bottom-left") {
+    return -50;
+  }
+
+  if (corner === "bottom-right") {
+    return 50;
+  }
+
+  throw new Error("Invalid corner");
+};
+
+const initialTop = (corner: Corner) => {
+  if (corner === "top-left") {
+    return -30;
+  }
+
+  if (corner === "top-right") {
+    return -30;
+  }
+
+  if (corner === "bottom-left") {
+    return 30;
+  }
+
+  if (corner === "bottom-right") {
+    return 30;
+  }
+
+  throw new Error("Invalid corner");
+};
+
+export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
+  corner,
+  language,
+}) => {
+  const { PlanetSVG } = mapLanguageToPlanet[language];
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -56,8 +107,8 @@ export const PlanetScaleOut: React.FC = () => {
   const zoomOut = zoomOutJump * 0.8 + zoomOutConstant * 0.2;
 
   const scale = interpolate(zoomOut, [0, 1], [3, 1.5]);
-  const left = interpolate(zoomOut, [0, 1], [-50, 0]);
-  const top = interpolate(zoomOut, [0, 1], [30, 0]);
+  const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
+  const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
   const radialGradientScale = interpolate(zoomOut, [0, 1], [200, 100]) + "%";
 
@@ -99,7 +150,7 @@ export const PlanetScaleOut: React.FC = () => {
         <LanguageDescription
           delay={60}
           duration={90}
-          language="Java"
+          language={language}
           position={1}
         />
       </AbsoluteFill>
