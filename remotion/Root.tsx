@@ -62,9 +62,7 @@ export const RemotionRoot: React.FC = () => {
         schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{
-          planetType: "Ice",
-        }}
+        defaultProps={{ planetType: "Silver" as const }}
       />
       <Composition
         id={"Contributions"}
@@ -159,6 +157,10 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          transitionDuration: 30,
+          burstFrame: 30,
+        }}
       />
       <Composition
         id={"StarsReceived"}
