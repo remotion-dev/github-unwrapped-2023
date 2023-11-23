@@ -20,8 +20,12 @@ import {
 } from "./svgs/NewRocketSVG";
 import SkySVG from "./svgs/SkySVG";
 
+const speedRemapFn = (f: number) => interpolate(f, [0, 200], [1, 2]);
+
 const frameAtStart = 15;
 const frameAtEnd = 110;
+
+const spedUpFrameEnd = remapSpeed(frameAtEnd - 80, speedRemapFn);
 
 const progress = ({
   f,
@@ -56,14 +60,14 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const { PlanetSVG } = mapLanguageToPlanet[language];
 
   const frame = useCurrentFrame();
-  const spedUpFrame = remapSpeed(frame, (f) =>
-    interpolate(f, [0, 200], [1, 2]),
-  );
+  const spedUpFrame = remapSpeed(frame, speedRemapFn);
 
   const { width, height } = useVideoConfig();
 
   const getRadius = (f: number) =>
     interpolate(f, [frameAtStart, frameAtEnd], [width / 3.5, width / 2.5]);
+
+  const rotation = interpolate(spedUpFrame, [0, frameAtEnd], [-0.2, 0], {});
 
   const radius = getRadius(frame);
   const radiusAtStart = getRadius(frameAtStart);
@@ -197,6 +201,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         style={{
           justifyContent: "center",
           alignItems: "center",
+          rotate: `${rotation}rad`,
         }}
       >
         <PlanetSVG />
