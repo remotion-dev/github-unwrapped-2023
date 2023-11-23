@@ -12,6 +12,8 @@ import { RadialGradient } from "../RadialGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import type { Corner } from "./corner";
+import { cornerType } from "./corner";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -23,9 +25,49 @@ const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
 
 export const zoomOutSchema = z.object({
-  corner: z.enum(["top-left", "top-right", "bottom-left", "bottom-right"]),
+  corner: cornerType,
   language: LanguagesEnum,
 });
+
+const initialLeft = (corner: Corner) => {
+  if (corner === "top-left") {
+    return -50;
+  }
+
+  if (corner === "top-right") {
+    return 50;
+  }
+
+  if (corner === "bottom-left") {
+    return -50;
+  }
+
+  if (corner === "bottom-right") {
+    return 50;
+  }
+
+  throw new Error("Invalid corner");
+};
+
+const initialTop = (corner: Corner) => {
+  if (corner === "top-left") {
+    return -30;
+  }
+
+  if (corner === "top-right") {
+    return -30;
+  }
+
+  if (corner === "bottom-left") {
+    return 30;
+  }
+
+  if (corner === "bottom-right") {
+    return 30;
+  }
+
+  throw new Error("Invalid corner");
+};
 
 export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   corner,
@@ -65,8 +107,8 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const zoomOut = zoomOutJump * 0.8 + zoomOutConstant * 0.2;
 
   const scale = interpolate(zoomOut, [0, 1], [3, 1.5]);
-  const left = interpolate(zoomOut, [0, 1], [-50, 0]);
-  const top = interpolate(zoomOut, [0, 1], [30, 0]);
+  const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
+  const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
   const radialGradientScale = interpolate(zoomOut, [0, 1], [200, 100]) + "%";
 
