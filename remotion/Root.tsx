@@ -1,4 +1,4 @@
-import { Composition, Folder } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -8,6 +8,8 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
+import { Gradient } from "./Gradients/NativeGradient";
+import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import {
@@ -333,6 +335,22 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />
+      <Folder name="Gradients">
+        {Object.keys(availableGradients).map((gradient) => {
+          return (
+            <Still
+              key={gradient}
+              id={`Gradients-${gradient}`}
+              component={Gradient}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
+              defaultProps={{
+                gradient: gradient as keyof typeof availableGradients,
+              }}
+            />
+          );
+        })}
+      </Folder>
     </>
   );
 };
