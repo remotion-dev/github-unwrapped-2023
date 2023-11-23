@@ -69,6 +69,54 @@ const initialTop = (corner: Corner) => {
   throw new Error("Invalid corner");
 };
 
+const arcRotation = (corner: Corner) => {
+  if (corner === "bottom-left") {
+    return (-PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "bottom-right") {
+    return 1.5 * Math.PI - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "top-left") {
+    return 0.5 * Math.PI - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "top-right") {
+    return Number(Math.PI) - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  return 0;
+};
+
+const pathTranslation = ({
+  corner,
+  width,
+  height,
+}: {
+  corner: Corner;
+  width: number;
+  height: number;
+}): [number, number] => {
+  if (corner === "bottom-left") {
+    return [-width, 0];
+  }
+
+  if (corner === "bottom-right") {
+    return [0, 0];
+  }
+
+  if (corner === "top-left") {
+    return [-width, -height];
+  }
+
+  if (corner === "top-right") {
+    return [0, -height];
+  }
+
+  throw new Error("Invalid corner");
+};
+
 export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   corner,
   language,
@@ -81,9 +129,10 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
     progress: 0.25 + PATH_EXTRAPOLATION,
     radius: width,
     closePath: false,
-    rotation: (-PATH_EXTRAPOLATION / 2) * Math.PI * 2,
+    rotation: arcRotation(corner),
   });
-  const translated = translatePath(path, -width, 0);
+  const translation = pathTranslation({ corner, width, height });
+  const translated = translatePath(path, translation[0], translation[1]);
   const scaled = scalePath(translated, SCALE_FACTOR, SCALE_FACTOR);
   const translated2 = translatePath(scaled, 0, height * (1 - SCALE_FACTOR));
 

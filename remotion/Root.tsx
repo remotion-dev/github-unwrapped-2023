@@ -237,7 +237,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={zoomOutSchema}
           defaultProps={{
-            corner: "top-left" as const,
+            corner: "top-right" as const,
             language: "JavaScript" as const,
           }}
         />
