@@ -41,10 +41,9 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const frameOutOfOrbit = 112;
-  const p = frameOutOfOrbit / 3;
+  const frameOutOfOrbit = 90;
 
-  const progress = (f: number) => (f % p) / p;
+  const progress = (f: number, start: number) => ((f - start) % 40) / 40;
 
   const centered = translatePath(
     reversePath(path),
@@ -52,7 +51,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     height / 2 - radius
   );
 
-  const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit));
+  const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit, 0));
   const radiusAtEnd = _radius(frameOutOfOrbit);
   const extrapolatedX =
     moveAtEnd.offset.x +
@@ -63,11 +62,17 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const extrapolatedLine = `M ${moveAtEnd.offset.x} ${moveAtEnd.offset.y} L ${extrapolatedX} ${extrapolatedY}`;
   const currentMove = moveAlongLine(
     spedUpFrame > frameOutOfOrbit ? extrapolatedLine : centered,
-    progress(spedUpFrame)
+    progress(spedUpFrame, spedUpFrame > frameOutOfOrbit ? frameOutOfOrbit : 0)
   );
 
   return (
     <AbsoluteFill>
+      {" "}
+      <AbsoluteFill>
+        <svg viewBox={`0 0 1080 1080`}>
+          <path d={extrapolatedLine} fill="transparent" stroke="white" />
+        </svg>
+      </AbsoluteFill>
       <AbsoluteFill
         style={{
           backgroundImage: "radial-gradient(#DD8B5A, #0A0A1B)",
@@ -94,11 +99,6 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
           }px) rotate(${currentMove.angleInDegrees}deg) scale(0.5)`,
         }}
       />
-      <AbsoluteFill>
-        <svg viewBox={`0 0 1080 1080`}>
-          <path d={extrapolatedLine} fill="transparent" stroke="white" />
-        </svg>
-      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
