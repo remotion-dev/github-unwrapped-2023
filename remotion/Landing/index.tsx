@@ -7,6 +7,7 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import { z } from "zod";
 import { VIDEO_FPS } from "../../types/constants";
 import { Background } from "./Background";
 import Cloud1 from "./Cloud-1";
@@ -16,13 +17,11 @@ import Rocket from "./Rocket";
 import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 
-enum Planet {
-  Ice,
-  Silver,
-  Gold,
-}
+const planetEnum = z.enum(["Ice", "Silver", "Gold"]);
 
-const PLANET = Planet.Silver;
+export const planetSchema = z.object({
+  planetType: planetEnum,
+});
 
 const PLANET_SIZE = 1400;
 const PLANET_GROWTH = 400;
@@ -32,7 +31,7 @@ const LANDING_FRAME = 115;
 const SPARKLE_SPEED = 40;
 
 const mapPlanetToAttributes = {
-  [Planet.Ice]: {
+  [planetEnum.Values.Ice]: {
     colors: {
       color1: "#02e3f2",
       color2: "#42d9e3",
@@ -71,7 +70,7 @@ const mapPlanetToAttributes = {
     style: {},
     landingAdjustment: -90,
   },
-  [Planet.Silver]: {
+  [planetEnum.Values.Silver]: {
     colors: {
       color1: "#a8a8a8",
       color2: "#b8b8b8",
@@ -91,7 +90,7 @@ const mapPlanetToAttributes = {
     landingAdjustment: 0,
     sparkles: [],
   },
-  [Planet.Gold]: {
+  [planetEnum.Values.Gold]: {
     colors: {
       color1: "#cd9631",
       color2: "#cf9b36",
@@ -111,7 +110,9 @@ const mapPlanetToAttributes = {
   },
 };
 
-export const LandingScene: React.FC = () => {
+export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
+  planetType,
+}) => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -143,7 +144,7 @@ export const LandingScene: React.FC = () => {
 
   const text = spring({
     fps: VIDEO_FPS,
-    frame: frame,
+    frame,
     delay: LANDING_FRAME,
     config: {
       damping: 40,
@@ -159,7 +160,7 @@ export const LandingScene: React.FC = () => {
     },
   });
 
-  const attributes = mapPlanetToAttributes[PLANET];
+  const attributes = mapPlanetToAttributes[planetType];
 
   return (
     <AbsoluteFill
@@ -173,7 +174,7 @@ export const LandingScene: React.FC = () => {
       }}
     >
       <AbsoluteFill>
-        <Background></Background>
+        <Background />
       </AbsoluteFill>
 
       <div
@@ -189,7 +190,7 @@ export const LandingScene: React.FC = () => {
               ? frame / attributes.bgBrightness
               : LANDING_FRAME / attributes.bgBrightness,
         }}
-      ></div>
+      />
 
       {/* <div
         style={{

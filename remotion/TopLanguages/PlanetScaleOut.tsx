@@ -8,7 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { RadialGradient } from "../RadialGradient";
+import { Gradient } from "../Gradients/NativeGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
@@ -27,23 +27,24 @@ const PATH_EXTRAPOLATION = 0.1;
 export const zoomOutSchema = z.object({
   corner: cornerType,
   language: LanguagesEnum,
+  position: z.number().int(),
 });
 
 const initialLeft = (corner: Corner) => {
   if (corner === "top-left") {
-    return -50;
+    return -40;
   }
 
   if (corner === "top-right") {
-    return 50;
+    return 40;
   }
 
   if (corner === "bottom-left") {
-    return -50;
+    return -40;
   }
 
   if (corner === "bottom-right") {
-    return 50;
+    return 40;
   }
 
   throw new Error("Invalid corner");
@@ -69,11 +70,60 @@ const initialTop = (corner: Corner) => {
   throw new Error("Invalid corner");
 };
 
+const arcRotation = (corner: Corner) => {
+  if (corner === "bottom-left") {
+    return (-PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "bottom-right") {
+    return 1.5 * Math.PI - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "top-left") {
+    return 0.5 * Math.PI - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  if (corner === "top-right") {
+    return Number(Math.PI) - (PATH_EXTRAPOLATION / 2) * Math.PI * 2;
+  }
+
+  return 0;
+};
+
+const pathTranslation = ({
+  corner,
+  width,
+  height,
+}: {
+  corner: Corner;
+  width: number;
+  height: number;
+}): [number, number] => {
+  if (corner === "bottom-left") {
+    return [-width, 0];
+  }
+
+  if (corner === "bottom-right") {
+    return [0, 0];
+  }
+
+  if (corner === "top-left") {
+    return [-width, -height];
+  }
+
+  if (corner === "top-right") {
+    return [0, -height];
+  }
+
+  throw new Error("Invalid corner");
+};
+
 export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   corner,
   language,
+  position,
 }) => {
-  const { PlanetSVG } = mapLanguageToPlanet[language];
+  const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -81,9 +131,10 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
     progress: 0.25 + PATH_EXTRAPOLATION,
     radius: width,
     closePath: false,
-    rotation: (-PATH_EXTRAPOLATION / 2) * Math.PI * 2,
+    rotation: arcRotation(corner),
   });
-  const translated = translatePath(path, -width, 0);
+  const translation = pathTranslation({ corner, width, height });
+  const translated = translatePath(path, translation[0], translation[1]);
   const scaled = scalePath(translated, SCALE_FACTOR, SCALE_FACTOR);
   const translated2 = translatePath(scaled, 0, height * (1 - SCALE_FACTOR));
 
@@ -106,29 +157,34 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   });
   const zoomOut = zoomOutJump * 0.8 + zoomOutConstant * 0.2;
 
-  const scale = interpolate(zoomOut, [0, 1], [3, 1.5]);
+  const scale = interpolate(zoomOut, [0, 1], [3, 1]);
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
-
-  const radialGradientScale = interpolate(zoomOut, [0, 1], [200, 100]) + "%";
 
   return (
     <AbsoluteFill style={{}}>
       <AbsoluteFill
-        style={{ width: radialGradientScale, height: radialGradientScale }}
-      >
-        <RadialGradient />
-      </AbsoluteFill>
-      <AbsoluteFill
         style={{
-          justifyContent: "center",
-          alignItems: "center",
           scale: String(scale),
           left: left + "%",
           top: top + "%",
         }}
       >
-        <PlanetSVG />
+        <AbsoluteFill
+          style={{
+            opacity: 0.2,
+          }}
+        >
+          <Gradient gradient={gradient} />
+        </AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <PlanetSVG />
+        </AbsoluteFill>
       </AbsoluteFill>
       <AbsoluteFill>
         <NewRocketSVG
@@ -151,7 +207,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           delay={60}
           duration={90}
           language={language}
-          position={1}
+          position={position}
         />
       </AbsoluteFill>
     </AbsoluteFill>

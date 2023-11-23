@@ -2,6 +2,7 @@ import { getBoundingBox, getLength, scalePath } from "@remotion/paths";
 import type { SVGProps } from "react";
 import { z } from "zod";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
+import type { GradientType } from "../Gradients/available-gradients";
 import {
   JavaPlanetBoundingBox,
   JavaPlanetSVG,
@@ -57,29 +58,40 @@ export const complexCurvePathLength = getLength(newPath);
 
 export const LanguagesEnum = z.enum(["Java", "Python", "JavaScript"]);
 
+export type LanguageType = z.infer<typeof LanguagesEnum>;
+
 const LanguageOptions = LanguagesEnum.options;
 export type LanguageEnumType = (typeof LanguageOptions)[number];
 
-export const mapLanguageToPlanet: Record<
-  LanguageEnumType,
-  {
-    boundingBox: {
-      width: number;
-      height: number;
-    };
-    PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
-  }
-> = {
+type BoundingBox = {
+  width: number;
+  height: number;
+};
+
+type PlanetInfo = {
+  boundingBox: BoundingBox;
+  PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  gradient: GradientType;
+  textColor: string;
+};
+
+export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   [LanguagesEnum.enum.Java]: {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
+    gradient: "orange",
+    textColor: "rgb(201, 246, 253)",
   },
   [LanguagesEnum.enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
+    gradient: "blue",
+    textColor: "rgb(200,228,252)",
   },
   [LanguagesEnum.enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
+    gradient: "yellow",
+    textColor: "rgb(253,241,190)",
   },
 };

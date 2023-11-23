@@ -8,7 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { RadialGradient } from "../RadialGradient";
+import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
 
@@ -17,12 +17,14 @@ const PATH_EXTRAPOLATION = 0.1;
 
 export const wiggleSchema = z.object({
   language: LanguagesEnum,
+  position: z.number(),
 });
 
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
+  position,
 }) => {
-  const { PlanetSVG } = mapLanguageToPlanet[language];
+  const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
   const { width, height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -62,8 +64,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
 
   return (
     <AbsoluteFill style={{}}>
-      <AbsoluteFill>
-        <RadialGradient />
+      <AbsoluteFill style={{ opacity: 0.2 }}>
+        <Gradient gradient={gradient} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{
@@ -90,7 +92,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
           delay={60}
           duration={90}
           language={language}
-          position={1}
+          position={position}
         />
       </AbsoluteFill>
     </AbsoluteFill>

@@ -1,4 +1,4 @@
-import { Composition, Folder } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -8,13 +8,16 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
+import { NativeGradient } from "./Gradients/NativeGradient";
+import type { GradientType } from "./Gradients/available-gradients";
+import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { LandingScene } from "./Landing";
+import { LandingScene, planetSchema } from "./Landing";
 import { Main } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -31,6 +34,11 @@ import {
   TopLanguagesCanvas,
   topLanguagesSchema,
 } from "./TopLanguages";
+import {
+  AllPlanets,
+  allPlanetsSchema,
+  getDurationOfAllPlanets,
+} from "./TopLanguages/AllPlanets";
 import {
   PlanetScaleWiggle,
   wiggleSchema,
@@ -51,9 +59,12 @@ export const RemotionRoot: React.FC = () => {
         component={LandingScene}
         durationInFrames={12 * 30}
         fps={VIDEO_FPS}
+        schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          planetType: "Ice",
+        }}
       />
       <Composition
         id={"Contributions"}
@@ -157,9 +168,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{
-          starsReceived: 5,
-        }}
+        defaultProps={{ starsReceived: 141 }}
       />
       <Composition
         id={"JumpingNumber"}
@@ -247,8 +256,9 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={zoomOutSchema}
           defaultProps={{
-            corner: "top-left" as const,
+            corner: "top-right" as const,
             language: "JavaScript" as const,
+            position: 1,
           }}
         />
         <Composition
@@ -261,6 +271,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java",
+            position: 1,
           }}
         />
         <Composition
@@ -272,7 +283,10 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java",
+            language: "Java" as const,
+            showHelperLine: true,
+            startRotationInRadians: 0,
+            position: 1,
           }}
         />
         <Composition
@@ -284,7 +298,36 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java",
+            language: "Java" as const,
+            showHelperLine: false,
+            startRotationInRadians: 37.3,
+            position: 1,
+          }}
+        />
+        <Composition
+          id={"AllPlanets"}
+          component={AllPlanets}
+          schema={allPlanetsSchema}
+          durationInFrames={500}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          calculateMetadata={({ props: { language2, language3 } }) => {
+            return {
+              durationInFrames: getDurationOfAllPlanets({
+                language2,
+                language3,
+                fps: VIDEO_FPS,
+              }),
+            };
+          }}
+          defaultProps={{
+            corner: "bottom-left" as const,
+            language1: "Java" as const,
+            language2: "Python" as const,
+            language3: "Python" as const,
+            showHelperLine: false,
+            startRotationInRadians: 0,
           }}
         />
       </Folder>
@@ -304,6 +347,22 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />
+      <Folder name="Gradients">
+        {Object.keys(availableGradients).map((gradient) => {
+          return (
+            <Still
+              key={gradient}
+              id={`Gradients-${gradient}`}
+              component={NativeGradient}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
+              defaultProps={{
+                gradient: gradient as GradientType,
+              }}
+            />
+          );
+        })}
+      </Folder>
     </>
   );
 };
