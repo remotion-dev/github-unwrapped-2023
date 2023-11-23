@@ -17,6 +17,7 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
+import { LandingScene } from "./Landing";
 import { Main } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -53,6 +54,15 @@ import { LanguagesEnum } from "./TopLanguages/constants";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id={"Landing"}
+        component={LandingScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={defaultMyCompProps}
+      />
       <Composition
         id={"Contributions"}
         component={ContributionsScene}
