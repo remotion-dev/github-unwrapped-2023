@@ -6,9 +6,10 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { z } from "zod";
+import type { z } from "zod";
 import { moveAlongLine } from "../move-along-line";
-import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import type { spiralSchema } from "./PlanetScaleSpiral";
+import { mapLanguageToPlanet } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -17,12 +18,10 @@ import {
 } from "./svgs/NewRocketSVG";
 import SkySVG from "./svgs/SkySVG";
 
-export const spiralSchema = z.object({
-  language: LanguagesEnum,
-});
-
 export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
+  showHelperLine,
+  orbitOffset,
 }) => {
   const { PlanetSVG } = mapLanguageToPlanet[language];
 
@@ -41,9 +40,24 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const frameOutOfOrbit = 90;
+  const frameOutOfOrbit = 120;
 
-  const progress = (f: number, start: number) => ((f - start) % 40) / 40;
+  const progress = ({
+    f,
+    start,
+    loop,
+    offset,
+  }: {
+    f: number;
+    start: number;
+    loop: boolean;
+    offset: number;
+  }) => {
+    const unit = 40;
+    const unclamped = f - start + offset;
+    const current = loop ? unclamped % unit : unclamped;
+    return current / unit;
+  };
 
   const centered = translatePath(
     reversePath(path),
@@ -51,7 +65,12 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     height / 2 - radius
   );
 
-  const moveAtEnd = moveAlongLine(centered, progress(frameOutOfOrbit, 0));
+  const isMovingOut = spedUpFrame > frameOutOfOrbit;
+
+  const moveAtEnd = moveAlongLine(
+    centered,
+    progress({ f: frameOutOfOrbit, start: 0, loop: true, offset: orbitOffset })
+  );
   const radiusAtEnd = _radius(frameOutOfOrbit);
   const extrapolatedX =
     moveAtEnd.offset.x +
@@ -61,18 +80,26 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     Math.sin(moveAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
   const extrapolatedLine = `M ${moveAtEnd.offset.x} ${moveAtEnd.offset.y} L ${extrapolatedX} ${extrapolatedY}`;
   const currentMove = moveAlongLine(
-    spedUpFrame > frameOutOfOrbit ? extrapolatedLine : centered,
-    progress(spedUpFrame, spedUpFrame > frameOutOfOrbit ? frameOutOfOrbit : 0)
+    isMovingOut ? extrapolatedLine : centered,
+    isMovingOut
+      ? progress({
+          f: spedUpFrame,
+          start: frameOutOfOrbit,
+          loop: false,
+          offset: 0,
+        })
+      : progress({ f: spedUpFrame, start: 0, loop: true, offset: orbitOffset })
   );
 
   return (
     <AbsoluteFill>
-      {" "}
-      <AbsoluteFill>
-        <svg viewBox={`0 0 1080 1080`}>
-          <path d={extrapolatedLine} fill="transparent" stroke="white" />
-        </svg>
-      </AbsoluteFill>
+      {showHelperLine ? (
+        <AbsoluteFill>
+          <svg viewBox={`0 0 1080 1080`}>
+            <path d={extrapolatedLine} fill="transparent" stroke="white" />
+          </svg>
+        </AbsoluteFill>
+      ) : null}
       <AbsoluteFill
         style={{
           backgroundImage: "radial-gradient(#DD8B5A, #0A0A1B)",

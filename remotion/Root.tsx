@@ -263,6 +263,8 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java",
+            showHelperLine: true,
+            orbitOffset: 0,
           }}
         />
         <Composition
@@ -275,6 +277,8 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java",
+            showHelperLine: true,
+            orbitOffset: 0,
           }}
         />
       </Folder>

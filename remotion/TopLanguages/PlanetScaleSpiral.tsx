@@ -6,14 +6,18 @@ import { LanguagesEnum } from "./constants";
 
 export const spiralSchema = z.object({
   language: LanguagesEnum,
+  showHelperLine: z.boolean(),
+  orbitOffset: z.number().step(0.1)
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
+  showHelperLine,
+  orbitOffset
 }) => {
   const frame = useCurrentFrame();
 
-  const zoomOutProgress = interpolate(frame, [30, 130], [0, 1], {
+  const zoomOutProgress = interpolate(frame, [30, 80], [0, 1], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
     easing: Easing.inOut(Easing.ease),
@@ -30,7 +34,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
           transform: `translateX(${translateX}%) translateY(${translateY}%) scale(${scale})`,
         }}
       >
-        <PlanetScaleSpiralWhole language={language} />
+        <PlanetScaleSpiralWhole orbitOffset={orbitOffset} showHelperLine={showHelperLine} language={language} />
       </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
