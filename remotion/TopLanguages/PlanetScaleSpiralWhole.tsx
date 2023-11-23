@@ -1,5 +1,6 @@
 import { reversePath, translatePath } from "@remotion/paths";
 import { makeCircle } from "@remotion/shapes";
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   interpolate,
@@ -18,85 +19,120 @@ import {
 } from "./svgs/NewRocketSVG";
 import SkySVG from "./svgs/SkySVG";
 
+const frameAtEnd = 120;
+
+const progress = ({
+  f,
+  start,
+  loop,
+  offset,
+}: {
+  f: number;
+  start: number;
+  loop: boolean;
+  offset: number;
+}) => {
+  const unit = 40;
+  const unclamped = f - start + (offset * unit) / (2 * Math.PI);
+  const current = loop ? unclamped % unit : unclamped;
+  return current / unit;
+};
+
+const getPath = (r: number, canvasWidth: number, canvasHeight: number) => {
+  return translatePath(
+    reversePath(makeCircle({ radius: r }).path),
+    canvasWidth / 2 - r,
+    canvasHeight / 2 - r
+  );
+};
+
 export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
   showHelperLine,
-  orbitOffset,
+  startRotationInRadians,
 }) => {
   const { PlanetSVG } = mapLanguageToPlanet[language];
 
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
-
-  const _radius = (f: number) =>
-    interpolate(f, [0, 100], [width / 3.5, width / 2.5]);
-  const radius = _radius(frame);
-
-  const { path } = makeCircle({
-    radius,
-  });
-
   const spedUpFrame = remapSpeed(frame, (f) =>
     interpolate(f, [0, 200], [1, 2])
   );
 
-  const frameOutOfOrbit = 120;
+  const { width, height } = useVideoConfig();
 
-  const progress = ({
-    f,
-    start,
-    loop,
-    offset,
-  }: {
-    f: number;
-    start: number;
-    loop: boolean;
-    offset: number;
-  }) => {
-    const unit = 40;
-    const unclamped = f - start + offset;
-    const current = loop ? unclamped % unit : unclamped;
-    return current / unit;
-  };
+  const getRadius = (f: number) =>
+    interpolate(f, [0, 100], [width / 3.5, width / 2.5]);
 
-  const centered = translatePath(
-    reversePath(path),
-    width / 2 - radius,
-    height / 2 - radius
-  );
+  const radius = getRadius(frame);
+  const radiusAtEnd = getRadius(frameAtEnd);
 
-  const isMovingOut = spedUpFrame > frameOutOfOrbit;
+  const path = getPath(radius, width, height);
+  const pathAtEnd = useMemo(() => {
+    return getPath(radiusAtEnd, width, height);
+  }, [height, radiusAtEnd, width]);
 
-  const moveAtEnd = moveAlongLine(
-    centered,
-    progress({ f: frameOutOfOrbit, start: 0, loop: true, offset: orbitOffset })
-  );
-  const radiusAtEnd = _radius(frameOutOfOrbit);
-  const extrapolatedX =
-    moveAtEnd.offset.x +
-    Math.cos(moveAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
-  const extrapolatedY =
-    moveAtEnd.offset.y +
-    Math.sin(moveAtEnd.angleInRadians) * radiusAtEnd * 2 * Math.PI;
-  const extrapolatedLine = `M ${moveAtEnd.offset.x} ${moveAtEnd.offset.y} L ${extrapolatedX} ${extrapolatedY}`;
-  const currentMove = moveAlongLine(
-    isMovingOut ? extrapolatedLine : centered,
-    isMovingOut
-      ? progress({
+  const isOverEnd = spedUpFrame > frameAtEnd;
+
+  const positionAtend = useMemo(() => {
+    return moveAlongLine(
+      pathAtEnd,
+      progress({
+        f: frameAtEnd,
+        start: 0,
+        loop: true,
+        offset: startRotationInRadians,
+      })
+    );
+  }, [pathAtEnd, startRotationInRadians]);
+
+  const xAtEnd = useMemo(() => {
+    return (
+      positionAtend.offset.x +
+      Math.cos(positionAtend.angleInRadians) * radiusAtEnd * 2 * Math.PI
+    );
+  }, [positionAtend.angleInRadians, positionAtend.offset.x, radiusAtEnd]);
+
+  const yAtEnd = useMemo(() => {
+    return (
+      positionAtend.offset.y +
+      Math.sin(positionAtend.angleInRadians) * radiusAtEnd * 2 * Math.PI
+    );
+  }, [positionAtend.angleInRadians, positionAtend.offset.y, radiusAtEnd]);
+
+  const outOfOrbitLine = useMemo(() => {
+    return `M ${positionAtend.offset.x} ${positionAtend.offset.y} L ${xAtEnd} ${yAtEnd}`;
+  }, [positionAtend.offset.x, positionAtend.offset.y, xAtEnd, yAtEnd]);
+
+  const currentPosition = useMemo(() => {
+    if (isOverEnd) {
+      return moveAlongLine(
+        outOfOrbitLine,
+        progress({
           f: spedUpFrame,
-          start: frameOutOfOrbit,
+          start: frameAtEnd,
           loop: false,
           offset: 0,
         })
-      : progress({ f: spedUpFrame, start: 0, loop: true, offset: orbitOffset })
-  );
+      );
+    }
+
+    return moveAlongLine(
+      path,
+      progress({
+        f: spedUpFrame,
+        start: 0,
+        loop: true,
+        offset: startRotationInRadians,
+      })
+    );
+  }, [isOverEnd, outOfOrbitLine, path, spedUpFrame, startRotationInRadians]);
 
   return (
     <AbsoluteFill>
       {showHelperLine ? (
         <AbsoluteFill>
           <svg viewBox={`0 0 1080 1080`}>
-            <path d={extrapolatedLine} fill="transparent" stroke="white" />
+            <path d={outOfOrbitLine} fill="transparent" stroke="white" />
           </svg>
         </AbsoluteFill>
       ) : null}
@@ -120,10 +156,10 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
       <NewRocketSVG
         style={{
           transform: `translateX(${
-            currentMove.offset.x - TL_ROCKET_WIDTH / 2
+            currentPosition.offset.x - TL_ROCKET_WIDTH / 2
           }px) translateY(${
-            currentMove.offset.y - TL_ROCKET_HEIGHT / 2
-          }px) rotate(${currentMove.angleInDegrees}deg) scale(0.5)`,
+            currentPosition.offset.y - TL_ROCKET_HEIGHT / 2
+          }px) rotate(${currentPosition.angleInDegrees}deg) scale(0.5)`,
         }}
       />
     </AbsoluteFill>

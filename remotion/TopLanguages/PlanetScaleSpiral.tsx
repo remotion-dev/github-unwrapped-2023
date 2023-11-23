@@ -7,13 +7,13 @@ import { LanguagesEnum } from "./constants";
 export const spiralSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),
-  orbitOffset: z.number().step(0.1)
+  startRotationInRadians: z.number().step(0.1)
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
   showHelperLine,
-  orbitOffset
+  startRotationInRadians
 }) => {
   const frame = useCurrentFrame();
 
@@ -34,7 +34,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
           transform: `translateX(${translateX}%) translateY(${translateY}%) scale(${scale})`,
         }}
       >
-        <PlanetScaleSpiralWhole orbitOffset={orbitOffset} showHelperLine={showHelperLine} language={language} />
+        <PlanetScaleSpiralWhole startRotationInRadians={startRotationInRadians} showHelperLine={showHelperLine} language={language} />
       </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
