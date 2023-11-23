@@ -286,8 +286,8 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             language: "Java" as const,
-            showHelperLine: true,
-            startRotationInRadians: 0,
+            showHelperLine: false,
+            startRotationInRadians: 2.2,
             position: 1,
           }}
         />
@@ -326,7 +326,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             corner: "bottom-left" as const,
             language1: "Java" as const,
-            language2: "Python" as const,
+            language2: "JavaScript" as const,
             language3: "Python" as const,
             showHelperLine: false,
             startRotationInRadians: 0,

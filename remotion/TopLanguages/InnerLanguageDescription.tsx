@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
 import type { LanguageEnumType } from "./constants";
 import { mapLanguageToPlanet } from "./constants";
 
@@ -9,8 +10,8 @@ const label: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-  background: "#191c29",
-  border: "2px solid rgba(255, 255, 255, 0.1)",
+  background: PANE_BACKGROUND,
+  border: PANE_BORDER,
   padding: `${HORIZONTAL_PADDING}px ${HORIZONTAL_PADDING}px`,
   borderRadius: INNER_BORDER_RADIUS + HORIZONTAL_PADDING,
   lineHeight: 1,
@@ -23,7 +24,7 @@ const num: React.CSSProperties = {
   width: 80,
   height: 80,
   background: "rgba(255, 255, 255, 0.1)",
-  border: "2px solid rgba(255, 255, 255, 0.1)",
+  border: PANE_BORDER,
   justifyContent: "center",
   alignItems: "center",
   display: "flex",

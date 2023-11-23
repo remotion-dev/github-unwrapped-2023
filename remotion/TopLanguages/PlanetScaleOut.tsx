@@ -52,19 +52,19 @@ const initialLeft = (corner: Corner) => {
 
 const initialTop = (corner: Corner) => {
   if (corner === "top-left") {
-    return -30;
+    return -15;
   }
 
   if (corner === "top-right") {
-    return -30;
+    return -15;
   }
 
   if (corner === "bottom-left") {
-    return 30;
+    return 15;
   }
 
   if (corner === "bottom-right") {
-    return 30;
+    return 15;
   }
 
   throw new Error("Invalid corner");
@@ -142,7 +142,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
 
   const remappedFrame = remapSpeed(frame, speedFunction);
 
-  const progress = interpolate(remappedFrame, [0, 80], [0, 1]);
+  const progress = interpolate(remappedFrame, [15, 100], [0, 1]);
   const move = moveAlongLine(translated2, progress);
 
   const zoomOutJump = interpolate(frame, [40, 70], [0, 1], {
@@ -161,8 +161,12 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
+  const gradientOpacity = interpolate(frame, [0, 15], [0, 0.2], {
+    extrapolateRight: "clamp",
+  });
+
   return (
-    <AbsoluteFill style={{}}>
+    <AbsoluteFill>
       <AbsoluteFill
         style={{
           scale: String(scale),
@@ -172,7 +176,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
       >
         <AbsoluteFill
           style={{
-            opacity: 0.2,
+            opacity: gradientOpacity,
           }}
         >
           <Gradient gradient={gradient} />

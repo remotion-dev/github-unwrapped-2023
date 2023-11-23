@@ -1,6 +1,5 @@
-import { Sequence } from "remotion";
+import { AbsoluteFill, Sequence } from "remotion";
 import { z } from "zod";
-import { Background } from "./Background";
 import { Description } from "./Description";
 import { Planets } from "./Planets";
 import { Rocket } from "./Rocket";
@@ -21,12 +20,12 @@ export const TopLanguagesCanvas: React.FC<
   }
 > = (props) => {
   return (
-    <Background style={props.style}>
+    <AbsoluteFill style={props.style}>
       <SkySVG style={{ transform: "scale(6)", opacity: 0.3 }} />
       <Description />
       <Rocket />
       <Planets {...props} />
-    </Background>
+    </AbsoluteFill>
   );
 };
 
