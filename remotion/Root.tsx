@@ -8,7 +8,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { Gradient } from "./Gradients/NativeGradient";
+import { NativeGradient } from "./Gradients/NativeGradient";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
@@ -341,7 +341,7 @@ export const RemotionRoot: React.FC = () => {
             <Still
               key={gradient}
               id={`Gradients-${gradient}`}
-              component={Gradient}
+              component={NativeGradient}
               width={VIDEO_WIDTH}
               height={VIDEO_HEIGHT}
               defaultProps={{
