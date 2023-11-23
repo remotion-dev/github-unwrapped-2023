@@ -147,9 +147,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{
-          starsReceived: 5,
-        }}
+        defaultProps={{ starsReceived: 141 }}
       />
       <Composition
         id={"JumpingNumber"}

@@ -10,6 +10,7 @@ export const starsReceivedSchema = z.object({
 export const StarsReceived: React.FC<z.infer<typeof starsReceivedSchema>> = ({
   starsReceived,
 }) => {
+  console.log({starsReceived})
   return (
     <AbsoluteFill
       style={{
@@ -18,7 +19,8 @@ export const StarsReceived: React.FC<z.infer<typeof starsReceivedSchema>> = ({
       }}
     >
       {new Array(starsReceived).fill("").map((_, index) => (
-        <Star key={index} initialFrame={index * 30} />
+        // eslint-disable-next-line react/no-array-index-key
+        <Star key={index} initialFrame={index * 10} transitionDuration={30} totalStars={starsReceived}/>
       ))}
 
       <AbsoluteFill>
