@@ -34,7 +34,7 @@ const progress = ({
   offset: number;
 }) => {
   const unit = 40;
-  const unclamped = f - start + (offset * unit) / (2 * Math.PI);
+  const unclamped = f - start - frameAtStart + (offset * unit) / (2 * Math.PI);
   const current = loop ? unclamped % unit : unclamped;
   return current / unit;
 };
@@ -62,7 +62,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const { width, height } = useVideoConfig();
 
   const getRadius = (f: number) =>
-    interpolate(f, [0, 100], [width / 3.5, width / 2.5]);
+    interpolate(f, [frameAtStart, frameAtEnd], [width / 3.5, width / 2.5]);
 
   const radius = getRadius(frame);
   const radiusAtStart = getRadius(frameAtStart);
@@ -116,13 +116,25 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
     return `M ${positionAtEnd.offset.x} ${positionAtEnd.offset.y} L ${xAtEnd} ${yAtEnd}`;
   }, [positionAtEnd, radiusAtEnd]);
 
+  const intoOrbitLine = useMemo(() => {
+    const xAtStart =
+      positionAtStart.offset.x +
+      Math.cos(positionAtStart.angleInRadians) * radiusAtStart * 2 * Math.PI;
+
+    const yAtStart =
+      positionAtStart.offset.y +
+      Math.sin(positionAtStart.angleInRadians) * radiusAtStart * 2 * Math.PI;
+
+    return `M ${positionAtStart.offset.x} ${positionAtStart.offset.y} L ${xAtStart} ${yAtStart}`;
+  }, [positionAtStart, radiusAtStart]);
+
   const currentPosition = useMemo(() => {
     if (isOverEnd) {
       return moveAlongLine(
         outOfOrbitLine,
         progress({
           f: spedUpFrame,
-          start: frameAtEnd,
+          start: frameAtEnd - frameAtStart,
           loop: false,
           offset: 0,
         })
@@ -152,6 +164,13 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
         <AbsoluteFill>
           <svg viewBox={`0 0 1080 1080`}>
             <path d={outOfOrbitLine} fill="transparent" stroke="white" />
+          </svg>
+        </AbsoluteFill>
+      ) : null}
+      {showHelperLine ? (
+        <AbsoluteFill>
+          <svg viewBox={`0 0 1080 1080`}>
+            <path d={intoOrbitLine} fill="transparent" stroke="green" />
           </svg>
         </AbsoluteFill>
       ) : null}

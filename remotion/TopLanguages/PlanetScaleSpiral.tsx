@@ -7,7 +7,7 @@ import { LanguagesEnum } from "./constants";
 export const spiralSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),
-  startRotationInRadians: z.number().step(0.1)
+  startRotationInRadians: z.number().step(0.1).min(0)
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
