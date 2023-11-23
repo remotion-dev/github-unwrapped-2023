@@ -228,14 +228,14 @@ export const LandingScene: React.FC = () => {
         <Cloud1 {...attributes.colors} />
       </div>
 
-      {frame < LANDING_FRAME && (
+      {frame < LANDING_FRAME - 40 && (
         <div
           style={{
             position: "absolute",
             left: 352,
-            top: -370 + rocket * 950 - attributes.landingAdjustment,
+            top: -480 + rocket * 1150 - attributes.landingAdjustment,
             width: 400,
-            transform: `scale(${1 - rocket + 0.4})`,
+            transform: `scale(${1 - rocket + 0.2})`,
             transformOrigin: "center top",
           }}
         >
