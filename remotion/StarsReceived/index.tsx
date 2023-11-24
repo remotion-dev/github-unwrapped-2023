@@ -1,7 +1,12 @@
 import { AbsoluteFill } from "remotion";
 import { z } from "zod";
 import CockpitSVG from "./CockpitSVG";
+import { Description } from "./Description";
 import { Star } from "./Star";
+
+export const MAX_STARS = 50;
+export const STARS_DELAY = 20;
+export const STAR_DURATION = 40;
 
 export const starsReceivedSchema = z.object({
   starsReceived: z.number().min(0),
@@ -10,7 +15,6 @@ export const starsReceivedSchema = z.object({
 export const StarsReceived: React.FC<z.infer<typeof starsReceivedSchema>> = ({
   starsReceived,
 }) => {
-  console.log({starsReceived})
   return (
     <AbsoluteFill
       style={{
@@ -19,13 +23,19 @@ export const StarsReceived: React.FC<z.infer<typeof starsReceivedSchema>> = ({
       }}
     >
       {new Array(starsReceived).fill("").map((_, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Star key={index} initialFrame={index * 10} transitionDuration={30} totalStars={starsReceived}/>
+        <Star
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          initialFrame={index * STARS_DELAY}
+          duration={30}
+          starsShown={Math.min(starsReceived, MAX_STARS)}
+        />
       ))}
 
       <AbsoluteFill>
         <CockpitSVG />
       </AbsoluteFill>
+      <Description starsReceived={starsReceived} />
     </AbsoluteFill>
   );
 };
