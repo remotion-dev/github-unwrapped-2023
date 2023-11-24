@@ -15,6 +15,10 @@ import {
   PythonPlanetBoundingBox,
   PythonPlanetSVG,
 } from "./svgs/planets/PythonPlanetSVG";
+import {
+  TypeScriptPlanetBoundingBox,
+  TypeScriptPlanetSVG,
+} from "./svgs/planets/TypeScriptPlanetSVG";
 
 export const ACTION_DURATION = 60;
 
@@ -56,7 +60,12 @@ const scale = boundingBox.width / 2160;
 export const newPath = scalePath(rocketPath, 1 / scale, 1 / scale);
 export const complexCurvePathLength = getLength(newPath);
 
-export const LanguagesEnum = z.enum(["Java", "Python", "JavaScript"]);
+export const LanguagesEnum = z.enum([
+  "Java",
+  "Python",
+  "JavaScript",
+  "TypeScript",
+]);
 
 export type LanguageType = z.infer<typeof LanguagesEnum>;
 
@@ -76,22 +85,28 @@ type PlanetInfo = {
 };
 
 export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
-  [LanguagesEnum.enum.Java]: {
+  [LanguagesEnum.Enum.Java]: {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
     gradient: "orange",
     textColor: "rgb(201, 246, 253)",
   },
-  [LanguagesEnum.enum.Python]: {
+  [LanguagesEnum.Enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
     gradient: "blue",
     textColor: "rgb(200,228,252)",
   },
-  [LanguagesEnum.enum.JavaScript]: {
+  [LanguagesEnum.Enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
     gradient: "yellow",
     textColor: "rgb(253,241,190)",
+  },
+  [LanguagesEnum.Enum.TypeScript]: {
+    boundingBox: TypeScriptPlanetBoundingBox,
+    PlanetSVG: TypeScriptPlanetSVG,
+    gradient: "yellow",
+    textColor: "#71BBD8",
   },
 };
