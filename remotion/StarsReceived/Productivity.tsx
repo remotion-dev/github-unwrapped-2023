@@ -74,7 +74,7 @@ const Graph = (props: { productivityPerHour: Array<ProductivityPerHour> }) => {
               justifyContent: "flex-end",
               alignItems: "center",
               flexDirection: "column",
-              gap: 24,
+              gap: 12,
             }}
           >
             <Bar productivity={productivityPerHour.productivity} />
