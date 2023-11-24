@@ -1,18 +1,30 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { RadialGradient } from "../RadialGradient";
-import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
 import { TitleCardOctocat } from "./TitleCardOctocat";
+import { TopLanguagesTitle } from "./TopLanguagesTitle";
+import { Intro } from "./sequences/Intro";
 import SkySVG from "./svgs/SkySVG";
 
 export const TopLanguagesTitleCard: React.FC = () => {
+  const frame = useCurrentFrame();
+  const zoomOutProgress = interpolate(frame, [0, 80], [0, 1]);
+  const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
+
   return (
-    <AbsoluteFill>
-      <AbsoluteFill style={{ opacity: 0.2 }}>
+    <AbsoluteFill
+      style={{
+        transform: `scale(${scale})`,
+      }}
+    >
+      <AbsoluteFill style={{ opacity: 0.5 }}>
         <RadialGradient />
       </AbsoluteFill>
-      <AbsoluteFill style={{ opacity: 0.2 }}>
-        <SkySVG style={{ transform: "scale(7)" }} />
+      <AbsoluteFill style={{ transform: `translateY(-300px)` }}>
+        <Intro first="Java" second="JavaScript" third="Java" />
+      </AbsoluteFill>
+      <AbsoluteFill style={{ opacity: 0.5 }}>
+        <SkySVG style={{ transform: "scale(1)" }} />
       </AbsoluteFill>
       <TitleCardOctocat />
       <AbsoluteFill
@@ -21,22 +33,7 @@ export const TopLanguagesTitleCard: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            color: "white",
-            fontSize: 80,
-            fontFamily: "Mona Sans",
-            fontWeight: 800,
-            lineHeight: 1.1,
-            backgroundColor: PANE_BACKGROUND,
-            padding: "20px 80px",
-            borderRadius: 50,
-            border: PANE_BORDER,
-            textAlign: "center",
-          }}
-        >
-          Your top <br /> languages of 2023
-        </div>
+        <TopLanguagesTitle />
       </AbsoluteFill>
     </AbsoluteFill>
   );
