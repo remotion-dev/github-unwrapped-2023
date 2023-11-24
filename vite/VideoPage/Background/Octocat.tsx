@@ -14,7 +14,7 @@ export const OctoCat: React.FC = () => {
       fill="none"
     >
       <OctocatBody />
-      <OctocatLine />
+      <OctocatLine mode="imperative" />
     </svg>
   );
 };

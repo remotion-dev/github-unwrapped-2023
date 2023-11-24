@@ -1,21 +1,26 @@
 import { noise2D } from "@remotion/noise";
 import { serializeInstructions } from "@remotion/paths";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { bodyRef } from "./Octocat-body";
-
-const getBodyTranslation = (time: number) => {
-  const offsetX = noise2D("bodyx", time / 800, 0) * 5;
-  const offsetY = noise2D("bodyy", time / 800, 1) * 5;
-  const offsetRotate = noise2D("rotateY", time / 1400, 1) * 5;
-  return {
-    x: offsetX,
-    y: offsetY,
-    rotate: offsetRotate,
-  };
-};
 
 const OCTOCAT_ANCHOR_X = 1119.44;
 const OCTOCAT_ANCHOR_Y = 825.73;
+
+const getBodyTranslation = (time: number) => {
+  const x = noise2D("bodyx", time / 800, 0) * 5;
+  const y = noise2D("bodyy", time / 800, 1) * 5;
+  const rotate = noise2D("rotateY", time / 1400, 1) * 5;
+  const transformOrigin = `${OCTOCAT_ANCHOR_X}px ${OCTOCAT_ANCHOR_Y}px`;
+
+  return {
+    x,
+    y,
+    transformOrigin,
+    transform: `translateX(${x}px) translateY(${y}px) rotate(${
+      -rotate - 10
+    }deg)`,
+  };
+};
 
 const octocatLinePath = (
   time: number,
@@ -108,8 +113,21 @@ const octocatLinePath = (
 
 export const octocatLineRef = React.createRef<SVGPathElement>();
 
-export const OctocatLine: React.FC = () => {
+type Props =
+  | {
+      mode: "imperative";
+    }
+  | {
+      mode: "remotion";
+      time: number;
+    };
+
+export const OctocatLine: React.FC<Props> = (props) => {
   useEffect(() => {
+    if (props.mode !== "imperative") {
+      return;
+    }
+
     let time = 0;
     let cancel: null | number = null;
 
@@ -119,12 +137,10 @@ export const OctocatLine: React.FC = () => {
         throw new Error("bodyRef.current is null");
       }
 
-      const { x, y, rotate } = getBodyTranslation(time);
+      const { x, y, transformOrigin, transform } = getBodyTranslation(time);
       octocatLineRef.current?.setAttribute("d", octocatLinePath(time, x, y));
-      bodyRef.current.style.transformOrigin = `${OCTOCAT_ANCHOR_X}px ${OCTOCAT_ANCHOR_Y}px`;
-      bodyRef.current.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${
-        -rotate - 10
-      }deg)`;
+      bodyRef.current.style.transformOrigin = transformOrigin;
+      bodyRef.current.style.transform = transform;
       cancel = requestAnimationFrame(set);
     };
 
@@ -137,17 +153,41 @@ export const OctocatLine: React.FC = () => {
         cancelAnimationFrame(cancel);
       }
     };
-  }, []);
+  }, [props.mode]);
+
+  const remotionAnim = useMemo(() => {
+    if (props.mode !== "remotion") {
+      return null;
+    }
+
+    return {
+      path: octocatLinePath(props.time, 0, 0),
+      anim: getBodyTranslation(props.time),
+    };
+  }, [props]);
 
   return (
     <>
-      <path
-        ref={octocatLineRef}
-        d={octocatLinePath(0, 0, 0)}
-        stroke="url(#octocatgradient)"
-        strokeWidth="4"
-        strokeMiterlimit="10"
-      />
+      {props.mode === "imperative" ? (
+        <path
+          ref={octocatLineRef}
+          d={octocatLinePath(0, 0, 0)}
+          stroke="url(#octocatgradient)"
+          strokeWidth="4"
+          strokeMiterlimit="10"
+        />
+      ) : (
+        <path
+          d={remotionAnim!.path}
+          style={{
+            transformOrigin: remotionAnim!.anim.transformOrigin,
+            transform: remotionAnim!.anim.transform,
+          }}
+          stroke="url(#octocatgradient)"
+          strokeWidth="4"
+          strokeMiterlimit="10"
+        />
+      )}
       <defs>
         <linearGradient
           id="octocatgradient"
