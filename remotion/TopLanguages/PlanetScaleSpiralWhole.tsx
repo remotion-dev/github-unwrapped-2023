@@ -228,9 +228,8 @@ export const PlanetScaleSpiralWhole: React.FC<
           </svg>
         </AbsoluteFill>
       ) : null}
-
       <AbsoluteFill>
-        <SkySVG style={{ transform: "scale(1)", opacity: 0.5 }} />
+        <SkySVG style={{ opacity: 0.5 }} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{

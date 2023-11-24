@@ -34,7 +34,7 @@ export const allPlanetsTransitionTiming = springTiming({
 
 const TITLE_CARD_DURATION = 100;
 const FIRST_PLACE_DURATION = 120;
-const SECOND_PLACE_DURATION = 120;
+const SECOND_PLACE_DURATION = 112;
 const THIRD_PLACE_DURATION = 110;
 
 export const getDurationOfAllPlanets = ({

@@ -11,6 +11,7 @@ import { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
@@ -66,6 +67,9 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
     <AbsoluteFill style={{}}>
       <AbsoluteFill style={{ opacity: 0.2 }}>
         <Gradient gradient={gradient} />
+      </AbsoluteFill>
+      <AbsoluteFill>
+        <SkySVG style={{ opacity: 0.5 }} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{

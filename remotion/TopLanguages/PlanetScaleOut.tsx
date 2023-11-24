@@ -21,6 +21,7 @@ import {
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
+import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
@@ -182,6 +183,10 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
         >
           <Gradient gradient={gradient} />
         </AbsoluteFill>
+        <AbsoluteFill>
+          <SkySVG style={{ opacity: 0.5 }} />
+        </AbsoluteFill>
+
         <AbsoluteFill
           style={{
             justifyContent: "center",
