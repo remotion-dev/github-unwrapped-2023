@@ -3,6 +3,7 @@ import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
   Easing,
+  Sequence,
   interpolate,
   useCurrentFrame,
   useVideoConfig,
@@ -206,14 +207,14 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           <path d={translated2} fill="transparent" />
         </svg>
       </AbsoluteFill>
-      <AbsoluteFill>
+      <Sequence from={60}>
         <LanguageDescription
-          delay={60}
+          delay={0}
           duration={90}
           language={language}
           position={position}
         />
-      </AbsoluteFill>
+      </Sequence>
     </AbsoluteFill>
   );
 };

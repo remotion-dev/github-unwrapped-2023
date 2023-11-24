@@ -84,7 +84,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
-        presentation={slide({ direction: "from-bottom" })}
+        presentation={slide({ direction: "from-top" })}
         timing={allPlanetsTransitionTiming}
       />
       {language3 ? (
