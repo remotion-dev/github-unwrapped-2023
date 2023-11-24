@@ -17,7 +17,7 @@ const style: React.CSSProperties = {
   background: "rgba(255, 255, 255, 0.03)",
 };
 
-export const BottomRow = () => {
+export const BottomPageRow = () => {
   return (
     <div style={style}>
       {/**

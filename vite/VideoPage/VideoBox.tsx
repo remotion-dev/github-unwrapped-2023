@@ -2,13 +2,13 @@ import React from "react";
 import type { z } from "zod";
 import type { CompositionProps } from "../../types/constants";
 import { GradientBox } from "../GradientBox/GradientBox";
-import { BottomRow } from "./BottomRow";
+import { BottomPageRow } from "./BottomRow";
 import { PlayerContainer } from "./Player";
 import { Sidebar } from "./Sidebar";
 import styles from "./styles.module.css";
 
 const row: React.CSSProperties = {
-  borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+  borderTop: "1px solid rgba(255, 255, 255, 0.1)",
 };
 
 export const VideoBox: React.FC<{
@@ -25,11 +25,11 @@ export const VideoBox: React.FC<{
         marginBottom: 60,
       }}
     >
+      <BottomPageRow />
       <div style={row} className={styles.roworcolumn}>
         <PlayerContainer inputProps={inputProps} />
         <Sidebar inputProps={inputProps} />
       </div>
-      <BottomRow />
     </GradientBox>
   );
 };
