@@ -1,13 +1,11 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { OctocatBody } from "../../vite/VideoPage/Background/Octocat-body";
-import { OctocatLine } from "../../vite/VideoPage/Background/octocat-line";
+import { AbsoluteFill } from "remotion";
 import { RadialGradient } from "../RadialGradient";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
+import { TitleCardOctocat } from "./TitleCardOctocat";
 import SkySVG from "./svgs/SkySVG";
 
 export const TopLanguagesTitleCard: React.FC = () => {
-  const frame = useCurrentFrame();
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 0.2 }}>
@@ -16,21 +14,7 @@ export const TopLanguagesTitleCard: React.FC = () => {
       <AbsoluteFill style={{ opacity: 0.2 }}>
         <SkySVG style={{ transform: "scale(7)" }} />
       </AbsoluteFill>
-      <AbsoluteFill>
-        <svg
-          style={{
-            position: "fixed",
-            width: "200%",
-            bottom: 0,
-            right: -100,
-          }}
-          viewBox="0 0 1442 997"
-          fill="none"
-        >
-          <OctocatBody />
-          <OctocatLine mode="remotion" time={frame * 6} />
-        </svg>
-      </AbsoluteFill>
+      <TitleCardOctocat />
       <AbsoluteFill
         style={{
           justifyContent: "center",
