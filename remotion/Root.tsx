@@ -37,11 +37,7 @@ import {
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
-import {
-  TopLanguagesCamera,
-  TopLanguagesCanvas,
-  topLanguagesSchema,
-} from "./TopLanguages";
+import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
   allPlanetsSchema,
@@ -334,20 +330,7 @@ export const RemotionRoot: React.FC = () => {
             third: LanguagesEnum.enum.Java,
           }}
         />
-        <Composition
-          id={"TopLanguagesCamera"}
-          component={TopLanguagesCamera}
-          schema={topLanguagesSchema}
-          durationInFrames={TOP_LANGUAGES_DURATION}
-          fps={VIDEO_FPS}
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
-          defaultProps={{
-            first: "Java" as const,
-            second: "Python" as const,
-            third: "Java" as const,
-          }}
-        />
+
         <Composition
           id={"TopLanguagesZoomOut"}
           component={PlanetScaleOut}

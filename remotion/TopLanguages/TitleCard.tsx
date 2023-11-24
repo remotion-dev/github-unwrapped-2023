@@ -1,9 +1,9 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { RadialGradient } from "../RadialGradient";
+import { Rocket } from "./Rocket";
 import { TitleCardOctocat } from "./TitleCardOctocat";
 import { TopLanguagesTitle } from "./TopLanguagesTitle";
-import { Intro } from "./sequences/Intro";
 import SkySVG from "./svgs/SkySVG";
 
 export const TopLanguagesTitleCard: React.FC = () => {
@@ -20,9 +20,11 @@ export const TopLanguagesTitleCard: React.FC = () => {
       <AbsoluteFill style={{ opacity: 0.5 }}>
         <RadialGradient />
       </AbsoluteFill>
-      <AbsoluteFill style={{ transform: `translateY(-300px)` }}>
-        <Intro first="Java" second="JavaScript" third="Java" />
-      </AbsoluteFill>
+      <Sequence from={30} style={{ transform: `translateY(-300px)` }}>
+        <AbsoluteFill style={{ marginTop: 200, marginLeft: 300 }}>
+          <Rocket />
+        </AbsoluteFill>
+      </Sequence>
       <AbsoluteFill style={{ opacity: 0.5 }}>
         <SkySVG style={{ transform: "scale(1)" }} />
       </AbsoluteFill>

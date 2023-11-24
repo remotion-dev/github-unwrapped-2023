@@ -57,7 +57,7 @@ export const getRate = ({
   return interpolate(
     frame,
     [0, ...actionFrames.flat(), TOP_LANGUAGES_DURATION],
-    [0, ...actionLocations.flatMap((l) => [l, l]), 1]
+    [0, ...actionLocations.flatMap((l) => [l, l]), 1],
   );
 };
 
@@ -74,7 +74,7 @@ export const getNewRate = (frame: number) => {
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    }
+    },
   );
 
   const push3 = interpolate(
@@ -84,7 +84,7 @@ export const getNewRate = (frame: number) => {
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    }
+    },
   );
 
   const push4 = interpolate(
@@ -94,7 +94,7 @@ export const getNewRate = (frame: number) => {
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    }
+    },
   );
 
   return push1 + push2 + push3 + push4;
@@ -125,8 +125,8 @@ export const Rocket: React.FC = () => {
     >
       <AbsoluteFill>
         <svg
-          style={{ width: 2160, height: 2160 }}
-          viewBox="0 0 2160 2160"
+          style={{ width: 1080, height: 1080 }}
+          viewBox="0 0 1080 1080"
           fill="none"
           overflow="visible"
         >

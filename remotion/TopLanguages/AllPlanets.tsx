@@ -8,10 +8,10 @@ import {
   PlanetScaleSpiral,
   startRotationInRadiansSchema,
 } from "./PlanetScaleSpiral";
+import { TopLanguagesTitleCard } from "./TitleCard";
 import type { LanguageType } from "./constants";
 import { LanguagesEnum } from "./constants";
 import { cornerType } from "./corner";
-import { ShowDescription } from "./sequences/ShowDescription";
 
 export const allPlanetsSchema = z.object({
   language1: LanguagesEnum,
@@ -29,7 +29,7 @@ export const allPlanetsTransitionTiming = springTiming({
   durationInFrames: 15,
 });
 
-const TITLE_CARD_DURATION = 70;
+const TITLE_CARD_DURATION = 100;
 const FIRST_PLACE_DURATION = 120;
 const SECOND_PLACE_DURATION = 120;
 const THIRD_PLACE_DURATION = 110;
@@ -80,9 +80,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             overflow: "hidden",
           }}
         >
-          <Sequence from={-45}>
-            <ShowDescription first="Java" second="JavaScript" third="Python" />
-          </Sequence>
+          <TopLanguagesTitleCard />
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
