@@ -187,7 +187,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
             alignItems: "center",
           }}
         >
-          <PlanetSVG />
+          <PlanetSVG width={360} />
         </AbsoluteFill>
       </AbsoluteFill>
       <AbsoluteFill>

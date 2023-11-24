@@ -120,17 +120,14 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   [LanguagesEnum.Enum.TypeScript]: {
     boundingBox: TypeScriptPlanetBoundingBox,
     PlanetSVG: TypeScriptPlanetSVG,
-    // TODO: WRONG COLOR
-    gradient: "yellow",
+    gradient: "blue",
     textColor: "#71BBD8",
     name: "TypeScript",
   },
   [LanguagesEnum.Enum.Go]: {
     boundingBox: GoPlanetBoundingBox,
     PlanetSVG: GoPlanetSVG,
-    // TODO: WRONG COLOR
-    gradient: "yellow",
-    // TODO: WRONG COLOR
+    gradient: "blue",
     textColor: "#71BBD8",
     name: "Go",
   },

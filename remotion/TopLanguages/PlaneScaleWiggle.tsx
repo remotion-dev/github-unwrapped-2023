@@ -75,6 +75,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         }}
       >
         <PlanetSVG
+          width={800}
           style={{
             scale: String(planetScale),
             rotate: rotate + "deg",

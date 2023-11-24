@@ -204,7 +204,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
           rotate: `${rotation}rad`,
         }}
       >
-        <PlanetSVG />
+        <PlanetSVG style={{ width: 400 }} />
       </AbsoluteFill>
       <NewRocketSVG
         style={{
