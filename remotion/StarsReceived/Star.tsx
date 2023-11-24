@@ -96,7 +96,7 @@ export const Star: React.FC<{
         }}
       >
         <StarSprite
-          burstFrame={hitSpaceship ? duration * (2 / 3) : undefined}
+          burstFrame={hitSpaceship ? duration * (4 / 5) : undefined}
           transitionDuration={duration}
         />
         {/* <StarSprite  duration={duration}/> */}
