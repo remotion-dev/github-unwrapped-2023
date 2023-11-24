@@ -96,6 +96,7 @@ type PlanetInfo = {
   PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
   gradient: GradientType;
   textColor: string;
+  name: string;
 };
 
 export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
@@ -104,18 +105,21 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     PlanetSVG: JavaPlanetSVG,
     gradient: "orange",
     textColor: "rgb(201, 246, 253)",
+    name: "Java",
   },
   [LanguagesEnum.Enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
     PlanetSVG: PythonPlanetSVG,
     gradient: "blue",
     textColor: "rgb(200,228,252)",
+    name: "Python",
   },
   [LanguagesEnum.Enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
     PlanetSVG: JavaScriptPlanetSVG,
     gradient: "yellow",
     textColor: "rgb(253,241,190)",
+    name: "JavaScript",
   },
   [LanguagesEnum.Enum.TypeScript]: {
     boundingBox: TypeScriptPlanetBoundingBox,
@@ -123,6 +127,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     // TODO: WRONG COLOR
     gradient: "yellow",
     textColor: "#71BBD8",
+    name: "TypeScript",
   },
   [LanguagesEnum.Enum.Go]: {
     boundingBox: GoPlanetBoundingBox,
@@ -131,6 +136,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     // TODO: WRONG COLOR
     textColor: "#71BBD8",
+    name: "Go",
   },
   [LanguagesEnum.Enum.Rust1]: {
     boundingBox: Rust1PlanetBoundingBox,
@@ -138,7 +144,8 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     // TODO: WRONG COLOR
     gradient: "yellow",
     // TODO: WRONG COLOR
-    textColor: "#71BBD8",
+    textColor: "#956648",
+    name: "Rust",
   },
   [LanguagesEnum.Enum.Rust2]: {
     boundingBox: Rust2PlanetBoundingBox,
@@ -146,14 +153,15 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     // TODO: WRONG COLOR
     gradient: "yellow",
     // TODO: WRONG COLOR
-    textColor: "#71BBD8",
+    textColor: "#9E9284",
+    name: "Rust",
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
     PlanetSVG: Rust3Planet,
     // TODO: WRONG COLOR
     gradient: "yellow",
-    // TODO: WRONG COLOR
-    textColor: "#71BBD8",
+    textColor: "#E8A08A",
+    name: "Rust",
   },
 };

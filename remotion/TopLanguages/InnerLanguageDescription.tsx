@@ -53,7 +53,7 @@ export const InnerLanguageDescription: React.FC<{
   return (
     <div style={label}>
       <div style={num}>{position}</div>
-      <div style={languageStyle}>{language}</div>
+      <div style={languageStyle}>{mapLanguageToPlanet[language].name}</div>
     </div>
   );
 };
