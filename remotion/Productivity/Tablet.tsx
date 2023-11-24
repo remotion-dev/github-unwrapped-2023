@@ -23,9 +23,9 @@ export const Tablet: React.FC<ComponentProps<typeof Productivity>> = ({
           position: "absolute",
           display: "flex",
           flexDirection: "column",
-          gap: 24,
+          gap: 36,
           transform:
-            "perspective(1500px) rotateY(15deg) skew(6deg,-3deg) scale(0.6)",
+            "perspective(1200px) rotateY(15deg) rotateX(-10deg) rotateZ(0) skew(7deg,-4deg) scale(0.6)",
         }}
       >
         <div
