@@ -1,12 +1,19 @@
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
+import { z } from "zod";
 import { RadialGradient } from "../RadialGradient";
 import { Rocket } from "./Rocket";
 import { TitleCardOctocat } from "./TitleCardOctocat";
 import { TopLanguagesTitle } from "./TopLanguagesTitle";
 import SkySVG from "./svgs/SkySVG";
 
-export const TopLanguagesTitleCard: React.FC = () => {
+export const topLanguagesTitleCardSchema = z.object({
+  login: z.string(),
+});
+
+export const TopLanguagesTitleCard: React.FC<
+  z.infer<typeof topLanguagesTitleCardSchema>
+> = ({ login }) => {
   const frame = useCurrentFrame();
   const zoomOutProgress = interpolate(frame, [0, 80], [0, 1]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
@@ -35,7 +42,7 @@ export const TopLanguagesTitleCard: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <TopLanguagesTitle />
+        <TopLanguagesTitle login={login} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

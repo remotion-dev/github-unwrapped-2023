@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import React from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../icons/DownloadIcon";
-import type { CompositionProps } from "../../types/constants";
+import type { CompositionProps } from "../../remotion/props";
 import { Button } from "../Button/Button";
 import { Actions } from "./Actions";
 
@@ -42,7 +42,7 @@ export const Sidebar: React.FC<{
         <Link to={"/"}>
           <h2 style={hashtag}>#GitHubUnwrapped</h2>
         </Link>
-        <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
+        <h2 style={{ margin: 0 }}>@{inputProps.login}</h2>
       </div>
       <div style={downloadContent}>
         <Button

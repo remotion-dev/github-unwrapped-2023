@@ -5,17 +5,17 @@ import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
 import { PullRequests } from "./Paths/Paths";
 import { StarsReceived } from "./StarsReceived";
-import { AllPlanets, allPlanetsSchema } from "./TopLanguages/AllPlanets";
+import { AllPlanets } from "./TopLanguages/AllPlanets";
+import type { CompositionProps } from "./props";
 
-const mainSchema = allPlanetsSchema;
-
-export const Main: React.FC<z.infer<typeof mainSchema>> = ({
+export const Main: React.FC<z.infer<typeof CompositionProps>> = ({
   corner,
   language1,
   language2,
   language3,
   showHelperLine,
   startRotationInRadians,
+  login,
 }) => {
   return (
     <AbsoluteFill>
@@ -28,6 +28,7 @@ export const Main: React.FC<z.infer<typeof mainSchema>> = ({
             language3={language3}
             showHelperLine={showHelperLine}
             startRotationInRadians={startRotationInRadians}
+            login={login}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={5 * 30}>

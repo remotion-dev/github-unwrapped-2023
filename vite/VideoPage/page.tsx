@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
+import type { CompositionProps } from "../../remotion/props";
 import type { ProfileStats } from "../../src/server/db";
-import type { CompositionProps } from "../../types/constants";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
@@ -43,7 +43,14 @@ declare global {
 export const UserPage = () => {
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
-      title: window.__USER__.username,
+      login: window.__USER__.username,
+      // TODO: Real data
+      corner: "bottom-right",
+      language1: "Go",
+      language2: "TypeScript",
+      language3: "JavaScript",
+      showHelperLine: false,
+      startRotationInRadians: 0,
     };
   }, []);
 

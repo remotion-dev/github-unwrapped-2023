@@ -191,7 +191,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           <PlanetSVG width={360} />
         </AbsoluteFill>
       </AbsoluteFill>
-      <AbsoluteFill>
+      <Sequence durationInFrames={60}>
         <NewRocketSVG
           style={{
             transform: `translateX(${
@@ -201,7 +201,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
             }deg) scale(1.5)`,
           }}
         />
-      </AbsoluteFill>
+      </Sequence>
       <AbsoluteFill>
         <svg viewBox={`0 0 1080 1080`}>
           <path d={translated2} fill="transparent" />

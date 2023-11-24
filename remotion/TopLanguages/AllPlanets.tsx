@@ -20,6 +20,7 @@ export const allPlanetsSchema = z.object({
   corner: cornerType,
   showHelperLine: z.boolean(),
   startRotationInRadians: startRotationInRadiansSchema,
+  login: z.string(),
 });
 
 export const allPlanetsTransitionTiming = springTiming({
@@ -71,6 +72,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   corner,
   showHelperLine,
   startRotationInRadians,
+  login,
 }) => {
   return (
     <TransitionSeries>
@@ -80,7 +82,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             overflow: "hidden",
           }}
         >
-          <TopLanguagesTitleCard />
+          <TopLanguagesTitleCard login={login} />
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
@@ -89,11 +91,15 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
       />
       {language3 ? (
         <>
-          <TransitionSeries.Sequence durationInFrames={THIRD_PLACE_DURATION}>
+          <TransitionSeries.Sequence
+            key="language3"
+            durationInFrames={THIRD_PLACE_DURATION}
+          >
             <PlanetScaleOut position={3} corner={corner} language={language3} />
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
-            presentation={slide({ direction: "from-top" })}
+            key="scene3"
+            presentation={slide({ direction: "from-bottom" })}
             timing={allPlanetsTransitionTiming}
           />
         </>
@@ -101,6 +107,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
       {language2 ? (
         <>
           <TransitionSeries.Sequence
+            key="transition2"
             style={{
               overflow: "hidden",
             }}
@@ -114,6 +121,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             />
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
+            key="scene2"
             presentation={slide({ direction: "from-top" })}
             timing={allPlanetsTransitionTiming}
           />

@@ -1,7 +1,7 @@
 import type { RenderMediaOnLambdaOutput } from "@remotion/lambda/client";
 import type { z } from "zod";
+import type { CompositionProps } from "../remotion/props";
 import type { ApiResponse } from "../src/helpers/api-response";
-import type { CompositionProps } from "../types/constants";
 import type {
   ProgressRequest,
   ProgressResponse,
@@ -11,7 +11,7 @@ import { frontendCredentials } from "./env";
 
 const makeRequest = async <Res>(
   endpoint: string,
-  body: unknown
+  body: unknown,
 ): Promise<Res> => {
   const result = await fetch(frontendCredentials().VITE_HOST + endpoint, {
     method: "post",

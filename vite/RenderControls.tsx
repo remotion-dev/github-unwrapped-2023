@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { CompositionProps } from "../types/constants";
+import type { CompositionProps } from "../remotion/props";
 import { COMP_NAME } from "../types/constants";
 import { AlignEnd } from "./AlignEnd";
 import { Button } from "./Button/Button";

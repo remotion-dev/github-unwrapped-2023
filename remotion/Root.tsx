@@ -4,7 +4,6 @@ import {
   VIDEO_FPS,
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
-  defaultMyCompProps,
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
@@ -54,8 +53,12 @@ import {
   spiralSchema,
 } from "./TopLanguages/PlanetScaleSpiral";
 import { PlanetScaleSpiralWhole } from "./TopLanguages/PlanetScaleSpiralWhole";
-import { TopLanguagesTitleCard } from "./TopLanguages/TitleCard";
+import {
+  TopLanguagesTitleCard,
+  topLanguagesTitleCardSchema,
+} from "./TopLanguages/TitleCard";
 import { LanguagesEnum } from "./TopLanguages/constants";
+import { defaultMyCompProps } from "./props";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -315,6 +318,10 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
+          schema={topLanguagesTitleCardSchema}
+          defaultProps={{
+            login: "JonnyBurger",
+          }}
         />
         <Composition
           id={"TopLanguagesCanvas"}
@@ -420,6 +427,7 @@ export const RemotionRoot: React.FC = () => {
             language3: "TypeScript" as const,
             showHelperLine: false,
             startRotationInRadians: 0,
+            login: "JonnyBurger",
           }}
         />
       </Folder>
@@ -430,6 +438,15 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          corner: "bottom-left",
+          language1: "JavaScript",
+          language2: "TypeScript",
+          language3: "Rust2",
+          showHelperLine: false,
+          startRotationInRadians: 0,
+          login: "JonnyBurger",
+        }}
       />
       <Composition
         id="Stars"
