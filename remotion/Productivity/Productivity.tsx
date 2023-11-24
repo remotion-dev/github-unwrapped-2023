@@ -58,7 +58,10 @@ const Bar = (props: { productivity: number }) => {
   );
 };
 
-const Graph = (props: { productivityPerHour: Array<ProductivityPerHour> }) => {
+export const ProductivityGraph = (props: {
+  productivityPerHour: Array<ProductivityPerHour>;
+  style?: React.CSSProperties;
+}) => {
   return (
     <div
       style={{
@@ -67,6 +70,7 @@ const Graph = (props: { productivityPerHour: Array<ProductivityPerHour> }) => {
         justifyContent: "center",
         gap: 16,
         height: 480,
+        ...props.style,
       }}
     >
       {props.productivityPerHour.map((productivityPerHour) => {
@@ -139,7 +143,7 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
           justifyContent: "center",
         }}
       >
-        <Graph productivityPerHour={graphData} />
+        <ProductivityGraph productivityPerHour={graphData} />
       </div>
     </AbsoluteFill>
   );
