@@ -387,8 +387,8 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             corner: "bottom-left" as const,
             language1: "Java" as const,
-            language2: "JavaScript" as const,
-            language3: "TypeScript" as const,
+            language2: "Rust1" as const,
+            language3: "Rust3" as const,
             showHelperLine: false,
             startRotationInRadians: 0,
           }}

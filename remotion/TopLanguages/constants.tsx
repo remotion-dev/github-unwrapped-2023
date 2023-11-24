@@ -3,6 +3,7 @@ import type { SVGProps } from "react";
 import { z } from "zod";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
+import { GoPlanetBoundingBox, GoPlanetSVG } from "./svgs/planets/GoPlanetSVG";
 import {
   JavaPlanetBoundingBox,
   JavaPlanetSVG,
@@ -15,6 +16,15 @@ import {
   PythonPlanetBoundingBox,
   PythonPlanetSVG,
 } from "./svgs/planets/PythonPlanetSVG";
+import {
+  Rust1PlanetBoundingBox,
+  Rust1PlanetSVG,
+} from "./svgs/planets/Rust1PlanetSVG";
+import {
+  Rust2PlanetBoundingBox,
+  Rust2PlanetSVG,
+} from "./svgs/planets/Rust2PlanetSVG";
+import { Rust3BoundingBox, Rust3Planet } from "./svgs/planets/Rust3Planet";
 import {
   TypeScriptPlanetBoundingBox,
   TypeScriptPlanetSVG,
@@ -65,6 +75,10 @@ export const LanguagesEnum = z.enum([
   "Python",
   "JavaScript",
   "TypeScript",
+  "Go",
+  "Rust1",
+  "Rust2",
+  "Rust3",
 ]);
 
 export type LanguageType = z.infer<typeof LanguagesEnum>;
@@ -106,7 +120,40 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   [LanguagesEnum.Enum.TypeScript]: {
     boundingBox: TypeScriptPlanetBoundingBox,
     PlanetSVG: TypeScriptPlanetSVG,
+    // TODO: WRONG COLOR
     gradient: "yellow",
+    textColor: "#71BBD8",
+  },
+  [LanguagesEnum.Enum.Go]: {
+    boundingBox: GoPlanetBoundingBox,
+    PlanetSVG: GoPlanetSVG,
+    // TODO: WRONG COLOR
+    gradient: "yellow",
+    // TODO: WRONG COLOR
+    textColor: "#71BBD8",
+  },
+  [LanguagesEnum.Enum.Rust1]: {
+    boundingBox: Rust1PlanetBoundingBox,
+    PlanetSVG: Rust1PlanetSVG,
+    // TODO: WRONG COLOR
+    gradient: "yellow",
+    // TODO: WRONG COLOR
+    textColor: "#71BBD8",
+  },
+  [LanguagesEnum.Enum.Rust2]: {
+    boundingBox: Rust2PlanetBoundingBox,
+    PlanetSVG: Rust2PlanetSVG,
+    // TODO: WRONG COLOR
+    gradient: "yellow",
+    // TODO: WRONG COLOR
+    textColor: "#71BBD8",
+  },
+  [LanguagesEnum.Enum.Rust3]: {
+    boundingBox: Rust3BoundingBox,
+    PlanetSVG: Rust3Planet,
+    // TODO: WRONG COLOR
+    gradient: "yellow",
+    // TODO: WRONG COLOR
     textColor: "#71BBD8",
   },
 };
