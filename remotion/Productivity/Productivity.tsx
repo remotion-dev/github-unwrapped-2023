@@ -27,7 +27,7 @@ const Bar = (props: { productivity: number }) => {
     from: 0,
     to: 100,
     config: {
-      mass: props.productivity * 20,
+      mass: props.productivity * 10,
       damping: 200,
     },
   });
