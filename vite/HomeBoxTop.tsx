@@ -28,7 +28,7 @@ export const HomeBoxTop: React.FC = () => {
   return (
     <div style={container}>
       <div className={styles.gradientText} style={hashtag}>
-        #GitHubUnwrapped 2023
+        #GitHubUnwrapped
       </div>
       <div style={{ flex: 1 }} />
       <HomeLink

@@ -40,7 +40,7 @@ export const Sidebar: React.FC<{
     <div style={information}>
       <div style={title}>
         <Link to={"/"}>
-          <h2 style={hashtag}>#GitHubUnwrapped 2023</h2>
+          <h2 style={hashtag}>#GitHubUnwrapped</h2>
         </Link>
         <h2 style={{ margin: 0 }}>@{inputProps.title}</h2>
       </div>
