@@ -4,10 +4,7 @@ import { Sequence } from "remotion";
 import { z } from "zod";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
-import {
-  PlanetScaleSpiral,
-  startRotationInRadiansSchema,
-} from "./PlanetScaleSpiral";
+import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
 import { TopLanguagesTitleCard } from "./TitleCard";
 import type { LanguageType } from "./constants";
 import { LanguagesEnum } from "./constants";
@@ -19,7 +16,6 @@ export const allPlanetsSchema = z.object({
   language3: LanguagesEnum.or(z.null()),
   corner: cornerType,
   showHelperLine: z.boolean(),
-  startRotationInRadians: startRotationInRadiansSchema,
   login: z.string(),
 });
 
@@ -71,7 +67,6 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   language3,
   corner,
   showHelperLine,
-  startRotationInRadians,
   login,
 }) => {
   return (
@@ -116,7 +111,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             <PlanetScaleSpiral
               showHelperLine={showHelperLine}
               language={language2}
-              startRotationInRadians={startRotationInRadians}
+              corner={corner}
               position={2}
             />
           </TransitionSeries.Sequence>

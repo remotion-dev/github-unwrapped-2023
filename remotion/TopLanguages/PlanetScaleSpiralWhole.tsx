@@ -8,10 +8,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { z } from "zod";
+import { z } from "zod";
 import { moveAlongLine } from "../move-along-line";
-import type { spiralSchema } from "./PlanetScaleSpiral";
-import { mapLanguageToPlanet } from "./constants";
+import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import type { ClockDirection } from "./corner";
+import { clockDirectionSchema } from "./corner";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -24,6 +25,13 @@ const speedRemapFn = (f: number) => interpolate(f, [0, 200], [1, 2]);
 
 const frameAtStart = 15;
 const frameAtEnd = 110;
+
+export const spiralWholeSchema = z.object({
+  language: LanguagesEnum,
+  showHelperLine: z.boolean(),
+  startRotationInRadians: z.number().step(0.1).min(0),
+  clockDirection: clockDirectionSchema,
+});
 
 const progress = ({
   f,
@@ -42,19 +50,31 @@ const progress = ({
   return current / unit;
 };
 
-const getPath = (r: number, canvasWidth: number, canvasHeight: number) => {
+const getPath = ({
+  r,
+  canvasWidth,
+  canvasHeight,
+  clockDirection,
+}: {
+  r: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  clockDirection: ClockDirection;
+}) => {
+  const circle = makeCircle({ radius: r }).path;
+  const circleReversed =
+    clockDirection === "counter-clockwise" ? circle : reversePath(circle);
+
   return translatePath(
-    reversePath(makeCircle({ radius: r }).path),
+    circleReversed,
     canvasWidth / 2 - r,
     canvasHeight / 2 - r,
   );
 };
 
-export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
-  language,
-  showHelperLine,
-  startRotationInRadians,
-}) => {
+export const PlanetScaleSpiralWhole: React.FC<
+  z.infer<typeof spiralWholeSchema>
+> = ({ language, showHelperLine, startRotationInRadians, clockDirection }) => {
   const { PlanetSVG } = mapLanguageToPlanet[language];
 
   const frame = useCurrentFrame();
@@ -72,14 +92,29 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
   const radiusAtEnd = getRadius(frameAtEnd);
 
   const pathAtStart = useMemo(() => {
-    return getPath(radiusAtStart, width, height);
-  }, [height, radiusAtStart, width]);
+    return getPath({
+      r: radiusAtStart,
+      canvasWidth: width,
+      canvasHeight: height,
+      clockDirection,
+    });
+  }, [clockDirection, height, radiusAtStart, width]);
 
-  const pathInOrbit = getPath(radius, width, height);
+  const pathInOrbit = getPath({
+    r: radius,
+    canvasWidth: width,
+    canvasHeight: height,
+    clockDirection,
+  });
 
   const pathAtEnd = useMemo(() => {
-    return getPath(radiusAtEnd, width, height);
-  }, [height, radiusAtEnd, width]);
+    return getPath({
+      r: radiusAtEnd,
+      canvasWidth: width,
+      canvasHeight: height,
+      clockDirection,
+    });
+  }, [clockDirection, height, radiusAtEnd, width]);
 
   const isBeforeStart = spedUpFrame < frameAtStart;
   const isOverEnd = spedUpFrame > frameAtEnd;

@@ -5,20 +5,26 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
 import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import {
+  cornerType,
+  deriveClockDirectionFromEnterDirection,
+  deriveEnterDirectionFromCorner,
+  deriveStartRotationFromEnterDirection,
+} from "./corner";
 
 export const startRotationInRadiansSchema = z.number().step(0.1).min(0);
 
 export const spiralSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),
-  startRotationInRadians: startRotationInRadiansSchema,
+  corner: cornerType,
   position: z.number().int(),
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   language,
   showHelperLine,
-  startRotationInRadians,
+  corner,
   position,
 }) => {
   const frame = useCurrentFrame();
@@ -37,6 +43,10 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
     };
   }, [scale]);
 
+  const enterDirection = deriveEnterDirectionFromCorner(corner);
+  const clockDirection = deriveClockDirectionFromEnterDirection(enterDirection);
+  const startRotation = deriveStartRotationFromEnterDirection(enterDirection);
+
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 0.2 }}>
@@ -44,10 +54,10 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
       </AbsoluteFill>
       <AbsoluteFill style={style}>
         <PlanetScaleSpiralWhole
-          startRotationInRadians={startRotationInRadians}
+          startRotationInRadians={startRotation}
           showHelperLine={showHelperLine}
           language={language}
-          position={position}
+          clockDirection={clockDirection}
         />
       </AbsoluteFill>
       <AbsoluteFill>

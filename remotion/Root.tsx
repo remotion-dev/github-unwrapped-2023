@@ -376,8 +376,10 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             language: "Java" as const,
             showHelperLine: false,
-            startRotationInRadians: 2.2,
+            corner: "bottom-right",
             position: 1,
+            startRotationInRadians: 0,
+            clockDirection: "clockwise",
           }}
         />
         <Composition
@@ -391,7 +393,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             language: "Java" as const,
             showHelperLine: false,
-            startRotationInRadians: 37.3,
+            corner: "bottom-right",
             position: 1,
           }}
         />
@@ -421,12 +423,11 @@ export const RemotionRoot: React.FC = () => {
             };
           }}
           defaultProps={{
-            corner: "bottom-left" as const,
+            corner: "bottom-right" as const,
             language1: "Java" as const,
-            language2: "TypeScript" as const,
+            language2: "Go" as const,
             language3: "TypeScript" as const,
             showHelperLine: false,
-            startRotationInRadians: 0,
             login: "JonnyBurger",
           }}
         />
@@ -444,7 +445,6 @@ export const RemotionRoot: React.FC = () => {
           language2: "TypeScript",
           language3: "Rust2",
           showHelperLine: false,
-          startRotationInRadians: 0,
           login: "JonnyBurger",
         }}
       />

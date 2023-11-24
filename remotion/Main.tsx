@@ -14,7 +14,6 @@ export const Main: React.FC<z.infer<typeof CompositionProps>> = ({
   language2,
   language3,
   showHelperLine,
-  startRotationInRadians,
   login,
 }) => {
   return (
@@ -27,7 +26,6 @@ export const Main: React.FC<z.infer<typeof CompositionProps>> = ({
             language2={language2}
             language3={language3}
             showHelperLine={showHelperLine}
-            startRotationInRadians={startRotationInRadians}
             login={login}
           />
         </Series.Sequence>
