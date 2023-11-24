@@ -27,8 +27,14 @@ import {
   SevenSegment,
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
-import { StarSprite } from "./StarSprite";
-import { StarsReceived, starsReceivedSchema } from "./StarsReceived";
+import { STAR_DURATION, StarSprite } from "./StarSprite";
+import {
+  MAX_STARS,
+  STARS_DELAY,
+  StarsReceived,
+  starsReceivedSchema,
+} from "./StarsReceived";
+import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,
@@ -171,8 +177,18 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 141 }}
+        defaultProps={{ starsReceived: 10 }}
+        calculateMetadata={({ props }) => {
+          const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
+          return {
+            durationInFrames:
+              (starsDisplayed - 1) * STARS_DELAY +
+              STAR_DURATION +
+              DESCRIPTION_SEQUENCE_DURATION,
+          };
+        }}
       />
+
       <Composition
         id={"JumpingNumber"}
         schema={jumpingNumberSchema}
