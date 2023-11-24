@@ -35,6 +35,7 @@ import {
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
+import { Productivity } from "./StarsReceived/Productivity";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,
@@ -188,7 +189,16 @@ export const RemotionRoot: React.FC = () => {
           };
         }}
       />
-
+      <Composition
+        id={"Productivity"}
+        component={Productivity}
+        durationInFrames={10 * VIDEO_FPS}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        schema={starsReceivedSchema}
+        defaultProps={{ starsReceived: 10 }}
+      />
       <Composition
         id={"JumpingNumber"}
         schema={jumpingNumberSchema}
