@@ -1,4 +1,4 @@
-import { reversePath, translatePath } from "@remotion/paths";
+import { reversePath, scalePath, translatePath } from "@remotion/paths";
 import { makeCircle } from "@remotion/shapes";
 import { useMemo } from "react";
 import {
@@ -62,14 +62,16 @@ const getPath = ({
   clockDirection: ClockDirection;
 }) => {
   const circle = makeCircle({ radius: r }).path;
+  const reversed = reversePath(circle);
   const circleReversed =
-    clockDirection === "counter-clockwise" ? circle : reversePath(circle);
+    clockDirection === "clockwise"
+      ? reversed
+      : translatePath(scalePath(reversed, -1, 1), r * 2, 0);
 
-  return translatePath(
-    circleReversed,
-    canvasWidth / 2 - r,
-    canvasHeight / 2 - r,
-  );
+  const translateX = canvasWidth / 2 - r;
+  const translateY = canvasHeight / 2 - r;
+
+  return translatePath(circleReversed, translateX, translateY);
 };
 
 export const PlanetScaleSpiralWhole: React.FC<

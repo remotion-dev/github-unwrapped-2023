@@ -8,7 +8,13 @@ import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
 import { TopLanguagesTitleCard } from "./TitleCard";
 import type { LanguageType } from "./constants";
 import { LanguagesEnum } from "./constants";
-import { cornerType } from "./corner";
+import {
+  cornerType,
+  deriveEnterDirectionFromCorner,
+  mapEnterDirectionIntoSlideDirection,
+  mapEnterDirectionToExitDirection,
+  mapExitDirectionIntoSlideDirection,
+} from "./corner";
 
 export const allPlanetsSchema = z.object({
   language1: LanguagesEnum,
@@ -94,7 +100,11 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
             key="scene3"
-            presentation={slide({ direction: "from-bottom" })}
+            presentation={slide({
+              direction: mapEnterDirectionIntoSlideDirection(
+                deriveEnterDirectionFromCorner(corner),
+              ),
+            })}
             timing={allPlanetsTransitionTiming}
           />
         </>
@@ -117,7 +127,13 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
             key="scene2"
-            presentation={slide({ direction: "from-top" })}
+            presentation={slide({
+              direction: mapExitDirectionIntoSlideDirection(
+                mapEnterDirectionToExitDirection(
+                  deriveEnterDirectionFromCorner(corner),
+                ),
+              ),
+            })}
             timing={allPlanetsTransitionTiming}
           />
         </>

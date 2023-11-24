@@ -423,10 +423,10 @@ export const RemotionRoot: React.FC = () => {
             };
           }}
           defaultProps={{
-            corner: "bottom-right" as const,
-            language1: "Java" as const,
+            corner: "bottom-left" as const,
+            language1: "Go" as const,
             language2: "Go" as const,
-            language3: "TypeScript" as const,
+            language3: "Python" as const,
             showHelperLine: false,
             login: "JonnyBurger",
           }}
