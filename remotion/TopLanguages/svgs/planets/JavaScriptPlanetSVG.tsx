@@ -1,6 +1,7 @@
 import type { SVGProps } from "react";
+import { toViewBox, type PlanetBoundingBox } from "../../planet-types";
 
-export const JavaScriptPlanetBoundingBox = {
+export const JavaScriptPlanetBoundingBox: PlanetBoundingBox = {
   width: 385,
   height: 360,
 };
@@ -8,9 +9,8 @@ export const JavaScriptPlanetBoundingBox = {
 export const JavaScriptPlanetSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
     style={JavaScriptPlanetBoundingBox}
-    viewBox="0 0 385 360"
+    viewBox={toViewBox(JavaScriptPlanetBoundingBox)}
     fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path

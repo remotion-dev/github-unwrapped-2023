@@ -3,6 +3,7 @@ import type { SVGProps } from "react";
 import { z } from "zod";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
+import type { PlanetBoundingBox } from "./planet-types";
 import { GoPlanetBoundingBox, GoPlanetSVG } from "./svgs/planets/GoPlanetSVG";
 import {
   JavaPlanetBoundingBox,
@@ -86,13 +87,8 @@ export type LanguageType = z.infer<typeof LanguagesEnum>;
 const LanguageOptions = LanguagesEnum.options;
 export type LanguageEnumType = (typeof LanguageOptions)[number];
 
-type BoundingBox = {
-  width: number;
-  height: number;
-};
-
 type PlanetInfo = {
-  boundingBox: BoundingBox;
+  boundingBox: PlanetBoundingBox;
   PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
   gradient: GradientType;
   textColor: string;
