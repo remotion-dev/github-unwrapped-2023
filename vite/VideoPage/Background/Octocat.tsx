@@ -1,3 +1,4 @@
+import { getOctocatLine } from "../../../remotion/TopLanguages/octocat-line";
 import { OctocatBody } from "./Octocat-body";
 import { OctocatLine } from "./octocat-line";
 
@@ -13,7 +14,7 @@ export const OctoCat: React.FC = () => {
       viewBox="0 0 1442 997"
       fill="none"
     >
-      <OctocatBody />
+      <OctocatBody d={getOctocatLine()} progress={1} />
       <OctocatLine mode="imperative" />
     </svg>
   );

@@ -193,7 +193,7 @@ export const PlanetScaleSpiralWhole: React.FC<z.infer<typeof spiralSchema>> = ({
       ) : null}
 
       <AbsoluteFill>
-        <SkySVG style={{ transform: "scale(6)", opacity: 0.3 }} />
+        <SkySVG style={{ transform: "scale(2)", opacity: 0.3 }} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{
