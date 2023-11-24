@@ -1,4 +1,4 @@
-import { Composition, Folder, Still } from "remotion";
+import { Composition, Folder, Still, random } from "remotion";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -196,8 +196,34 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10 }}
+        defaultProps={{
+          graphData: [
+            { time: 4, productivity: random(null) },
+            { time: 5, productivity: random(null) },
+            { time: 6, productivity: random(null) },
+            { time: 7, productivity: random(null) },
+            { time: 8, productivity: random(null) },
+            { time: 9, productivity: random(null) },
+            { time: 10, productivity: random(null) },
+            { time: 11, productivity: random(null) },
+            { time: 12, productivity: random(null) },
+            { time: 13, productivity: random(null) },
+            { time: 14, productivity: random(null) },
+            { time: 15, productivity: random(null) },
+            { time: 16, productivity: random(null) },
+            { time: 17, productivity: random(null) },
+            { time: 18, productivity: random(null) },
+            { time: 19, productivity: random(null) },
+            { time: 20, productivity: random(null) },
+            { time: 21, productivity: random(null) },
+            { time: 22, productivity: random(null) },
+            { time: 23, productivity: random(null) },
+            { time: 24, productivity: random(null) },
+            { time: 1, productivity: random(null) },
+            { time: 2, productivity: random(null) },
+            { time: 3, productivity: random(null) },
+          ],
+        }}
       />
       <Composition
         id={"JumpingNumber"}
