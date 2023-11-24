@@ -23,6 +23,7 @@ import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
+import { Productivity } from "./Productivity/Productivity";
 import {
   SevenSegment,
   sevenSegmentSchema,
@@ -35,7 +36,6 @@ import {
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
-import { Productivity } from "./StarsReceived/Productivity";
 import {
   TopLanguagesCamera,
   TopLanguagesCanvas,

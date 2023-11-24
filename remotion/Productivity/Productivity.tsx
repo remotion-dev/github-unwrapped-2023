@@ -64,7 +64,6 @@ const Graph = (props: { productivityPerHour: Array<ProductivityPerHour> }) => {
         justifyContent: "center",
         gap: 16,
         height: 480,
-        marginBottom: 120,
       }}
     >
       {props.productivityPerHour.map((productivityPerHour) => {
@@ -104,23 +103,41 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
       style={{
         background: "rgb(21,20,39)",
         display: "flex",
-        justifyContent: "flex-end",
       }}
     >
       <div
         style={{
           color: "white",
-          position: "absolute",
-          top: 48,
-          left: 48,
           fontSize: 120,
           fontFamily: "Mona Sans",
           fontWeight: 800,
+          paddingTop: 80,
+          textAlign: "center",
         }}
       >
-        Monday
+        Monday 3PM
       </div>
-      <Graph productivityPerHour={graphData} />
+      <div
+        style={{
+          color: "white",
+          fontSize: 40,
+          fontFamily: "Mona Sans",
+          fontWeight: 300,
+          textAlign: "center",
+        }}
+      >
+        Is your most productive time
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Graph productivityPerHour={graphData} />
+      </div>
     </AbsoluteFill>
   );
 };
