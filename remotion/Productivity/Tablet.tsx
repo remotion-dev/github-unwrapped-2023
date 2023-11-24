@@ -15,17 +15,7 @@ export const Tablet: React.FC<ComponentProps<typeof Productivity>> = ({
       <TabletSVG
         style={{ width: "100%", height: "100%", position: "relative" }}
       />
-      {/* <div
-        style={{
-          width: 600,
-          aspectRatio: 3 / 2,
-          background: " red ",
-          left: 400,
-          top: 280,
-          position: "absolute",
-          transform: "perspective(1500px) rotateY(15deg) skew(6deg,-3deg)",
-        }}
-      /> */}
+
       <div
         style={{
           left: 220,
