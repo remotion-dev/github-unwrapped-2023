@@ -14,7 +14,21 @@ export const OctoCat: React.FC = () => {
       viewBox="0 0 1442 997"
       fill="none"
     >
-      <OctocatBody d={getOctocatLine()} progress={1} />
+      <OctocatBody
+        d={getOctocatLine({
+          noise1: 0,
+          noise2: 0,
+          noise3: 0,
+          noise4: 0,
+          noise5: 0,
+          endOffsetX: 0,
+          endOffsetY: 0,
+        })}
+        endOffsetX={0}
+        endOffsetY={0}
+        rotation={0}
+        progress={1}
+      />
       <OctocatLine mode="imperative" />
     </svg>
   );

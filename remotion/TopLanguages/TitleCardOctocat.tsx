@@ -6,8 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { OctocatBody } from "../../vite/VideoPage/Background/Octocat-body";
-import { OctocatLine } from "../../vite/VideoPage/Background/octocat-line";
+import { FloatingOctocat } from "./FloatingOctocat";
 
 export const TitleCardOctocat: React.FC = () => {
   const frame = useCurrentFrame();
@@ -28,21 +27,12 @@ export const TitleCardOctocat: React.FC = () => {
     interpolate(spr, [0, 1], [400, 0]) + noise2D("y", frame / 100, 0) * 10;
 
   return (
-    <AbsoluteFill>
-      <svg
-        style={{
-          position: "fixed",
-          width: "200%",
-          bottom: 0,
-          right: -100,
-          transform: `translate(${x}px, ${y}px)`,
-        }}
-        viewBox="0 0 1442 997"
-        fill="none"
-      >
-        <OctocatBody />
-        <OctocatLine mode="remotion" time={frame * 6} />
-      </svg>
+    <AbsoluteFill
+      style={{
+        transform: `translate(${x}px, ${y}px)`,
+      }}
+    >
+      <FloatingOctocat />
     </AbsoluteFill>
   );
 };
