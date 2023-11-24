@@ -25,8 +25,6 @@ const speedRemapFn = (f: number) => interpolate(f, [0, 200], [1, 2]);
 const frameAtStart = 15;
 const frameAtEnd = 110;
 
-const spedUpFrameEnd = remapSpeed(frameAtEnd - 80, speedRemapFn);
-
 const progress = ({
   f,
   start,

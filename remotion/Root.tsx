@@ -46,6 +46,7 @@ import {
   allPlanetsSchema,
   getDurationOfAllPlanets,
 } from "./TopLanguages/AllPlanets";
+import { FloatingOctocat } from "./TopLanguages/FloatingOctocat";
 import {
   PlanetScaleWiggle,
   wiggleSchema,
@@ -366,6 +367,14 @@ export const RemotionRoot: React.FC = () => {
             startRotationInRadians: 37.3,
             position: 1,
           }}
+        />
+        <Composition
+          id={"FloatingOctocat"}
+          component={FloatingOctocat}
+          durationInFrames={150}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
         />
         <Composition
           id={"AllPlanets"}

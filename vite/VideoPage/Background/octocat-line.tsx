@@ -188,6 +188,12 @@ export const OctocatLine: React.FC<Props> = (props) => {
           strokeMiterlimit="10"
         />
       )}
+      <path
+        d="M1450.75 489.02C1236.48 461.95 1336.89 643.47 1363.29 762.83C1378.57 831.91 1383.16 978.91 1276.4 947.78C1212.86 927.1 1174.59 847.88 1119.43 825.71"
+        stroke="url(#octocatgradient)"
+        strokeWidth="4"
+        strokeMiterlimit="10"
+      />
       <defs>
         <linearGradient
           id="octocatgradient"
@@ -197,8 +203,8 @@ export const OctocatLine: React.FC<Props> = (props) => {
           y2="720.3"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#3772A8" />
-          <stop offset="1" stopColor="#8FB0B3" />
+          <stop stopColor="#3772A7" />
+          <stop offset="1" stopColor="#8EAFB2" />
         </linearGradient>
       </defs>
     </>
