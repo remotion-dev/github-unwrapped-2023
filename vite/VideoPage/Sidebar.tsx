@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import React from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../icons/DownloadIcon";
-import type { CompositionProps } from "../../remotion/props";
+import type { compositionSchema } from "../../remotion/props";
 import { Button } from "../Button/Button";
 import { Actions } from "./Actions";
 
@@ -34,7 +34,7 @@ const hashtag: React.CSSProperties = {
 };
 
 export const Sidebar: React.FC<{
-  inputProps: z.infer<typeof CompositionProps>;
+  inputProps: z.infer<typeof compositionSchema>;
 }> = ({ inputProps }) => {
   return (
     <div style={information}>

@@ -1,6 +1,6 @@
 import type { RenderMediaOnLambdaOutput } from "@remotion/lambda/client";
 import type { z } from "zod";
-import type { CompositionProps } from "../remotion/props";
+import type { compositionSchema } from "../remotion/props";
 import type { ApiResponse } from "../src/helpers/api-response";
 import type {
   ProgressRequest,
@@ -33,7 +33,7 @@ export const renderVideo = ({
   inputProps,
 }: {
   id: string;
-  inputProps: z.infer<typeof CompositionProps>;
+  inputProps: z.infer<typeof compositionSchema>;
 }) => {
   const body: z.infer<typeof RenderRequest> = {
     id,

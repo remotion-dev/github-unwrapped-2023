@@ -6,9 +6,9 @@ import { Issues } from "./Issues";
 import { PullRequests } from "./Paths/Paths";
 import { StarsReceived } from "./StarsReceived";
 import { AllPlanets } from "./TopLanguages/AllPlanets";
-import type { CompositionProps } from "./props";
+import type { compositionSchema } from "./props";
 
-export const Main: React.FC<z.infer<typeof CompositionProps>> = ({
+export const Main: React.FC<z.infer<typeof compositionSchema>> = ({
   corner,
   language1,
   language2,

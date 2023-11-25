@@ -1,6 +1,6 @@
 import React from "react";
 import type { z } from "zod";
-import type { CompositionProps } from "../../remotion/props";
+import type { compositionSchema } from "../../remotion/props";
 import { GradientBox } from "../GradientBox/GradientBox";
 import { BottomPageRow } from "./BottomRow";
 import { PlayerContainer } from "./Player";
@@ -12,7 +12,7 @@ const row: React.CSSProperties = {
 };
 
 export const VideoBox: React.FC<{
-  inputProps: z.infer<typeof CompositionProps>;
+  inputProps: z.infer<typeof compositionSchema>;
 }> = ({ inputProps }) => {
   return (
     <GradientBox

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
-import type { CompositionProps } from "../../remotion/props";
+import type { compositionSchema } from "../../remotion/props";
 import type { ProfileStats } from "../../src/server/db";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
@@ -41,7 +41,7 @@ declare global {
 }
 
 export const UserPage = () => {
-  const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
+  const inputProps: z.infer<typeof compositionSchema> = useMemo(() => {
     return {
       login: window.__USER__.username,
       // TODO: Real data

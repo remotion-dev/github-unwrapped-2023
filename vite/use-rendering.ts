@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import type { z } from "zod";
-import type { CompositionProps } from "../remotion/props.js";
+import type { compositionSchema } from "../remotion/props.js";
 import { getProgress, renderVideo } from "./lambda.js";
 
 export type State =
@@ -37,7 +37,7 @@ const wait = async (milliSeconds: number) => {
 
 export const useRendering = (
   id: string,
-  inputProps: z.infer<typeof CompositionProps>,
+  inputProps: z.infer<typeof compositionSchema>,
 ) => {
   const [state, setState] = useState<State>({
     status: "init",

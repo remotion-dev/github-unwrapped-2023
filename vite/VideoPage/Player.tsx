@@ -3,7 +3,7 @@ import { Player } from "@remotion/player";
 import { useEffect, useRef } from "react";
 import type { z } from "zod";
 import { Main } from "../../remotion/Main";
-import type { CompositionProps } from "../../remotion/props";
+import type { compositionSchema } from "../../remotion/props";
 import {
   DURATION_IN_FRAMES,
   VIDEO_FPS,
@@ -19,7 +19,7 @@ const player: React.CSSProperties = {
 };
 
 export const PlayerContainer: React.FC<{
-  inputProps: z.infer<typeof CompositionProps>;
+  inputProps: z.infer<typeof compositionSchema>;
 }> = ({ inputProps }) => {
   const ref = useRef<PlayerRef>(null);
 

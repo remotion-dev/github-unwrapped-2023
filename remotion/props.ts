@@ -2,7 +2,7 @@ import { z } from "zod";
 import { LanguagesEnum } from "./TopLanguages/constants";
 import { cornerType } from "./TopLanguages/corner";
 
-export const CompositionProps = z.object({
+export const compositionSchema = z.object({
   language1: LanguagesEnum,
   language2: LanguagesEnum.or(z.null()),
   language3: LanguagesEnum.or(z.null()),
@@ -11,7 +11,7 @@ export const CompositionProps = z.object({
   login: z.string(),
 });
 
-export const defaultMyCompProps: z.infer<typeof CompositionProps> = {
+export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   corner: "bottom-left",
   language1: "JavaScript",
   language2: "TypeScript",

@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { CompositionProps } from "../remotion/props";
+import { compositionSchema } from "../remotion/props";
 
 export const RenderRequest = z.object({
   id: z.string(),
-  inputProps: CompositionProps,
+  inputProps: compositionSchema,
 });
 
 export const ProgressRequest = z.object({

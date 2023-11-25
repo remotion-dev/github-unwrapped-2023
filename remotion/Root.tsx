@@ -58,7 +58,7 @@ import {
   topLanguagesTitleCardSchema,
 } from "./TopLanguages/TitleCard";
 import { LanguagesEnum } from "./TopLanguages/constants";
-import { defaultMyCompProps } from "./props";
+import { compositionSchema, defaultMyCompProps } from "./props";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -439,6 +439,7 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={compositionSchema}
         defaultProps={{
           corner: "bottom-left",
           language1: "JavaScript",
