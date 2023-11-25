@@ -21,7 +21,6 @@ import {
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
-import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
@@ -163,9 +162,14 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
-  const gradientOpacity = interpolate(frame, [0, 15], [0, 0.2], {
-    extrapolateRight: "clamp",
-  });
+  const gradientOpacity = interpolate(
+    frame,
+    [0, 15],
+    [0, mapLanguageToPlanet[language].opacity],
+    {
+      extrapolateRight: "clamp",
+    },
+  );
 
   return (
     <AbsoluteFill>
@@ -183,9 +187,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
         >
           <Gradient gradient={gradient} />
         </AbsoluteFill>
-        <AbsoluteFill>
-          <SkySVG style={{ opacity: 0.5 }} />
-        </AbsoluteFill>
+        <AbsoluteFill />
 
         <AbsoluteFill
           style={{

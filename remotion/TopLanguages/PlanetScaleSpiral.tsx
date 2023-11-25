@@ -49,7 +49,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ opacity: 0.2 }}>
+      <AbsoluteFill style={{ opacity: mapLanguageToPlanet[language].opacity }}>
         <Gradient gradient={mapLanguageToPlanet[language].gradient} />
       </AbsoluteFill>
       <AbsoluteFill style={style}>

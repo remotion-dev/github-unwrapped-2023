@@ -426,7 +426,7 @@ export const RemotionRoot: React.FC = () => {
             corner: "bottom-left" as const,
             language1: "Go" as const,
             language2: "Go" as const,
-            language3: "Python" as const,
+            language3: "JavaScript" as const,
             showHelperLine: false,
             login: "JonnyBurger",
           }}

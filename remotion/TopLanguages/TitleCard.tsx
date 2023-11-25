@@ -28,14 +28,14 @@ export const TopLanguagesTitleCard: React.FC<
         <RadialGradient />
       </AbsoluteFill>
       <Sequence from={30} style={{ transform: `translateY(-300px)` }}>
-        <AbsoluteFill style={{ marginTop: 200, marginLeft: 300 }}>
+        <AbsoluteFill style={{ marginTop: 100, marginLeft: 300 }}>
           <Rocket />
         </AbsoluteFill>
       </Sequence>
+      <TitleCardOctocat />
       <AbsoluteFill style={{ opacity: 0.5 }}>
         <SkySVG style={{ transform: "scale(1)" }} />
       </AbsoluteFill>
-      <TitleCardOctocat />
       <AbsoluteFill
         style={{
           justifyContent: "center",

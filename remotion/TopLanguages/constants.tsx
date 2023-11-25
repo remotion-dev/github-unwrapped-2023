@@ -90,6 +90,7 @@ type PlanetInfo = {
   gradient: GradientType;
   textColor: string;
   name: string;
+  opacity: number;
 };
 
 export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
@@ -99,6 +100,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "orange",
     textColor: "rgb(201, 246, 253)",
     name: "Java",
+    opacity: 0.3,
   },
   [LanguagesEnum.Enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
@@ -106,6 +108,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "blue",
     textColor: "rgb(200,228,252)",
     name: "Python",
+    opacity: 0.3,
   },
   [LanguagesEnum.Enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
@@ -113,6 +116,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     textColor: "rgb(253,241,190)",
     name: "JavaScript",
+    opacity: 0.25,
   },
   [LanguagesEnum.Enum.TypeScript]: {
     boundingBox: TypeScriptPlanetBoundingBox,
@@ -120,6 +124,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "blue",
     textColor: "#71BBD8",
     name: "TypeScript",
+    opacity: 0.3,
   },
   [LanguagesEnum.Enum.Go]: {
     boundingBox: GoPlanetBoundingBox,
@@ -127,6 +132,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "blue",
     textColor: "#71BBD8",
     name: "Go",
+    opacity: 0.5,
   },
   [LanguagesEnum.Enum.Rust1]: {
     boundingBox: Rust1PlanetBoundingBox,
@@ -136,6 +142,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     // TODO: WRONG COLOR
     textColor: "#956648",
     name: "Rust",
+    opacity: 0.3,
   },
   [LanguagesEnum.Enum.Rust2]: {
     boundingBox: Rust2PlanetBoundingBox,
@@ -145,6 +152,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     // TODO: WRONG COLOR
     textColor: "#9E9284",
     name: "Rust",
+    opacity: 0.3,
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
@@ -153,5 +161,6 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     textColor: "#E8A08A",
     name: "Rust",
+    opacity: 0.3,
   },
 };
