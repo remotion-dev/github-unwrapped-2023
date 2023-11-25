@@ -8,7 +8,8 @@
     "target": "ESNext",
     "rootDir": "src",
     "outDir": "dist",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strict": true
   },
   "include": ["src"]
 }
