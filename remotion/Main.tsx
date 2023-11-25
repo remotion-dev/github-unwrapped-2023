@@ -1,14 +1,44 @@
 import React from "react";
+import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Series } from "remotion";
 import type { z } from "zod";
 import type { compositionSchema } from "../src/config";
+import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
 import { PullRequests } from "./Paths/Paths";
 import { StarsReceived } from "./StarsReceived";
-import { AllPlanets } from "./TopLanguages/AllPlanets";
+import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 
-export const Main: React.FC<z.infer<typeof compositionSchema>> = ({
+type Schema = z.infer<typeof compositionSchema>;
+
+const ISSUES_SCENE = 5 * 30;
+const STARS_SCENE = 10 * 30;
+const PULL_REQUESTS_SCENE = 15 * 30;
+const CONTRIBUTIONS_SCENE = 10 * 30;
+
+export const calculateDuration = ({
+  language2,
+  language3,
+}: z.infer<typeof compositionSchema>) => {
+  const introScene = getDurationOfAllPlanets({
+    language2,
+    fps: VIDEO_FPS,
+    language3,
+  });
+
+  return introScene + STARS_SCENE + PULL_REQUESTS_SCENE + CONTRIBUTIONS_SCENE;
+};
+
+export const mainCalculateMetadataScene: CalculateMetadataFunction<
+  z.infer<typeof compositionSchema>
+> = ({ props }) => {
+  return {
+    durationInFrames: calculateDuration(props),
+  };
+};
+
+export const Main: React.FC<Schema> = ({
   corner,
   language1,
   language2,
@@ -16,10 +46,16 @@ export const Main: React.FC<z.infer<typeof compositionSchema>> = ({
   showHelperLine,
   login,
 }) => {
+  const introScene = getDurationOfAllPlanets({
+    language2,
+    fps: VIDEO_FPS,
+    language3,
+  });
+
   return (
     <AbsoluteFill>
       <Series>
-        <Series.Sequence durationInFrames={15 * 30}>
+        <Series.Sequence durationInFrames={introScene}>
           <AllPlanets
             corner={corner}
             language1={language1}
@@ -29,16 +65,16 @@ export const Main: React.FC<z.infer<typeof compositionSchema>> = ({
             login={login}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={5 * 30}>
+        <Series.Sequence durationInFrames={ISSUES_SCENE}>
           <Issues openIssues={10} closedIssues={10} />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={10 * 30}>
+        <Series.Sequence durationInFrames={STARS_SCENE}>
           <StarsReceived starsReceived={10} />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={15 * 30}>
+        <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
           <PullRequests />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={10 * 30}>
+        <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene />
         </Series.Sequence>
       </Series>

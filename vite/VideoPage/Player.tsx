@@ -1,15 +1,10 @@
 import type { PlayerRef } from "@remotion/player";
 import { Player } from "@remotion/player";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { z } from "zod";
-import { Main } from "../../remotion/Main";
+import { Main, calculateDuration } from "../../remotion/Main";
 import type { compositionSchema } from "../../src/config";
-import {
-  DURATION_IN_FRAMES,
-  VIDEO_FPS,
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
-} from "../../types/constants";
+import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
 import styles from "./styles.module.css";
 
 const player: React.CSSProperties = {
@@ -46,6 +41,10 @@ export const PlayerContainer: React.FC<{
     };
   }, []);
 
+  const durationInFrames = useMemo(() => {
+    return calculateDuration(inputProps);
+  }, [inputProps]);
+
   return (
     <Player
       // TODO: Optimize
@@ -53,7 +52,7 @@ export const PlayerContainer: React.FC<{
       numberOfSharedAudioTags={10}
       component={Main}
       inputProps={inputProps}
-      durationInFrames={DURATION_IN_FRAMES}
+      durationInFrames={durationInFrames}
       fps={VIDEO_FPS}
       compositionHeight={VIDEO_HEIGHT}
       compositionWidth={VIDEO_WIDTH}

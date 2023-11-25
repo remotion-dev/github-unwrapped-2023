@@ -18,7 +18,7 @@ import {
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
 import { LandingScene, planetSchema } from "./Landing";
-import { Main } from "./Main";
+import { Main, mainCalculateMetadataScene } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
@@ -440,6 +440,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={compositionSchema}
+        calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
           corner: "bottom-left",
           language1: "JavaScript",
