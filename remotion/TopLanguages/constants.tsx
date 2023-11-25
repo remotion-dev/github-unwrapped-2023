@@ -128,21 +128,18 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     boundingBox: Rust1PlanetBoundingBox,
     PlanetSVG: Rust1PlanetSVG,
     // TODO: WRONG COLOR
-    gradient: "yellow",
-    // TODO: WRONG COLOR
-    textColor: "#956648",
+    gradient: "brown",
+    textColor: "#5F523E",
     name: "Rust",
     opacity: 0.3,
   },
   [LanguagesEnum.Enum.Rust2]: {
     boundingBox: Rust2PlanetBoundingBox,
     PlanetSVG: Rust2PlanetSVG,
-    // TODO: WRONG COLOR
-    gradient: "yellow",
-    // TODO: WRONG COLOR
-    textColor: "#9E9284",
+    gradient: "brown",
+    textColor: "#5F523E",
     name: "Rust",
-    opacity: 0.3,
+    opacity: 0.8,
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
