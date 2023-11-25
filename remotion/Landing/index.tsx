@@ -18,7 +18,10 @@ import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 import Stars from "./Stars";
 
-export const planetEnum = z.enum(["Ice", "Silver", "Gold"]);
+const availablePlanets = ["Ice", "Silver", "Gold"] as const;
+type Planet = (typeof availablePlanets)[number];
+
+export const planetEnum = z.enum(availablePlanets);
 
 export const planetSchema = z.object({
   planetType: planetEnum,
@@ -31,7 +34,27 @@ const LANDING_FRAME = 115;
 
 const SPARKLE_SPEED = 40;
 
-const mapPlanetToAttributes = {
+type PlanetAttributes = {
+  colors: {
+    color1: string;
+    color2: string;
+    color3: string;
+    color4: string;
+    color5: string;
+  };
+  bgGradient: string;
+  name: string;
+  description: string;
+  planet: string;
+  style: React.CSSProperties;
+  landingAdjustment: number;
+  sparkles: {
+    x: number;
+    y: number;
+  }[];
+};
+
+const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
   [planetEnum.Values.Ice]: {
     colors: {
       color1: "#02e3f2",
@@ -345,6 +368,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         (attributes.sparkles as any).map(
           (i: { x: number; y: number }, index: number) => (
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={index}
               style={{
                 position: "absolute",
