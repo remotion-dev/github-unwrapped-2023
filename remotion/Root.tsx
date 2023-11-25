@@ -1,4 +1,5 @@
 import { Composition, Folder, Still } from "remotion";
+import { COMP_NAME } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -433,7 +434,7 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Composition
-        id="Main"
+        id={COMP_NAME}
         component={Main}
         durationInFrames={60 * 30}
         fps={FPS}
