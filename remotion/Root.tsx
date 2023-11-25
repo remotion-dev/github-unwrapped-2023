@@ -448,6 +448,7 @@ export const RemotionRoot: React.FC = () => {
           language3: "Rust2",
           showHelperLine: false,
           login: "JonnyBurger",
+          planet: "Silver",
         }}
       />
       <Composition

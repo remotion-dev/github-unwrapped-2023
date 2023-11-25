@@ -6,6 +6,7 @@ import type { compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
+import { LandingScene } from "./Landing";
 import { PullRequests } from "./Paths/Paths";
 import { StarsReceived } from "./StarsReceived";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
@@ -45,6 +46,7 @@ export const Main: React.FC<Schema> = ({
   language3,
   showHelperLine,
   login,
+  planet,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -76,6 +78,9 @@ export const Main: React.FC<Schema> = ({
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene />
+        </Series.Sequence>
+        <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
+          <LandingScene planetType={planet} />
         </Series.Sequence>
       </Series>
     </AbsoluteFill>

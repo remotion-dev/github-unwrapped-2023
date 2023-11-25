@@ -1,5 +1,6 @@
 import type { AwsRegion } from "@remotion/lambda";
 import { z } from "zod";
+import { planetEnum } from "../remotion/Landing/index.js";
 
 export const REGION: AwsRegion = "us-east-1";
 
@@ -35,6 +36,7 @@ export const compositionSchema = z.object({
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
+  planet: planetEnum,
 });
 
 export const RenderRequest = z.object({

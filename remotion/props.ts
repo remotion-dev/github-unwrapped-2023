@@ -8,4 +8,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   language3: "Python",
   showHelperLine: false,
   login: "JonnyBurger",
+  planet: "Ice" as const,
 };

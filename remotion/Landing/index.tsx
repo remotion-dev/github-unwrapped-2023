@@ -18,7 +18,7 @@ import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 import Stars from "./Stars";
 
-const planetEnum = z.enum(["Ice", "Silver", "Gold"]);
+export const planetEnum = z.enum(["Ice", "Silver", "Gold"]);
 
 export const planetSchema = z.object({
   planetType: planetEnum,

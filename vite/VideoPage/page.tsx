@@ -51,6 +51,7 @@ export const UserPage = () => {
       language3: "JavaScript",
       showHelperLine: false,
       startRotationInRadians: 0,
+      planet: "Ice",
     };
   }, []);
 
