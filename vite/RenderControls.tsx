@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { compositionSchema } from "../remotion/props";
-import { COMP_NAME } from "../types/constants";
+import { COMP_NAME } from "../src/config";
 import { AlignEnd } from "./AlignEnd";
 import { Button } from "./Button/Button";
 import { InputContainer } from "./Container";
