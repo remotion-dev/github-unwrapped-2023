@@ -421,6 +421,9 @@ export const RemotionRoot: React.FC = () => {
           showHelperLine: false,
           login: "JonnyBurger",
           planet: "Silver",
+          starsReceived: 10,
+          issuesClosed: 10,
+          issuesOpened: 10,
         }}
       />
       <Composition

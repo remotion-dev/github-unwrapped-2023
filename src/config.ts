@@ -1,6 +1,5 @@
 import type { AwsRegion } from "@remotion/lambda";
 import { z } from "zod";
-import { planetEnum } from "../remotion/Landing/index.js";
 
 export const REGION: AwsRegion = "us-east-1";
 
@@ -9,6 +8,11 @@ export const SITE_NAME = "unwrapped2023";
 export const RAM = 2048;
 export const DISK = 2048;
 export const TIMEOUT = 240;
+
+const availablePlanets = ["Ice", "Silver", "Gold"] as const;
+export type Planet = (typeof availablePlanets)[number];
+
+export const planetEnum = z.enum(availablePlanets);
 
 export const LanguagesEnum = z.enum([
   "Java",
@@ -37,6 +41,9 @@ export const compositionSchema = z.object({
   showHelperLine: z.boolean(),
   login: z.string(),
   planet: planetEnum,
+  starsReceived: z.number(),
+  issuesOpened: z.number(),
+  issuesClosed: z.number(),
 });
 
 export const RenderRequest = z.object({

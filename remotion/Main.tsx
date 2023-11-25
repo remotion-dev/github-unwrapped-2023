@@ -8,27 +8,35 @@ import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
 import { LandingScene } from "./Landing";
 import { PullRequests } from "./Paths/Paths";
-import { StarsReceived } from "./StarsReceived";
+import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 
 type Schema = z.infer<typeof compositionSchema>;
 
-const ISSUES_SCENE = 5 * 30;
-const STARS_SCENE = 10 * 30;
-const PULL_REQUESTS_SCENE = 15 * 30;
-const CONTRIBUTIONS_SCENE = 10 * 30;
+const ISSUES_SCENE = 5 * VIDEO_FPS;
+const PULL_REQUESTS_SCENE = 8 * VIDEO_FPS;
+const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
+const LANDING_SCENE = 7 * VIDEO_FPS;
+const STARS_AND_PRODUCTIVITY = 400;
 
 export const calculateDuration = ({
   language2,
   language3,
 }: z.infer<typeof compositionSchema>) => {
-  const introScene = getDurationOfAllPlanets({
+  const topLanguagesScene = getDurationOfAllPlanets({
     language2,
     fps: VIDEO_FPS,
     language3,
   });
 
-  return introScene + STARS_SCENE + PULL_REQUESTS_SCENE + CONTRIBUTIONS_SCENE;
+  return (
+    topLanguagesScene +
+    ISSUES_SCENE +
+    PULL_REQUESTS_SCENE +
+    CONTRIBUTIONS_SCENE +
+    LANDING_SCENE +
+    STARS_AND_PRODUCTIVITY
+  );
 };
 
 export const mainCalculateMetadataScene: CalculateMetadataFunction<
@@ -47,6 +55,7 @@ export const Main: React.FC<Schema> = ({
   showHelperLine,
   login,
   planet,
+  starsReceived,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -70,8 +79,8 @@ export const Main: React.FC<Schema> = ({
         <Series.Sequence durationInFrames={ISSUES_SCENE}>
           <Issues openIssues={10} closedIssues={10} />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={STARS_SCENE}>
-          <StarsReceived starsReceived={10} />
+        <Series.Sequence durationInFrames={STARS_AND_PRODUCTIVITY}>
+          <StarsAndProductivity starsReceived={starsReceived} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
           <PullRequests />
@@ -79,7 +88,7 @@ export const Main: React.FC<Schema> = ({
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
+        <Series.Sequence durationInFrames={LANDING_SCENE}>
           <LandingScene planetType={planet} />
         </Series.Sequence>
       </Series>

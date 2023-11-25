@@ -9,4 +9,7 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   showHelperLine: false,
   login: "JonnyBurger",
   planet: "Ice" as const,
+  starsReceived: 10,
+  issuesClosed: 10,
+  issuesOpened: 10,
 };

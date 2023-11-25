@@ -8,6 +8,8 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
+import type { Planet } from "../../src/config";
+import { planetEnum } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
 import { Background } from "./Background";
 import Cloud1 from "./Cloud-1";
@@ -17,11 +19,6 @@ import Rocket from "./Rocket";
 import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 import Stars from "./Stars";
-
-const availablePlanets = ["Ice", "Silver", "Gold"] as const;
-type Planet = (typeof availablePlanets)[number];
-
-export const planetEnum = z.enum(availablePlanets);
 
 export const planetSchema = z.object({
   planetType: planetEnum,

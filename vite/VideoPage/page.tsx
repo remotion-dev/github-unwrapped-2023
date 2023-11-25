@@ -52,6 +52,9 @@ export const UserPage = () => {
       showHelperLine: false,
       startRotationInRadians: 0,
       planet: "Ice",
+      starsReceived: 10,
+      issuesClosed: 10,
+      issuesOpened: 10,
     };
   }, []);
 
