@@ -32,7 +32,7 @@ export const LoginOptions: React.FC<Props> = ({
         })
         .catch((error) => console.log("error", error));
     },
-    [setUserNotFound, username]
+    [setUserNotFound, username],
   );
 
   return (
@@ -66,7 +66,7 @@ export const LoginOptions: React.FC<Props> = ({
       </form>
       <div style={{ width: 20, display: "inline-block" }} />
       <div style={{ fontSize: 16, fontWeight: 500 }}>
-        Got private contributions?
+        Want to include private contributions?
         <div style={{ width: 10, display: "inline-block" }} />
         <SignInWithGitHub />
       </div>

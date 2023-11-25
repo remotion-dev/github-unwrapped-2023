@@ -3,23 +3,29 @@ import { AbsoluteFill } from "remotion";
 import { ProductivityGraph, type Productivity } from "./Productivity";
 import { TabletSVG } from "./TabletSVG";
 
-export const Tablet: React.FC<ComponentProps<typeof Productivity>> = ({
-  graphData,
-}) => {
+export const Tablet: React.FC<
+  ComponentProps<typeof Productivity> & { style?: React.CSSProperties }
+> = ({ graphData, style }) => {
   return (
     <AbsoluteFill
       style={{
         display: "flex",
+        ...style,
       }}
     >
       <TabletSVG
-        style={{ width: "100%", height: "100%", position: "relative" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          transform: "translateY(100px)",
+        }}
       />
 
       <div
         style={{
           left: 220,
-          top: 160,
+          top: 160 + 100,
           position: "absolute",
           display: "flex",
           flexDirection: "column",
