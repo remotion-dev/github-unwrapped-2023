@@ -3,7 +3,7 @@ import { Player } from "@remotion/player";
 import { useEffect, useRef } from "react";
 import type { z } from "zod";
 import { Main } from "../../remotion/Main";
-import type { compositionSchema } from "../../remotion/props";
+import type { compositionSchema } from "../../src/config";
 import {
   DURATION_IN_FRAMES,
   VIDEO_FPS,

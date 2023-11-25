@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { compositionSchema } from "../remotion/props";
+import type { compositionSchema } from "../src/config";
 import { COMP_NAME } from "../src/config";
 import { AlignEnd } from "./AlignEnd";
 import { Button } from "./Button/Button";

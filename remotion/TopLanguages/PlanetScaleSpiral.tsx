@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { LanguagesEnum, cornerType } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
-import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import { mapLanguageToPlanet } from "./constants";
 import {
-  cornerType,
   deriveClockDirectionFromEnterDirection,
   deriveEnterDirectionFromCorner,
   deriveStartRotationFromEnterDirection,

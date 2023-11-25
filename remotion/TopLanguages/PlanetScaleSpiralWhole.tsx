@@ -9,8 +9,9 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { LanguagesEnum } from "../../src/config";
 import { moveAlongLine } from "../move-along-line";
-import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import { mapLanguageToPlanet } from "./constants";
 import type { ClockDirection } from "./corner";
 import { clockDirectionSchema } from "./corner";
 import { remapSpeed } from "./remap-speed";

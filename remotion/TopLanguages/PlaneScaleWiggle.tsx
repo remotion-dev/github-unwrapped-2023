@@ -8,9 +8,10 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { LanguagesEnum } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
-import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
+import { mapLanguageToPlanet } from "./constants";
 import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
-import type { compositionSchema } from "../../remotion/props";
+import type { compositionSchema } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import React from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../icons/DownloadIcon";
-import type { compositionSchema } from "../../remotion/props";
+import type { compositionSchema } from "../../src/config";
 import { Button } from "../Button/Button";
 import { Actions } from "./Actions";
 

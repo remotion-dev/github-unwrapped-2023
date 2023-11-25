@@ -1,6 +1,7 @@
 import { getLength, scalePath, translatePath } from "@remotion/paths";
 import type { SVGProps } from "react";
-import { z } from "zod";
+import type { z } from "zod";
+import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
 import type { PlanetBoundingBox } from "./planet-types";
@@ -67,17 +68,6 @@ export const newPath = translatePath(
   0,
 );
 export const complexCurvePathLength = getLength(newPath);
-
-export const LanguagesEnum = z.enum([
-  "Java",
-  "Python",
-  "JavaScript",
-  "TypeScript",
-  "Go",
-  "Rust1",
-  "Rust2",
-  "Rust3",
-]);
 
 export type LanguageType = z.infer<typeof LanguagesEnum>;
 

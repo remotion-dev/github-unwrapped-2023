@@ -1,7 +1,7 @@
 import { AbsoluteFill } from "remotion";
 import { z } from "zod";
+import { LanguagesEnum } from "../../src/config";
 import { Rocket } from "./Rocket";
-import { LanguagesEnum } from "./constants";
 
 export const topLanguagesSchema = z.object({
   first: LanguagesEnum,

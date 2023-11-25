@@ -2,14 +2,13 @@ import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
 import { Sequence } from "remotion";
 import { z } from "zod";
+import { LanguagesEnum, cornerType } from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
 import { TopLanguagesTitleCard } from "./TitleCard";
 import type { LanguageType } from "./constants";
-import { LanguagesEnum } from "./constants";
 import {
-  cornerType,
   deriveEnterDirectionFromCorner,
   mapEnterDirectionIntoSlideDirection,
   mapEnterDirectionToExitDirection,

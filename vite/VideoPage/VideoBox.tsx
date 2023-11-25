@@ -1,6 +1,6 @@
 import React from "react";
 import type { z } from "zod";
-import type { compositionSchema } from "../../remotion/props";
+import type { compositionSchema } from "../../src/config";
 import { GradientBox } from "../GradientBox/GradientBox";
 import { BottomPageRow } from "./BottomRow";
 import { PlayerContainer } from "./Player";

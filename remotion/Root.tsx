@@ -1,5 +1,5 @@
 import { Composition, Folder, Still } from "remotion";
-import { COMP_NAME } from "../src/config";
+import { COMP_NAME, LanguagesEnum, compositionSchema } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -58,8 +58,7 @@ import {
   TopLanguagesTitleCard,
   topLanguagesTitleCardSchema,
 } from "./TopLanguages/TitleCard";
-import { LanguagesEnum } from "./TopLanguages/constants";
-import { compositionSchema, defaultMyCompProps } from "./props";
+import { defaultMyCompProps } from "./props";
 
 export const RemotionRoot: React.FC = () => {
   return (

@@ -1,13 +1,6 @@
 import type { SlideDirection } from "@remotion/transitions/slide";
 import { z } from "zod";
-
-export const cornerType = z.enum([
-  "top-left",
-  "top-right",
-  "bottom-left",
-  "bottom-right",
-]);
-export type Corner = z.infer<typeof cornerType>;
+import type { Corner } from "../../src/config";
 
 export const clockDirectionSchema = z.enum(["clockwise", "counter-clockwise"]);
 export type ClockDirection = z.infer<typeof clockDirectionSchema>;

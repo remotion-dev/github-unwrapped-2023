@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import type { z } from "zod";
-import type { compositionSchema } from "../remotion/props.js";
+import type { compositionSchema } from "../src/config.js";
 import { getProgress, renderVideo } from "./lambda.js";
 
 export type State =

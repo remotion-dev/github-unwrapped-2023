@@ -1,15 +1,5 @@
-import { z } from "zod";
-import { LanguagesEnum } from "./TopLanguages/constants";
-import { cornerType } from "./TopLanguages/corner";
-
-export const compositionSchema = z.object({
-  language1: LanguagesEnum,
-  language2: LanguagesEnum.or(z.null()),
-  language3: LanguagesEnum.or(z.null()),
-  corner: cornerType,
-  showHelperLine: z.boolean(),
-  login: z.string(),
-});
+import type { z } from "zod";
+import type { compositionSchema } from "../src/config";
 
 export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   corner: "bottom-left",

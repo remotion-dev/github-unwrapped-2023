@@ -1,12 +1,12 @@
 import React from "react";
 import { AbsoluteFill, Series } from "remotion";
 import type { z } from "zod";
+import type { compositionSchema } from "../src/config";
 import { ContributionsScene } from "./Contributions";
 import { Issues } from "./Issues";
 import { PullRequests } from "./Paths/Paths";
 import { StarsReceived } from "./StarsReceived";
 import { AllPlanets } from "./TopLanguages/AllPlanets";
-import type { compositionSchema } from "./props";
 
 export const Main: React.FC<z.infer<typeof compositionSchema>> = ({
   corner,

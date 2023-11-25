@@ -9,12 +9,12 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import type { Corner } from "../../src/config";
+import { LanguagesEnum, cornerType } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
-import { LanguagesEnum, mapLanguageToPlanet } from "./constants";
-import type { Corner } from "./corner";
-import { cornerType } from "./corner";
+import { mapLanguageToPlanet } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
