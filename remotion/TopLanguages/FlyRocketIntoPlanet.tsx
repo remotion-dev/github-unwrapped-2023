@@ -6,15 +6,18 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { EnterDirection, ExitDirection } from "./corner";
+import {
+  mapEnterDirectionToExitDirection,
+  type EnterDirection,
+} from "./corner";
 import { NewRocketSVG } from "./svgs/NewRocketSVG";
 
 export const FlyRocketIntoPlanet: React.FC<{
-  exitDirection: ExitDirection;
   enterDirection: EnterDirection;
-}> = ({ exitDirection, enterDirection }) => {
+}> = ({ enterDirection }) => {
   const { height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
+  const exitDirection = mapEnterDirectionToExitDirection(enterDirection);
 
   const flyIn = spring({
     fps,
@@ -37,11 +40,11 @@ export const FlyRocketIntoPlanet: React.FC<{
     }
 
     if (exitDirection === "bottom") {
-      return Math.PI;
-    }
+      if (enterDirection === "right-counter-clockwise") {
+        return Math.PI / 2;
+      }
 
-    if (enterDirection === "right-counter-clockwise") {
-      return -Math.PI / 2;
+      return Math.PI;
     }
 
     return 0;

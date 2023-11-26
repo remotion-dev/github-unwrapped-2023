@@ -11,10 +11,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
-import {
-  enterDirectionSchema,
-  mapEnterDirectionToExitDirection,
-} from "./corner";
+import { enterDirectionSchema } from "./corner";
 import SkySVG from "./svgs/SkySVG";
 
 export const wiggleSchema = z.object({
@@ -28,7 +25,6 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   position,
   enterDirection,
 }) => {
-  const exitDirection = mapEnterDirectionToExitDirection(enterDirection);
   const { PlanetSVG, gradient, opacity } = mapLanguageToPlanet[language];
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -65,10 +61,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
       <AbsoluteFill style={{ opacity, scale: String(1.3) }}>
         <Gradient gradient={gradient} />
       </AbsoluteFill>
-      <FlyRocketIntoPlanet
-        enterDirection={enterDirection}
-        exitDirection={exitDirection}
-      />
+      <FlyRocketIntoPlanet enterDirection={enterDirection} />
       <AbsoluteFill
         style={{
           justifyContent: "center",
