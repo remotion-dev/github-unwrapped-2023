@@ -1,6 +1,5 @@
-import { noise2D } from "@remotion/noise";
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill } from "remotion";
 import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
 
 export const IssueNumber: React.FC<{
@@ -9,10 +8,6 @@ export const IssueNumber: React.FC<{
   label: string;
   align: "left" | "right";
 }> = ({ currentNumber, label, align, max }) => {
-  const frame = useCurrentFrame();
-
-  const opacity = ((noise2D(label, frame / 30, 0) + 1) / 2) * 0.3 + 0.7;
-
   return (
     <AbsoluteFill
       style={{
@@ -36,7 +31,7 @@ export const IssueNumber: React.FC<{
           paddingBottom: 5,
         }}
       >
-        <div style={{ opacity }}>
+        <div>
           <SevenSegment max={max} num={currentNumber} fontSize={120} />
         </div>
         <div
