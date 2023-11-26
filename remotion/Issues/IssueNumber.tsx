@@ -1,11 +1,28 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
-import { SevenSegmentNumber } from "../JumpingNumber/SevenSegmentNumber";
+import {
+  AbsoluteFill,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
 
 export const IssueNumber: React.FC<{
-  closedIssues: number;
-  openIssues: number;
-}> = ({ closedIssues, openIssues }) => {
+  totalIssues: number;
+  label: string;
+  align: "left" | "right";
+}> = ({ totalIssues, label, align }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const currentNumber = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+  });
+
   return (
     <AbsoluteFill
       style={{
@@ -13,7 +30,7 @@ export const IssueNumber: React.FC<{
         fontFamily: "Mona Sans",
         fontWeight: "800",
         justifyContent: "flex-end",
-        alignItems: "flex-end",
+        alignItems: align === "left" ? "flex-start" : "flex-end",
         padding: 40,
       }}
     >
@@ -25,12 +42,12 @@ export const IssueNumber: React.FC<{
           marginBottom: 14,
         }}
       >
-        Issues opened
+        {label}
       </div>
-      <SevenSegmentNumber
-        duration={30}
-        from={0}
-        to={closedIssues + openIssues}
+      <SevenSegment
+        max={totalIssues}
+        num={Math.round(currentNumber * totalIssues)}
+        fontSize={120}
       />
     </AbsoluteFill>
   );

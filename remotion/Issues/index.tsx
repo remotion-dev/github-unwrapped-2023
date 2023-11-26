@@ -82,8 +82,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
       easing: Easing.out(Easing.ease),
-    }
+    },
   );
+
+  const closedIssuesSoFar = ufos.filter((u, i) => {
+    const explosion = explosions.find((e) => e.index === i);
+    if (explosion) {
+      return frame > explosion.explodeAfterFrames;
+    }
+
+    return false;
+  });
 
   return (
     <AbsoluteFill
@@ -162,7 +171,16 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           <Rocket shots={withShootDurations} />
         </AbsoluteFill>
       </AbsoluteFill>
-      <IssueNumber closedIssues={closedIssues} openIssues={openIssues} />
+      <IssueNumber
+        align="left"
+        label="Issues opened"
+        totalIssues={closedIssues + openIssues}
+      />
+      <IssueNumber
+        align="right"
+        label="Issues closed"
+        totalIssues={closedIssuesSoFar.length}
+      />
     </AbsoluteFill>
   );
 };
