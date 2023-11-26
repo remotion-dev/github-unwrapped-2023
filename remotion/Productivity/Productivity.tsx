@@ -5,7 +5,6 @@ import {
   useVideoConfig,
 } from "remotion";
 
-export const PRODUCTIVITY_SEQUENCE_DURATION = 120;
 const barBackground = "rgb(0,0,0)";
 const barColor = "rgb(133,134,214)";
 

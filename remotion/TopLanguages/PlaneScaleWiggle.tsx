@@ -12,9 +12,6 @@ import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
 import SkySVG from "./svgs/SkySVG";
 
-const SCALE_FACTOR = 1;
-const PATH_EXTRAPOLATION = 0.1;
-
 export const wiggleSchema = z.object({
   language: LanguagesEnum,
   position: z.number(),
@@ -53,7 +50,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   const rotate = isAction ? noise : 0;
 
   return (
-    <AbsoluteFill style={{}}>
+    <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 0.2 }}>
         <Gradient gradient={gradient} />
       </AbsoluteFill>
@@ -75,8 +72,6 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
           }}
         />
       </AbsoluteFill>
-      <AbsoluteFill />
-
       <AbsoluteFill>
         <LanguageDescription
           delay={60}

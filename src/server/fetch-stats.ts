@@ -7,7 +7,7 @@ import { sendDiscordMessage } from "./discord.js";
 import { getQuery } from "./query.js";
 import type { GitHubResponse } from "./stats.js";
 
-export const fetchFromGitHub = async ({
+const fetchFromGitHub = async ({
   username,
   token,
 }: {

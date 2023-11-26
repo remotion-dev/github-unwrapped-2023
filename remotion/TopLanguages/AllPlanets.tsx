@@ -24,7 +24,7 @@ export const allPlanetsSchema = z.object({
   login: z.string(),
 });
 
-export const allPlanetsTransitionTiming = springTiming({
+const allPlanetsTransitionTiming = springTiming({
   config: {
     damping: 200,
   },

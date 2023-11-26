@@ -5,16 +5,16 @@ import type { Corner } from "../../src/config";
 export const clockDirectionSchema = z.enum(["clockwise", "counter-clockwise"]);
 export type ClockDirection = z.infer<typeof clockDirectionSchema>;
 
-export const enterDirectionSchema = z.enum([
+const enterDirectionSchema = z.enum([
   "top-clockwise",
   "left-clockwise",
   "right-counter-clockwise",
   "bottom-clockwise",
 ]);
-export type EnterDirection = z.infer<typeof enterDirectionSchema>;
+type EnterDirection = z.infer<typeof enterDirectionSchema>;
 
-export const exitDirectionSchema = z.enum(["left", "right", "top", "bottom"]);
-export type ExitDirection = z.infer<typeof exitDirectionSchema>;
+const exitDirectionSchema = z.enum(["left", "right", "top", "bottom"]);
+type ExitDirection = z.infer<typeof exitDirectionSchema>;
 
 export const deriveEnterDirectionFromCorner = (
   corner: Corner,
