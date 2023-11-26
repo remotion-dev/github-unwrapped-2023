@@ -1,3 +1,4 @@
+import { noise2D } from "@remotion/noise";
 import React from "react";
 import {
   AbsoluteFill,
@@ -14,6 +15,8 @@ export const IssueNumber: React.FC<{
 }> = ({ totalIssues, label, align }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+
+  const opacity = ((noise2D(label, frame / 30, 0) + 1) / 2) * 0.3 + 0.7;
 
   const currentNumber = spring({
     fps,
@@ -34,6 +37,13 @@ export const IssueNumber: React.FC<{
         padding: 40,
       }}
     >
+      <div style={{ opacity }}>
+        <SevenSegment
+          max={totalIssues}
+          num={Math.round(currentNumber * totalIssues)}
+          fontSize={120}
+        />
+      </div>
       <div
         style={{
           fontFamily: "Mona Sans",
@@ -44,11 +54,6 @@ export const IssueNumber: React.FC<{
       >
         {label}
       </div>
-      <SevenSegment
-        max={totalIssues}
-        num={Math.round(currentNumber * totalIssues)}
-        fontSize={120}
-      />
     </AbsoluteFill>
   );
 };
