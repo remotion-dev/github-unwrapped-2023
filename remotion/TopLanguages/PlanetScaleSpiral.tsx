@@ -12,8 +12,6 @@ import {
   deriveStartRotationFromEnterDirection,
 } from "./corner";
 
-export const startRotationInRadiansSchema = z.number().step(0.1).min(0);
-
 export const spiralSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),

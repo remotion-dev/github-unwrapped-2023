@@ -1,7 +1,6 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import {
-  RATE_DECREASE,
   TOP_LANGUAGES_DURATION,
   TRANSFORM_PATH_X,
   TRANSFORM_PATH_Y,
@@ -28,7 +27,7 @@ import {
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
 
-export const getActionFrames = (actionLocations: number[]) => {
+const getActionFrames = (actionLocations: number[]) => {
   return (
     actionLocations
       // sort ascending
@@ -44,24 +43,7 @@ export const getActionFrames = (actionLocations: number[]) => {
   );
 };
 
-export const getRate = ({
-  frame,
-  actionLocations,
-}: {
-  frame: number;
-  actionLocations: number[];
-}) => {
-  // [ [25, 30], [45,50] ]
-  const actionFrames = getActionFrames(actionLocations.sort((a, b) => a - b));
-
-  return interpolate(
-    frame,
-    [0, ...actionFrames.flat(), TOP_LANGUAGES_DURATION],
-    [0, ...actionLocations.flatMap((l) => [l, l]), 1],
-  );
-};
-
-export const getNewRate = (frame: number) => {
+const getNewRate = (frame: number) => {
   const push1 = interpolate(frame, [0, firstPushEnd], [0, PLANET_1_POSITION], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -98,12 +80,6 @@ export const getNewRate = (frame: number) => {
   );
 
   return push1 + push2 + push3 + push4;
-};
-
-export const getRates = (stopAtFrames: number[]) => {
-  // sort descending
-  stopAtFrames = stopAtFrames.sort((a, b) => a - b);
-  return stopAtFrames.map((f, i) => (f - i * ACTION_DURATION) * RATE_DECREASE);
 };
 
 export const Rocket: React.FC = () => {
