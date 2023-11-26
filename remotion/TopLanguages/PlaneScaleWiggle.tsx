@@ -1,6 +1,4 @@
 import { noise2D } from "@remotion/noise";
-import { scalePath, translatePath } from "@remotion/paths";
-import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
   spring,
@@ -27,18 +25,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   position,
 }) => {
   const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
-  const { width, height, fps } = useVideoConfig();
+  const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
-
-  const { path } = makePie({
-    progress: 0.25 + PATH_EXTRAPOLATION,
-    radius: width,
-    closePath: false,
-    rotation: (-PATH_EXTRAPOLATION / 2) * Math.PI * 2,
-  });
-  const translated = translatePath(path, -width, 0);
-  const scaled = scalePath(translated, SCALE_FACTOR, SCALE_FACTOR);
-  const translated2 = translatePath(scaled, 0, height * (1 - SCALE_FACTOR));
 
   const delay = 30;
 
@@ -88,11 +76,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         />
       </AbsoluteFill>
       <AbsoluteFill />
-      <AbsoluteFill>
-        <svg viewBox={`0 0 1080 1080`}>
-          <path d={translated2} fill="transparent" />
-        </svg>
-      </AbsoluteFill>
+
       <AbsoluteFill>
         <LanguageDescription
           delay={60}
