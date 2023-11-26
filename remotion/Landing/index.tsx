@@ -18,7 +18,6 @@ import Fire from "./Fire";
 import Rocket from "./Rocket";
 import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
-import Stars from "./Stars";
 
 export const planetSchema = z.object({
   planetType: planetEnum,
@@ -60,6 +59,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
       color4: "#9ae7ed",
       color5: "#d9fcff",
     },
+    bgBrightness: 900,
     sparkles: [
       {
         x: 180,
@@ -98,6 +98,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
       color4: "#d9d9d9",
       color5: "#f2f2f2",
     },
+    bgBrightness: 400,
     bgGradient: "linear-gradient( #404040, #a8a8a8)",
     planet: staticFile("planet-silver.png"),
     name: "Titanium Planet",
@@ -117,6 +118,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
       color4: "#e4c65d",
       color5: "#f5e87d",
     },
+    bgBrightness: 500,
     bgGradient: "linear-gradient(#02e3f2, #59b2ff)",
     name: "Golden Planet",
     description:
@@ -203,11 +205,14 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
           width: "100%",
           height: "100%",
           background: attributes.bgGradient,
-          opacity: frame < LANDING_FRAME ? frame / 600 : LANDING_FRAME / 600,
+          opacity:
+            frame < LANDING_FRAME
+              ? frame / attributes.bgBrightness
+              : LANDING_FRAME / attributes.bgBrightness,
         }}
       />
 
-      <div
+      {/* <div
         style={{
           position: "absolute",
           top: 0,
@@ -217,7 +222,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         }}
       >
         <Stars />
-      </div>
+      </div> */}
 
       <div
         style={{
