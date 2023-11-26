@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { interpolate, useCurrentFrame } from "remotion";
 import {
   ROCKET_HEIGHT,
   ROCKET_ORIGIN_X,
@@ -15,22 +15,13 @@ export const ROCKET_JUMP_IN_DELAY = TIME_BEFORE_SHOOTING - 30;
 
 export const Rocket = ({
   shots,
+  jumpIn,
   ...props
 }: SVGProps<SVGSVGElement> & {
   shots: ShotWithShootDelay[];
+  jumpIn: number;
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const jumpIn = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    delay: ROCKET_JUMP_IN_DELAY,
-    durationInFrames: ROCKET_JUMP_IN_DURATION,
-  });
 
   const yOffset = interpolate(jumpIn, [0, 1], [400, 0]);
 
@@ -42,7 +33,7 @@ export const Rocket = ({
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    }
+    },
   );
 
   return (

@@ -21,6 +21,7 @@ import {
   getShotsToFire,
 } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
+import { IssueGrid } from "./IssueGrid";
 import { IssueNumber } from "./IssueNumber";
 import {
   FPS,
@@ -28,7 +29,11 @@ import {
   UFO_ENTRANCE_DELAY,
   UFO_ENTRANCE_DURATION,
 } from "./make-ufo-positions";
-import { Rocket } from "./Rocket";
+import {
+  Rocket,
+  ROCKET_JUMP_IN_DELAY,
+  ROCKET_JUMP_IN_DURATION,
+} from "./Rocket";
 import { Ufo } from "./Ufo";
 
 export const issuesSchema = z.object({
@@ -93,6 +98,28 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
     return false;
   });
+
+  const jumpIn = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: ROCKET_JUMP_IN_DELAY,
+    durationInFrames: ROCKET_JUMP_IN_DURATION,
+  });
+
+  const rocketOffset = interpolate(jumpIn, [0, 1], [400, 0]);
+
+  const currentNumber =
+    spring({
+      fps: FPS,
+      frame,
+      config: {
+        damping: 200,
+      },
+    }) *
+    (closedIssues + openIssues);
 
   return (
     <AbsoluteFill
@@ -168,19 +195,28 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           );
         })}
         <AbsoluteFill>
-          <Rocket shots={withShootDurations} />
+          <Rocket jumpIn={jumpIn} shots={withShootDurations} />
         </AbsoluteFill>
       </AbsoluteFill>
-      <IssueNumber
-        align="left"
-        label="Issues opened"
-        totalIssues={closedIssues + openIssues}
-      />
-      <IssueNumber
-        align="right"
-        label="Issues closed"
-        totalIssues={closedIssuesSoFar.length}
-      />
+      <AbsoluteFill
+        style={{
+          transform: `translateY(${rocketOffset}px)`,
+        }}
+      >
+        <IssueGrid />
+        <IssueNumber
+          align="left"
+          label="Opened"
+          currentNumber={Math.round(currentNumber)}
+          max={totalIssues}
+        />
+        <IssueNumber
+          align="right"
+          label="Closed"
+          currentNumber={closedIssuesSoFar.length}
+          max={closedIssues}
+        />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
