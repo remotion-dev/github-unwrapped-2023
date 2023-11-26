@@ -30,14 +30,7 @@ export const IssueGridLeft: React.FC = () => {
           stroke="url(#paint2_linear_0_3)"
           strokeOpacity="0.28"
         />
-        <line
-          x1="674"
-          y1="976.5"
-          x2="1045"
-          y2="976.5"
-          stroke="url(#paint3_linear_0_3)"
-          strokeOpacity="0.28"
-        />
+
         <defs>
           <linearGradient
             id="paint0_linear_0_3"

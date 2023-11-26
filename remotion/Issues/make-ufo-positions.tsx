@@ -5,6 +5,8 @@ import {
   PADDING,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
+  TIME_BEFORE_SHOOTING,
+  TOTAL_SHOOT_DURATION,
   USABLE_CANVAS_WIDTH,
 } from "./constants";
 import type { ShotWithShootDelay } from "./get-shots-to-fire";
@@ -22,6 +24,7 @@ export type UfoPosition = {
   y: number;
   scale: number;
   isClosed: boolean;
+  column: number;
 };
 
 export const getAngleForShoot = (targetX: number, targetY: number) => {
@@ -63,18 +66,18 @@ const makeYPosition = ({
 const getExtraPaddingIfInOfLastRow = ({
   row,
   numberOfUfos,
-  perRow,
+  columns,
   ufoContainerWidth,
   spaceInbetweenUfo,
 }: {
   row: number;
   numberOfUfos: number;
-  perRow: number;
+  columns: number;
   ufoContainerWidth: number;
   spaceInbetweenUfo: number;
 }) => {
-  const inLastRow = row === Math.floor(numberOfUfos / perRow);
-  const itemsInThisRow = inLastRow ? numberOfUfos % perRow : perRow;
+  const inLastRow = row === Math.floor(numberOfUfos / columns);
+  const itemsInThisRow = inLastRow ? numberOfUfos % columns : columns;
   const spaceInThisRow =
     itemsInThisRow * ufoContainerWidth +
     spaceInbetweenUfo * (itemsInThisRow - 1);
@@ -86,19 +89,19 @@ const makeXPosition = ({
   i,
   spaceInbetweenUfo,
   ufoContainerWidth,
-  perRow,
+  columns,
   numberOfUfos,
 }: {
   ufoContainerWidth: number;
   column: number;
   spaceInbetweenUfo: number;
   i: number;
-  perRow: number;
+  columns: number;
   numberOfUfos: number;
 }) => {
-  const row = Math.floor(i / perRow);
+  const row = Math.floor(i / columns);
   const extraPadding = getExtraPaddingIfInOfLastRow({
-    perRow,
+    columns,
     row,
     spaceInbetweenUfo,
     numberOfUfos,
@@ -115,6 +118,8 @@ const UFOS_MUST_BE_ABOVE_LINE = VIDEO_HEIGHT * 0.4;
 
 export const UFO_ENTRANCE_DURATION = 30;
 export const UFO_ENTRANCE_DELAY = 0;
+
+export const UFO_EXIT_START = TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION + 30;
 
 const reduceTotalNumberOfUfos = (numberOfUfos: number) => {
   const maxUfos = 100;
@@ -140,21 +145,22 @@ export const makeUfoPositions = ({
   rows: number;
   rowHeight: number;
   factor: number;
+  columns: number;
 } => {
   const { factor, numberOfUfos: totalUfos } =
     reduceTotalNumberOfUfos(originalTotalUfos);
 
   const closedIssues = Math.round(originalClosedIssues * factor);
 
-  const perRow = issuesPerRow(totalUfos);
+  const columns = issuesPerRow(totalUfos);
   const spaceInbetweenUfo = 30;
 
   const ufoContainerWidth =
-    (USABLE_CANVAS_WIDTH - (perRow - 1) * spaceInbetweenUfo) / perRow;
+    (USABLE_CANVAS_WIDTH - (columns - 1) * spaceInbetweenUfo) / columns;
   const ufoScale = 1 / (UFO_WIDTH / ufoContainerWidth);
   const ufoHeight = UFO_HEIGHT * ufoScale;
   const rowHeight = ufoHeight + 10;
-  const rows = Math.ceil(totalUfos / perRow);
+  const rows = Math.ceil(totalUfos / columns);
 
   const totalHeight = rows * rowHeight + PADDING;
   const offsetDueToManyUfos = Math.min(
@@ -165,8 +171,8 @@ export const makeUfoPositions = ({
   const closedIndices = sampleUniqueIndices(totalUfos, closedIssues);
 
   const ufos = new Array(totalUfos).fill(0).map((_, i): UfoPosition => {
-    const row = Math.floor(i / perRow);
-    const column = i % perRow;
+    const row = Math.floor(i / columns);
+    const column = i % columns;
 
     return {
       x: makeXPosition({
@@ -174,7 +180,7 @@ export const makeUfoPositions = ({
         i,
         spaceInbetweenUfo,
         ufoContainerWidth,
-        perRow,
+        columns,
         numberOfUfos: totalUfos,
       }),
       y:
@@ -184,6 +190,7 @@ export const makeUfoPositions = ({
           rowHeight,
         }) + offsetDueToManyUfos,
       scale: ufoScale,
+      column,
       isClosed: closedIndices.includes(i),
     };
   });
@@ -195,6 +202,7 @@ export const makeUfoPositions = ({
     rowHeight,
     rows,
     factor,
+    columns,
   };
 };
 

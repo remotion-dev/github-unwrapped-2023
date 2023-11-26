@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+import { interpolate, useVideoConfig } from "remotion";
 
 export const UFO_WIDTH = 322;
 export const UFO_HEIGHT = 208;
@@ -9,16 +10,33 @@ export const Ufo = ({
   scale,
   explodeAfter,
   yOffset,
+  exit,
+  column,
+  columns,
   ...props
 }: SVGProps<SVGSVGElement> & {
   x: number;
   y: number;
   scale: number;
+  columns: number;
+  column: number;
   explodeAfter: number;
   yOffset: number;
+  exit: number;
 }) => {
+  const { width } = useVideoConfig();
   const actualUfoWidth = UFO_WIDTH * scale;
   const actualUfoHeight = UFO_HEIGHT * scale;
+
+  const toLeft = column < columns / 2;
+  const offsetDistance = width / 2 + actualUfoWidth / 2;
+  console.log({ column, columns, offsetDistance, toLeft });
+
+  const exitOffset = interpolate(
+    exit,
+    [0, 1],
+    [0, toLeft ? -offsetDistance : offsetDistance],
+  );
 
   return (
     <div>
@@ -31,7 +49,7 @@ export const Ufo = ({
           width: actualUfoWidth,
           height: actualUfoHeight,
           position: "absolute",
-          left: x - actualUfoWidth / 2,
+          left: x - actualUfoWidth / 2 + exitOffset,
           top: y - actualUfoHeight / 2 + yOffset,
         }}
         viewBox="0 0 322 208"

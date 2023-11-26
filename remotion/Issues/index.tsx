@@ -29,6 +29,7 @@ import {
   makeUfoPositions,
   UFO_ENTRANCE_DELAY,
   UFO_ENTRANCE_DURATION,
+  UFO_EXIT_START,
 } from "./make-ufo-positions";
 import {
   Rocket,
@@ -49,13 +50,20 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const { ufos, closedIndices, offsetDueToManyUfos, factor, rowHeight, rows } =
-    useMemo(() => {
-      return makeUfoPositions({
-        totalUfos: totalIssues,
-        closedIssues,
-      });
-    }, [closedIssues, totalIssues]);
+  const {
+    ufos,
+    closedIndices,
+    offsetDueToManyUfos,
+    factor,
+    rowHeight,
+    rows,
+    columns,
+  } = useMemo(() => {
+    return makeUfoPositions({
+      totalUfos: totalIssues,
+      closedIssues,
+    });
+  }, [closedIssues, totalIssues]);
 
   const entrace = spring({
     fps: FPS,
@@ -65,6 +73,15 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     },
     durationInFrames: UFO_ENTRANCE_DURATION,
     delay: UFO_ENTRANCE_DELAY,
+  });
+
+  const exit = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: UFO_EXIT_START,
   });
 
   const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
@@ -161,12 +178,15 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
               }
             >
               <Ufo
+                exit={exit}
                 explodeAfter={
                   explosion ? explosion.explodeAfterFrames : Infinity
                 }
                 scale={p.scale}
                 x={p.x}
                 y={p.y}
+                column={p.column}
+                columns={columns}
                 yOffset={entranceYOffset}
               />
             </Sequence>
@@ -203,23 +223,35 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           transform: `translateY(${rocketOffset}px)`,
         }}
       >
-        <IssueGridLeft />
-        <IssueGridRight />
-        <IssueNumber
-          align="left"
-          label="Opened"
-          currentNumber={Math.round(currentNumber)}
-          max={totalIssues}
-        />
-        <IssueNumber
-          align="right"
-          label="Closed"
-          currentNumber={Math.min(
-            closedIssues,
-            closedIssuesSoFar.length * (1 / factor),
-          )}
-          max={closedIssues}
-        />
+        <AbsoluteFill
+          style={{
+            transform: `translateX(${interpolate(exit, [0, 1], [0, -500])}px)`,
+          }}
+        >
+          <IssueGridLeft />
+          <IssueNumber
+            align="left"
+            label="Opened"
+            currentNumber={Math.round(currentNumber)}
+            max={totalIssues}
+          />
+        </AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
+          }}
+        >
+          <IssueGridRight />
+          <IssueNumber
+            align="right"
+            label="Closed"
+            currentNumber={Math.min(
+              closedIssues,
+              closedIssuesSoFar.length * (1 / factor),
+            )}
+            max={closedIssues}
+          />
+        </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>
   );
