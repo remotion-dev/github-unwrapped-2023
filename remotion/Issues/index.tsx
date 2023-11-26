@@ -48,10 +48,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
 
-  const { ufos, closedIndices, offsetDueToManyUfos, rowHeight, rows } =
+  const { ufos, closedIndices, offsetDueToManyUfos, factor, rowHeight, rows } =
     useMemo(() => {
       return makeUfoPositions({
-        numberOfUfos: totalIssues,
+        totalUfos: totalIssues,
         closedIssues,
       });
     }, [closedIssues, totalIssues]);
@@ -118,8 +118,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       config: {
         damping: 200,
       },
-    }) *
-    (closedIssues + openIssues);
+    }) * totalIssues;
 
   return (
     <AbsoluteFill
@@ -213,7 +212,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         <IssueNumber
           align="right"
           label="Closed"
-          currentNumber={closedIssuesSoFar.length}
+          currentNumber={Math.min(
+            closedIssues,
+            closedIssuesSoFar.length * (1 / factor),
+          )}
           max={closedIssues}
         />
       </AbsoluteFill>

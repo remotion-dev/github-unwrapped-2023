@@ -134,7 +134,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 100, openIssues: 900 }}
+          defaultProps={{ closedIssues: 3000, openIssues: 2000 }}
         />
       </Folder>
       <Composition
