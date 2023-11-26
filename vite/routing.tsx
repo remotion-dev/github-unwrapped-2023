@@ -17,10 +17,10 @@ const indexRoute = new Route({
   component: Home,
 });
 
-export const $usernamePath = "/$username";
+const $usernamePath = "/$username";
 
 // Create an index route
-export const userRoute = new Route({
+const userRoute = new Route({
   getParentRoute: () => rootRoute,
   path: $usernamePath,
   component: UserPage,
