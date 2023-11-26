@@ -77,7 +77,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const yOffset = interpolate(
     frame,
     [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
-    [0, -offsetDueToManyUfos + 400],
+    [0, -offsetDueToManyUfos],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
