@@ -21,7 +21,8 @@ import {
   getShotsToFire,
 } from "./get-shots-to-fire";
 import { GlowStick } from "./GlowStick";
-import { IssueGrid } from "./IssueGrid";
+import { IssueGridLeft } from "./IssueGridLeft";
+import { IssueGridRight } from "./IssueGridRight";
 import { IssueNumber } from "./IssueNumber";
 import {
   FPS,
@@ -202,7 +203,8 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           transform: `translateY(${rocketOffset}px)`,
         }}
       >
-        <IssueGrid />
+        <IssueGridLeft />
+        <IssueGridRight />
         <IssueNumber
           align="left"
           label="Opened"
