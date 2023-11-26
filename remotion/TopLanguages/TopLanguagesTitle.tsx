@@ -43,7 +43,7 @@ export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
         lineHeight: 1.1,
       }}
     >
-      Your top <br /> languages
+      My top <br /> languages
     </div>
   </div>
 );

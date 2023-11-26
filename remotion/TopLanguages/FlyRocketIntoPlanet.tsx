@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   interpolate,
@@ -5,9 +6,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { ExitDirection } from "./corner";
 import { NewRocketSVG } from "./svgs/NewRocketSVG";
 
-export const FlyRocketIntoPlanet: React.FC<{}> = () => {
+export const FlyRocketIntoPlanet: React.FC<{
+  exitDirection: ExitDirection;
+}> = ({ exitDirection }) => {
   const { height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -22,10 +26,30 @@ export const FlyRocketIntoPlanet: React.FC<{}> = () => {
     to: 0,
   });
 
-  const marginTop = interpolate(flyIn, [0, 1], [height / 2 + 200, 0]);
+  const rotation = useMemo(() => {
+    if (exitDirection === "left") {
+      return -Math.PI / 2;
+    }
+
+    if (exitDirection === "right") {
+      return Math.PI / 2;
+    }
+
+    if (exitDirection === "bottom") {
+      return Math.PI;
+    }
+
+    return 0;
+  }, [exitDirection]);
+
+  const marginTop = interpolate(flyIn, [0, 1], [height / 2 + 400, 0]);
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        transform: `rotate(${rotation + Math.PI / 4}rad)`,
+      }}
+    >
       <AbsoluteFill
         style={{
           justifyContent: "center",

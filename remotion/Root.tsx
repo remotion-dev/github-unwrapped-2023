@@ -335,6 +335,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             language: "Java",
             position: 1,
+            exitDirection: "left",
           }}
         />
         <Composition
@@ -395,8 +396,8 @@ export const RemotionRoot: React.FC = () => {
             };
           }}
           defaultProps={{
-            corner: "bottom-left" as const,
-            language1: "Go" as const,
+            corner: "bottom-right" as const,
+            language1: "Python" as const,
             language2: "Go" as const,
             language3: "JavaScript" as const,
             showHelperLine: false,

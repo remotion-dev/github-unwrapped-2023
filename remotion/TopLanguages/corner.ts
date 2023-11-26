@@ -13,8 +13,8 @@ const enterDirectionSchema = z.enum([
 ]);
 type EnterDirection = z.infer<typeof enterDirectionSchema>;
 
-const exitDirectionSchema = z.enum(["left", "right", "top", "bottom"]);
-type ExitDirection = z.infer<typeof exitDirectionSchema>;
+export const exitDirectionSchema = z.enum(["left", "right", "top", "bottom"]);
+export type ExitDirection = z.infer<typeof exitDirectionSchema>;
 
 export const deriveEnterDirectionFromCorner = (
   corner: Corner,
