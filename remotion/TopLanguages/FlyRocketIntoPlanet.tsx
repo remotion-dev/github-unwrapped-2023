@@ -6,12 +6,13 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { ExitDirection } from "./corner";
+import type { EnterDirection, ExitDirection } from "./corner";
 import { NewRocketSVG } from "./svgs/NewRocketSVG";
 
 export const FlyRocketIntoPlanet: React.FC<{
   exitDirection: ExitDirection;
-}> = ({ exitDirection }) => {
+  enterDirection: EnterDirection;
+}> = ({ exitDirection, enterDirection }) => {
   const { height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -39,8 +40,12 @@ export const FlyRocketIntoPlanet: React.FC<{
       return Math.PI;
     }
 
+    if (enterDirection === "right-counter-clockwise") {
+      return -Math.PI / 2;
+    }
+
     return 0;
-  }, [exitDirection]);
+  }, [enterDirection, exitDirection]);
 
   const marginTop = interpolate(flyIn, [0, 1], [height / 2 + 400, 0]);
 

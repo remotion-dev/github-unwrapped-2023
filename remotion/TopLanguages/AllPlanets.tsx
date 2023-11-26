@@ -141,7 +141,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
         }}
       >
         <PlanetScaleWiggle
-          exitDirection={exitDirection}
+          enterDirection={enterDirection}
           position={1}
           language={language1}
         />

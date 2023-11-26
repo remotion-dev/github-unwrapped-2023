@@ -32,7 +32,10 @@ const ImageGradient: React.FC<Props> = ({ gradient }) => {
 
   return (
     <AbsoluteFill>
-      <Img style={style} src={staticFile(`gradient/${gradient}.png`)} />
+      <Img
+        style={style}
+        src={staticFile(`gradient/Gradients-${gradient}.png`)}
+      />
     </AbsoluteFill>
   );
 };
