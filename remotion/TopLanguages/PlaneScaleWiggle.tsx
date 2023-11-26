@@ -8,6 +8,7 @@ import {
 import { z } from "zod";
 import { LanguagesEnum } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
 import SkySVG from "./svgs/SkySVG";
@@ -25,7 +26,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  const delay = 30;
+  const delay = 25;
 
   const shrinkSpring = spring({
     frame,
@@ -44,7 +45,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   });
 
   const planetScale = 1 - shrinkSpring * 0.9 + growSpring * 0.9;
-  const isAction = delay <= frame && frame < 50;
+  const isAction = delay <= frame && frame < 45;
   const noise = noise2D("seed", frame / 10, 1) * 10;
 
   const rotate = isAction ? noise : 0;
@@ -57,6 +58,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
       <AbsoluteFill>
         <SkySVG style={{ opacity: 0.5 }} />
       </AbsoluteFill>
+      <FlyRocketIntoPlanet />
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -74,7 +76,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
       </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
-          delay={60}
+          delay={30}
           duration={90}
           language={language}
           position={position}
