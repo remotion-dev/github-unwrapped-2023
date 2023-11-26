@@ -15,24 +15,24 @@ export const IssueGridRight: React.FC = () => {
         </mask>
         <path
           d="M588 841H1045V1021C1045 1032.05 1036.05 1041 1025 1041H588V841Z"
-          fill="url(#aha)"
+          fill="url(#gradientright)"
         />
         <path
           d="M588 841H1045H588ZM1046 1021C1046 1032.6 1036.6 1042 1025 1042H588V1040H1025C1035.49 1040 1044 1031.49 1044 1021H1046ZM588 1041V841V1041ZM1046 841V1021C1046 1032.6 1036.6 1042 1025 1042V1040C1035.49 1040 1044 1031.49 1044 1021V841H1046Z"
-          fill="url(#paint)"
+          fill="url(#paintright)"
           mask="url(#abc)"
         />
         <line
           x1="674"
           y1="976.5"
-          x2="1045"
+          x2="1044"
           y2="976.5"
-          stroke="url(#paint2_linear_0_3)"
+          stroke="url(#paint2right)"
           strokeOpacity="0.28"
         />
         <defs>
           <linearGradient
-            id="aha"
+            id="gradientright"
             x1="1045"
             y1="1041"
             x2="947.537"
@@ -43,7 +43,7 @@ export const IssueGridRight: React.FC = () => {
             <stop offset="1" stopColor="#191C29" stopOpacity="0" />
           </linearGradient>
           <linearGradient
-            id="paint"
+            id="paintright"
             x1="1045"
             y1="1031.5"
             x2="951.342"
@@ -54,7 +54,7 @@ export const IssueGridRight: React.FC = () => {
             <stop offset="1" stopColor="white" stopOpacity="0" />
           </linearGradient>
           <linearGradient
-            id="paint2_linear_0_3"
+            id="paint2right"
             x1="1045"
             y1="977"
             x2="674"
