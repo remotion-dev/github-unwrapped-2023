@@ -50,6 +50,8 @@ export const IssueNumber: React.FC<{
           color: "white",
           fontSize: 30,
           marginBottom: 14,
+          paddingLeft: align === "left" ? 15 : 0,
+          paddingRight: align === "right" ? 9 : 0,
         }}
       >
         {label}
