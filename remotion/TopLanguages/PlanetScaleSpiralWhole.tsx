@@ -27,7 +27,7 @@ const speedRemapFn = (f: number) => interpolate(f, [0, 200], [1, 2]);
 const frameAtStart = 15;
 const frameAtEnd = 110;
 
-export const spiralWholeSchema = z.object({
+const spiralWholeSchema = z.object({
   language: LanguagesEnum,
   showHelperLine: z.boolean(),
   startRotationInRadians: z.number().step(0.1).min(0),

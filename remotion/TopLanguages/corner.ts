@@ -11,6 +11,7 @@ export const enterDirectionSchema = z.enum([
   "right-counter-clockwise",
   "bottom-clockwise",
 ]);
+
 export type EnterDirection = z.infer<typeof enterDirectionSchema>;
 
 export const exitDirectionSchema = z.enum(["left", "right", "top", "bottom"]);

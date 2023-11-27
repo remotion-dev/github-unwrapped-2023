@@ -58,6 +58,7 @@ type PlanetAttributes = {
     x: number;
     y: number;
   }[];
+  bgBrightness: number;
 };
 
 const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {

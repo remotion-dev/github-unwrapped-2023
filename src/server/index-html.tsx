@@ -15,7 +15,7 @@ export const viteDistDir = path.join(viteDir, "dist");
 
 export const nodeEnv = backendCredentials().NODE_ENV;
 
-export const viteIndexHtml =
+const viteIndexHtml =
   nodeEnv === "development"
     ? path.join(viteDir, "index.html")
     : path.join(viteDistDir, "index.html");
@@ -30,7 +30,7 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
 
       response.status(200);
       response.send(
-        await replaceAppHead(req.params.username ?? null, transformed)
+        await replaceAppHead(req.params.username ?? null, transformed),
       );
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
@@ -47,7 +47,7 @@ export const handleIndexHtmlProduction = () => {
     try {
       response.status(200);
       response.send(
-        await replaceAppHead(req.params.username ?? null, template)
+        await replaceAppHead(req.params.username ?? null, template),
       );
       response.end();
     } catch (err) {

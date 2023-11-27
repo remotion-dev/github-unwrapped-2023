@@ -24,7 +24,7 @@ export const allPlanetsSchema = z.object({
   login: z.string(),
 });
 
-export const allPlanetsTransitionTiming = springTiming({
+const allPlanetsTransitionTiming = springTiming({
   config: {
     damping: 200,
   },
@@ -74,6 +74,9 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   showHelperLine,
   login,
 }) => {
+  const enterDirection = deriveEnterDirectionFromCorner(corner);
+  const exitDirection = mapEnterDirectionToExitDirection(enterDirection);
+
   return (
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
@@ -100,9 +103,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           <TransitionSeries.Transition
             key="scene3"
             presentation={slide({
-              direction: mapEnterDirectionIntoSlideDirection(
-                deriveEnterDirectionFromCorner(corner),
-              ),
+              direction: mapEnterDirectionIntoSlideDirection(enterDirection),
             })}
             timing={allPlanetsTransitionTiming}
           />
@@ -127,11 +128,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           <TransitionSeries.Transition
             key="scene2"
             presentation={slide({
-              direction: mapExitDirectionIntoSlideDirection(
-                mapEnterDirectionToExitDirection(
-                  deriveEnterDirectionFromCorner(corner),
-                ),
-              ),
+              direction: mapExitDirectionIntoSlideDirection(exitDirection),
             })}
             timing={allPlanetsTransitionTiming}
           />
@@ -143,7 +140,11 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           overflow: "hidden",
         }}
       >
-        <PlanetScaleWiggle position={1} language={language1} />
+        <PlanetScaleWiggle
+          enterDirection={enterDirection}
+          position={1}
+          language={language1}
+        />
       </TransitionSeries.Sequence>
     </TransitionSeries>
   );

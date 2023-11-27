@@ -153,7 +153,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 100, openIssues: 900 }}
+          defaultProps={{ closedIssues: 3000, openIssues: 2000 }}
         />
       </Folder>
       <Composition
@@ -354,6 +354,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             language: "Java",
             position: 1,
+            enterDirection: "right-counter-clockwise" as const,
           }}
         />
         <Composition
@@ -414,8 +415,8 @@ export const RemotionRoot: React.FC = () => {
             };
           }}
           defaultProps={{
-            corner: "bottom-left" as const,
-            language1: "Go" as const,
+            corner: "top-left" as const,
+            language1: "Python" as const,
             language2: "Go" as const,
             language3: "JavaScript" as const,
             showHelperLine: false,

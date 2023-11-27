@@ -1,14 +1,8 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import {
-  RATE_DECREASE,
-  TOP_LANGUAGES_DURATION,
-  TRANSFORM_PATH_X,
-  TRANSFORM_PATH_Y,
-} from "../../types/constants";
+import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import { moveAlongLine } from "../move-along-line";
 import {
-  ACTION_DURATION,
   PLANET_1_POSITION,
   PLANET_2_POSITION,
   PLANET_3_POSITION,
@@ -28,40 +22,7 @@ import {
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
 
-export const getActionFrames = (actionLocations: number[]) => {
-  return (
-    actionLocations
-      // sort ascending
-      .sort((a, b) => a - b)
-      .map((percentage) => {
-        // index must be added because the duration from every previous action should be considered
-        const actionStartFrame =
-          Math.floor(percentage * TOP_LANGUAGES_DURATION) - ACTION_DURATION / 2;
-        const actionEndFrame = actionStartFrame + ACTION_DURATION;
-        // start frame is included in action time, actionEndFrame is not
-        return [actionStartFrame, actionEndFrame];
-      })
-  );
-};
-
-export const getRate = ({
-  frame,
-  actionLocations,
-}: {
-  frame: number;
-  actionLocations: number[];
-}) => {
-  // [ [25, 30], [45,50] ]
-  const actionFrames = getActionFrames(actionLocations.sort((a, b) => a - b));
-
-  return interpolate(
-    frame,
-    [0, ...actionFrames.flat(), TOP_LANGUAGES_DURATION],
-    [0, ...actionLocations.flatMap((l) => [l, l]), 1],
-  );
-};
-
-export const getNewRate = (frame: number) => {
+const getNewRate = (frame: number) => {
   const push1 = interpolate(frame, [0, firstPushEnd], [0, PLANET_1_POSITION], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -98,12 +59,6 @@ export const getNewRate = (frame: number) => {
   );
 
   return push1 + push2 + push3 + push4;
-};
-
-export const getRates = (stopAtFrames: number[]) => {
-  // sort descending
-  stopAtFrames = stopAtFrames.sort((a, b) => a - b);
-  return stopAtFrames.map((f, i) => (f - i * ACTION_DURATION) * RATE_DECREASE);
 };
 
 export const Rocket: React.FC = () => {

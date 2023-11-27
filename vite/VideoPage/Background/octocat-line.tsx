@@ -3,8 +3,8 @@ import { serializeInstructions } from "@remotion/paths";
 import React, { useEffect, useMemo } from "react";
 import { bodyRef } from "./Octocat-body";
 
-export const OCTOCAT_ANCHOR_X = 1119.44;
-export const OCTOCAT_ANCHOR_Y = 825.73;
+const OCTOCAT_ANCHOR_X = 1119.44;
+const OCTOCAT_ANCHOR_Y = 825.73;
 
 const getBodyTranslation = (time: number) => {
   const x = noise2D("bodyx", time / 800, 0) * 5;
@@ -111,7 +111,7 @@ const octocatLinePath = (
   ]);
 };
 
-export const octocatLineRef = React.createRef<SVGPathElement>();
+const octocatLineRef = React.createRef<SVGPathElement>();
 
 type Props =
   | {

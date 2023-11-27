@@ -6,7 +6,7 @@ import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
 const INNER_BORDER_RADIUS = 30;
 const PADDING = 20;
 
-export const topLanguagesTitle = z.object({
+const topLanguagesTitle = z.object({
   login: z.string(),
 });
 
@@ -43,7 +43,7 @@ export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
         lineHeight: 1.1,
       }}
     >
-      Your top <br /> languages
+      My top <br /> languages
     </div>
   </div>
 );

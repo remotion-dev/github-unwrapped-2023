@@ -1,5 +1,6 @@
+import { noise2D } from "@remotion/noise";
 import React from "react";
-import { Img, staticFile } from "remotion";
+import { Img, staticFile, useCurrentFrame } from "remotion";
 import { z } from "zod";
 
 export const sevenSegmentSchema = z.object({
@@ -13,7 +14,11 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
   fontSize,
   max,
 }) => {
+  const frame = useCurrentFrame();
+
   const digits = max ? String(max).length : String(num).length;
+
+  const fullNum = String(num).padStart(digits, "0");
 
   return (
     <div
@@ -23,6 +28,17 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
       }}
     >
       {new Array(digits).fill(true).map((n, i) => {
+        const opacity = ((noise2D(i + "x", frame / 15, 0) + 1) / 2) * 0.3 + 0.7;
+
+        console.log({ opacity });
+        const digit = fullNum[i];
+        const allBeforeAreZeroes = fullNum
+          .slice(0, i + 1)
+          .split("")
+          .every((x) => {
+            return x === "0";
+          });
+
         return (
           <div
             // eslint-disable-next-line react/no-array-index-key
@@ -46,14 +62,15 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
               }}
               src={staticFile(`sevensegment/background.png`)}
             />
-            <Img
-              style={{
-                height: fontSize,
-              }}
-              src={staticFile(
-                `sevensegment/${String(num).padStart(digits, "0")[i]}.png`
-              )}
-            />
+            {allBeforeAreZeroes ? null : (
+              <Img
+                style={{
+                  height: fontSize,
+                  opacity,
+                }}
+                src={staticFile(`sevensegment/${digit}.png`)}
+              />
+            )}
           </div>
         );
       })}

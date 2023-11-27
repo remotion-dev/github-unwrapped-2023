@@ -1,4 +1,5 @@
 import { Internals } from "remotion";
+import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 import {
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
@@ -8,14 +9,13 @@ import {
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import type { UfoPosition } from "./make-ufo-positions";
 import { getFramesAfterWhichShootProgressIsReached } from "./make-ufo-positions";
-import { UFO_HEIGHT, UFO_WIDTH } from "./Ufo";
 
 type Explosion = {
   index: number;
   explodeAfterProgress: number;
 };
 
-export type Shot = {
+type Shot = {
   startX: number;
   startY: number;
   endX: number;
@@ -41,7 +41,7 @@ const findClosestUfoRemaining = ({
 
   for (const ufo of remainingUfos) {
     const distance = Math.sqrt(
-      (referenceUfo.x - ufo.x) ** 2 + (referenceUfo.y - ufo.y) ** 2
+      (referenceUfo.x - ufo.x) ** 2 + (referenceUfo.y - ufo.y) ** 2,
     );
     if (distance < closestDistance) {
       closestDistance = distance;
@@ -140,10 +140,10 @@ export const getShotsToFire = ({
 
         const distanceToRocket = Math.sqrt(
           (ROCKET_ORIGIN_X - intersection.x) ** 2 +
-            (ROCKET_TOP_Y - intersection.y) ** 2
+            (ROCKET_TOP_Y - intersection.y) ** 2,
         );
         const distanceToShotEnd = Math.sqrt(
-          (shot.endX - intersection.x) ** 2 + (shot.endY - intersection.y) ** 2
+          (shot.endX - intersection.x) ** 2 + (shot.endY - intersection.y) ** 2,
         );
 
         const explodeAfterProgress =
@@ -167,7 +167,7 @@ export const getShotsToFire = ({
   return shots;
 };
 
-export type ExplosionExpanded = {
+type ExplosionExpanded = {
   index: number;
   explodeAfterFrames: number;
   x: number;
@@ -185,7 +185,7 @@ export const getExplosions = ({
     return shot.explosions.map((explosion) => {
       const explodeAfterFrames = getFramesAfterWhichShootProgressIsReached(
         explosion.explodeAfterProgress,
-        getShootDuration(shots)
+        getShootDuration(shots),
       );
       return {
         index: explosion.index,

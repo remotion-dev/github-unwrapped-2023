@@ -1,6 +1,4 @@
 import { noise2D } from "@remotion/noise";
-import { scalePath, translatePath } from "@remotion/paths";
-import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
   spring,
@@ -10,37 +8,32 @@ import {
 import { z } from "zod";
 import { LanguagesEnum } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
+import {
+  enterDirectionSchema,
+  mapEnterDirectionToExitDirection,
+} from "./corner";
 import SkySVG from "./svgs/SkySVG";
-
-const SCALE_FACTOR = 1;
-const PATH_EXTRAPOLATION = 0.1;
 
 export const wiggleSchema = z.object({
   language: LanguagesEnum,
   position: z.number(),
+  enterDirection: enterDirectionSchema,
 });
 
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
   position,
+  enterDirection,
 }) => {
-  const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
-  const { width, height, fps } = useVideoConfig();
+  const exitDirection = mapEnterDirectionToExitDirection(enterDirection);
+  const { PlanetSVG, gradient, opacity } = mapLanguageToPlanet[language];
+  const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  const { path } = makePie({
-    progress: 0.25 + PATH_EXTRAPOLATION,
-    radius: width,
-    closePath: false,
-    rotation: (-PATH_EXTRAPOLATION / 2) * Math.PI * 2,
-  });
-  const translated = translatePath(path, -width, 0);
-  const scaled = scalePath(translated, SCALE_FACTOR, SCALE_FACTOR);
-  const translated2 = translatePath(scaled, 0, height * (1 - SCALE_FACTOR));
-
-  const delay = 30;
+  const delay = 25;
 
   const shrinkSpring = spring({
     frame,
@@ -59,19 +52,23 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   });
 
   const planetScale = 1 - shrinkSpring * 0.9 + growSpring * 0.9;
-  const isAction = delay <= frame && frame < 50;
+  const isAction = delay <= frame && frame < 45;
   const noise = noise2D("seed", frame / 10, 1) * 10;
 
   const rotate = isAction ? noise : 0;
 
   return (
-    <AbsoluteFill style={{}}>
-      <AbsoluteFill style={{ opacity: 0.2 }}>
-        <Gradient gradient={gradient} />
-      </AbsoluteFill>
+    <AbsoluteFill>
       <AbsoluteFill>
         <SkySVG style={{ opacity: 0.5 }} />
       </AbsoluteFill>
+      <AbsoluteFill style={{ opacity, scale: String(1.3) }}>
+        <Gradient gradient={gradient} />
+      </AbsoluteFill>
+      <FlyRocketIntoPlanet
+        enterDirection={enterDirection}
+        exitDirection={exitDirection}
+      />
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -87,15 +84,9 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
           }}
         />
       </AbsoluteFill>
-      <AbsoluteFill />
-      <AbsoluteFill>
-        <svg viewBox={`0 0 1080 1080`}>
-          <path d={translated2} fill="transparent" />
-        </svg>
-      </AbsoluteFill>
       <AbsoluteFill>
         <LanguageDescription
-          delay={60}
+          delay={30}
           duration={90}
           language={language}
           position={position}

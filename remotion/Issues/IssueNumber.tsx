@@ -1,37 +1,55 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { SevenSegmentNumber } from "../JumpingNumber/SevenSegmentNumber";
+import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
 
 export const IssueNumber: React.FC<{
-  closedIssues: number;
-  openIssues: number;
-}> = ({ closedIssues, openIssues }) => {
+  currentNumber: number;
+  max: number;
+  label: string;
+  align: "left" | "right";
+}> = ({ currentNumber, label, align, max }) => {
   return (
     <AbsoluteFill
       style={{
         color: "white",
         fontFamily: "Mona Sans",
         fontWeight: "800",
-        justifyContent: "flex-end",
-        alignItems: "flex-end",
-        padding: 40,
       }}
     >
       <div
         style={{
-          fontFamily: "Mona Sans",
-          color: "white",
-          fontSize: 30,
-          marginBottom: 14,
+          alignItems: align === "left" ? "flex-start" : "flex-end",
+          display: "inline-flex",
+          flexDirection: "column",
+          [align === "left" ? "left" : "right"]: 40,
+          width: 300,
+          position: "absolute",
+          bottom: 35,
+          paddingLeft: 10,
+          paddingRight: 10,
+          paddingTop: 5,
+          paddingBottom: 5,
         }}
       >
-        Issues opened
+        <div>
+          <SevenSegment max={max} num={currentNumber} fontSize={120} />
+        </div>
+        <div
+          style={{
+            fontFamily: "Mona Sans",
+            color: "white",
+            fontSize: 30,
+            marginBottom: 14,
+            marginTop: 19,
+            fontWeight: "700",
+            paddingLeft: align === "left" ? 15 : 0,
+            paddingRight: align === "right" ? 15 : 0,
+            opacity: 0.7,
+          }}
+        >
+          {label}
+        </div>
       </div>
-      <SevenSegmentNumber
-        duration={30}
-        from={0}
-        to={closedIssues + openIssues}
-      />
     </AbsoluteFill>
   );
 };

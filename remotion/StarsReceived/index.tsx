@@ -13,7 +13,6 @@ import { Star } from "./Star";
 
 export const MAX_STARS = 50;
 export const STARS_DELAY = 20;
-export const STAR_DURATION = 40;
 
 export const starsReceivedSchema = z.object({
   starsReceived: z.number().min(0),

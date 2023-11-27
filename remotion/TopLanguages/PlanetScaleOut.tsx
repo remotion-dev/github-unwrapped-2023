@@ -21,6 +21,7 @@ import {
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
+import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
@@ -187,8 +188,9 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
         >
           <Gradient gradient={gradient} />
         </AbsoluteFill>
-        <AbsoluteFill />
-
+        <AbsoluteFill>
+          <SkySVG style={{ opacity: 0.5 }} />
+        </AbsoluteFill>
         <AbsoluteFill
           style={{
             justifyContent: "center",
@@ -198,7 +200,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           <PlanetSVG width={360} />
         </AbsoluteFill>
       </AbsoluteFill>
-      <Sequence durationInFrames={60}>
+      <Sequence durationInFrames={50} from={10}>
         <NewRocketSVG
           style={{
             transform: `translateX(${
@@ -209,11 +211,6 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           }}
         />
       </Sequence>
-      <AbsoluteFill>
-        <svg viewBox={`0 0 1080 1080`}>
-          <path d={translated2} fill="transparent" />
-        </svg>
-      </AbsoluteFill>
       <Sequence from={60}>
         <LanguageDescription
           delay={0}
