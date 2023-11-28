@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Img,
+  Sequence,
   interpolate,
   spring,
   staticFile,
@@ -30,6 +31,14 @@ const LANDING_FRAME = 115;
 
 const SPARKLE_SPEED = 40;
 
+const WITH_CLOUDS = true;
+
+const SHOW_TEXT_LENGTH = 60;
+
+const TEXT_1 = LANDING_FRAME - 15;
+const TEXT_2 = TEXT_1 + SHOW_TEXT_LENGTH;
+const TEXT_3 = TEXT_2 + SHOW_TEXT_LENGTH;
+
 type PlanetAttributes = {
   colors: {
     color1: string;
@@ -43,6 +52,7 @@ type PlanetAttributes = {
   description: string;
   planet: string;
   style: React.CSSProperties;
+  bgBrightness: number;
   landingAdjustment: number;
   sparkles: {
     x: number;
@@ -131,6 +141,30 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
   },
 };
 
+const CUTOVER = LANDING_FRAME - 60;
+
+export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({}) => {
+  return (
+    <Sequence>
+      <Sequence from={0} durationInFrames={CUTOVER}>
+        <LandingScene planetType={planetEnum.Values.Ice} />
+      </Sequence>
+      <Sequence
+        style={{
+          top: -64,
+          scale: String(2),
+        }}
+        from={CUTOVER - 1}
+        durationInFrames={Infinity}
+      >
+        <Sequence from={-CUTOVER - 1}>
+          <LandingScene planetType={planetEnum.Values.Ice} />
+        </Sequence>
+      </Sequence>
+    </Sequence>
+  );
+};
+
 export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
   planetType,
 }) => {
@@ -163,10 +197,28 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
     },
   });
 
-  const text = spring({
+  const text1 = spring({
     fps: VIDEO_FPS,
     frame,
-    delay: LANDING_FRAME,
+    delay: TEXT_1,
+    config: {
+      damping: 40,
+    },
+  });
+
+  const text2 = spring({
+    fps: VIDEO_FPS,
+    frame,
+    delay: TEXT_2,
+    config: {
+      damping: 40,
+    },
+  });
+
+  const text3 = spring({
+    fps: VIDEO_FPS,
+    frame,
+    delay: TEXT_3,
     config: {
       damping: 40,
     },
@@ -174,7 +226,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
 
   const rocket = spring({
     fps: VIDEO_FPS,
-    frame: frame / 4.5,
+    frame: frame > CUTOVER ? frame / 7.5 : frame / 4.5,
     delay: 0,
     config: {
       damping: 100,
@@ -183,37 +235,46 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
 
   const attributes = mapPlanetToAttributes[planetType];
 
+  console.log(rocket);
+
   return (
     <AbsoluteFill
       style={{
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 60,
-
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
-      <AbsoluteFill>
-        <Background />
-      </AbsoluteFill>
-
-      <div
+      <AbsoluteFill
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: 60,
           width: "100%",
           height: "100%",
-          background: attributes.bgGradient,
-          opacity:
-            frame < LANDING_FRAME
-              ? frame / attributes.bgBrightness
-              : LANDING_FRAME / attributes.bgBrightness,
+          background:
+            "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
         }}
-      />
+      >
+        <AbsoluteFill>
+          <Background />
+        </AbsoluteFill>
 
-      {/* <div
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: attributes.bgGradient,
+            opacity:
+              frame < LANDING_FRAME
+                ? frame / attributes.bgBrightness
+                : LANDING_FRAME / attributes.bgBrightness,
+          }}
+        />
+
+        {/* <div
         style={{
           position: "absolute",
           top: 0,
@@ -225,105 +286,120 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         <Stars />
       </div> */}
 
-      <div
-        style={{
-          width: PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH,
-          position: "absolute",
-          left:
-            -(PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH) / 2 + 530,
-          bottom: -850 + planet * 120,
-        }}
-      >
-        <Img
-          src={attributes.planet}
-          style={{ width: "100%", height: "100%", ...attributes.style }}
-        />
-
-        {/* <Planet /> */}
-      </div>
-
-      <div
-        style={{
-          width: 900 + 100 * cloud,
-          position: "absolute",
-          bottom: -450 + cloudOffset * 5.6,
-          left: -150,
-          transform: `scale(${cloudSize})`,
-          opacity: (1 - cloud) * 1 + 0.7,
-        }}
-      >
-        <Cloud1 {...attributes.colors} />
-      </div>
-
-      {frame < LANDING_FRAME - 40 && (
         <div
           style={{
+            width: PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH,
             position: "absolute",
-            left: 352,
-            top: -480 + rocket * 1150 - attributes.landingAdjustment,
-            width: 400,
-            transform: `scale(${1 - rocket + 0.2})`,
-            transformOrigin: "center top",
+            left:
+              -(PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH) / 2 + 530,
+            bottom: -850 + planet * 120,
           }}
         >
-          <Fire />
+          <Img
+            src={attributes.planet}
+            style={{ width: "100%", height: "100%", ...attributes.style }}
+          />
+
+          {/* <Planet /> */}
         </div>
-      )}
 
-      <Smoke
-        currentFrame={frame}
-        startFrame={LANDING_FRAME}
-        x={550}
-        y={680 - attributes.landingAdjustment}
-        scale={1.8}
-      />
+        {WITH_CLOUDS && (
+          <div
+            style={{
+              width: 900 + 100 * cloud,
+              position: "absolute",
+              bottom: -450 + cloudOffset * 5.6,
+              left: -150,
+              transform: `scale(${cloudSize})`,
+              opacity: ((1 - cloud) * 1 + 0.7) * 0.07,
+            }}
+          >
+            <Cloud1 {...attributes.colors} />
+          </div>
+        )}
 
-      <h1
-        style={{
-          fontSize: 48,
-          fontFamily: "Mona Sans",
-          color: "white",
-          opacity: text,
-          textAlign: "left",
-          left: 96,
-          top: 48,
-          position: "absolute",
-        }}
-      >
-        You discovered the
-      </h1>
+        {frame < LANDING_FRAME - 40 && (
+          <div
+            style={{
+              position: "absolute",
+              left: 352,
+              top: -480 + rocket * 1150 - attributes.landingAdjustment,
+              width: 400,
+              transform: `scale(${1 - rocket + 0.2})`,
+              transformOrigin: "center top",
+            }}
+          >
+            <Fire />
+          </div>
+        )}
 
-      <h1
-        style={{
-          fontSize: 96,
-          fontFamily: "Mona Sans",
-          color: "white",
-          opacity: text,
-          textAlign: "left",
-          left: 96,
-          top: 80,
-          position: "absolute",
-        }}
-      >
-        {attributes.name}!
-      </h1>
+        <Smoke
+          currentFrame={frame}
+          startFrame={LANDING_FRAME + 40}
+          x={520}
+          y={640 - attributes.landingAdjustment}
+          scale={5}
+        />
 
-      <h1
-        style={{
-          fontSize: 96,
-          fontFamily: "Mona Sans",
-          color: "white",
-          opacity: text,
-          textAlign: "left",
-          left: 96,
-          top: 80,
-          position: "absolute",
-        }}
-      >
-        {attributes.name}!
-      </h1>
+        {frame < TEXT_2 && (
+          <h1
+            style={{
+              top: 360,
+              textAlign: "center",
+              fontSize: 30,
+              width: 460,
 
-      <h2
+              fontFamily: "Mona Sans",
+              color: "white",
+              opacity: text1,
+              left: 306,
+
+              position: "absolute",
+            }}
+          >
+            Which planet will you discover?
+          </h1>
+        )}
+
+        {frame < TEXT_3 && (
+          <h1
+            style={{
+              top: 360,
+              textAlign: "center",
+              fontSize: 30,
+              width: 460,
+
+              fontFamily: "Mona Sans",
+              color: "white",
+              opacity: text2,
+              left: 306,
+
+              position: "absolute",
+            }}
+          >
+            Get your #GitHubUnwrapped
+          </h1>
+        )}
+
+        <h1
+          style={{
+            top: 360,
+            textAlign: "center",
+            fontSize: 30,
+            width: 460,
+
+            fontFamily: "Mona Sans",
+            color: "white",
+            opacity: text3,
+            left: 306,
+
+            position: "absolute",
+          }}
+        >
+          GitHubUnwrapped.com
+        </h1>
+
+        {/* <h2
         style={{
           fontSize: 32,
           fontFamily: "Mona Sans",
@@ -338,64 +414,68 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         }}
       >
         <span style={{ opacity: 0.8 }}>{attributes.description}</span>
-      </h2>
+      </h2> */}
 
-      <div
-        style={{
-          position: "absolute",
-          left: 410,
-          top: -700 + rocket * 1100 - attributes.landingAdjustment,
-          width: 300,
+        <div
+          style={{
+            position: "absolute",
+            left: 410,
+            top: -700 + rocket * 1100 - attributes.landingAdjustment,
+            width: 300,
 
-          transform: `scale(${1 - rocket + 0.6})`,
-          // transformOrigin: "center center",
-        }}
-      >
-        <Rocket />
-      </div>
+            transform: `scale(${1 - rocket + 0.6})`,
+            // transformOrigin: "center center",
+          }}
+        >
+          <Rocket />
+        </div>
 
-      <div
-        style={{
-          width: 1000 + 100 * cloud,
-          position: "absolute",
-          bottom: -400 + cloudOffset * 3.8,
-          right: -200,
-          transform: `scale(${cloudSize})`,
-          opacity: (1 - cloud) * 1 + 0.7,
-        }}
-      >
-        <Cloud2 {...attributes.colors} />
-      </div>
-
-      {frame > LANDING_FRAME - 45 &&
-        (attributes.sparkles as any).map(
-          (i: { x: number; y: number }, index: number) => (
-            <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              style={{
-                position: "absolute",
-                top: i.y,
-                left: i.x,
-                width: 100,
-                opacity: 0.8,
-                height: 100,
-                transform: `scale(${
-                  (SPARKLE_SPEED / 4 - ((frame + 3 * index) % SPARKLE_SPEED)) /
-                  (SPARKLE_SPEED / 4)
-                })`,
-              }}
-            >
-              <Sparkle />
-            </div>
-          ),
+        {WITH_CLOUDS && (
+          <div
+            style={{
+              width: 1000 + 100 * cloud,
+              position: "absolute",
+              bottom: -400 + cloudOffset * 3.8,
+              right: -200,
+              transform: `scale(${cloudSize})`,
+              opacity: ((1 - cloud) * 1 + 0.7) * 0.07,
+            }}
+          >
+            <Cloud2 {...attributes.colors} />
+          </div>
         )}
 
-      {/* <div
+        {frame > LANDING_FRAME - 45 &&
+          (attributes.sparkles as any).map(
+            (i: { x: number; y: number }, index: number) => (
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                style={{
+                  position: "absolute",
+                  top: i.y,
+                  left: i.x,
+                  width: 100,
+                  opacity: 0.8,
+                  height: 100,
+                  transform: `scale(${
+                    (SPARKLE_SPEED / 4 -
+                      ((frame + 3 * index) % SPARKLE_SPEED)) /
+                    (SPARKLE_SPEED / 4)
+                  })`,
+                }}
+              >
+                <Sparkle />
+              </div>
+            ),
+          )}
+
+        {/* <div
         style={{ width: 1600, position: "absolute", top: -720, right: -544 }}
       >
         <Swish />
       </div> */}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

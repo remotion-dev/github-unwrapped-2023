@@ -17,7 +17,7 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { LandingScene, planetSchema } from "./Landing";
+import { LandingCut, LandingScene, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -30,6 +30,7 @@ import {
   SevenSegment,
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
+import { SponsorshipsScene } from "./Sponsorships";
 import { STAR_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
@@ -66,8 +67,26 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
+        id={"Sponsorships"}
+        component={SponsorshipsScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
         id={"Landing"}
         component={LandingScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        schema={planetSchema}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{ planetType: "Silver" as const }}
+      />
+      <Composition
+        id={"LandingCut"}
+        component={LandingCut}
         durationInFrames={12 * 30}
         fps={VIDEO_FPS}
         schema={planetSchema}
