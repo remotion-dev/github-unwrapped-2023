@@ -33,7 +33,7 @@ export const HomeBoxTop: React.FC = () => {
       <div style={{ flex: 1 }} />
       <HomeLink
         href={"https://github.com/remotion-dev/github-unwrapped-2023"}
-        label={"Source"}
+        label={"Source Code"}
         icon={(props) => <GithubIcon {...props} />}
       />
       <div style={{ width: 6 }} />
