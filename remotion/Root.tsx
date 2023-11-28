@@ -209,7 +209,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10 }}
+        defaultProps={{ starsReceived: 10, showBackground: true }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {
@@ -228,7 +228,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10 }}
+        defaultProps={{ starsReceived: 10, showBackground: true }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {

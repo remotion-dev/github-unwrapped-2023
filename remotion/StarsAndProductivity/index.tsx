@@ -26,6 +26,7 @@ export const StarsAndProductivity: React.FC<
   return (
     <AbsoluteFill>
       <StarsReceived
+        showBackground={false}
         starsReceived={starsReceived}
         style={{
           transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,

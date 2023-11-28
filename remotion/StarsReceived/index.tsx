@@ -17,11 +17,12 @@ export const STARS_DELAY = 20;
 
 export const starsReceivedSchema = z.object({
   starsReceived: z.number().min(0),
+  showBackground: z.boolean(),
 });
 
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & { style?: React.CSSProperties }
-> = ({ starsReceived, style }) => {
+> = ({ starsReceived, style, showBackground }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const tabletTransition = spring({
@@ -39,9 +40,11 @@ export const StarsReceived: React.FC<
         ...style,
       }}
     >
-      <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
-      </AbsoluteFill>
+      {showBackground ? (
+        <AbsoluteFill>
+          <Gradient gradient="blueRadial" />
+        </AbsoluteFill>
+      ) : null}
       {new Array(starsReceived).fill("").map((_, index) => (
         <Star
           // eslint-disable-next-line react/no-array-index-key

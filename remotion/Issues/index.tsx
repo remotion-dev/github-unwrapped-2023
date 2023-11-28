@@ -44,6 +44,8 @@ export const issuesSchema = z.object({
   closedIssues: z.number().min(0),
 });
 
+export const ISSUES_EXIT_DURATION = 20;
+
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,
   openIssues,
@@ -83,6 +85,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       damping: 200,
     },
     delay: UFO_EXIT_START,
+    durationInFrames: ISSUES_EXIT_DURATION,
   });
 
   const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
