@@ -70,8 +70,8 @@ export const Noise: React.FC<z.infer<typeof noiseSchema>> = ({
                   // eslint-disable-next-line react/no-array-index-key
                   key={`${i}-${j}`}
                   style={{
-                    width: 8 * randomDigit2 * 0.1,
-                    height: 8 * randomDigit2 * 0.1,
+                    width: 6 * randomDigit2 * 0.1,
+                    height: 6 * randomDigit2 * 0.1,
                     left: i * unitSize,
                     top: j * unitSize,
                     position: "absolute",

@@ -1,11 +1,11 @@
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { RadialGradient } from "../RadialGradient";
+import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import { Rocket } from "./Rocket";
 import { TitleCardOctocat } from "./TitleCardOctocat";
 import { TopLanguagesTitle } from "./TopLanguagesTitle";
-import SkySVG from "./svgs/SkySVG";
 
 export const topLanguagesTitleCardSchema = z.object({
   login: z.string(),
@@ -25,7 +25,7 @@ export const TopLanguagesTitleCard: React.FC<
       }}
     >
       <AbsoluteFill style={{ opacity: 0.5 }}>
-        <RadialGradient />
+        <Gradient gradient="blueRadial" />
       </AbsoluteFill>
       <Sequence from={30} style={{ transform: `translateY(-300px)` }}>
         <AbsoluteFill style={{ marginTop: 100, marginLeft: 300 }}>
@@ -34,7 +34,7 @@ export const TopLanguagesTitleCard: React.FC<
       </Sequence>
       <TitleCardOctocat />
       <AbsoluteFill style={{ opacity: 0.5 }}>
-        <SkySVG style={{ transform: "scale(1)" }} />
+        <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{

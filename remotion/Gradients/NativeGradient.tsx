@@ -4,7 +4,6 @@ import {
   Img,
   getRemotionEnvironment,
   staticFile,
-  useVideoConfig,
 } from "remotion";
 import type { GradientType } from "./available-gradients";
 import { availableGradients } from "./available-gradients";
@@ -24,11 +23,9 @@ export const NativeGradient: React.FC<Props> = ({ gradient }) => {
 };
 
 const ImageGradient: React.FC<Props> = ({ gradient }) => {
-  const { width, height } = useVideoConfig();
-
   const style = useMemo(() => {
-    return { width, height };
-  }, [height, width]);
+    return { width: "100%", height: "100%" };
+  }, []);
 
   return (
     <AbsoluteFill>

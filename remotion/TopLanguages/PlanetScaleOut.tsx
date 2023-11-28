@@ -12,6 +12,7 @@ import { z } from "zod";
 import type { Corner } from "../../src/config";
 import { LanguagesEnum, cornerType } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
 import { mapLanguageToPlanet } from "./constants";
@@ -21,7 +22,6 @@ import {
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
-import SkySVG from "./svgs/SkySVG";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
@@ -189,7 +189,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           <Gradient gradient={gradient} />
         </AbsoluteFill>
         <AbsoluteFill>
-          <SkySVG style={{ opacity: 0.5 }} />
+          <Noise translateX={0} translateY={-1080} />
         </AbsoluteFill>
         <AbsoluteFill
           style={{

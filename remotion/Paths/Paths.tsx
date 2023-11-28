@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { Gradient } from "../Gradients/NativeGradient";
 import { PATHS_COMP_HEIGHT } from "./Path";
 import { WholePaths } from "./WholePaths";
 
@@ -21,10 +22,11 @@ export const PullRequests: React.FC = () => {
         height: PATHS_COMP_HEIGHT,
         width: 1080,
         marginTop: -offset,
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
+      <AbsoluteFill style={{}}>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       <WholePaths extraPaths={15} />;
     </AbsoluteFill>
   );

@@ -10,6 +10,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
 import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
@@ -139,12 +140,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     }) * totalIssues;
 
   return (
-    <AbsoluteFill
-      style={{
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
-      }}
-    >
+    <AbsoluteFill>
+      <AbsoluteFill>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       <AbsoluteFill>
         <Background />
       </AbsoluteFill>
