@@ -28,11 +28,13 @@ const fetchFromGitHub = async ({
   }
 
   const response = await res.json();
+  if (response.errors) {
+    throw new Error(JSON.stringify(response.errors[0].message));
+  }
+
   if (username === null) {
     return response.data.viewer as GitHubResponse;
   }
-
-  return response.data.user as GitHubResponse;
 };
 
 export const getStatsFromGitHub = async ({
