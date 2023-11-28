@@ -1,6 +1,12 @@
 import { Pie } from "@remotion/shapes";
 import React, { useMemo } from "react";
-import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  random,
+  useCurrentFrame,
+} from "remotion";
 import { MAX_STARS } from ".";
 import { StarSprite } from "../StarSprite";
 
@@ -47,9 +53,10 @@ export const Star: React.FC<{
   const translateY = MOVE_AIM - y * randomRadius;
   const translateX = x * randomRadius;
 
-  const scale = interpolate(frame, [0, 0 + duration], [0, 1], {
+  const scale = interpolate(frame, [0, duration], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
+    easing: Easing.out(Easing.ease),
   });
 
   return (
