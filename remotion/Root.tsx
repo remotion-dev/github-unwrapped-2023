@@ -214,6 +214,7 @@ export const RemotionRoot: React.FC = () => {
           starsReceived: 10,
           showBackground: true,
           showHitWindow: true,
+          showCockpit: true,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
@@ -237,7 +238,8 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           starsReceived: 10,
           showBackground: true,
-          showHitWindow: false,
+          showHitWindow: true,
+          showCockpit: true,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);

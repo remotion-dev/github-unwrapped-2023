@@ -90,6 +90,7 @@ export const Main: React.FC<Schema> = ({
             starsReceived={starsReceived}
             showBackground={false}
             showHitWindow={false}
+            showCockpit={false}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>

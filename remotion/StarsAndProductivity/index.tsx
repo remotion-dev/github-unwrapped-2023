@@ -8,7 +8,7 @@ import { StarsReceived } from "../StarsReceived";
 
 export const StarsAndProductivity: React.FC<
   React.ComponentProps<typeof StarsReceived>
-> = ({ starsReceived, showHitWindow, showBackground }) => {
+> = ({ starsReceived, showHitWindow, showBackground, showCockpit }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const zoomTransition = spring({
@@ -29,6 +29,7 @@ export const StarsAndProductivity: React.FC<
         showBackground={showBackground}
         showHitWindow={showHitWindow}
         starsReceived={starsReceived}
+        showCockpit={showCockpit}
         style={{
           transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
         }}
