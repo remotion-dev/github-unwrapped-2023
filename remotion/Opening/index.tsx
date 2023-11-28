@@ -30,12 +30,11 @@ export const OpeningScene: React.FC = () => {
           <Background />
         </AbsoluteFill>
 
-        <AbsoluteFill style={{ top: -100 }}>
-          <Spaceship />
-        </AbsoluteFill>
-
         <AbsoluteFill style={{ top: 0 }}>
           <Foreground />
+        </AbsoluteFill>
+        <AbsoluteFill style={{ top: -100 }}>
+          <Spaceship />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>
