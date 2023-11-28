@@ -17,9 +17,9 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { LandingCut, LandingScene, planetSchema } from "./Landing";
+import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
-import { Noise, noiseSchema } from "./Noise";
+import { OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
@@ -68,6 +68,14 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
+        id={"Opening"}
+        component={OpeningScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
         id={"Sponsorships"}
         component={SponsorshipsScene}
         durationInFrames={12 * 30}
@@ -75,7 +83,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />
-      <Composition
+      {/* <Composition
         id={"Landing"}
         component={LandingScene}
         durationInFrames={12 * 30}
@@ -84,7 +92,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{ planetType: "Silver" as const }}
-      />
+      /> */}
       <Composition
         id={"LandingCut"}
         component={LandingCut}
@@ -471,16 +479,6 @@ export const RemotionRoot: React.FC = () => {
           );
         })}
       </Folder>
-      <Composition
-        component={Noise}
-        id="noise"
-        durationInFrames={100}
-        fps={30}
-        height={1080}
-        width={1080}
-        schema={noiseSchema}
-        defaultProps={{ translateX: -1665, translateY: -617 }}
-      />
     </>
   );
 };
