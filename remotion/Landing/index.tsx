@@ -52,7 +52,6 @@ type PlanetAttributes = {
   description: string;
   planet: string;
   style: React.CSSProperties;
-  bgBrightness: number;
   landingAdjustment: number;
   sparkles: {
     x: number;
@@ -142,28 +141,6 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
 };
 
 const CUTOVER = LANDING_FRAME - 60;
-
-export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({}) => {
-  return (
-    <Sequence>
-      <Sequence from={0} durationInFrames={CUTOVER}>
-        <LandingScene planetType={planetEnum.Values.Ice} />
-      </Sequence>
-      <Sequence
-        style={{
-          top: -64,
-          scale: String(2),
-        }}
-        from={CUTOVER - 1}
-        durationInFrames={Infinity}
-      >
-        <Sequence from={-CUTOVER - 1}>
-          <LandingScene planetType={planetEnum.Values.Ice} />
-        </Sequence>
-      </Sequence>
-    </Sequence>
-  );
-};
 
 export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
   planetType,
@@ -477,5 +454,26 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
       </div> */}
       </AbsoluteFill>
     </AbsoluteFill>
+  );
+};
+
+export const LandingCut: React.FC<z.infer<typeof planetSchema>> = () => {
+  return (
+    <Sequence>
+      <Sequence durationInFrames={CUTOVER}>
+        <LandingScene planetType={planetEnum.Values.Ice} />
+      </Sequence>
+      <Sequence
+        style={{
+          top: -64,
+          scale: String(2),
+        }}
+        from={CUTOVER - 1}
+      >
+        <Sequence from={-CUTOVER - 1}>
+          <LandingScene planetType={planetEnum.Values.Ice} />
+        </Sequence>
+      </Sequence>
+    </Sequence>
   );
 };
