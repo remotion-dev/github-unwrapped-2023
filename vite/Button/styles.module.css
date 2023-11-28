@@ -40,6 +40,7 @@
   font-weight: bold;
   appearance: none;
   cursor: pointer;
+  color: rgb(165, 198, 227);
 }
 
 .invalidInput {
