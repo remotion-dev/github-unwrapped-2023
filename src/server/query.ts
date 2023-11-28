@@ -84,8 +84,8 @@ starredRepositories(first:100, f firstorderBy: {field: STARRED_AT, direction: DE
 sponsoring(first: 100) {
 	nodes {
 		... on  Organization {
-					login
-				}
+			login
+		}
 		... on User {
 			login
 		}
