@@ -5,7 +5,7 @@ import type { z } from "zod";
 import type { compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
-import { Issues } from "./Issues";
+import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
 import { LandingScene } from "./Landing";
 import { PullRequests } from "./Paths/Paths";
 import { StarsAndProductivity } from "./StarsAndProductivity";
@@ -13,7 +13,7 @@ import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 
 type Schema = z.infer<typeof compositionSchema>;
 
-const ISSUES_SCENE = 5 * VIDEO_FPS;
+const ISSUES_SCENE = 6 * VIDEO_FPS;
 const PULL_REQUESTS_SCENE = 8 * VIDEO_FPS;
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
@@ -31,7 +31,8 @@ export const calculateDuration = ({
 
   return (
     topLanguagesScene +
-    ISSUES_SCENE +
+    ISSUES_SCENE -
+    ISSUES_EXIT_DURATION +
     PULL_REQUESTS_SCENE +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
@@ -56,6 +57,8 @@ export const Main: React.FC<Schema> = ({
   login,
   planet,
   starsReceived,
+  issuesClosed,
+  issuesOpened,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -77,10 +80,16 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={ISSUES_SCENE}>
-          <Issues openIssues={10} closedIssues={10} />
+          <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={STARS_AND_PRODUCTIVITY}>
-          <StarsAndProductivity starsReceived={starsReceived} />
+        <Series.Sequence
+          durationInFrames={STARS_AND_PRODUCTIVITY}
+          offset={-ISSUES_EXIT_DURATION}
+        >
+          <StarsAndProductivity
+            starsReceived={starsReceived}
+            showBackground={false}
+          />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
           <PullRequests />

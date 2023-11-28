@@ -17,8 +17,9 @@ import {
   JumpingNumberDemo,
   jumpingNumberSchema,
 } from "./JumpingNumber/JumpingNumber";
-import { LandingCut, LandingScene, planetSchema } from "./Landing";
+import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
+import { OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
@@ -67,6 +68,14 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
+        id={"Opening"}
+        component={OpeningScene}
+        durationInFrames={12 * 30}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
         id={"Sponsorships"}
         component={SponsorshipsScene}
         durationInFrames={12 * 30}
@@ -74,7 +83,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />
-      <Composition
+      {/* <Composition
         id={"Landing"}
         component={LandingScene}
         durationInFrames={12 * 30}
@@ -83,7 +92,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{ planetType: "Silver" as const }}
-      />
+      /> */}
       <Composition
         id={"LandingCut"}
         component={LandingCut}
@@ -200,7 +209,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10 }}
+        defaultProps={{ starsReceived: 10, showBackground: true }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {
@@ -219,7 +228,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10 }}
+        defaultProps={{ starsReceived: 10, showBackground: true }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {

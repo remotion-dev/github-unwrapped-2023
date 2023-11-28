@@ -29,7 +29,8 @@ export const Ufo = ({
   const actualUfoHeight = UFO_HEIGHT * scale;
 
   const toLeft = column < columns / 2;
-  const offsetDistance = width / 2 + actualUfoWidth / 2;
+  // Bug: Don't know why 30px offset is needed
+  const offsetDistance = width / 2 + actualUfoWidth + 30;
   console.log({ column, columns, offsetDistance, toLeft });
 
   const exitOffset = interpolate(

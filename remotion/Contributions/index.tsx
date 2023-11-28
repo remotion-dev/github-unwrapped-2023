@@ -8,6 +8,7 @@ import {
 } from "remotion";
 
 import React from "react";
+import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Background } from "./Background";
@@ -44,7 +45,7 @@ export const ContributionsScene: React.FC = () => {
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    }
+    },
   );
 
   return (
@@ -53,10 +54,11 @@ export const ContributionsScene: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         fontSize: 60,
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
+      <AbsoluteFill>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       <AbsoluteFill>
         <Background />
       </AbsoluteFill>

@@ -12,6 +12,7 @@ import { z } from "zod";
 import type { Planet } from "../../src/config";
 import { planetEnum } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Background } from "./Background";
 import Cloud1 from "./Cloud-1";
 import Cloud2 from "./Cloud-2";
@@ -228,14 +229,14 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
           fontSize: 60,
           width: "100%",
           height: "100%",
-          background:
-            "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
         }}
       >
         <AbsoluteFill>
+          <Gradient gradient="blueRadial" />
+        </AbsoluteFill>
+        <AbsoluteFill>
           <Background />
         </AbsoluteFill>
-
         <div
           style={{
             position: "absolute",

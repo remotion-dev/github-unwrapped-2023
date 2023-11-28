@@ -10,6 +10,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Poof, POOF_DURATION } from "../Poof";
 import { Background } from "./Background";
 import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
@@ -42,6 +43,8 @@ export const issuesSchema = z.object({
   openIssues: z.number().min(0),
   closedIssues: z.number().min(0),
 });
+
+export const ISSUES_EXIT_DURATION = 20;
 
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,
@@ -82,6 +85,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       damping: 200,
     },
     delay: UFO_EXIT_START,
+    durationInFrames: ISSUES_EXIT_DURATION,
   });
 
   const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
@@ -139,12 +143,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     }) * totalIssues;
 
   return (
-    <AbsoluteFill
-      style={{
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
-      }}
-    >
+    <AbsoluteFill>
+      <AbsoluteFill>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       <AbsoluteFill>
         <Background />
       </AbsoluteFill>
