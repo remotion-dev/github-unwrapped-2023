@@ -13,7 +13,7 @@ import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 
 type Schema = z.infer<typeof compositionSchema>;
 
-const ISSUES_SCENE = 6.5 * VIDEO_FPS;
+const ISSUES_SCENE = 6 * VIDEO_FPS;
 const PULL_REQUESTS_SCENE = 8 * VIDEO_FPS;
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;

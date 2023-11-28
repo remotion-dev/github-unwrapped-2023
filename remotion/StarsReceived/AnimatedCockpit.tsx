@@ -20,12 +20,13 @@ export const AnimatedCockpit: React.FC = () => {
     },
   });
 
-  const scale = interpolate(entryProgress, [0, 1], [4, 1]);
+  const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
+  const scaleDivided = 1 / distance;
 
   return (
     <AbsoluteFill
       style={{
-        scale: String(scale),
+        scale: String(scaleDivided),
       }}
     >
       <CockpitSVG />
