@@ -32,6 +32,7 @@ const apiEndpointWrapper = (
       await endpoint(req, res, next);
     } catch (error) {
       Sentry.captureException(error);
+      res.status(500).end((error as Error).message);
     }
   };
 };
