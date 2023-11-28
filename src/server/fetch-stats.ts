@@ -32,7 +32,6 @@ const fetchFromGitHub = async ({
     throw new Error(JSON.stringify(response.errors[0].message));
   }
 
-  console.log(response);
   if (username === null) {
     if (response.data) {
       return response.data.viewer as GitHubResponse;
