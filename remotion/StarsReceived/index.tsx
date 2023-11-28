@@ -16,7 +16,7 @@ import { Description } from "./Description";
 import { HIT_RADIUS, Star } from "./Star";
 
 export const MAX_STARS = 50;
-export const TIME_INBETWEEN_STARS = 20;
+export const TIME_INBETWEEN_STARS = 10;
 export const STAR_DELAY = 20;
 
 export const starsReceivedSchema = z.object({
@@ -24,11 +24,19 @@ export const starsReceivedSchema = z.object({
   showBackground: z.boolean(),
   showHitWindow: z.boolean(),
   showCockpit: z.boolean(),
+  showDots: z.boolean(),
 });
 
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & { style?: React.CSSProperties }
-> = ({ starsReceived, style, showBackground, showHitWindow, showCockpit }) => {
+> = ({
+  starsReceived,
+  style,
+  showBackground,
+  showHitWindow,
+  showCockpit,
+  showDots,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const tabletTransition = spring({
@@ -75,8 +83,9 @@ export const StarsReceived: React.FC<
           <Star
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
             id={`star-${index}`}
-            duration={30}
+            duration={20}
             starsShown={Math.min(starsReceived, MAX_STARS)}
+            showDots={showDots}
           />
         </Sequence>
       ))}
