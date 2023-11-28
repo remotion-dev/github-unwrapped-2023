@@ -35,6 +35,8 @@ const fetchFromGitHub = async ({
   if (username === null) {
     return response.data.viewer as GitHubResponse;
   }
+
+  return response.data.user as GitHubResponse;
 };
 
 export const getStatsFromGitHub = async ({
