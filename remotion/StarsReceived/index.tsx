@@ -8,7 +8,7 @@ import { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Tablet } from "../Productivity/Tablet";
 import { GRAPH_DATA } from "../Productivity/constants";
-import CockpitSVG from "./CockpitSVG";
+import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Description } from "./Description";
 import { Star } from "./Star";
 
@@ -54,12 +54,8 @@ export const StarsReceived: React.FC<
           starsShown={Math.min(starsReceived, MAX_STARS)}
         />
       ))}
-
-      <AbsoluteFill>
-        <CockpitSVG />
-      </AbsoluteFill>
+      <AnimatedCockpit />
       <Description starsReceived={starsReceived} />
-
       <Tablet
         style={{
           position: "absolute",
