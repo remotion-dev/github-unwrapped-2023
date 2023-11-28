@@ -5,6 +5,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Tablet } from "../Productivity/Tablet";
 import { GRAPH_DATA } from "../Productivity/constants";
 import CockpitSVG from "./CockpitSVG";
@@ -35,11 +36,12 @@ export const StarsReceived: React.FC<
   return (
     <AbsoluteFill
       style={{
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
         ...style,
       }}
     >
+      <AbsoluteFill>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       {new Array(starsReceived).fill("").map((_, index) => (
         <Star
           // eslint-disable-next-line react/no-array-index-key

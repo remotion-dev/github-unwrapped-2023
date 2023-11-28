@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { Gradient } from "../Gradients/NativeGradient";
 import { Background } from "./Background";
 import { Box } from "./Box";
 
@@ -13,11 +14,11 @@ export const SponsorshipsScene: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         fontSize: 60,
-
-        background:
-          "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
       }}
     >
+      <AbsoluteFill>
+        <Gradient gradient="blueRadial" />
+      </AbsoluteFill>
       <AbsoluteFill>
         <Background />
       </AbsoluteFill>
