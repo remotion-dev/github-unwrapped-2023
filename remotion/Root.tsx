@@ -19,6 +19,7 @@ import {
 } from "./JumpingNumber/JumpingNumber";
 import { LandingCut, LandingScene, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
+import { Noise, noiseSchema } from "./Noise";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
@@ -470,6 +471,16 @@ export const RemotionRoot: React.FC = () => {
           );
         })}
       </Folder>
+      <Composition
+        component={Noise}
+        id="noise"
+        durationInFrames={100}
+        fps={30}
+        height={1080}
+        width={1080}
+        schema={noiseSchema}
+        defaultProps={{ translateX: -1665, translateY: -617 }}
+      />
     </>
   );
 };
