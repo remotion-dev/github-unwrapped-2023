@@ -33,7 +33,12 @@ const fetchFromGitHub = async ({
   }
 
   if (username === null) {
-    return response.data.viewer as GitHubResponse;
+    if (response.data) {
+      return response.data.viewer as GitHubResponse;
+    }
+
+    console.log(response);
+    throw new Error("Unexpected response from GitHub");
   }
 
   return response.data.user as GitHubResponse;
