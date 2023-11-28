@@ -18,6 +18,7 @@ import {
 import { loginEndPoint } from "./login.js";
 import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
+import { errorEndpoint } from "./sentry-test.js";
 
 const apiEndpointWrapper = (
   endpoint: (
@@ -62,6 +63,8 @@ export const startServer = async () => {
   app.post("/api/render", apiEndpointWrapper(renderEndPoint));
 
   app.post("/api/progress", apiEndpointWrapper(progressEndPoint));
+
+  app.post("api/error", apiEndpointWrapper(errorEndpoint));
 
   app.get("/favicon.ico", faviconEndPoint);
   app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
