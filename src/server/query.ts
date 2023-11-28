@@ -69,7 +69,7 @@ contributionsCollection(
 		}
 	}
 }
-starredRepositories(first:100, f firstorderBy: {field: STARRED_AT, direction: DESC}) {
+starredRepositories(first:100, orderBy: {field: STARRED_AT, direction: DESC}) {
 	edges {
 		starredAt
 		cursor
