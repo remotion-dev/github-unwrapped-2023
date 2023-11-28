@@ -36,6 +36,7 @@ import { STAR_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
+  STAR_DELAY,
   StarsReceived,
   TIME_INBETWEEN_STARS,
   starsReceivedSchema,
@@ -212,7 +213,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           starsReceived: 10,
           showBackground: true,
-          showHitWindow: false,
+          showHitWindow: true,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
@@ -220,6 +221,7 @@ export const RemotionRoot: React.FC = () => {
             durationInFrames:
               (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
               STAR_DURATION +
+              STAR_DELAY +
               DESCRIPTION_SEQUENCE_DURATION,
           };
         }}

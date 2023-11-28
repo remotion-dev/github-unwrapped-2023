@@ -15,6 +15,7 @@ import { Star } from "./Star";
 
 export const MAX_STARS = 50;
 export const TIME_INBETWEEN_STARS = 20;
+export const STAR_DELAY = 20;
 
 export const starsReceivedSchema = z.object({
   starsReceived: z.number().min(0),
@@ -37,11 +38,7 @@ export const StarsReceived: React.FC<
     },
   });
   return (
-    <AbsoluteFill
-      style={{
-        ...style,
-      }}
-    >
+    <AbsoluteFill style={style}>
       {showBackground ? (
         <AbsoluteFill>
           <Gradient gradient="blueRadial" />
@@ -50,9 +47,10 @@ export const StarsReceived: React.FC<
       {new Array(starsReceived).fill("").map((_, index) => (
         <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}
-          from={index * TIME_INBETWEEN_STARS}
+          from={index * TIME_INBETWEEN_STARS + STAR_DELAY}
         >
           <Star
+            id={`star-${index}`}
             duration={30}
             starsShown={Math.min(starsReceived, MAX_STARS)}
             showHitWindow={showHitWindow}

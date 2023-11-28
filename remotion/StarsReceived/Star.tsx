@@ -1,12 +1,6 @@
 import { Pie } from "@remotion/shapes";
 import React, { useMemo } from "react";
-import {
-  AbsoluteFill,
-  Easing,
-  interpolate,
-  random,
-  useCurrentFrame,
-} from "remotion";
+import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion";
 import { MAX_STARS } from ".";
 import { StarSprite } from "../StarSprite";
 
@@ -14,7 +8,7 @@ const MOVE_AIM = 100;
 const HIT_RADIUS = 500;
 
 const MIN_NON_HIT_RADIUS = 900;
-const MAX_NON_HIT_RADIUS = 1200;
+const MAX_NON_HIT_RADIUS = 800;
 
 const MAX_HITS = 10;
 
@@ -22,25 +16,25 @@ export const Star: React.FC<{
   duration: number;
   starsShown: number;
   showHitWindow: boolean;
-}> = ({ duration, starsShown, showHitWindow }) => {
+  id: string;
+}> = ({ duration, id, starsShown, showHitWindow }) => {
   const hitProbability = useMemo(
     () => interpolate(starsShown, [0, MAX_HITS, MAX_STARS], [1, 0.9, 0.4]),
     [starsShown],
   );
   const hitSpaceship = useMemo(
-    () => random(null) < hitProbability,
-    [hitProbability],
+    () => random(id) < hitProbability,
+    [hitProbability, id],
   );
   const frame = useCurrentFrame();
 
-  const randomValue = useMemo(() => random(null), []);
   const interpolateRandom = interpolate(
-    randomValue,
+    random(id + "a"),
     [0, 1],
     [-Math.PI / 2, Math.PI / 2],
   );
 
-  const randomRadiusMultiplier = useMemo(() => random(null), []);
+  const randomRadiusMultiplier = useMemo(() => random(id + "b"), [id]);
 
   const randomRadius = hitSpaceship
     ? randomRadiusMultiplier * HIT_RADIUS
@@ -53,11 +47,8 @@ export const Star: React.FC<{
   const translateY = MOVE_AIM - y * randomRadius;
   const translateX = x * randomRadius;
 
-  const scale = interpolate(frame, [0, duration], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.ease),
-  });
+  const distance = interpolate(frame, [0, duration + 10], [1, 0.005], {});
+  const scale = 1 / distance - 1;
 
   return (
     <AbsoluteFill
