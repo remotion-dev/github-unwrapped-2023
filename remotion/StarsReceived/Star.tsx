@@ -1,5 +1,6 @@
+import { Pie } from "@remotion/shapes";
 import React, { useMemo } from "react";
-import { interpolate, random, Sequence, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion";
 import { MAX_STARS } from ".";
 import { StarSprite } from "../StarSprite";
 
@@ -12,10 +13,10 @@ const MAX_NON_HIT_RADIUS = 1200;
 const MAX_HITS = 10;
 
 export const Star: React.FC<{
-  initialFrame: number;
   duration: number;
   starsShown: number;
-}> = ({ initialFrame, duration, starsShown }) => {
+  showHitWindow: boolean;
+}> = ({ duration, starsShown, showHitWindow }) => {
   const hitProbability = useMemo(
     () => interpolate(starsShown, [0, MAX_HITS, MAX_STARS], [1, 0.9, 0.4]),
     [starsShown],
@@ -46,45 +47,40 @@ export const Star: React.FC<{
   const translateY = MOVE_AIM - y * randomRadius;
   const translateX = x * randomRadius;
 
-  const scale = interpolate(
-    frame,
-    [initialFrame, initialFrame + duration],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    },
-  );
+  const scale = interpolate(frame, [0, 0 + duration], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
-    <Sequence
+    <AbsoluteFill
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
-      from={initialFrame}
     >
-      {/* <AbsoluteFill
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Pie
-          radius={HIT_RADIUS}
-          progress={0.5}
-          fill="white"
-          rotation={-0.5 * Math.PI}
+      {showHitWindow ? (
+        <AbsoluteFill
           style={{
-            transform: `translateY(100px)`,
-            opacity: 0.1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-      </AbsoluteFill> */}
-
-      <Sequence
+        >
+          <Pie
+            radius={HIT_RADIUS}
+            progress={0.5}
+            fill="white"
+            rotation={-0.5 * Math.PI}
+            style={{
+              transform: `translateY(100px)`,
+              opacity: 0.1,
+            }}
+          />
+        </AbsoluteFill>
+      ) : null}
+      <AbsoluteFill
         style={{
           display: "flex",
           justifyContent: "center",
@@ -92,32 +88,14 @@ export const Star: React.FC<{
           transform: `translateX(${translateX * scale}px) translateY(${
             translateY * scale
           }px) scale(${scale * 0.7})`,
-          opacity: frame < initialFrame + duration ? 1 : 0,
+          opacity: frame < duration ? 1 : 0,
         }}
       >
         <StarSprite
           burstFrame={hitSpaceship ? duration * (4 / 5) : undefined}
           transitionDuration={duration}
         />
-        {/* <StarSprite  duration={duration}/> */}
-      </Sequence>
-      {/* <AbsoluteFill
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            width: 24,
-            height: 24,
-            background: "dodgerblue",
-            zIndex: 100,
-            transform: `translateY(${translateY}px) translateX(${translateX}px)`,
-          }}
-        ></div>
-      </AbsoluteFill> */}
-    </Sequence>
+      </AbsoluteFill>
+    </AbsoluteFill>
   );
 };

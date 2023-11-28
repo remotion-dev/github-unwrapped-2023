@@ -36,8 +36,8 @@ import { STAR_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
-  STARS_DELAY,
   StarsReceived,
+  TIME_INBETWEEN_STARS,
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
@@ -209,12 +209,16 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10, showBackground: true }}
+        defaultProps={{
+          starsReceived: 10,
+          showBackground: true,
+          showHitWindow: false,
+        }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {
             durationInFrames:
-              (starsDisplayed - 1) * STARS_DELAY +
+              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
               STAR_DURATION +
               DESCRIPTION_SEQUENCE_DURATION,
           };
@@ -228,12 +232,16 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10, showBackground: true }}
+        defaultProps={{
+          starsReceived: 10,
+          showBackground: true,
+          showHitWindow: false,
+        }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
           return {
             durationInFrames:
-              (starsDisplayed - 1) * STARS_DELAY +
+              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
               STAR_DURATION +
               DESCRIPTION_SEQUENCE_DURATION +
               100,

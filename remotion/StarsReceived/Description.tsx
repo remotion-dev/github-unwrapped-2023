@@ -13,7 +13,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { STARS_DELAY } from ".";
+import { TIME_INBETWEEN_STARS } from ".";
 
 const descriptionPath =
   "M0.599976 136.5C0.599976 136.5 76.6 153.6 158.2 68.2002C222.7 0.700195 314.8 0.700195 314.8 0.700195H626.9H801.2C801.2 0.700195 883.8 0.700195 957.8 68.2002C1026.4 130.8 1115.4 136.5 1115.4 136.5";
@@ -27,7 +27,7 @@ export const DESCRIPTION_SEQUENCE_DURATION = 120;
 export const Description: React.FC<{ starsReceived: number }> = ({
   starsReceived,
 }) => {
-  const sequenceDelay = starsReceived * STARS_DELAY;
+  const sequenceDelay = starsReceived * TIME_INBETWEEN_STARS;
   const frame = useCurrentFrame();
   const sequenceFrame = frame - sequenceDelay;
   const { fps } = useVideoConfig();

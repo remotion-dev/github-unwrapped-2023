@@ -1,5 +1,6 @@
 import {
   AbsoluteFill,
+  Sequence,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -13,16 +14,17 @@ import { Description } from "./Description";
 import { Star } from "./Star";
 
 export const MAX_STARS = 50;
-export const STARS_DELAY = 20;
+export const TIME_INBETWEEN_STARS = 20;
 
 export const starsReceivedSchema = z.object({
   starsReceived: z.number().min(0),
   showBackground: z.boolean(),
+  showHitWindow: z.boolean(),
 });
 
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & { style?: React.CSSProperties }
-> = ({ starsReceived, style, showBackground }) => {
+> = ({ starsReceived, style, showBackground, showHitWindow }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const tabletTransition = spring({
@@ -46,13 +48,16 @@ export const StarsReceived: React.FC<
         </AbsoluteFill>
       ) : null}
       {new Array(starsReceived).fill("").map((_, index) => (
-        <Star
-          // eslint-disable-next-line react/no-array-index-key
+        <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}
-          initialFrame={index * STARS_DELAY}
-          duration={30}
-          starsShown={Math.min(starsReceived, MAX_STARS)}
-        />
+          from={index * TIME_INBETWEEN_STARS}
+        >
+          <Star
+            duration={30}
+            starsShown={Math.min(starsReceived, MAX_STARS)}
+            showHitWindow={showHitWindow}
+          />
+        </Sequence>
       ))}
       <AnimatedCockpit />
       <Description starsReceived={starsReceived} />
