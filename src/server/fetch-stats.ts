@@ -1,8 +1,6 @@
-import {
-  getProfileStatsFromCache,
-  insertProfileStats,
-  type ProfileStats,
-} from "./db.js";
+import { getTimesOfDay } from "./commits/get-times-of-day.js";
+import { getALotOfGithubCommits } from "./commits/github-commits.js";
+import { insertProfileStats, type ProfileStats } from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { baseQuery, BaseQueryResponse } from "./queries/base.query.js";
 import {
@@ -29,6 +27,7 @@ const fetchFromGitHub =
       },
     });
     const rateLimit = res.headers.get("x-ratelimit-remaining");
+
     if (Math.random() < 0.1) {
       sendDiscordMessage(`Rate limit remaining: ${rateLimit}`);
     }
@@ -58,6 +57,10 @@ const NOT_LANGUAGES = [
   "shell",
 ];
 
+const NOT_LANGUAGES_OBJ = Object.fromEntries(
+  NOT_LANGUAGES.map((l) => [l, true]),
+);
+
 export const getStatsFromGitHub = async ({
   username,
   token,
@@ -78,8 +81,11 @@ export const getStatsFromGitHub = async ({
 
   let done = false;
   let cursor = undefined;
+  let safety = 0;
 
-  while (!done) {
+  const commits = username ? await getALotOfGithubCommits(username, token) : [];
+
+  while (!done && safety < 10) {
     const data = await fetchFromGitHub<PullRequestQueryResponse>({
       username,
       token,
@@ -95,30 +101,25 @@ export const getStatsFromGitHub = async ({
 
     pullRequestData.push(...prs);
     cursor = data.pullRequests.pageInfo.endCursor;
+    safety++;
   }
 
-  const topLanguages = Object.entries(
-    baseData.contributionsCollection.commitContributionsByRepository.reduce(
-      (acc, i) => ({
-        ...acc,
-        ...i.repository.languages.edges
-          .filter(
-            (e) => !NOT_LANGUAGES.includes(e.node.name.toLocaleLowerCase()),
-          )
-          .reduce(
-            (acc2, l) => ({
-              ...acc2,
-              [l.node.name]: {
-                color: l.node.color,
-                value: l.size + acc[l.node.name]?.value || 0,
-              },
-            }),
-            {} as Record<string, { color: string; value: number }>,
-          ),
-      }),
-      {} as Record<string, { color: string; value: number }>,
-    ),
-  )
+  let acc: Record<string, { color: string; value: number }> = {};
+
+  baseData.contributionsCollection.commitContributionsByRepository.forEach(
+    (i) => {
+      i.repository.languages.edges
+        .filter((e) => !NOT_LANGUAGES_OBJ[e.node.name.toLocaleLowerCase()])
+        .forEach((l) => {
+          acc[l.node.name] = {
+            color: l.node.color,
+            value: l.size + acc[l.node.name]?.value || 0,
+          };
+        });
+    },
+  );
+
+  const topLanguages = Object.entries(acc)
     .sort((a, b) => b[1].value - a[1].value)
     .map((i) => ({
       name: i[0],
@@ -126,7 +127,7 @@ export const getStatsFromGitHub = async ({
     }))
     .slice(0, 3);
 
-  return {
+  const stats = {
     totalPullRequests: pullRequestData.length,
     topLanguages,
     totalStars: baseData.starredRepositories.edges.length,
@@ -138,7 +139,12 @@ export const getStatsFromGitHub = async ({
     loggedInWithGitHub,
     username: baseData.login,
     lowercasedUsername: baseData.login.toLowerCase(),
+    bestHours: getTimesOfDay(commits),
   };
+
+  console.log(stats);
+
+  return stats;
 };
 
 export const getStatsFromGitHubOrCache = async ({
@@ -148,10 +154,10 @@ export const getStatsFromGitHubOrCache = async ({
   username: string;
   token: string;
 }) => {
-  const fromCache = await getProfileStatsFromCache(username);
-  if (fromCache !== null) {
-    return fromCache;
-  }
+  // const fromCache = await getProfileStatsFromCache(username);
+  // if (fromCache !== null) {
+  //   return fromCache;
+  // }
 
   const stats = await getStatsFromGitHub({
     loggedInWithGitHub: false,

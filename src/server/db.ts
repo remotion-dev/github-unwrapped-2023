@@ -13,6 +13,7 @@ export type ProfileStats = {
   totalStars: number;
   totalContributions: number;
   topLanguages: Array<{ name: string; color: string }>;
+  bestHours: Record<string, number>;
 };
 
 const mongoUrl = () => {
