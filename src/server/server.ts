@@ -25,7 +25,7 @@ const apiEndpointWrapper = (
     req: Request,
     res: Response,
     next: NextFunction,
-  ) => Promise<Response<any, Record<string, any>>>,
+  ) => Promise<void | Response<any, Record<string, any>>> | void,
 ) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -67,8 +67,8 @@ export const startServer = async () => {
 
   app.post("api/error", apiEndpointWrapper(errorEndpoint));
 
-  app.get("/favicon.ico", faviconEndPoint);
-  app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
+  app.get("/favicon.ico", apiEndpointWrapper(faviconEndPoint));
+  app.get(REDIRECT_URL_ENDPOINT, apiEndpointWrapper(loginEndPoint));
 
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
