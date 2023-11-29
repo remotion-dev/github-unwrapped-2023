@@ -21,19 +21,26 @@
   flex-direction: column;
   gap: 8px;
   margin-bottom: 30px;
-  margin-top: 50px;
+  margin-top: 24px;
+
+  @media only screen and (min-width: 40em) {
+    margin-top: 40px;
+  }
 }
 
 .homeBoxWrapper {
   background: #191c29eb;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
   backdrop-filter: blur(5px);
   position: fixed;
   overflow: visible;
   width: calc(100% - 50px);
   max-width: 800px;
   border-radius: 10px;
+
+  @media only screen and (min-width: 40em) {
+    bottom: 224px;
+  }
 }
 
 .linkContainer {
@@ -75,5 +82,25 @@
 
   @media only screen and (min-width: 40em) {
     padding: 30px;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.mobileSubmitButton {
+  @media only screen and (min-width: 40em) {
+    display: none;
+  }
+}
+
+.desktopSubmitButton {
+  display: none;
+  width: 160px;
+  @media only screen and (min-width: 40em) {
+    display: inline;
   }
 }

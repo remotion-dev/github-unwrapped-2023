@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import { Button } from "./Button/Button";
-import { Input } from "./Input/Input";
-import { SignInWithGitHub } from "./SignInWithGitHub";
+import { ChevronRight } from "../../icons/ChevronRight";
+import { Button } from "../Button/Button";
+import { Input } from "../Input/Input";
+import { SignInWithGitHub } from "../SignInWithGitHub";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -54,15 +55,24 @@ export const LoginOptions: React.FC<Props> = ({
           }}
         />
         <Button
+          className={styles.desktopSubmitButton}
           style={{
-            borderRadius: 5,
-            height: 56,
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,
           }}
           type={"submit"}
         >
           Unwrap
+        </Button>
+        <Button
+          className={styles.mobileSubmitButton}
+          style={{
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+          }}
+          type={"submit"}
+        >
+          <ChevronRight />
         </Button>
       </form>
       <div style={{ width: 20, display: "inline-block" }} />

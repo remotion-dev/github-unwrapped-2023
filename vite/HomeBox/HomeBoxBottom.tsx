@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { LoginOptions } from "../LoginOptions";
 import { UserNotFound } from "../UserNotFound";
+import { LoginOptions } from "./LoginOptions";
 import styles from "./styles.module.css";
 
 export const HomeBoxBottom: React.FC<{

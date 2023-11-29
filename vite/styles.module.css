@@ -10,12 +10,6 @@
   align-items: center;
 }
 
-.buttonContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-}
-
 .octocat {
   position: absolute;
   height: 236px;
