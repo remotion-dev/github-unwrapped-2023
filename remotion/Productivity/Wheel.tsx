@@ -1,13 +1,29 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 
 const items = 18;
-const radius = 400;
+const radius = 200;
 
 export const Wheel: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
-  const rotation = frame / 100;
+  const progress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: 30,
+  });
+
+  const rotation = (interpolate(progress, [0, 1], [0.2, 0]) % Math.PI) * 2;
 
   return (
     <AbsoluteFill
@@ -28,8 +44,7 @@ export const Wheel: React.FC = () => {
             key={i}
             style={{
               justifyContent: "center",
-              alignItems: "center",
-              fontSize: 100,
+              fontSize: 50,
               transform: `translateZ(${z}px) translateY(${y}px) rotateX(${r}deg)`,
               backfaceVisibility: "hidden",
               perspective: 1000,
@@ -44,7 +59,8 @@ export const Wheel: React.FC = () => {
                 backfaceVisibility: "hidden",
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "center",
+                width: 600,
+                marginLeft: 100,
               }}
             >
               <div
