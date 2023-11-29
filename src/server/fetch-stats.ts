@@ -69,8 +69,6 @@ export const getStatsFromGitHub = async ({
 }): Promise<ProfileStats> => {
   const fetchedAt = Date.now();
 
-  console.log(loggedInWithGitHub);
-
   const baseData = await fetchFromGitHub<BaseQueryResponse>({
     username,
     token,
