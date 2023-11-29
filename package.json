@@ -11,7 +11,7 @@
     "remotion": "remotion studio",
     "render": "remotion render",
     "deploy": "bun deploy.ts",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org remotion-ag --project node ./dist && sentry-cli sourcemaps upload --org remotion-ag --project node ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org remotion --project node ./dist && sentry-cli sourcemaps upload --org remotion --project node ./dist"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.74",
