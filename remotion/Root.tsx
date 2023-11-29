@@ -240,9 +240,9 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           starsGiven: 10,
           showBackground: true,
-          showHitWindow: true,
+          showHitWindow: false,
           showCockpit: true,
-          showDots: true,
+          showDots: false,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
