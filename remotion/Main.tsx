@@ -1,12 +1,14 @@
 import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, Series } from "remotion";
+import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
 import type { compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
+import { FPS } from "./Issues/make-ufo-positions";
 import { LandingScene } from "./Landing";
+import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { PullRequests } from "./Paths/Paths";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
@@ -36,7 +38,8 @@ export const calculateDuration = ({
     PULL_REQUESTS_SCENE +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
-    STARS_AND_PRODUCTIVITY
+    STARS_AND_PRODUCTIVITY +
+    OPENING_SCENE_LENGTH
   );
 };
 
@@ -68,7 +71,11 @@ export const Main: React.FC<Schema> = ({
 
   return (
     <AbsoluteFill>
+      <Audio startFrom={FPS} src={staticFile("music/robots-preview.mp3")} />
       <Series>
+        <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
+          <OpeningScene />
+        </Series.Sequence>
         <Series.Sequence durationInFrames={introScene}>
           <AllPlanets
             corner={corner}
@@ -90,7 +97,8 @@ export const Main: React.FC<Schema> = ({
             starsGiven={starsGiven}
             showBackground={false}
             showHitWindow={false}
-            showCockpit={false}
+            showCockpit
+            showDots={false}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>

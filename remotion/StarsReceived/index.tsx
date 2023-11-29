@@ -1,12 +1,5 @@
 import { Pie } from "@remotion/shapes";
-import {
-  AbsoluteFill,
-  Sequence,
-  random,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, Sequence, random } from "remotion";
 import { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Tablet } from "../Productivity/Tablet";
@@ -28,7 +21,10 @@ export const starsReceivedSchema = z.object({
 });
 
 export const StarsReceived: React.FC<
-  z.infer<typeof starsReceivedSchema> & { style?: React.CSSProperties }
+  z.infer<typeof starsReceivedSchema> & {
+    style?: React.CSSProperties;
+    tabletTransition: number;
+  }
 > = ({
   starsGiven,
   style,
@@ -36,18 +32,8 @@ export const StarsReceived: React.FC<
   showHitWindow,
   showCockpit,
   showDots,
+  tabletTransition,
 }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const tabletTransition = spring({
-    fps,
-    frame,
-    delay: 295,
-    config: {
-      mass: 4,
-      damping: 200,
-    },
-  });
   return (
     <AbsoluteFill style={style}>
       {showBackground ? (
