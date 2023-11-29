@@ -218,7 +218,6 @@ export const RemotionRoot: React.FC = () => {
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
-          tabletTransition: 0,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -277,6 +276,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           graphData: GRAPH_DATA,
+          enter: 1,
         }}
       />
       <Composition

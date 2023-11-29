@@ -47,14 +47,7 @@ export const StarsAndProductivity: React.FC<
         }}
       />
       <Sequence from={ZOOM_DELAY}>
-        <Tablet
-          style={{
-            position: "absolute",
-            transformOrigin: "left bottom",
-            transform: `translateY(${900 - zoomTransition * 900}px) scale(0.8)`,
-          }}
-          graphData={GRAPH_DATA}
-        />
+        <Tablet enter={zoomTransition} graphData={GRAPH_DATA} />
       </Sequence>
     </AbsoluteFill>
   );
