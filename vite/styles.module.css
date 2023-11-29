@@ -1,11 +1,10 @@
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   background-position: bottom;
   background-size: cover;
-  position: relative;
 
   justify-content: center;
   align-items: center;
