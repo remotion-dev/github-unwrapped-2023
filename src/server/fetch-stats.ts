@@ -84,7 +84,7 @@ export const getStatsFromGitHub = async ({
       .filter((n) => n.createdAt.startsWith("2023"))
       .map((n) => ({ title: n.title, createdAt: n.createdAt }));
 
-    if (prs.length !== data.pullRequests.nodes.length) {
+    if (prs.length === 0 || prs.length !== data.pullRequests.nodes.length) {
       done = true;
     }
 
