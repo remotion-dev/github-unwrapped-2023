@@ -1,12 +1,15 @@
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
-import { insertProfileStats, type ProfileStats } from "./db.js";
-import { sendDiscordMessage } from "./discord.js";
-import { baseQuery, BaseQueryResponse } from "./queries/base.query.js";
 import {
-  pullRequestQuery,
-  PullRequestQueryResponse,
-} from "./queries/pull-request.query.js";
+  getProfileStatsFromCache,
+  insertProfileStats,
+  type ProfileStats,
+} from "./db.js";
+import { sendDiscordMessage } from "./discord.js";
+import type { BaseQueryResponse } from "./queries/base.query.js";
+import { baseQuery } from "./queries/base.query.js";
+import type { PullRequestQueryResponse } from "./queries/pull-request.query.js";
+import { pullRequestQuery } from "./queries/pull-request.query.js";
 import { getQuery } from "./queries/query.js";
 
 const fetchFromGitHub =
@@ -77,10 +80,10 @@ export const getStatsFromGitHub = async ({
     token,
   })(baseQuery);
 
-  let pullRequestData: Array<{ title: string; createdAt: string }> = [];
+  const pullRequestData: Array<{ title: string; createdAt: string }> = [];
 
   let done = false;
-  let cursor = undefined;
+  let cursor;
   let safety = 0;
 
   const commits = username ? await getALotOfGithubCommits(username, token) : [];
@@ -104,7 +107,7 @@ export const getStatsFromGitHub = async ({
     safety++;
   }
 
-  let acc: Record<string, { color: string; value: number }> = {};
+  const acc: Record<string, { color: string; value: number }> = {};
 
   baseData.contributionsCollection.commitContributionsByRepository.forEach(
     (i) => {
@@ -154,10 +157,10 @@ export const getStatsFromGitHubOrCache = async ({
   username: string;
   token: string;
 }) => {
-  // const fromCache = await getProfileStatsFromCache(username);
-  // if (fromCache !== null) {
-  //   return fromCache;
-  // }
+  const fromCache = await getProfileStatsFromCache(username);
+  if (fromCache !== null) {
+    return fromCache;
+  }
 
   const stats = await getStatsFromGitHub({
     loggedInWithGitHub: false,
