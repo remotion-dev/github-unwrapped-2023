@@ -60,6 +60,7 @@ export const LoginOptions: React.FC<Props> = ({
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,
           }}
+          type={"submit"}
         >
           Unwrap
         </Button>
