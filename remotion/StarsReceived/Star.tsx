@@ -13,6 +13,7 @@ const MOVE_AIM = 100;
 export const HIT_RADIUS = 450;
 
 const MAX_HITS = 10;
+export const STAR_ANIMATION_DURATION = 20;
 
 export const Star: React.FC<{
   duration: number;

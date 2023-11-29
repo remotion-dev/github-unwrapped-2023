@@ -1,4 +1,3 @@
-import { noise2D } from "@remotion/noise";
 import React from "react";
 import {
   AbsoluteFill,
@@ -9,7 +8,11 @@ import {
 } from "remotion";
 import CockpitSVG from "./CockpitSVG";
 
-export const AnimatedCockpit: React.FC = () => {
+export const AnimatedCockpit: React.FC<{
+  xShake: number;
+  yShake: number;
+  rotationShake: number;
+}> = ({ xShake, yShake, rotationShake }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -21,9 +24,6 @@ export const AnimatedCockpit: React.FC = () => {
     },
   });
 
-  const xShake = noise2D("xshake", frame / 10, 0) * 10;
-  const yShake = noise2D("yshake", frame / 10, 0) * 10;
-
   const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
   const scaleDivided = 1 / distance;
 
@@ -31,7 +31,10 @@ export const AnimatedCockpit: React.FC = () => {
     <AbsoluteFill
       style={{
         scale: String(scaleDivided),
-        transform: `scale(${scaleDivided}) translate(${xShake}px, ${yShake}px)`,
+        transform: `rotate(${rotationShake}rad) scale(${
+          // +0.1 so noise doesn't cut off
+          scaleDivided + 0.1
+        }) translate(${xShake}px, ${yShake}px)`,
       }}
     >
       <CockpitSVG />

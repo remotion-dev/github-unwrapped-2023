@@ -42,6 +42,7 @@ import {
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
+import { Shine, Shines, shineSchema } from "./StarsReceived/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
@@ -214,7 +215,7 @@ export const RemotionRoot: React.FC = () => {
           starsGiven: 43,
           showBackground: true,
           showHitWindow: false,
-          showCockpit: true,
+          showCockpit: false,
           showDots: false,
           tabletTransition: 10,
         }}
@@ -494,6 +495,34 @@ export const RemotionRoot: React.FC = () => {
             />
           );
         })}
+      </Folder>
+      <Folder name="StarsReceived">
+        <Composition
+          id="shine"
+          component={Shine}
+          fps={30}
+          durationInFrames={100}
+          height={1080}
+          width={1080}
+          schema={shineSchema}
+          defaultProps={{
+            rotation: 0.1,
+            showHelpers: false,
+          }}
+        />
+        <Composition
+          id="shines"
+          component={Shines}
+          fps={30}
+          durationInFrames={100}
+          height={1080}
+          width={1080}
+          defaultProps={{
+            rotationShake: 0,
+            xShake: 0,
+            yShake: 0,
+          }}
+        />
       </Folder>
     </>
   );
