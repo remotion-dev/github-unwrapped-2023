@@ -24,10 +24,10 @@ const boundingBox = getBoundingBox(descriptionPath);
 
 export const DESCRIPTION_SEQUENCE_DURATION = 120;
 
-export const Description: React.FC<{ starsReceived: number }> = ({
-  starsReceived,
+export const Description: React.FC<{ starsGiven: number }> = ({
+  starsGiven,
 }) => {
-  const sequenceDelay = starsReceived * TIME_INBETWEEN_STARS;
+  const sequenceDelay = starsGiven * TIME_INBETWEEN_STARS;
   const frame = useCurrentFrame();
   const sequenceFrame = frame - sequenceDelay;
   const { fps } = useVideoConfig();
@@ -82,7 +82,7 @@ export const Description: React.FC<{ starsReceived: number }> = ({
           opacity: descriptionEnterOpacity - descriptionExitOpacity,
         }}
       >
-        {starsReceived} stars received
+        {starsGiven} stars received
       </div>
       <svg
         viewBox={`0 0 ${boundingBox.width} ${boundingBox.height}`}

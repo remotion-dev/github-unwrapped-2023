@@ -56,7 +56,7 @@ export const Main: React.FC<Schema> = ({
   showHelperLine,
   login,
   planet,
-  starsReceived,
+  starsGiven,
   issuesClosed,
   issuesOpened,
 }) => {
@@ -87,7 +87,7 @@ export const Main: React.FC<Schema> = ({
           offset={-ISSUES_EXIT_DURATION}
         >
           <StarsAndProductivity
-            starsReceived={starsReceived}
+            starsGiven={starsGiven}
             showBackground={false}
             showHitWindow={false}
             showCockpit={false}

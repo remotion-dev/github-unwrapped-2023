@@ -20,7 +20,7 @@ export const TIME_INBETWEEN_STARS = 10;
 export const STAR_DELAY = 20;
 
 export const starsReceivedSchema = z.object({
-  starsReceived: z.number().min(0),
+  starsGiven: z.number().min(0),
   showBackground: z.boolean(),
   showHitWindow: z.boolean(),
   showCockpit: z.boolean(),
@@ -30,7 +30,7 @@ export const starsReceivedSchema = z.object({
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & { style?: React.CSSProperties }
 > = ({
-  starsReceived,
+  starsGiven,
   style,
   showBackground,
   showHitWindow,
@@ -75,7 +75,7 @@ export const StarsReceived: React.FC<
           />
         </AbsoluteFill>
       ) : null}
-      {new Array(starsReceived).fill("").map((_, index) => (
+      {new Array(starsGiven).fill("").map((_, index) => (
         <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}
           from={index * TIME_INBETWEEN_STARS + STAR_DELAY}
@@ -84,13 +84,13 @@ export const StarsReceived: React.FC<
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
             id={`star-${index}`}
             duration={20}
-            starsShown={Math.min(starsReceived, MAX_STARS)}
+            starsShown={Math.min(starsGiven, MAX_STARS)}
             showDots={showDots}
           />
         </Sequence>
       ))}
       {showCockpit ? <AnimatedCockpit /> : null}
-      <Description starsReceived={starsReceived} />
+      <Description starsGiven={starsGiven} />
       <Tablet
         style={{
           position: "absolute",

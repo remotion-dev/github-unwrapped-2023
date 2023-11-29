@@ -211,14 +211,14 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
         defaultProps={{
-          starsReceived: 43,
+          starsGiven: 43,
           showBackground: true,
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
         }}
         calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
+          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
           return {
             durationInFrames:
               (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
@@ -237,14 +237,14 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
         defaultProps={{
-          starsReceived: 10,
+          starsGiven: 10,
           showBackground: true,
           showHitWindow: true,
           showCockpit: true,
           showDots: true,
         }}
         calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
+          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
           return {
             durationInFrames:
               (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
@@ -464,7 +464,7 @@ export const RemotionRoot: React.FC = () => {
           showHelperLine: false,
           login: "JonnyBurger",
           planet: "Silver",
-          starsReceived: 10,
+          starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,
         }}

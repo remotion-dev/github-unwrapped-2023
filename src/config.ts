@@ -12,7 +12,7 @@ export const TIMEOUT = 240;
 const availablePlanets = ["Ice", "Silver", "Gold"] as const;
 export type Planet = (typeof availablePlanets)[number];
 
-export const planetEnum = z.enum(availablePlanets);
+export const PlanetEnum = z.enum(availablePlanets);
 
 export const LanguagesEnum = z.enum([
   "Java",
@@ -33,17 +33,25 @@ export const cornerType = z.enum([
 ]);
 export type Corner = z.infer<typeof cornerType>;
 
+export const languageSchema = LanguagesEnum.or(
+  z.object({
+    name: z.string(),
+    color: z.string(),
+  }),
+);
+
 export const compositionSchema = z.object({
-  language1: LanguagesEnum,
-  language2: LanguagesEnum.or(z.null()),
-  language3: LanguagesEnum.or(z.null()),
+  language1: languageSchema,
+  language2: languageSchema.or(z.null()),
+  language3: languageSchema.or(z.null()),
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
-  planet: planetEnum,
-  starsReceived: z.number(),
+  planet: PlanetEnum,
+  starsGiven: z.number(),
   issuesOpened: z.number(),
   issuesClosed: z.number(),
+  totalPullRequests: z.number(),
 });
 
 export const RenderRequest = z.object({

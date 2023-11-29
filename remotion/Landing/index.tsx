@@ -10,7 +10,7 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { Planet } from "../../src/config";
-import { planetEnum } from "../../src/config";
+import { PlanetEnum } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Background } from "./Background";
@@ -22,7 +22,7 @@ import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 
 export const planetSchema = z.object({
-  planetType: planetEnum,
+  planetType: PlanetEnum,
 });
 
 const PLANET_SIZE = 1400;
@@ -62,7 +62,7 @@ type PlanetAttributes = {
 };
 
 const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
-  [planetEnum.Values.Ice]: {
+  [PlanetEnum.Values.Ice]: {
     colors: {
       color1: "#02e3f2",
       color2: "#42d9e3",
@@ -101,7 +101,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     style: {},
     landingAdjustment: -90,
   },
-  [planetEnum.Values.Silver]: {
+  [PlanetEnum.Values.Silver]: {
     colors: {
       color1: "#a8a8a8",
       color2: "#b8b8b8",
@@ -121,7 +121,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     landingAdjustment: 0,
     sparkles: [],
   },
-  [planetEnum.Values.Gold]: {
+  [PlanetEnum.Values.Gold]: {
     colors: {
       color1: "#cd9631",
       color2: "#cf9b36",
@@ -462,7 +462,7 @@ export const LandingCut: React.FC<z.infer<typeof planetSchema>> = () => {
   return (
     <Sequence>
       <Sequence durationInFrames={CUTOVER}>
-        <LandingScene planetType={planetEnum.Values.Ice} />
+        <LandingScene planetType={PlanetEnum.Values.Ice} />
       </Sequence>
       <Sequence
         style={{
@@ -472,7 +472,7 @@ export const LandingCut: React.FC<z.infer<typeof planetSchema>> = () => {
         from={CUTOVER - 1}
       >
         <Sequence from={-CUTOVER - 1}>
-          <LandingScene planetType={planetEnum.Values.Ice} />
+          <LandingScene planetType={PlanetEnum.Values.Ice} />
         </Sequence>
       </Sequence>
     </Sequence>
