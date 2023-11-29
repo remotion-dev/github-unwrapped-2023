@@ -1,6 +1,11 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
-import type { compositionSchema } from "../../src/config";
+import {
+  LanguagesEnum,
+  PlanetEnum,
+  type compositionSchema,
+  type languageSchema,
+} from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
@@ -40,22 +45,59 @@ declare global {
   }
 }
 
+type CompositionParameters = z.infer<typeof compositionSchema>;
+
+const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
+  if (userStats.totalContributions > 10000) {
+    return PlanetEnum.Enum.Gold;
+  }
+
+  if (userStats.totalContributions > 1000) {
+    return PlanetEnum.Enum.Silver;
+  }
+
+  return PlanetEnum.Enum.Ice;
+};
+
+const parseTopLanguage = (topLanguage: {
+  name: string;
+  color: string;
+}): z.infer<typeof languageSchema> => {
+  try {
+    return LanguagesEnum.parse(topLanguage.name);
+  } catch (e) {
+    return topLanguage;
+  }
+};
+
+const computeCompositionParameters = (
+  userStats: ProfileStats,
+): CompositionParameters => {
+  return {
+    login: userStats.username,
+    // TODO
+    corner: "bottom-right",
+    language1: parseTopLanguage(userStats.topLanguages[0]),
+    language2:
+      userStats.topLanguages.length > 1
+        ? parseTopLanguage(userStats.topLanguages[1])
+        : null,
+    language3:
+      userStats.topLanguages.length > 1
+        ? parseTopLanguage(userStats.topLanguages[2])
+        : null,
+    showHelperLine: false,
+    planet: computePlanet(userStats),
+    starsGiven: userStats.totalStars,
+    issuesClosed: userStats.closedIssues,
+    issuesOpened: userStats.openIssues,
+    totalPullRequests: userStats.totalPullRequests,
+  };
+};
+
 export const UserPage = () => {
-  const inputProps: z.infer<typeof compositionSchema> = useMemo(() => {
-    return {
-      login: window.__USER__.username,
-      // TODO: Real data
-      corner: "bottom-right",
-      language1: "Go",
-      language2: "TypeScript",
-      language3: "JavaScript",
-      showHelperLine: false,
-      startRotationInRadians: 0,
-      planet: "Ice",
-      starsReceived: 10,
-      issuesClosed: 10,
-      issuesOpened: 10,
-    };
+  const inputProps: CompositionParameters = useMemo(() => {
+    return computeCompositionParameters(window.__USER__);
   }, []);
 
   return (

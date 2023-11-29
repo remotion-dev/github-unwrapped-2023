@@ -3,12 +3,16 @@ import { MongoClient } from "mongodb";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
+  totalPullRequests: number;
   username: string;
   lowercasedUsername: string;
   openIssues: number;
   closedIssues: number;
   fetchedAt: number;
   loggedInWithGitHub: boolean;
+  totalStars: number;
+  totalContributions: number;
+  topLanguages: Array<{ name: string; color: string }>;
 };
 
 const mongoUrl = () => {
@@ -26,7 +30,7 @@ const getStatsCollection = async () => {
 };
 
 export const insertProfileStats = async (
-  stats: ProfileStats
+  stats: ProfileStats,
 ): Promise<boolean> => {
   const collection = await getStatsCollection();
   const { lowercasedUsername, ...statsWithoutPrimary } = stats;
@@ -35,13 +39,13 @@ export const insertProfileStats = async (
     {
       $set: statsWithoutPrimary,
     },
-    { upsert: true }
+    { upsert: true },
   );
   return value.acknowledged;
 };
 
 export const getProfileStatsFromCache = async (
-  username: string
+  username: string,
 ): Promise<WithId<ProfileStats> | null> => {
   const collection = await getStatsCollection();
   const value = await collection.findOne({

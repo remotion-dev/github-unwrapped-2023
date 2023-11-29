@@ -13,13 +13,12 @@ const BIGGEST_HEIGHT = 284;
 
 export const STAR_DURATION = 7;
 
-export const StarSprite: React.FC<{ burstFrame?: number; transitionDuration: number }> = ({
-  burstFrame,
-  transitionDuration
-}) => {
+export const StarSprite: React.FC<{
+  burstFrame?: number;
+}> = ({ burstFrame }) => {
   const frame = useCurrentFrame();
 
-  const actualFrame = Math.round((frame - (burstFrame ?? 0)) / (transitionDuration/15) );
+  const actualFrame = Math.round(frame - (burstFrame ?? 0));
 
   const actualScale = 1.5;
 
@@ -52,9 +51,9 @@ export const StarSprite: React.FC<{ burstFrame?: number; transitionDuration: num
       case 6: {
         return <StarSprite7SVG />;
       }
-      
+
       default: {
-       return <StarSprite1ASVG />;
+        return <StarSprite1ASVG />;
       }
     }
   };

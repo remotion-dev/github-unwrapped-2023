@@ -4,6 +4,8 @@ import Background from "./Background";
 import Foreground from "./Foreground";
 import Spaceship from "./Spaceship";
 
+export const OPENING_SCENE_LENGTH = 60;
+
 export const OpeningScene: React.FC = () => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -30,12 +32,11 @@ export const OpeningScene: React.FC = () => {
           <Background />
         </AbsoluteFill>
 
-        <AbsoluteFill style={{ top: -100 }}>
-          <Spaceship />
-        </AbsoluteFill>
-
         <AbsoluteFill style={{ top: 0 }}>
           <Foreground />
+        </AbsoluteFill>
+        <AbsoluteFill style={{ top: -100 }}>
+          <Spaceship />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>

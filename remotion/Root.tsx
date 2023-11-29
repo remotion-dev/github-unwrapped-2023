@@ -36,8 +36,9 @@ import { STAR_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
-  STARS_DELAY,
+  STAR_DELAY,
   StarsReceived,
+  TIME_INBETWEEN_STARS,
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
@@ -209,13 +210,20 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10, showBackground: true }}
+        defaultProps={{
+          starsGiven: 43,
+          showBackground: true,
+          showHitWindow: false,
+          showCockpit: true,
+          showDots: false,
+        }}
         calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
+          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
           return {
             durationInFrames:
-              (starsDisplayed - 1) * STARS_DELAY +
+              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
               STAR_DURATION +
+              STAR_DELAY +
               DESCRIPTION_SEQUENCE_DURATION,
           };
         }}
@@ -228,12 +236,18 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={starsReceivedSchema}
-        defaultProps={{ starsReceived: 10, showBackground: true }}
+        defaultProps={{
+          starsGiven: 10,
+          showBackground: true,
+          showHitWindow: true,
+          showCockpit: true,
+          showDots: true,
+        }}
         calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsReceived, MAX_STARS);
+          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
           return {
             durationInFrames:
-              (starsDisplayed - 1) * STARS_DELAY +
+              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
               STAR_DURATION +
               DESCRIPTION_SEQUENCE_DURATION +
               100,
@@ -450,7 +464,7 @@ export const RemotionRoot: React.FC = () => {
           showHelperLine: false,
           login: "JonnyBurger",
           planet: "Silver",
-          starsReceived: 10,
+          starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,
         }}

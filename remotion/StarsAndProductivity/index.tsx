@@ -4,11 +4,13 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { z } from "zod";
+import type { starsReceivedSchema } from "../StarsReceived";
 import { StarsReceived } from "../StarsReceived";
 
 export const StarsAndProductivity: React.FC<
-  React.ComponentProps<typeof StarsReceived>
-> = ({ starsReceived }) => {
+  z.infer<typeof starsReceivedSchema>
+> = ({ starsGiven, showHitWindow, showBackground, showCockpit, showDots }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const zoomTransition = spring({
@@ -23,11 +25,16 @@ export const StarsAndProductivity: React.FC<
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;
   const scale = 1 + zoomTransition * 0.5;
+
   return (
     <AbsoluteFill>
       <StarsReceived
-        showBackground={false}
-        starsReceived={starsReceived}
+        showBackground={showBackground}
+        showHitWindow={showHitWindow}
+        starsGiven={starsGiven}
+        showCockpit={showCockpit}
+        showDots={showDots}
+        tabletTransition={zoomTransition}
         style={{
           transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
         }}

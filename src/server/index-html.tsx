@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import type { Request, Response } from "express";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -34,6 +35,7 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
       );
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
+      Sentry.captureException(err);
       console.error(err);
       response.status(500).end((err as Error).message);
     }
@@ -51,6 +53,7 @@ export const handleIndexHtmlProduction = () => {
       );
       response.end();
     } catch (err) {
+      Sentry.captureException(err);
       sendDiscordMessage(`Error occurred:\n> ${(err as Error).stack}`);
       // TODO: Improve this
       response.status(500).end((err as Error).message);
