@@ -39,3 +39,6 @@ out/
 .env.production
 .env.staging
 dist
+
+# Sentry Config File
+.sentryclirc

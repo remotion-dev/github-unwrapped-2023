@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch src/server/index.ts",
-    "build": "node build.mjs",
+    "build": "node build.mjs && npm run sentry:sourcemaps",
     "start": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint . --ext .ts,.tsx",
     "remotion": "remotion studio",
     "render": "remotion render",
-    "deploy": "bun deploy.ts"
+    "deploy": "bun deploy.ts",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org remotion-ag --project node ./dist && sentry-cli sourcemaps upload --org remotion-ag --project node ./dist"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.74",
@@ -22,6 +23,9 @@
     "@remotion/player": "4.0.74",
     "@remotion/shapes": "4.0.74",
     "@remotion/transitions": "4.0.74",
+    "@sentry/cli": "^2.22.3",
+    "@sentry/node": "^7.83.0",
+    "@sentry/profiling-node": "^1.2.6",
     "@tanstack/react-router": "^0.0.1-beta.212",
     "@types/body-parser": "^1.19.5",
     "@types/express": "^4.17.21",

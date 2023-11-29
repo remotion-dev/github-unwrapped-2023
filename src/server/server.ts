@@ -1,6 +1,7 @@
+import * as Sentry from "@sentry/node";
 import react from "@vitejs/plugin-react-swc";
 import bodyParser from "body-parser";
-import type { Express } from "express";
+import type { Express, NextFunction, Request, Response } from "express";
 import express from "express";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
@@ -17,6 +18,24 @@ import {
 import { loginEndPoint } from "./login.js";
 import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
+import { errorEndpoint } from "./sentry-test.js";
+
+const apiEndpointWrapper = (
+  endpoint: (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void | Response<any, Record<string, any>>> | void,
+) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await endpoint(req, res, next);
+    } catch (error) {
+      Sentry.captureException(error);
+      res.status(500).end((error as Error).message);
+    }
+  };
+};
 
 const startViteDevelopmentServer = async (app: Express) => {
   const server = await createServer({
@@ -42,12 +61,14 @@ export const startServer = async () => {
 
   app.use(bodyParser.json());
 
-  app.post("/api/render", renderEndPoint);
+  app.post("/api/render", apiEndpointWrapper(renderEndPoint));
 
-  app.post("/api/progress", progressEndPoint);
+  app.post("/api/progress", apiEndpointWrapper(progressEndPoint));
 
-  app.get("/favicon.ico", faviconEndPoint);
-  app.get(REDIRECT_URL_ENDPOINT, loginEndPoint);
+  app.post("api/error", apiEndpointWrapper(errorEndpoint));
+
+  app.get("/favicon.ico", apiEndpointWrapper(faviconEndPoint));
+  app.get(REDIRECT_URL_ENDPOINT, apiEndpointWrapper(loginEndPoint));
 
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
