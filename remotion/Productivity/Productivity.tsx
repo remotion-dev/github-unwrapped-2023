@@ -5,7 +5,7 @@ import {
   useVideoConfig,
 } from "remotion";
 
-const barBackground = "rgb(0,0,0)";
+const barBackground = "#181B28";
 const barColor = "rgb(133,134,214)";
 
 type ProductivityPerHour = {
@@ -26,9 +26,6 @@ const Bar = (props: { productivity: number }) => {
     from: 0,
     to: 100,
     config: {
-      /**
-       * If the mass is 0 give it some mass as well
-       */
       mass: props.productivity * 10 + 0.1,
       damping: 200,
     },
@@ -43,6 +40,7 @@ const Bar = (props: { productivity: number }) => {
         display: "flex",
         alignItems: "flex-end",
         borderRadius: 16,
+        border: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
       <div
