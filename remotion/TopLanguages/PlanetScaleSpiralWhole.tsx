@@ -9,9 +9,9 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { LanguagesEnum } from "../../src/config";
+import { languageSchema } from "../../src/config";
 import { moveAlongLine } from "../move-along-line";
-import { mapLanguageToPlanet } from "./constants";
+import { computePlanetInfo } from "./constants";
 import type { ClockDirection } from "./corner";
 import { clockDirectionSchema } from "./corner";
 import { remapSpeed } from "./remap-speed";
@@ -28,7 +28,7 @@ const frameAtStart = 15;
 const frameAtEnd = 110;
 
 const spiralWholeSchema = z.object({
-  language: LanguagesEnum,
+  language: languageSchema,
   showHelperLine: z.boolean(),
   startRotationInRadians: z.number().step(0.1).min(0),
   clockDirection: clockDirectionSchema,
@@ -78,7 +78,7 @@ const getPath = ({
 export const PlanetScaleSpiralWhole: React.FC<
   z.infer<typeof spiralWholeSchema>
 > = ({ language, showHelperLine, startRotationInRadians, clockDirection }) => {
-  const { PlanetSVG } = mapLanguageToPlanet[language];
+  const { PlanetSVG } = computePlanetInfo(language);
 
   const frame = useCurrentFrame();
   const spedUpFrame = remapSpeed(frame, speedRemapFn);

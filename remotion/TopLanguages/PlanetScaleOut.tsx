@@ -10,12 +10,12 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { Corner } from "../../src/config";
-import { LanguagesEnum, cornerType } from "../../src/config";
+import { cornerType, languageSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { moveAlongLine } from "../move-along-line";
 import { LanguageDescription } from "./LanguageDescription";
-import { mapLanguageToPlanet } from "./constants";
+import { computePlanetInfo } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
   NewRocketSVG,
@@ -28,7 +28,7 @@ const PATH_EXTRAPOLATION = 0.1;
 
 export const zoomOutSchema = z.object({
   corner: cornerType,
-  language: LanguagesEnum,
+  language: languageSchema,
   position: z.number().int(),
 });
 
@@ -125,7 +125,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   language,
   position,
 }) => {
-  const { PlanetSVG, gradient } = mapLanguageToPlanet[language];
+  const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -163,14 +163,9 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
-  const gradientOpacity = interpolate(
-    frame,
-    [0, 15],
-    [0, mapLanguageToPlanet[language].opacity],
-    {
-      extrapolateRight: "clamp",
-    },
-  );
+  const gradientOpacity = interpolate(frame, [0, 15], [0, opacity], {
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill>

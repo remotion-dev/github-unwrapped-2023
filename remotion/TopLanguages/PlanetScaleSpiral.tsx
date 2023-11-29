@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { LanguagesEnum, cornerType } from "../../src/config";
+import { cornerType, languageSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
-import { mapLanguageToPlanet } from "./constants";
+import { computePlanetInfo } from "./constants";
 import {
   deriveClockDirectionFromEnterDirection,
   deriveEnterDirectionFromCorner,
@@ -13,7 +13,7 @@ import {
 } from "./corner";
 
 export const spiralSchema = z.object({
-  language: LanguagesEnum,
+  language: languageSchema,
   showHelperLine: z.boolean(),
   corner: cornerType,
   position: z.number().int(),
@@ -45,10 +45,12 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   const clockDirection = deriveClockDirectionFromEnterDirection(enterDirection);
   const startRotation = deriveStartRotationFromEnterDirection(enterDirection);
 
+  const planetInfo = computePlanetInfo(language);
+
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ opacity: mapLanguageToPlanet[language].opacity }}>
-        <Gradient gradient={mapLanguageToPlanet[language].gradient} />
+      <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
+        <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>
       <AbsoluteFill style={style}>
         <PlanetScaleSpiralWhole

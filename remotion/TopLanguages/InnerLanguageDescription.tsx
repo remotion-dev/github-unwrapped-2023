@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
+import { z } from "zod";
+import { languageSchema } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
-import type { LanguageEnumType } from "./constants";
 import { mapLanguageToPlanet } from "./constants";
 
 const INNER_BORDER_RADIUS = 10;
@@ -40,20 +41,27 @@ const languageBaseStyle: React.CSSProperties = {
 };
 
 export const InnerLanguageDescription: React.FC<{
-  language: LanguageEnumType;
+  language: z.infer<typeof languageSchema>;
   position: number;
 }> = ({ language, position }) => {
   const languageStyle = useMemo(() => {
     return {
       ...languageBaseStyle,
-      color: mapLanguageToPlanet[language].textColor,
+      color:
+        typeof language !== "string"
+          ? language.color
+          : mapLanguageToPlanet[language].textColor,
     };
   }, [language]);
 
   return (
     <div style={label}>
       <div style={num}>{position}</div>
-      <div style={languageStyle}>{mapLanguageToPlanet[language].name}</div>
+      <div style={languageStyle}>
+        {typeof language !== "string"
+          ? language.name
+          : mapLanguageToPlanet[language].name}
+      </div>
     </div>
   );
 };
