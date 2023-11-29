@@ -1,4 +1,8 @@
-import { insertProfileStats, type ProfileStats } from "./db.js";
+import {
+  getProfileStatsFromCache,
+  insertProfileStats,
+  type ProfileStats,
+} from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { baseQuery, BaseQueryResponse } from "./queries/base.query.js";
 import {
@@ -65,6 +69,8 @@ export const getStatsFromGitHub = async ({
 }): Promise<ProfileStats> => {
   const fetchedAt = Date.now();
 
+  console.log(loggedInWithGitHub);
+
   const baseData = await fetchFromGitHub<BaseQueryResponse>({
     username,
     token,
@@ -74,6 +80,7 @@ export const getStatsFromGitHub = async ({
 
   let done = false;
   let cursor = undefined;
+
   while (!done) {
     const data = await fetchFromGitHub<PullRequestQueryResponse>({
       username,
@@ -143,10 +150,10 @@ export const getStatsFromGitHubOrCache = async ({
   username: string;
   token: string;
 }) => {
-  // const fromCache = await getProfileStatsFromCache(username);
-  // if (fromCache !== null) {
-  //   return fromCache;
-  // }
+  const fromCache = await getProfileStatsFromCache(username);
+  if (fromCache !== null) {
+    return fromCache;
+  }
 
   const stats = await getStatsFromGitHub({
     loggedInWithGitHub: false,
