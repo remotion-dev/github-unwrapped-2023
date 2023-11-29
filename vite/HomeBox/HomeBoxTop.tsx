@@ -14,22 +14,10 @@ const container: React.CSSProperties = {
   background: "rgba(255, 255, 255, 0.03)",
 };
 
-const hashtag: React.CSSProperties = {
-  fontSize: 15,
-  padding: 0,
-  margin: 0,
-  marginLeft: 10,
-  fontWeight: "bolder",
-  display: "inline",
-  lineHeight: 1,
-};
-
 export const HomeBoxTop: React.FC = () => {
   return (
     <div style={container}>
-      <div className={styles.gradientText} style={hashtag}>
-        #GitHubUnwrapped
-      </div>
+      <div className={styles.gradientText}>#GitHubUnwrapped</div>
       <div style={{ flex: 1 }} />
       <HomeLink
         href={"https://github.com/remotion-dev/github-unwrapped-2023"}
