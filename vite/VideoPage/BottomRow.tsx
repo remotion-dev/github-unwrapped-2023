@@ -2,8 +2,6 @@ import React from "react";
 import { RocketIcon } from "../../icons/RocketIcon";
 import { HomeLink } from "../HomeLink";
 
-export const ACTION_ROW_PADDING = "8px 6px";
-
 const style: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
@@ -12,7 +10,7 @@ const style: React.CSSProperties = {
   fontSize: 14,
   fontWeight: 500,
   cursor: "pointer",
-  padding: ACTION_ROW_PADDING,
+  padding: "8px 6px",
   justifyContent: "flex-end",
   background: "rgba(255, 255, 255, 0.03)",
 };

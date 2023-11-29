@@ -1,4 +1,5 @@
 .gradientText {
+  display: none;
   background: linear-gradient(270.02deg, #645278 20.63%, #82b6c6 99.87%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -8,8 +9,11 @@
   margin: 0;
   margin-left: 10px;
   font-weight: bolder;
-  display: inline;
   line-height: 1;
+
+  @media only screen and (min-width: 40em) {
+    display: inline;
+  }
 }
 
 .inputWrapper {
@@ -30,4 +34,22 @@
   width: calc(100% - 50px);
   max-width: 800px;
   border-radius: 10px;
+}
+
+.linkContainer {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+
+  @media only screen and (min-width: 40em) {
+    justify-content: flex-end;
+  }
+}
+
+.headerTopContainer {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 6px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
 }
