@@ -12,3 +12,15 @@
   margin-bottom: 30px;
   margin-top: 50px;
 }
+
+.homeBoxWrapper {
+  background: #191c29eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  backdrop-filter: blur(5px);
+  position: fixed;
+  overflow: visible;
+  width: calc(100% - 50px);
+  max-width: 800px;
+  border-radius: 10px;
+}
