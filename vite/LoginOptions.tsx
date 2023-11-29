@@ -36,7 +36,7 @@ export const LoginOptions: React.FC<Props> = ({
   );
 
   return (
-    <div className={styles.inputContainer}>
+    <div>
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}

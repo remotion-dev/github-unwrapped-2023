@@ -10,10 +10,6 @@
   align-items: center;
 }
 
-.inputContainer {
-  font-family: "Mona Sans";
-}
-
 .buttonContainer {
   display: flex;
   flex: 1;
