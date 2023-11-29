@@ -65,7 +65,7 @@ export const Tablet: React.FC<
   const scaleParent = interpolate(
     toFullscreen,
     [0, 1],
-    [1, (1 / (1 - 0.8 * 0.5)) * 1.2],
+    [1, (1 / (1 - 0.8 * 0.5)) * 1.3],
   );
 
   const translateX = interpolate(toFullscreen, [0, 1], [0, -500]);

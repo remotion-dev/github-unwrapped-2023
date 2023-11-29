@@ -45,7 +45,7 @@ const Bar = (props: { productivity: number }) => {
           height: `${props.productivity * 100}%`,
           borderRadius: 4,
           backgroundColor: "#181B28",
-          border: "2px solid rgba(255, 255, 255, 0.1)",
+          border: "3px solid rgba(255, 255, 255, 0.1)",
         }}
       />
     </div>

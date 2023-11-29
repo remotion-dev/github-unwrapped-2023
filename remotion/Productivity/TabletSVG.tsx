@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export const TABLET_BG = "151424";
+export const TABLET_BG = "#080817";
 
 export const TabletSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
