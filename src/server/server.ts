@@ -73,6 +73,7 @@ export const startServer = async () => {
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
 
+    app.get("/about", handleIndexHtmlDev(vite));
     app.get("/:username", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
