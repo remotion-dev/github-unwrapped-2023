@@ -26,6 +26,7 @@ import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
 import { Tablet, tableSchema } from "./Productivity/Tablet";
+import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
   SevenSegment,
@@ -265,6 +266,17 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           graphData: GRAPH_DATA,
+        }}
+      />
+      <Composition
+        id="Wheel"
+        component={Wheel}
+        durationInFrames={100}
+        fps={FPS}
+        height={1080}
+        width={1080}
+        defaultProps={{
+          topLayer: false,
         }}
       />
       <Composition
