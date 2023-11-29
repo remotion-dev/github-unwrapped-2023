@@ -4,10 +4,7 @@ import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
-import { Tablet } from "../Productivity/Tablet";
-import { GRAPH_DATA } from "../Productivity/constants";
 import { AnimatedCockpit } from "./AnimatedCockpit";
-import { Description } from "./Description";
 import { Shines } from "./Shines";
 import { HIT_RADIUS, STAR_ANIMATION_DURATION, Star } from "./Star";
 
@@ -26,7 +23,6 @@ export const starsReceivedSchema = z.object({
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & {
     style?: React.CSSProperties;
-    tabletTransition: number;
   }
 > = ({
   starsGiven,
@@ -35,7 +31,6 @@ export const StarsReceived: React.FC<
   showHitWindow,
   showCockpit,
   showDots,
-  tabletTransition,
 }) => {
   const frame = useCurrentFrame();
 
@@ -93,15 +88,6 @@ export const StarsReceived: React.FC<
           yShake={yShake}
         />
       ) : null}
-      <Description starsGiven={starsGiven} />
-      <Tablet
-        style={{
-          position: "absolute",
-          transformOrigin: "left bottom",
-          transform: `translateY(${500 - tabletTransition * 500}px) scale(0.5)`,
-        }}
-        graphData={GRAPH_DATA}
-      />
     </AbsoluteFill>
   );
 };

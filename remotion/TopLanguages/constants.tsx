@@ -1,7 +1,8 @@
 import { getLength, scalePath, translatePath } from "@remotion/paths";
 import type { SVGProps } from "react";
 import type { z } from "zod";
-import { LanguagesEnum, languageSchema } from "../../src/config";
+import type { languageSchema } from "../../src/config";
+import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
 import type { PlanetBoundingBox } from "./planet-types";
@@ -132,7 +133,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "brown",
     textColor: "#5F523E",
     name: "Rust",
-    opacity: 0.8,
+    opacity: 0.4,
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
@@ -141,7 +142,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     textColor: "#E8A08A",
     name: "Rust",
-    opacity: 0.3,
+    opacity: 0.2,
   },
 };
 

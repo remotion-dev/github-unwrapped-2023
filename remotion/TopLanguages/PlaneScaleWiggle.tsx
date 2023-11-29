@@ -1,6 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import {
   AbsoluteFill,
+  interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -8,17 +9,19 @@ import {
 import { z } from "zod";
 import { languageSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguageDescription } from "./LanguageDescription";
 import { computePlanetInfo } from "./constants";
 import { enterDirectionSchema } from "./corner";
-import SkySVG from "./svgs/SkySVG";
 
 export const wiggleSchema = z.object({
   language: languageSchema,
   position: z.number(),
   enterDirection: enterDirectionSchema,
 });
+
+export const ALL_PLANETS_EXIT_DURATION = 12;
 
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
@@ -27,7 +30,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
 }) => {
   const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
 
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
   const delay = 25;
@@ -54,13 +57,31 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
 
   const rotate = isAction ? noise : 0;
 
+  const exitProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: 30,
+    delay: durationInFrames - ALL_PLANETS_EXIT_DURATION,
+  });
+
+  const distance = interpolate(exitProgress, [0, 1], [1, 0.000000005], {});
+  const scaleDivided = 1 / distance;
+  const translateX = (scaleDivided - 1) * 200;
+
   return (
-    <AbsoluteFill>
-      <AbsoluteFill>
-        <SkySVG style={{ opacity: 0.5 }} />
-      </AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
+      }}
+    >
       <AbsoluteFill style={{ opacity, scale: String(1.3) }}>
         <Gradient gradient={gradient} />
+      </AbsoluteFill>
+      <AbsoluteFill>
+        <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
       <FlyRocketIntoPlanet enterDirection={enterDirection} />
       <AbsoluteFill

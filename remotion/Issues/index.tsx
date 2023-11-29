@@ -10,9 +10,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
-import { Gradient } from "../Gradients/NativeGradient";
 import { Poof, POOF_DURATION } from "../Poof";
-import { Background } from "./Background";
 import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
 import { getAudioHits } from "./get-audio-hits";
 import {
@@ -144,12 +142,6 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
-      </AbsoluteFill>
-      <AbsoluteFill>
-        <Background />
-      </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
         {withShootDurations.map((p, i) => {
           return (

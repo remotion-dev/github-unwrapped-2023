@@ -46,6 +46,7 @@ import { Shine, Shines, shineSchema } from "./StarsReceived/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
+  FIRST_PLACE_DURATION,
   allPlanetsSchema,
   getDurationOfAllPlanets,
 } from "./TopLanguages/AllPlanets";
@@ -215,9 +216,9 @@ export const RemotionRoot: React.FC = () => {
           starsGiven: 43,
           showBackground: true,
           showHitWindow: false,
-          showCockpit: false,
+          showCockpit: true,
           showDots: false,
-          tabletTransition: 10,
+          tabletTransition: 0,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -372,7 +373,7 @@ export const RemotionRoot: React.FC = () => {
           id={"TopLanguagesWiggle"}
           component={PlanetScaleWiggle}
           schema={wiggleSchema}
-          durationInFrames={150}
+          durationInFrames={FIRST_PLACE_DURATION}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}

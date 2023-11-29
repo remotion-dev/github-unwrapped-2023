@@ -12,6 +12,7 @@ import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { PullRequests } from "./Paths/Paths";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
+import { ALL_PLANETS_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 
 type Schema = z.infer<typeof compositionSchema>;
 
@@ -32,7 +33,8 @@ export const calculateDuration = ({
   });
 
   return (
-    topLanguagesScene +
+    topLanguagesScene -
+    ALL_PLANETS_EXIT_DURATION +
     ISSUES_SCENE -
     ISSUES_EXIT_DURATION +
     PULL_REQUESTS_SCENE +
@@ -86,7 +88,10 @@ export const Main: React.FC<Schema> = ({
             login={login}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={ISSUES_SCENE}>
+        <Series.Sequence
+          durationInFrames={ISSUES_SCENE}
+          offset={-ALL_PLANETS_EXIT_DURATION}
+        >
           <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
         </Series.Sequence>
         <Series.Sequence

@@ -39,7 +39,7 @@ export const Shine: React.FC<z.infer<typeof shineSchema>> = ({
 
   const offset = interpolate(progress, [0, 1], [0, 900]);
 
-  const angle = 10;
+  const angle = 20;
 
   const x = Math.sin(rotation) * innerRadius;
   const y = Math.cos(rotation) * innerRadius;
@@ -111,12 +111,14 @@ export const Shines: React.FC<{
       style={{
         alignItems: "center",
         justifyContent: "center",
-        transform: `translateX(${xShake}px) translateY(${yShake}px)`,
+        transform: `translateX(${xShake * 0.5}px) translateY(${
+          yShake * 0.5
+        }px)`,
       }}
     >
       {new Array(1000).fill(true).map((a, i) => {
         const angle = random(i) * Math.PI + Math.PI / 2;
-        const height = 300;
+        const height = 200;
 
         return (
           // eslint-disable-next-line react/jsx-key
@@ -124,6 +126,7 @@ export const Shines: React.FC<{
             from={i * 0.3}
             style={{
               transform: `translateY(${height}px)`,
+              scale: String(1.5),
             }}
             durationInFrames={10}
           >
