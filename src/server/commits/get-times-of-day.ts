@@ -1,4 +1,4 @@
-import { Commit } from "./commits";
+import type { Commit } from "./commits.js";
 
 export type Hour =
   | 0
@@ -27,11 +27,11 @@ export type Hour =
   | 23;
 
 export const getTimesOfDay = (items: Commit[]) => {
-  const i = items.map((i) => i.date);
+  const i = items.map((index) => index.date);
 
   const times = i.map((item) => new Date(item).getHours());
 
-  let hours: { [key in Hour]: number } = {
+  const hours: { [key in Hour]: number } = {
     "5": 0,
     "6": 0,
     "7": 0,
