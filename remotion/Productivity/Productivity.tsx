@@ -107,7 +107,7 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
   return (
     <AbsoluteFill
       style={{
-        background: "rgb(21,20,39)",
+        background: "#151424",
         display: "flex",
       }}
     >

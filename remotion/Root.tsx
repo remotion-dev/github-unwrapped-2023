@@ -25,7 +25,7 @@ import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
-import { Tablet } from "./Productivity/Tablet";
+import { Tablet, tableSchema } from "./Productivity/Tablet";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
   SevenSegment,
@@ -274,9 +274,10 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={tableSchema}
         defaultProps={{
           graphData: GRAPH_DATA,
-          enter: 1,
+          enterProgress: 0,
         }}
       />
       <Composition

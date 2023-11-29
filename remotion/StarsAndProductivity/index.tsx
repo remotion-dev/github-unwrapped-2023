@@ -47,7 +47,7 @@ export const StarsAndProductivity: React.FC<
         }}
       />
       <Sequence from={ZOOM_DELAY}>
-        <Tablet enter={zoomTransition} graphData={GRAPH_DATA} />
+        <Tablet enterProgress={zoomTransition} graphData={GRAPH_DATA} />
       </Sequence>
     </AbsoluteFill>
   );
