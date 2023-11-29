@@ -1,4 +1,5 @@
 import { noise2D } from "@remotion/noise";
+import type { SpringConfig } from "remotion";
 import {
   AbsoluteFill,
   interpolate,
@@ -22,6 +23,12 @@ export const wiggleSchema = z.object({
 });
 
 export const ALL_PLANETS_EXIT_DURATION = 12;
+export const WIGGLE_EXIT_SPRING_CONFIG: Partial<SpringConfig> = {
+  damping: 200,
+};
+export const WIGGLE_EXIT_DURATION = 30;
+
+export const WIGGLE_SCENE_DURATION = 90;
 
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
@@ -60,10 +67,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   const exitProgress = spring({
     fps,
     frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: 30,
+    config: WIGGLE_EXIT_SPRING_CONFIG,
+    durationInFrames: WIGGLE_EXIT_DURATION,
     delay: durationInFrames - ALL_PLANETS_EXIT_DURATION,
   });
 
@@ -77,10 +82,12 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
       }}
     >
-      <AbsoluteFill style={{ opacity, scale: String(1.3) }}>
+      <AbsoluteFill style={{ opacity }}>
         <Gradient gradient={gradient} />
       </AbsoluteFill>
-      <AbsoluteFill>
+      <AbsoluteFill
+        style={{ opacity: interpolate(exitProgress, [0, 0.3], [1, 0]) }}
+      >
         <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
       <FlyRocketIntoPlanet enterDirection={enterDirection} />
