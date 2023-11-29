@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { GradientBox } from "./GradientBox/GradientBox";
-
+import { GradientBox } from "../GradientBox/GradientBox";
+import { Octocat } from "../Octocat";
 import { HomeBoxBottom } from "./HomeBoxBottom";
 import { HomeBoxTop } from "./HomeBoxTop";
-import { Octocat } from "./Octocat";
 
 export const HomeBox: React.FC = () => {
   const [userNotFound, setUserNotFound] = useState<boolean>(false);

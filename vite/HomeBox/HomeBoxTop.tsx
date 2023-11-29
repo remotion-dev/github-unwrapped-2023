@@ -1,8 +1,8 @@
 import React from "react";
-import { GithubIcon } from "../icons/GithubIcon";
-import { RocketIcon } from "../icons/RocketIcon";
-import { HomeLink } from "./HomeLink";
-import { ACTION_ROW_PADDING } from "./VideoPage/BottomRow";
+import { GithubIcon } from "../../icons/GithubIcon";
+import { RocketIcon } from "../../icons/RocketIcon";
+import { HomeLink } from "../HomeLink";
+import { ACTION_ROW_PADDING } from "../VideoPage/BottomRow";
 import styles from "./styles.module.css";
 
 const container: React.CSSProperties = {

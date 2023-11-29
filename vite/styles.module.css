@@ -15,14 +15,6 @@
   font-family: "Mona Sans";
 }
 
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-}
-
 .buttonContainer {
   display: flex;
   flex: 1;
@@ -36,11 +28,4 @@
   left: 0;
   right: 0;
   margin: 0 auto;
-}
-
-.gradientText {
-  background: linear-gradient(270.02deg, #645278 20.63%, #82b6c6 99.87%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
