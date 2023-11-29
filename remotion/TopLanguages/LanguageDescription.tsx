@@ -6,11 +6,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { z } from "zod";
+import { languageSchema } from "../../src/config";
 import { InnerLanguageDescription } from "./InnerLanguageDescription";
-import { type LanguageEnumType } from "./constants";
 
 export const LanguageDescription: React.FC<{
-  language: LanguageEnumType;
+  language: z.infer<typeof languageSchema>;
   position: number;
   delay: number;
   duration: number;

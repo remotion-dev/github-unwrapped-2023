@@ -2,12 +2,11 @@ import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
 import { Sequence } from "remotion";
 import { z } from "zod";
-import { LanguagesEnum, cornerType } from "../../src/config";
+import { cornerType, languageSchema } from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
 import { TopLanguagesTitleCard } from "./TitleCard";
-import type { LanguageType } from "./constants";
 import {
   deriveEnterDirectionFromCorner,
   mapEnterDirectionIntoSlideDirection,
@@ -16,9 +15,9 @@ import {
 } from "./corner";
 
 export const allPlanetsSchema = z.object({
-  language1: LanguagesEnum,
-  language2: LanguagesEnum.or(z.null()),
-  language3: LanguagesEnum.or(z.null()),
+  language1: languageSchema,
+  language2: languageSchema.or(z.null()),
+  language3: languageSchema.or(z.null()),
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
@@ -41,8 +40,8 @@ export const getDurationOfAllPlanets = ({
   language3,
   fps,
 }: {
-  language2: LanguageType | null;
-  language3: LanguageType | null;
+  language2: z.infer<typeof languageSchema> | null;
+  language3: z.infer<typeof languageSchema> | null;
   fps: number;
 }) => {
   const transitionDuration = allPlanetsTransitionTiming.getDurationInFrames({

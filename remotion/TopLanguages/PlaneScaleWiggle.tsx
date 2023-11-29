@@ -6,16 +6,16 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { LanguagesEnum } from "../../src/config";
+import { languageSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguageDescription } from "./LanguageDescription";
-import { mapLanguageToPlanet } from "./constants";
+import { computePlanetInfo } from "./constants";
 import { enterDirectionSchema } from "./corner";
 import SkySVG from "./svgs/SkySVG";
 
 export const wiggleSchema = z.object({
-  language: LanguagesEnum,
+  language: languageSchema,
   position: z.number(),
   enterDirection: enterDirectionSchema,
 });
@@ -25,7 +25,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   position,
   enterDirection,
 }) => {
-  const { PlanetSVG, gradient, opacity } = mapLanguageToPlanet[language];
+  const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
+
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill } from "remotion";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import Spaceship from "./Spaceship";
@@ -8,7 +8,7 @@ export const OPENING_SCENE_LENGTH = 60;
 
 export const OpeningScene: React.FC = () => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
-  const frame = useCurrentFrame();
+  // const frame = useCurrentFrame();
 
   return (
     <AbsoluteFill
