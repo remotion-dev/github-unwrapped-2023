@@ -1,10 +1,11 @@
 import * as Sentry from "@sentry/node";
+import { backendCredentials } from "../helpers/domain.js";
 import { ensureIndices } from "./db.js";
 import { nodeEnv } from "./index-html.js";
 import { startServer } from "./server.js";
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
+  dsn: backendCredentials().SENTRY_DSN,
   environment: nodeEnv,
   maxBreadcrumbs: 50,
   // We recommend adjusting this value in production, or using tracesSampler
