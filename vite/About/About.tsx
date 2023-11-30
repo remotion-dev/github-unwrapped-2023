@@ -1,6 +1,8 @@
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
-import styles from "./styles.module.css";
+import { signInWithGitHubLink } from "../sign-in-with-github";
+import styles from "../styles.module.css";
+import { EmailForm } from "./EmailForm";
 
 const header: React.CSSProperties = {
   display: "flex",
@@ -21,7 +23,7 @@ const wrapper: React.CSSProperties = {
   width: "100%",
   maxWidth: 700,
   margin: "0 auto",
-  padding: "128px 0",
+  padding: "64px 0",
 };
 
 const About = () => {
@@ -32,6 +34,20 @@ const About = () => {
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
     },
     {
+      icon: "/eyeball.svg",
+      title: "Private contributions not showing up?",
+      description: `To enable private contributions, you need to enable "Include private contributions on my profile" in your GitHub settings. Once you've done this, login in again and regenerate your video.`,
+      node: (
+        <a
+          className={styles.aboutButton}
+          style={{ lineHeight: "43px" }}
+          href={signInWithGitHubLink()}
+        >
+          Login again
+        </a>
+      ),
+    },
+    {
       icon: "/open-source.svg",
       title: "Is this project open source?",
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
@@ -39,7 +55,26 @@ const About = () => {
     {
       icon: "/detective.svg",
       title: "Who is behind GitHub Unwrapped?",
-      description: `This project was implemented by Remotion with support from GitHub.`,
+      description: "",
+      node: (
+        <p style={{ marginTop: -32 }}>
+          This project was developed by{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://www.remotion.dev"
+          >
+            Remotion
+          </a>{" "}
+          and{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://www.foronered.com"
+          >
+            For One Red
+          </a>{" "}
+          with support from GitHub.
+        </p>
+      ),
     },
     {
       icon: "/calculator.svg",
@@ -53,6 +88,7 @@ const About = () => {
       description: `Want to give your users their personalized video at the end of 2023?
       Developers: Check out Remotion and the source code of this project!
       Non-developers: Drop your email and we'll contact you in September 2023 for a free consultation!`,
+      node: <EmailForm />,
     },
     {
       icon: "/trophy.svg",
@@ -69,6 +105,17 @@ const About = () => {
       icon: "/mail.svg",
       title: "Contact",
       description: ``,
+      node: (
+        <a
+          target="_blank"
+          href="mailto:hi@remotion.dev"
+          rel="noreferrer"
+          className={styles.aboutButton}
+          style={{ lineHeight: "43px", marginTop: -16 }}
+        >
+          hi@remotion.dev
+        </a>
+      ),
     },
   ];
 
@@ -78,6 +125,18 @@ const About = () => {
       <Stars />
       <div style={outerWrapper}>
         <div style={wrapper}>
+          <a
+            href="/"
+            style={{
+              display: "block",
+              marginBottom: 32,
+            }}
+          >
+            <img
+              src="/arrow.svg"
+              style={{ width: 32, height: 32, transform: "rotate(180deg)" }}
+            />
+          </a>
           <div style={header}>
             <div
               style={{
@@ -125,7 +184,7 @@ const About = () => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    marginBottom: 8,
+                    marginBottom: -8,
                   }}
                 >
                   <img src={item.icon} style={{ marginRight: 12 }}></img>
@@ -133,7 +192,8 @@ const About = () => {
                     {item.title}
                   </h4>
                 </div>
-                <p style={{ marginTop: 0 }}>{item.description}</p>
+                <p>{item.description}</p>
+                {item.node}
               </div>
             ))}
           </div>

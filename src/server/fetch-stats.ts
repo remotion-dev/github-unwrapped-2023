@@ -75,6 +75,12 @@ export const getStatsFromGitHub = async ({
 }): Promise<ProfileStats> => {
   const fetchedAt = Date.now();
 
+  console.log({
+    username,
+    token,
+    loggedInWithGitHub,
+  });
+
   const baseData = await fetchFromGitHub<BaseQueryResponse>({
     username,
     token,
@@ -144,8 +150,6 @@ export const getStatsFromGitHub = async ({
     lowercasedUsername: baseData.login.toLowerCase(),
     bestHours: getTimesOfDay(commits),
   };
-
-  console.log(stats);
 
   return stats;
 };

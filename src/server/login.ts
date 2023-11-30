@@ -29,7 +29,7 @@ export const loginEndPoint = async (request: Request, response: Response) => {
       method: "POST",
       body: formdata,
       redirect: "follow",
-    }
+    },
   );
 
   const paramsStringText = await paramsString.text();
@@ -45,6 +45,8 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     token: access_token,
     username: null,
   });
+
+  console.log(stats);
 
   await insertProfileStats(stats);
 
