@@ -10,7 +10,21 @@ import {
 const items = 7;
 const radius = 80;
 
-export const Wheel: React.FC = () => {
+export const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+] as const;
+
+type Day = (typeof days)[number];
+
+export const Wheel: React.FC<{
+  day: Day;
+}> = ({ day }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -62,17 +76,7 @@ export const Wheel: React.FC = () => {
                 width: 250,
               }}
             >
-              {
-                [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                  "Sunday",
-                ][i % 7]
-              }
+              {days[(i + days.indexOf(day)) % 7]}
             </div>
           </AbsoluteFill>
         );

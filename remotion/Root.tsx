@@ -26,7 +26,7 @@ import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
 import { Tablet, tableSchema } from "./Productivity/Tablet";
-import { TopDay } from "./Productivity/TopDay";
+import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
@@ -276,8 +276,9 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         height={500}
         width={500}
+        schema={topDaySchema}
         defaultProps={{
-          topLayer: false,
+          day: "Sunday",
         }}
       />
       <Composition
@@ -287,8 +288,9 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         height={200}
         width={1080}
+        schema={topDaySchema}
         defaultProps={{
-          topLayer: false,
+          day: "Tuesday",
         }}
       />
       <Composition

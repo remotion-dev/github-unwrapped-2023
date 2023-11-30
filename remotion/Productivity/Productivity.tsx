@@ -5,6 +5,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { TABLET_BG } from "./TabletSVG";
+import { TopDay } from "./TopDay";
 
 type ProductivityPerHour = {
   time: number;
@@ -106,29 +107,11 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
         display: "flex",
       }}
     >
-      <div
-        style={{
-          color: "white",
-          fontSize: 120,
-          fontFamily: "Mona Sans",
-          fontWeight: 800,
-          paddingTop: 80,
-          textAlign: "center",
-        }}
-      >
-        Monday 3PM
-      </div>
-      <div
-        style={{
-          color: "white",
-          fontSize: 40,
-          fontFamily: "Mona Sans",
-          fontWeight: 300,
-          textAlign: "center",
-        }}
-      >
-        Is your most productive time
-      </div>
+      {/**
+       * TODO: HArdcoded
+       */}
+      <TopDay day="Monday" />
+      <TopDay day="Monday" />
       <div
         style={{
           display: "flex",
