@@ -7,8 +7,8 @@ import {
   useVideoConfig,
 } from "remotion";
 
-const items = 18;
-const radius = 200;
+const items = 7;
+const radius = 80;
 
 export const Wheel: React.FC = () => {
   const frame = useCurrentFrame();
@@ -23,12 +23,12 @@ export const Wheel: React.FC = () => {
     durationInFrames: 30,
   });
 
-  const rotation = (interpolate(progress, [0, 1], [0.2, 0]) % Math.PI) * 2;
+  const rotation = interpolate(progress, [0, 1], [1, 0]) % Math.PI;
 
   return (
     <AbsoluteFill
       style={{
-        perspective: 5000,
+        perspective: 10000,
       }}
     >
       {new Array(items).fill(true).map((f, i) => {
@@ -57,28 +57,22 @@ export const Wheel: React.FC = () => {
               style={{
                 transform: `rotateX(-${r}rad)`,
                 backfaceVisibility: "hidden",
-                display: "flex",
-                flexDirection: "row",
-                width: 600,
-                marginLeft: 100,
+                textAlign: "right",
+                lineHeight: 1,
+                width: 250,
               }}
             >
-              <div
-                style={{
-                  lineHeight: 1,
-                }}
-              >
-                {
-                  [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                  ][i % 6]
-                }
-              </div>
+              {
+                [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ][i % 7]
+              }
             </div>
           </AbsoluteFill>
         );
