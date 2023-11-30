@@ -1,4 +1,4 @@
-import { Commit, commits } from "./commits";
+import type { Commit, commits } from "./commits.js";
 
 type CommitsApiResponse = typeof commits;
 
@@ -10,6 +10,7 @@ export const mapApiResponseToCommits = (
       if (!commit.author) {
         return null;
       }
+
       return {
         author: commit.author.login,
         date: new Date(commit.commit.author.date).getTime(),

@@ -26,6 +26,7 @@ import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
 import { Tablet, tableSchema } from "./Productivity/Tablet";
+import { TopDay } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
@@ -273,7 +274,18 @@ export const RemotionRoot: React.FC = () => {
         component={Wheel}
         durationInFrames={100}
         fps={FPS}
-        height={1080}
+        height={500}
+        width={500}
+        defaultProps={{
+          topLayer: false,
+        }}
+      />
+      <Composition
+        id="TopDay"
+        component={TopDay}
+        durationInFrames={100}
+        fps={FPS}
+        height={200}
         width={1080}
         defaultProps={{
           topLayer: false,
@@ -351,6 +363,7 @@ export const RemotionRoot: React.FC = () => {
           schema={topLanguagesTitleCardSchema}
           defaultProps={{
             login: "JonnyBurger",
+            pluralizeLanguages: false,
           }}
         />
         <Composition

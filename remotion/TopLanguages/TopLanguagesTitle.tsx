@@ -8,10 +8,12 @@ const PADDING = 20;
 
 const topLanguagesTitle = z.object({
   login: z.string(),
+  pluralize: z.boolean(),
 });
 
 export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
   login,
+  pluralize,
 }) => (
   <div
     style={{
@@ -43,7 +45,7 @@ export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
         lineHeight: 1.1,
       }}
     >
-      My top <br /> languages
+      My top <br /> {pluralize ? "languages" : "language"}
     </div>
   </div>
 );

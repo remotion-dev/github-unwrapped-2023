@@ -122,7 +122,7 @@ export const getStatsFromGitHub = async ({
         .forEach((l) => {
           acc[l.node.name] = {
             color: l.node.color,
-            value: l.size + acc[l.node.name]?.value || 0,
+            value: l.size + (acc[l.node.name]?.value || 0),
           };
         });
     },

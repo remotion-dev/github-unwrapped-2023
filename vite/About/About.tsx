@@ -1,8 +1,8 @@
-import { EmailForm } from "./About/EmailForm";
-import { Stars } from "./Home/Stars";
-import { RadialGradient } from "./RadialGradient";
-import { signInWithGitHubLink } from "./sign-in-with-github";
-import styles from "./styles.module.css";
+import { Stars } from "../Home/Stars";
+import { RadialGradient } from "../RadialGradient";
+import { signInWithGitHubLink } from "../sign-in-with-github";
+import styles from "../styles.module.css";
+import { EmailForm } from "./EmailForm";
 
 const header: React.CSSProperties = {
   display: "flex",
@@ -88,7 +88,7 @@ const About = () => {
       description: `Want to give your users their personalized video at the end of 2023?
       Developers: Check out Remotion and the source code of this project!
       Non-developers: Drop your email and we'll contact you in September 2023 for a free consultation!`,
-      node: <EmailForm></EmailForm>,
+      node: <EmailForm />,
     },
     {
       icon: "/trophy.svg",
@@ -178,7 +178,8 @@ const About = () => {
             }}
           >
             {content.map((item, index) => (
-              <div className={styles.aboutItem}>
+              // eslint-disable-next-line react/no-array-index-key
+              <div key={index} className={styles.aboutItem}>
                 <div
                   style={{
                     display: "flex",

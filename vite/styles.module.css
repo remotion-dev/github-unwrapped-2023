@@ -1,32 +1,13 @@
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   background-position: bottom;
   background-size: cover;
-  position: relative;
 
   justify-content: center;
   align-items: center;
-}
-
-.inputContainer {
-  font-family: "Mona Sans";
-}
-
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 30px;
-  margin-top: 50px;
-}
-
-.buttonContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
 }
 
 .octocat {

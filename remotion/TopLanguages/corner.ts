@@ -1,6 +1,7 @@
 import type { SlideDirection } from "@remotion/transitions/slide";
+import { random } from "remotion";
 import { z } from "zod";
-import type { Corner } from "../../src/config";
+import { cornerTypeValues, type Corner } from "../../src/config";
 
 export const clockDirectionSchema = z.enum(["clockwise", "counter-clockwise"]);
 export type ClockDirection = z.infer<typeof clockDirectionSchema>;
@@ -147,4 +148,16 @@ export const mapExitDirectionIntoSlideDirection = (
   }
 
   throw new Error("direction not implemented");
+};
+
+export const generateRandomCorner = ({
+  lowercasedUsername,
+}: {
+  lowercasedUsername: string;
+}): Corner => {
+  const randomSeed = random(lowercasedUsername);
+
+  const index = Math.floor(randomSeed * cornerTypeValues.length);
+
+  return cornerTypeValues[index];
 };

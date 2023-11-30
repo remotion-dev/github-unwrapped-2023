@@ -1,6 +1,6 @@
-import { sendDiscordMessage } from "../discord";
-import type { Commit, commits } from "./commits";
-import { mapApiResponseToCommits } from "./map-api-response-to-commits";
+import { sendDiscordMessage } from "../discord.js";
+import type { Commit, commits } from "./commits.js";
+import { mapApiResponseToCommits } from "./map-api-response-to-commits.js";
 
 export const RATE_LIMIT_TOKEN = "rate-limit-token";
 
@@ -28,12 +28,14 @@ export const getGithubCommits = async (
 
   if (response.status !== 200) {
     // TODO: Distinguish between 404 and rate limit
-    const message = (await response.json()).message;
+    const { message } = await response.json();
     if (message.includes("API rate limit")) {
       throw new TypeError(RATE_LIMIT_TOKEN);
     }
+
     throw new TypeError((await response.json()).message);
   }
+
   const json = (await response.json()) as typeof commits;
   const listOfCommits = mapApiResponseToCommits(json);
   const isDone =
@@ -50,9 +52,9 @@ export const getALotOfGithubCommits = async (
   username: string,
   token: string,
 ) => {
-  let listOfCommits: Commit[] = [];
+  const listOfCommits: Commit[] = [];
 
-  let pages = [1, 2, 3, 4, 5];
+  const pages = [1, 2, 3, 4, 5];
 
   for (const page of pages) {
     const { commits, isDone } = await getGithubCommits(username, page, token);
