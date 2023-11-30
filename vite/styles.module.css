@@ -66,8 +66,7 @@
 }
 
 .aboutItemTitle {
-  color: #507eff;
-
+  color: white;
   font-family: Mona Sans;
   font-size: 20px;
   font-style: normal;
@@ -137,4 +136,9 @@
   font-weight: 700;
   line-height: normal;
   border: 0;
+}
+
+.aboutLink {
+  color: #507eff;
+  text-decoration: underline;
 }

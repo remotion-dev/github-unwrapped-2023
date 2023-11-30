@@ -34,6 +34,24 @@ const About = () => {
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
     },
     {
+      icon: "/detective.svg",
+      title: "Who is behind GitHub Unwrapped?",
+      description: "",
+      node: (
+        <p style={{ marginTop: -32 }}>
+          The project was implemented by{" "}
+          <a className={styles.aboutLink} href="https://www.remotion.dev">
+            Remotion
+          </a>{" "}
+          in collaboration with{" "}
+          <a className={styles.aboutLink} href="https://www.foronered.com">
+            For One Red
+          </a>{" "}
+          For One Red was also responsible for the design of this project.
+        </p>
+      ),
+    },
+    {
       icon: "/eyeball.svg",
       title: "Private contributions not showing up?",
       description: `To enable private contributions, you need to enable "Include private contributions on my profile" in your GitHub settings. Once you've done this, login in again and regenerate your video.`,
@@ -53,30 +71,6 @@ const About = () => {
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
     },
     {
-      icon: "/detective.svg",
-      title: "Who is behind GitHub Unwrapped?",
-      description: "",
-      node: (
-        <p style={{ marginTop: -32 }}>
-          The project was implemented by{" "}
-          <a
-            style={{ color: "white", textDecoration: "underline" }}
-            href="https://www.remotion.dev"
-          >
-            Remotion
-          </a>{" "}
-          in collaboration with{" "}
-          <a
-            style={{ color: "white", textDecoration: "underline" }}
-            href="https://www.foronered.com"
-          >
-            For One Red
-          </a>{" "}
-          For One Red was also responsible for the design of this project.
-        </p>
-      ),
-    },
-    {
       icon: "/calculator.svg",
       title: "How are my top languages calculated?",
       description: `Your top languages are not exactly calculated in a scientific way but are estimated according to the following formula:
@@ -93,15 +87,12 @@ const About = () => {
             <br />
             <br />
             Developers: Check out{" "}
-            <a
-              style={{ color: "white", textDecoration: "underline" }}
-              href="https://www.remotion.dev"
-            >
+            <a className={styles.aboutLink} href="https://www.remotion.dev">
               Remotion
             </a>{" "}
             and the source code of{" "}
             <a
-              style={{ color: "white", textDecoration: "underline" }}
+              className={styles.aboutLink}
               href="https://github.com/remotion-dev/github-unwrapped-2023"
             >
               this project
@@ -121,23 +112,20 @@ const About = () => {
         <p style={{ marginTop: -32 }}>
           Music -{" "}
           <a
-            style={{ color: "white", textDecoration: "underline" }}
+            className={styles.aboutLink}
             href="https://audiojungle.net/item/robots/35287595"
           >
             Robots
           </a>{" "}
           by Nicolas T. <br />
           Design -{" "}
-          <a
-            style={{ color: "white", textDecoration: "underline" }}
-            href="https://www.foronered.com/"
-          >
+          <a className={styles.aboutLink} href="https://www.foronered.com/">
             For One Red{" "}
           </a>{" "}
           <br />
           Font -{" "}
           <a
-            style={{ color: "white", textDecoration: "underline" }}
+            className={styles.aboutLink}
             href="https://github.com/github/mona-sans"
           >
             Mona Sans{" "}
@@ -145,7 +133,7 @@ const About = () => {
           by GitHub <br />
           Libraries -{" "}
           <a
-            style={{ color: "white", textDecoration: "underline" }}
+            className={styles.aboutLink}
             href="https://github.com/vercel/next.js"
           >
             Next.js{" "}
