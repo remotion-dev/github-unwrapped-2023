@@ -55,7 +55,7 @@ To allow thousands of people to render their video at the same time, we applied 
 
 ## Credits
 
-We thank [GitHub](https://github.com/github) and [ForOneRed](https://github.com/foronered) for their support in realization and promoting of this project. 
+We thank [GitHub](https://github.com/github) and [For One Red](https://github.com/foronered) for their support in realization and promoting of this project. 
 
 ## Music copyright disclaimer
 
