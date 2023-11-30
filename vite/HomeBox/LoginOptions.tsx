@@ -36,7 +36,7 @@ export const LoginOptions: React.FC<Props> = ({
   );
 
   return (
-    <div>
+    <div className={styles.loginOptionsWrapper}>
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
@@ -59,7 +59,7 @@ export const LoginOptions: React.FC<Props> = ({
           <ChevronRight />
         </Button> */}
       </form>
-      <div style={{ width: 20, display: "inline-block" }} />
+      <div className={styles.divider} />
       <div className={styles.privateContributions}>
         Want to include private contributions?
         <SignInWithGitHub />
