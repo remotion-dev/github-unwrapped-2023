@@ -5,10 +5,12 @@
   font-size: 15px;
   text-decoration: none;
   color: rgb(210, 211, 214);
-  transition: opacity 0.2s ease-in-out, background-color 0.1s ease-in-out,
+  transition:
+    opacity 0.2s ease-in-out,
+    background-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
   font-weight: 600;
-  padding-left: 7px;
+  padding-left: 6px;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 7px;

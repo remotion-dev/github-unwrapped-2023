@@ -1,5 +1,6 @@
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
+import gradientStyles from "../styles.module.css";
 import styles from "./styles.module.css";
 
 const header: React.CSSProperties = {
@@ -84,12 +85,7 @@ const About = () => {
                 flex: 1,
               }}
             >
-              <h2
-                className={styles.gradientText2}
-                style={{ fontSize: 24, marginTop: 0 }}
-              >
-                #GitHubUnwrapped
-              </h2>
+              <h2 className={gradientStyles.gradientText2}>#GitHubUnwrapped</h2>
               <h1
                 className={styles.aboutTitle}
                 style={{ margin: "16px 0 24px 0" }}
