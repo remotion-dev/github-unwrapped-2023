@@ -6,6 +6,10 @@ import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
 import type { PlanetBoundingBox } from "./planet-types";
+import {
+  CPlusPlusPlanet,
+  CPlusPlusPlanetBoundingBox,
+} from "./svgs/planets/CPlusPlusPlanetSVG";
 import { GoPlanetBoundingBox, GoPlanetSVG } from "./svgs/planets/GoPlanetSVG";
 import {
   JavaPlanetBoundingBox,
@@ -19,6 +23,10 @@ import {
   PythonPlanetBoundingBox,
   PythonPlanetSVG,
 } from "./svgs/planets/PythonPlanetSVG";
+import {
+  RubyPlanet,
+  RubyPlanetBoundingBox,
+} from "./svgs/planets/RubyPlanetSVG";
 import {
   Rust1PlanetBoundingBox,
   Rust1PlanetSVG,
@@ -142,6 +150,22 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     textColor: "#E8A08A",
     name: "Rust",
+    opacity: 0.2,
+  },
+  [LanguagesEnum.Enum["C++"]]: {
+    boundingBox: CPlusPlusPlanetBoundingBox,
+    PlanetSVG: CPlusPlusPlanet,
+    gradient: "blue",
+    textColor: "#4B8CC6",
+    name: "C++",
+    opacity: 0.2,
+  },
+  [LanguagesEnum.Enum.Ruby]: {
+    boundingBox: RubyPlanetBoundingBox,
+    PlanetSVG: RubyPlanet,
+    gradient: "red",
+    textColor: "#DDA89F",
+    name: "Ruby",
     opacity: 0.2,
   },
 };

@@ -393,7 +393,7 @@ export const RemotionRoot: React.FC = () => {
           schema={zoomOutSchema}
           defaultProps={{
             corner: "top-right" as const,
-            language: { type: "designed", name: "JavaScript" },
+            language: { type: "designed" as const, name: "JavaScript" },
             position: 1,
           }}
         />
@@ -420,7 +420,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: { type: "designed", name: "Java" },
+            language: { type: "designed" as const, name: "Java" as const },
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
@@ -470,9 +470,9 @@ export const RemotionRoot: React.FC = () => {
           }}
           defaultProps={{
             corner: "top-right" as const,
-            language1: { type: "designed" as const, name: "Python" as const },
+            language1: { type: "designed" as const, name: "C++" as const },
             language2: { type: "designed" as const, name: "Go" as const },
-            language3: { type: "designed" as const, name: "Rust2" as const },
+            language3: { type: "designed" as const, name: "Ruby" as const },
             showHelperLine: false,
             login: "JonnyBurger",
           }}
@@ -491,7 +491,7 @@ export const RemotionRoot: React.FC = () => {
           corner: "bottom-left",
           language1: { type: "designed", name: "JavaScript" },
           language2: { type: "designed", name: "TypeScript" },
-          language3: { type: "designed", name: "Rust2" },
+          language3: { type: "designed", name: "C++" },
           showHelperLine: false,
           login: "JonnyBurger",
           planet: "Silver",

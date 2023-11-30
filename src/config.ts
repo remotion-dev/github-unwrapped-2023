@@ -23,6 +23,8 @@ export const LanguagesEnum = z.enum([
   "Rust1",
   "Rust2",
   "Rust3",
+  "C++",
+  "Ruby",
 ]);
 
 export const cornerTypeValues = [
