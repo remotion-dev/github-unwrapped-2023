@@ -1,5 +1,4 @@
-<img src="public/background.png">
-<img src="public/background.png">
+<img src="public/landing-page.png">
 
 **Try it out live:** [GitHubUnwrapped.com](https://www.githubunwrapped.com)
 
@@ -21,11 +20,13 @@ Want to make your own year-in-review for your users?
    - You can use `AWS_KEY_2` and `AWS_SECRET_2` to load-balance between two accounts, or paste the same credentials as before to use the same account.
    - In `src/set-env-for-key.ts`, we rotate the environment variables.
 4. Deploy the functions into your AWS account(s):
+
    ```
    npx ts-node deploy.ts
    ```
-   
+
    Note that some AWS regions are disabled by default. [If you get an error, enable them or limit yourself to only default ones.](https://remotion.dev/docs/lambda/troubleshooting/security-token)
+
 5. For caching the videos and GitHub API responses, set up a MongoDB (we use a free MongoDB Atlas Cloud instance) to save the videos. Set the connection string as `MONGO_URL`.
 6. For fetching data from GitHub, create a personal access token in your user settings (no need to grant any scopes, the GraphQL API needs to be authenticated to get public information) and set it as `GITHUB_TOKEN_1`. Adding more tokens `GITHUB_TOKEN_2` etc. will rotate the personal access tokens.
 7. Optionally, provide `DISCORD_CHANNEL` and `DISCORD_TOKEN` values to send monitoring logs to Discord.
@@ -38,13 +39,13 @@ Run the web app:
 npm run dev
 ```
 
-Edit the template in the Remotion preview:
+Edit the template in the Remotion Studio:
 
 ```console
-npm run preview
+npm run remotion
 ```
 
-To deploy, connect your repository to Vercel. Don't forget to also set the environment variables there too.
+To deploy, connect your repository to [Render](https://render.com/). Don't forget to also set the environment variables there too.
 
 ## Scaling strategy
 
@@ -55,7 +56,7 @@ To allow thousands of people to render their video at the same time, we applied 
 
 ## Credits
 
-We thank [GitHub](https://github.com/github) and [For One Red](https://github.com/foronered) for their support in realization and promoting of this project. 
+We thank [GitHub](https://github.com/github) and [For One Red](https://github.com/foronered) for their support in realization and promoting of this project.
 
 ## Music copyright disclaimer
 
