@@ -82,11 +82,16 @@ export type LanguageEnumType = (typeof LanguageOptions)[number];
 
 export type PlanetInfo = {
   boundingBox: PlanetBoundingBox;
-  PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  PlanetSVG: (
+    props: SVGProps<SVGSVGElement> & {
+      customColor: string | null;
+    },
+  ) => JSX.Element;
   gradient: GradientType;
   textColor: string;
   name: string;
   opacity: number;
+  customPlanetColor: string | null;
 };
 
 export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
@@ -97,6 +102,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "rgb(201, 246, 253)",
     name: "Java",
     opacity: 0.3,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Python]: {
     boundingBox: PythonPlanetBoundingBox,
@@ -105,6 +111,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "rgb(200,228,252)",
     name: "Python",
     opacity: 0.3,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.JavaScript]: {
     boundingBox: JavaScriptPlanetBoundingBox,
@@ -113,6 +120,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "rgb(253,241,190)",
     name: "JavaScript",
     opacity: 0.25,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.TypeScript]: {
     boundingBox: TypeScriptPlanetBoundingBox,
@@ -121,6 +129,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#71BBD8",
     name: "TypeScript",
     opacity: 0.3,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Go]: {
     boundingBox: GoPlanetBoundingBox,
@@ -129,6 +138,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#71BBD8",
     name: "Go",
     opacity: 0.5,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Rust1]: {
     boundingBox: Rust1PlanetBoundingBox,
@@ -138,6 +148,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#5F523E",
     name: "Rust",
     opacity: 0.3,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Rust2]: {
     boundingBox: Rust2PlanetBoundingBox,
@@ -146,6 +157,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#5F523E",
     name: "Rust",
     opacity: 0.4,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
@@ -155,6 +167,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#E8A08A",
     name: "Rust",
     opacity: 0.2,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum["C++"]]: {
     boundingBox: CPlusPlusPlanetBoundingBox,
@@ -163,6 +176,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#4B8CC6",
     name: "C++",
     opacity: 0.2,
+    customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Ruby]: {
     boundingBox: RubyPlanetBoundingBox,
@@ -171,6 +185,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     textColor: "#DDA89F",
     name: "Ruby",
     opacity: 0.2,
+    customPlanetColor: null,
   },
 };
 
@@ -189,5 +204,6 @@ export const computePlanetInfo = (
     textColor: language.color,
     name: language.name,
     opacity: 0.3,
+    customPlanetColor: language.color,
   };
 };

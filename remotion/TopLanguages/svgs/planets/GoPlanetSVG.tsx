@@ -1,12 +1,12 @@
-import type { SVGProps } from "react";
 import { toViewBox, type PlanetBoundingBox } from "../../planet-types";
+import type { PlanetProps } from "./svg-types";
 
 export const GoPlanetBoundingBox: PlanetBoundingBox = {
   width: 928,
   height: 824,
 };
 
-export const GoPlanetSVG = (props: SVGProps<SVGSVGElement>) => (
+export const GoPlanetSVG = ({ customColor, ...props }: PlanetProps) => (
   <svg viewBox={toViewBox(GoPlanetBoundingBox)} fill="none" {...props}>
     <path
       fill="#0073B2"

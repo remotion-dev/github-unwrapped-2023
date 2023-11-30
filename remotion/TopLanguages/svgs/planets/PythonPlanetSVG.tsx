@@ -1,12 +1,12 @@
-import type { SVGProps } from "react";
 import { toViewBox, type PlanetBoundingBox } from "../../planet-types";
+import type { PlanetProps } from "./svg-types";
 
 export const PythonPlanetBoundingBox: PlanetBoundingBox = {
   width: 300,
   height: 360,
 };
 
-export const PythonPlanetSVG = (props: SVGProps<SVGSVGElement>) => (
+export const PythonPlanetSVG = ({ customColor, ...props }: PlanetProps) => (
   <svg
     style={PythonPlanetBoundingBox}
     viewBox={toViewBox(PythonPlanetBoundingBox)}

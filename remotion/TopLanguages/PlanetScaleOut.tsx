@@ -125,7 +125,8 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   language,
   position,
 }) => {
-  const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
+  const { PlanetSVG, gradient, opacity, customPlanetColor } =
+    computePlanetInfo(language);
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -192,7 +193,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
             alignItems: "center",
           }}
         >
-          <PlanetSVG width={360} />
+          <PlanetSVG customColor={customPlanetColor} width={360} />
         </AbsoluteFill>
       </AbsoluteFill>
       <Sequence durationInFrames={50} from={10}>

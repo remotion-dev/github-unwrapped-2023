@@ -1,12 +1,12 @@
-import type { SVGProps } from "react";
 import { toViewBox, type PlanetBoundingBox } from "../../planet-types";
+import type { PlanetProps } from "./svg-types";
 
 export const RubyPlanetBoundingBox: PlanetBoundingBox = {
   width: 1080,
   height: 1080,
 };
 
-export const RubyPlanet = (props: SVGProps<SVGSVGElement>) => (
+export const RubyPlanet = ({ customColor, ...props }: PlanetProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox={toViewBox(RubyPlanetBoundingBox)}

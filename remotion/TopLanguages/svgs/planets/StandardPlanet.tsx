@@ -8,7 +8,16 @@ export const StandardPlanetBoundingBox: PlanetBoundingBox = {
   height: 715,
 };
 
-export const StandardPlanet = (props: SVGProps<SVGSVGElement>) => {
+export const StandardPlanet = ({
+  customColor,
+  ...props
+}: SVGProps<SVGSVGElement> & {
+  customColor: string | null;
+}) => {
+  if (!customColor) {
+    throw new Error("customColor is null");
+  }
+
   const [id] = useState(() => random(null).toString().replace(".", ""));
 
   return (
@@ -43,7 +52,7 @@ export const StandardPlanet = (props: SVGProps<SVGSVGElement>) => {
           <stop offset={0.584} stopColor="#656566" />
           <stop offset={0.621} stopColor="#6D6F73" />
           <stop offset={0.658} stopColor="#7C7F88" />
-          <stop offset={0.667} stopColor="#80848E" />
+          <stop offset={0.667} stopColor={customColor} />
         </radialGradient>
       </defs>
     </svg>

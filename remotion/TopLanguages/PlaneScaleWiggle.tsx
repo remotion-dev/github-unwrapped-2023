@@ -35,7 +35,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   position,
   enterDirection,
 }) => {
-  const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
+  const { PlanetSVG, gradient, opacity, customPlanetColor } =
+    computePlanetInfo(language);
 
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -99,6 +100,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         }}
       >
         <PlanetSVG
+          customColor={customPlanetColor}
           width={800}
           style={{
             scale: String(planetScale),
