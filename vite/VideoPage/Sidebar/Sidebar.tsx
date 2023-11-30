@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import React from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
@@ -25,23 +24,12 @@ const title: React.CSSProperties = {
   flexDirection: "column",
 };
 
-const hashtag: React.CSSProperties = {
-  background: "linear-gradient(270.02deg, #645278 20.63%, #82B6C6 99.87%)",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  backgroundClip: "text",
-  margin: 0,
-};
-
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
 }> = ({ inputProps }) => {
   return (
     <div style={information}>
       <div style={title}>
-        <Link to={"/"}>
-          <h2 style={hashtag}>#GitHubUnwrapped</h2>
-        </Link>
         <h2 style={{ margin: 0 }}>@{inputProps.login}</h2>
       </div>
       <div style={downloadContent}>

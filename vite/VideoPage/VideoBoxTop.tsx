@@ -1,5 +1,5 @@
 import { RocketIcon } from "../../icons/RocketIcon";
-import boxStyles from "../HomeBox/styles.module.css";
+import boxStyles from "../Box/styles.module.css";
 import { HomeLink } from "../HomeLink";
 import gradientStyles from "../styles.module.css";
 
