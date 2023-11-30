@@ -8,7 +8,7 @@ import {
 } from "remotion";
 
 const items = 7;
-const radius = 80;
+const radius = 90;
 
 export const days = [
   "Monday",
@@ -58,11 +58,12 @@ export const Wheel: React.FC<{
             key={i}
             style={{
               justifyContent: "center",
-              fontSize: 50,
+              fontSize: 65,
               transform: `translateZ(${z}px) translateY(${y}px) rotateX(${r}deg)`,
               backfaceVisibility: "hidden",
               perspective: 1000,
-              color: "white",
+              color:
+                i === days.indexOf(day) ? "white" : "rgba(255, 255, 255, 0.3)",
               fontFamily: "Mona Sans",
               fontWeight: "bold",
             }}
@@ -73,7 +74,8 @@ export const Wheel: React.FC<{
                 backfaceVisibility: "hidden",
                 textAlign: "right",
                 lineHeight: 1,
-                width: 250,
+                width: 400,
+                paddingRight: 40,
               }}
             >
               {days[(i + days.indexOf(day)) % 7]}

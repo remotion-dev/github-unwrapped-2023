@@ -46,7 +46,7 @@ export const TopDay: React.FC<z.infer<typeof topDaySchema>> = ({ day }) => {
           backgroundImage:
             "linear-gradient(90deg, #ffffff00 0%, #ffffff20 100%)",
           height: "100%",
-          width: 300,
+          width: 400,
         }}
       >
         <AbsoluteFill
