@@ -1,0 +1,17 @@
+.sidebarWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px;
+  min-width: 350px;
+}
+
+.downloadButton {
+  background-color: rgba(80, 126, 255, 1);
+  display: flex;
+  gap: 8px;
+
+  &:hover {
+    background-color: rgba(80, 126, 255, 0.8);
+  }
+}
