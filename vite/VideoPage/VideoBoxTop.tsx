@@ -6,9 +6,6 @@ import gradientStyles from "../styles.module.css";
 export const VideoBoxTop = () => {
   return (
     <div className={boxStyles.headerTopContainer}>
-      {/**
-      // TODO: Make this
-       */}
       <h2
         className={gradientStyles.gradientText2}
         style={{ fontSize: 18, marginLeft: 7 }}
