@@ -147,18 +147,19 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
 };
 
 export const computePlanetInfo = (
-  langauge: z.infer<typeof languageSchema>,
+  language: z.infer<typeof languageSchema>,
 ): PlanetInfo => {
-  if (typeof langauge === "string") {
-    return mapLanguageToPlanet[langauge];
+  if (language.type === "designed") {
+    return mapLanguageToPlanet[language.name];
   }
 
+  // TODO: Why is is resorting to Java?
   return {
     boundingBox: JavaPlanetBoundingBox,
     PlanetSVG: JavaPlanetSVG,
     gradient: "orange",
     textColor: "black",
-    name: langauge.name,
+    name: language.name,
     opacity: 0.3,
   };
 };

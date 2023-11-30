@@ -47,8 +47,6 @@ export const WHEEL_INIT_SPEED =
   wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
   wheelSpring({ fps: FPS, frame: 0, delay: 0 });
 
-console.log(WHEEL_INIT_SPEED);
-
 export const Wheel: React.FC<{
   day: Day;
 }> = ({ day }) => {
