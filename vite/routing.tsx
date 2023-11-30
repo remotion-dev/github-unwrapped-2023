@@ -1,5 +1,5 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
-import About from "./About.jsx";
+import About from "./About/About.jsx";
 import Home from "./Home.jsx";
 import { UserPage } from "./VideoPage/page.jsx";
 

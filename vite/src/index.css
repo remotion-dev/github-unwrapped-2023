@@ -17,6 +17,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: "Mona Sans";
 }
 
 body {
@@ -24,7 +25,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   overflow-x: hidden;
 }
 

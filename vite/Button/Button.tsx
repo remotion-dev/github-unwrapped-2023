@@ -1,3 +1,4 @@
+import type { ButtonHTMLAttributes } from "react";
 import React, { forwardRef } from "react";
 import { Spacing } from "../Spacing";
 import { Spinner } from "../Spinner/Spinner";
@@ -13,15 +14,17 @@ const ButtonForward: React.ForwardRefRenderFunction<
     secondary?: boolean;
     style?: React.CSSProperties;
     className?: string;
+    type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   }
 > = (
-  { onClick, disabled, children, loading, secondary, style, className },
-  ref
+  { onClick, disabled, children, loading, secondary, style, className, type },
+  ref,
 ) => {
   return (
     <button
       ref={ref}
-      type="button"
+      // eslint-disable-next-line react/button-has-type
+      type={type ?? "button"}
       className={[
         styles.button,
         secondary ? styles.secondarybutton : undefined,

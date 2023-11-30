@@ -1,0 +1,107 @@
+.gradientText {
+  display: none;
+  background: linear-gradient(270.02deg, #645278 20.63%, #82b6c6 99.87%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+  font-weight: bolder;
+  line-height: 1;
+
+  @media only screen and (min-width: 40em) {
+    display: inline;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 30px;
+  margin-top: 32px;
+
+  @media only screen and (min-width: 40em) {
+    margin-top: 56px;
+  }
+}
+
+.homeBoxWrapper {
+  background: #191c29eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  overflow: visible;
+  width: calc(100% - 50px);
+  max-width: 800px;
+  border-radius: 10px;
+
+  @media only screen and (min-width: 40em) {
+    bottom: 224px;
+  }
+}
+
+.linkContainer {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+
+  @media only screen and (min-width: 40em) {
+    justify-content: flex-end;
+  }
+}
+
+.headerTopContainer {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 6px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  background: linear-gradient(270.02deg, #ddd 20.63%, #fff 99.87%);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media only screen and (min-width: 40em) {
+    font-size: 44px;
+    margin-bottom: 24px;
+  }
+}
+
+.homeBoxBottomWrapper {
+  padding: 16px;
+
+  @media only screen and (min-width: 40em) {
+    padding: 30px;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.mobileSubmitButton {
+  @media only screen and (min-width: 40em) {
+    display: none;
+  }
+}
+
+.desktopSubmitButton {
+  display: none;
+  width: 160px;
+  @media only screen and (min-width: 40em) {
+    display: inline;
+  }
+}

@@ -1,0 +1,48 @@
+.gradientText2 {
+  background: linear-gradient(270deg, #7172fd 3.63%, #0ee1eb 99.87%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.aboutTitle {
+  color: #fff;
+
+  font-family: Mona Sans;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.aboutDescription {
+  color: #ebeaee;
+
+  font-family: Mona Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.aboutItem {
+  display: flex;
+  padding: 30px 30px 32px 33px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 17px;
+  border-radius: 8px;
+  border: 2px solid #20222f;
+  background: #171823;
+}
+
+.aboutItemTitle {
+  color: #507eff;
+
+  font-family: Mona Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
