@@ -4,6 +4,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { Weekday } from "../../src/config";
 import { TABLET_BG } from "./TabletSVG";
 import { TopDay } from "./TopDay";
 
@@ -14,6 +15,7 @@ type ProductivityPerHour = {
 
 type Props = {
   graphData: Array<ProductivityPerHour>;
+  weekday: Weekday;
 };
 
 const Bar = (props: { productivity: number }) => {
@@ -99,7 +101,7 @@ const ProductivityGraph = (props: {
   );
 };
 
-export const Productivity: React.FC<Props> = ({ graphData }) => {
+export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
   return (
     <AbsoluteFill
       style={{
@@ -108,10 +110,10 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
       }}
     >
       {/**
-       * TODO: HArdcoded
+       * TODO: Top hour
        */}
-      <TopDay day="Monday" />
-      <TopDay day="Monday" />
+      <TopDay day={weekday} />
+      <TopDay day={weekday} />
       <div
         style={{
           display: "flex",

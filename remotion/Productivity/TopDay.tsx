@@ -1,8 +1,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { z } from "zod";
+import { days } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
-import { Wheel, days } from "./Wheel";
+import { Wheel } from "./Wheel";
 
 const label: React.CSSProperties = {
   color: "white",

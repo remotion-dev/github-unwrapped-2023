@@ -103,6 +103,7 @@ const computeCompositionParameters = (
     issuesClosed: userStats.closedIssues,
     issuesOpened: userStats.openIssues,
     totalPullRequests: userStats.totalPullRequests,
+    topWeekday: userStats.topWeekday,
   };
 };
 

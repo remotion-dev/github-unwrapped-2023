@@ -13,4 +13,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   issuesClosed: 10,
   issuesOpened: 10,
   totalPullRequests: 10,
+  topWeekday: "2",
 };

@@ -49,6 +49,11 @@ export const languageSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
+export const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
+export const topWeekdaySchema = z.enum(days);
+
+export type Weekday = (typeof days)[number];
+
 export const compositionSchema = z.object({
   language1: languageSchema,
   language2: languageSchema.or(z.null()),
@@ -61,6 +66,7 @@ export const compositionSchema = z.object({
   issuesOpened: z.number(),
   issuesClosed: z.number(),
   totalPullRequests: z.number(),
+  topWeekday: topWeekdaySchema,
 });
 
 export const RenderRequest = z.object({

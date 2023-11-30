@@ -6,22 +6,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { days, type Weekday } from "../../src/config";
 import { FPS } from "../Issues/make-ufo-positions";
 
 const items = 7;
 const radius = 90;
-
-export const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-] as const;
-
-type Day = (typeof days)[number];
 
 const wheelSpring = ({
   fps,
@@ -47,8 +36,20 @@ const WHEEL_INIT_SPEED =
   wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
   wheelSpring({ fps: FPS, frame: 0, delay: 0 });
 
+const weekdayToName = (weekday: Weekday) => {
+  return [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ][weekday];
+};
+
 export const Wheel: React.FC<{
-  day: Day;
+  day: Weekday;
 }> = ({ day }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -71,7 +72,8 @@ export const Wheel: React.FC<{
       {new Array(items).fill(true).map((f, i) => {
         const index = i / items + rotation;
 
-        const z = Math.cos(index * -Math.PI * 2) * radius;
+        const thisIndex = (i + Number(day)) % 7;
+        const zPosition = Math.cos(index * -Math.PI * 2) * radius;
         const y = Math.sin(index * Math.PI * 2) * radius;
         const r = interpolate(index, [0, 1], [0, Math.PI * 2]);
 
@@ -82,11 +84,11 @@ export const Wheel: React.FC<{
             style={{
               justifyContent: "center",
               fontSize: 65,
-              transform: `translateZ(${z}px) translateY(${y}px) rotateX(${r}deg)`,
+              transform: `translateZ(${zPosition}px) translateY(${y}px) rotateX(${r}deg)`,
               backfaceVisibility: "hidden",
               perspective: 1000,
               color:
-                i === days.indexOf(day) && frame - 5 > delay
+                Number(day) === thisIndex && frame - 5 > delay
                   ? "white"
                   : "rgba(255, 255, 255, 0.3)",
               fontFamily: "Mona Sans",
@@ -103,7 +105,7 @@ export const Wheel: React.FC<{
                 paddingRight: 40,
               }}
             >
-              {days[(i + days.indexOf(day)) % 7]}
+              {weekdayToName(days[thisIndex])}
             </div>
           </AbsoluteFill>
         );

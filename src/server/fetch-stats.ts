@@ -1,3 +1,4 @@
+import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
 import {
@@ -136,7 +137,7 @@ export const getStatsFromGitHub = async ({
     }))
     .slice(0, 3);
 
-  const stats = {
+  return {
     totalPullRequests: pullRequestData.length,
     topLanguages,
     totalStars: baseData.starredRepositories.edges.length,
@@ -149,9 +150,8 @@ export const getStatsFromGitHub = async ({
     username: baseData.login,
     lowercasedUsername: baseData.login.toLowerCase(),
     bestHours: getTimesOfDay(commits),
+    topWeekday: getMostProductive(commits).most,
   };
-
-  return stats;
 };
 
 export const getStatsFromGitHubOrCache = async ({

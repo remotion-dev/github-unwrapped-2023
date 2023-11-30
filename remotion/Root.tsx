@@ -221,6 +221,7 @@ export const RemotionRoot: React.FC = () => {
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
+          topWeekday: "1",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -247,6 +248,7 @@ export const RemotionRoot: React.FC = () => {
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
+          topWeekday: "3",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -268,6 +270,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           graphData: GRAPH_DATA,
+          weekday: "4",
         }}
       />
       <Composition
@@ -279,7 +282,7 @@ export const RemotionRoot: React.FC = () => {
         width={500}
         schema={topDaySchema}
         defaultProps={{
-          day: "Sunday",
+          day: "6",
         }}
       />
       <Composition
@@ -291,7 +294,7 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         schema={topDaySchema}
         defaultProps={{
-          day: "Tuesday",
+          day: "1",
         }}
       />
       <Composition
@@ -305,6 +308,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           graphData: GRAPH_DATA,
           enterProgress: 0,
+          weekday: "6",
         }}
       />
       <Composition
@@ -353,6 +357,9 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={240}
           height={1080}
           width={1080}
+          defaultProps={{
+            totalPullRequests: 12,
+          }}
         />
       </Folder>
       <Folder name="TopLanguages">
@@ -504,6 +511,7 @@ export const RemotionRoot: React.FC = () => {
           issuesClosed: 10,
           issuesOpened: 10,
           totalPullRequests: 10,
+          topWeekday: "2",
         }}
       />
       <Composition

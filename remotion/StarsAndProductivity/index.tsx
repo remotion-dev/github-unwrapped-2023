@@ -15,7 +15,14 @@ const ZOOM_DELAY = 120;
 
 export const StarsAndProductivity: React.FC<
   z.infer<typeof starsReceivedSchema>
-> = ({ starsGiven, showHitWindow, showBackground, showCockpit, showDots }) => {
+> = ({
+  starsGiven,
+  showHitWindow,
+  showBackground,
+  showCockpit,
+  showDots,
+  topWeekday,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -45,9 +52,14 @@ export const StarsAndProductivity: React.FC<
           transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
           opacity: 1 - zoomTransition * 0.7,
         }}
+        topWeekday={topWeekday}
       />
       <Sequence from={ZOOM_DELAY}>
-        <Tablet enterProgress={zoomTransition} graphData={GRAPH_DATA} />
+        <Tablet
+          weekday={topWeekday}
+          enterProgress={zoomTransition}
+          graphData={GRAPH_DATA}
+        />
       </Sequence>
     </AbsoluteFill>
   );
