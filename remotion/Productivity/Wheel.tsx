@@ -6,6 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { FPS } from "../Issues/make-ufo-positions";
 
 const items = 7;
 const radius = 90;
@@ -22,21 +23,45 @@ export const days = [
 
 type Day = (typeof days)[number];
 
-export const Wheel: React.FC<{
-  day: Day;
-}> = ({ day }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const progress = spring({
+const wheelSpring = ({
+  fps,
+  frame,
+  delay,
+}: {
+  fps: number;
+  frame: number;
+  delay: number;
+}) => {
+  return spring({
     fps,
     frame,
     config: {
       damping: 200,
     },
     durationInFrames: 30,
+    delay,
   });
+};
 
+export const WHEEL_INIT_SPEED =
+  wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
+  wheelSpring({ fps: FPS, frame: 0, delay: 0 });
+
+console.log(WHEEL_INIT_SPEED);
+
+export const Wheel: React.FC<{
+  day: Day;
+}> = ({ day }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const delay = 30;
+  const progress =
+    wheelSpring({ fps, frame, delay }) +
+    interpolate(frame, [delay - 1, delay], [-WHEEL_INIT_SPEED / 10, 0], {
+      extrapolateRight: "clamp",
+      extrapolateLeft: "extend",
+    });
   const rotation = interpolate(progress, [0, 1], [1, 0]) % Math.PI;
 
   return (
@@ -63,7 +88,9 @@ export const Wheel: React.FC<{
               backfaceVisibility: "hidden",
               perspective: 1000,
               color:
-                i === days.indexOf(day) ? "white" : "rgba(255, 255, 255, 0.3)",
+                i === days.indexOf(day) && frame - 5 > delay
+                  ? "white"
+                  : "rgba(255, 255, 255, 0.3)",
               fontFamily: "Mona Sans",
               fontWeight: "bold",
             }}
