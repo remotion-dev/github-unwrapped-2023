@@ -37,6 +37,10 @@ import {
 } from "./svgs/planets/Rust2PlanetSVG";
 import { Rust3BoundingBox, Rust3Planet } from "./svgs/planets/Rust3Planet";
 import {
+  StandardPlanet,
+  StandardPlanetBoundingBox,
+} from "./svgs/planets/StandardPlanet";
+import {
   TypeScriptPlanetBoundingBox,
   TypeScriptPlanetSVG,
 } from "./svgs/planets/TypeScriptPlanetSVG";
@@ -177,12 +181,12 @@ export const computePlanetInfo = (
     return mapLanguageToPlanet[language.name];
   }
 
-  // TODO: Why is is resorting to Java?
   return {
-    boundingBox: JavaPlanetBoundingBox,
-    PlanetSVG: JavaPlanetSVG,
+    boundingBox: StandardPlanetBoundingBox,
+    PlanetSVG: StandardPlanet,
+    // TODO: Find right gradient
     gradient: "orange",
-    textColor: "black",
+    textColor: language.color,
     name: language.name,
     opacity: 0.3,
   };

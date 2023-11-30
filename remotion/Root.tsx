@@ -1,5 +1,5 @@
 import { Composition, Folder, Still } from "remotion";
-import { COMP_NAME, LanguagesEnum, compositionSchema } from "../src/config";
+import { LanguagesEnum, compositionSchema } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -398,7 +398,7 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
         <Composition
-          id={"TopLanguagesWiggle"}
+          id="TopLanguagesWiggle"
           component={PlanetScaleWiggle}
           schema={wiggleSchema}
           durationInFrames={FIRST_PLACE_DURATION}
@@ -406,8 +406,8 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: { type: "designed", name: "Java" },
             position: 1,
+            language: { type: "other", name: "Swift", color: "#12b53b" },
             enterDirection: "right-counter-clockwise" as const,
           }}
         />
@@ -479,7 +479,7 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Composition
-        id={COMP_NAME}
+        id="Main"
         component={Main}
         durationInFrames={60 * 30}
         fps={FPS}
@@ -488,13 +488,17 @@ export const RemotionRoot: React.FC = () => {
         schema={compositionSchema}
         calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
-          corner: "bottom-left",
-          language1: { type: "designed", name: "JavaScript" },
-          language2: { type: "designed", name: "TypeScript" },
-          language3: { type: "designed", name: "C++" },
+          corner: "bottom-left" as const,
+          language1: { type: "designed" as const, name: "JavaScript" as const },
+          language2: { type: "designed" as const, name: "TypeScript" as const },
+          language3: {
+            type: "other" as const,
+            name: "Swift" as const,
+            color: "#12b53b",
+          },
           showHelperLine: false,
           login: "JonnyBurger",
-          planet: "Silver",
+          planet: "Silver" as const,
           starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,

@@ -23,6 +23,7 @@
     "@remotion/player": "4.0.74",
     "@remotion/shapes": "4.0.74",
     "@remotion/transitions": "4.0.74",
+    "@remotion/zod-types": "4.0.74",
     "@sentry/cli": "^2.22.3",
     "@sentry/node": "^7.83.0",
     "@sentry/profiling-node": "^1.2.6",

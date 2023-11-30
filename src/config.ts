@@ -1,4 +1,5 @@
 import type { AwsRegion } from "@remotion/lambda";
+import { zColor } from "@remotion/zod-types";
 import { z } from "zod";
 
 export const REGION: AwsRegion = "us-east-1";
@@ -41,7 +42,7 @@ export const languageSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("other"),
     name: z.string(),
-    color: z.string(),
+    color: zColor(),
   }),
   z.object({
     type: z.literal("designed"),
