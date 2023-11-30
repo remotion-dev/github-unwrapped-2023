@@ -1,5 +1,5 @@
-import { Stars } from "./Home/Stars";
-import { RadialGradient } from "./RadialGradient";
+import { Stars } from "../Home/Stars";
+import { RadialGradient } from "../RadialGradient";
 import styles from "./styles.module.css";
 
 const header: React.CSSProperties = {
@@ -119,7 +119,8 @@ const About = () => {
             }}
           >
             {content.map((item, index) => (
-              <div className={styles.aboutItem}>
+              // eslint-disable-next-line react/no-array-index-key
+              <div key={index} className={styles.aboutItem}>
                 <div
                   style={{
                     display: "flex",
