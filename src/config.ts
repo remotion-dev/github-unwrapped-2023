@@ -25,12 +25,14 @@ export const LanguagesEnum = z.enum([
   "Rust3",
 ]);
 
-export const cornerType = z.enum([
+export const cornerTypeValues = [
   "top-left",
   "top-right",
   "bottom-left",
   "bottom-right",
-]);
+] as const;
+
+export const cornerType = z.enum(cornerTypeValues);
 export type Corner = z.infer<typeof cornerType>;
 
 export const languageSchema = LanguagesEnum.or(
