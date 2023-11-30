@@ -11,14 +11,6 @@ import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
 
-const outer: React.CSSProperties = {
-  width: "100vw",
-  height: "100vh",
-  position: "absolute",
-  top: 0,
-  backgroundColor: "#000",
-};
-
 const background: React.CSSProperties = {
   width: "100vw",
   height: "100vh",
@@ -27,16 +19,6 @@ const background: React.CSSProperties = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   position: "absolute",
-};
-
-const container: React.CSSProperties = {
-  width: "100vw",
-  height: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  position: "absolute",
-  alignItems: "center",
-  overflow: "auto",
 };
 
 declare global {
@@ -101,13 +83,11 @@ export const UserPage = () => {
   }, []);
 
   return (
-    <div style={outer}>
+    <div className={styles.wrapper}>
       <div style={background} id="videobackground">
         <VideoPageBackground />
       </div>
-      <div style={container} className={styles.videobox}>
-        <VideoBox inputProps={inputProps} />
-      </div>
+      <VideoBox inputProps={inputProps} />
     </div>
   );
 };

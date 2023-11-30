@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { LinkedInIcon } from "../../icons/LinkedInIcon";
-import { UserIcon } from "../../icons/UserIcon";
-import { XIcon } from "../../icons/XIcon";
-import { signInWithGitHubLink } from "../sign-in-with-github";
+import { LinkedInIcon } from "../../../icons/LinkedInIcon";
+import { UserIcon } from "../../../icons/UserIcon";
+import { XIcon } from "../../../icons/XIcon";
+import { signInWithGitHubLink } from "../../sign-in-with-github";
 import { Action } from "./Action";
 
 const actionsWrapper: React.CSSProperties = {
@@ -20,8 +20,8 @@ export const Actions: React.FC = () => {
         onClick={() => {
           window.open(
             `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com\n\n[Delete this placeholder, download and drag your MP4 video in here]"
-            )}`
+              "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com\n\n[Delete this placeholder, download and drag your MP4 video in here]",
+            )}`,
           );
         }}
       />

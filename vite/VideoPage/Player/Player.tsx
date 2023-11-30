@@ -2,9 +2,9 @@ import type { PlayerRef } from "@remotion/player";
 import { Player } from "@remotion/player";
 import { useEffect, useMemo, useRef } from "react";
 import type { z } from "zod";
-import { Main, calculateDuration } from "../../remotion/Main";
-import type { compositionSchema } from "../../src/config";
-import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
+import { Main, calculateDuration } from "../../../remotion/Main";
+import type { compositionSchema } from "../../../src/config";
+import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../../types/constants";
 import styles from "./styles.module.css";
 
 const player: React.CSSProperties = {

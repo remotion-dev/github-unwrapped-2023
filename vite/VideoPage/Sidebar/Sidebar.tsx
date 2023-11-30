@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import React from "react";
 import type { z } from "zod";
-import { DownloadIcon } from "../../icons/DownloadIcon";
-import type { compositionSchema } from "../../src/config";
-import { Button } from "../Button/Button";
-import { Actions } from "./Actions";
+import { DownloadIcon } from "../../../icons/DownloadIcon";
+import type { compositionSchema } from "../../../src/config";
+import { Button } from "../../Button/Button";
+import { Actions } from "../Actions/Actions";
 
 const downloadContent: React.CSSProperties = {
   display: "flex",

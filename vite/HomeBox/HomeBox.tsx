@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Box } from "../Box/Box";
 import { Octocat } from "../Octocat";
 import { HomeBoxBottom } from "./HomeBoxBottom";
 import { HomeBoxTop } from "./HomeBoxTop";
@@ -8,13 +9,13 @@ export const HomeBox: React.FC = () => {
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
   return (
-    <div className={styles.homeBoxWrapper}>
+    <Box className={styles.homeBoxWrapper}>
       <HomeBoxTop />
       <HomeBoxBottom
         setUserNotFound={setUserNotFound}
         userNotFound={userNotFound}
       />
       <Octocat userNotFound={userNotFound} />
-    </div>
+    </Box>
   );
 };
