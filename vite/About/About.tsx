@@ -58,21 +58,21 @@ const About = () => {
       description: "",
       node: (
         <p style={{ marginTop: -32 }}>
-          This project was developed by{" "}
+          The project was implemented by{" "}
           <a
             style={{ color: "white", textDecoration: "underline" }}
             href="https://www.remotion.dev"
           >
             Remotion
           </a>{" "}
-          and{" "}
+          in collaboration with{" "}
           <a
             style={{ color: "white", textDecoration: "underline" }}
             href="https://www.foronered.com"
           >
             For One Red
           </a>{" "}
-          with support from GitHub.
+          For One Red was also responsible for the design of this project.
         </p>
       ),
     },
@@ -85,21 +85,74 @@ const About = () => {
     {
       icon: "/chat.svg",
       title: "Want to host a year in review for your users?",
-      description: `Want to give your users their personalized video at the end of 2023?
-      Developers: Check out Remotion and the source code of this project!
-      Non-developers: Drop your email and we'll contact you in September 2023 for a free consultation!`,
-      node: <EmailForm />,
+      description: ``,
+      node: (
+        <>
+          <p style={{ marginTop: -32 }}>
+            Want to give your users their personalized video at the end of 2024?
+            <br />
+            <br />
+            Developers: Check out{" "}
+            <a
+              style={{ color: "white", textDecoration: "underline" }}
+              href="https://www.remotion.dev"
+            >
+              Remotion
+            </a>{" "}
+            and the source code of{" "}
+            <a
+              style={{ color: "white", textDecoration: "underline" }}
+              href="https://github.com/remotion-dev/github-unwrapped-2023"
+            >
+              this project
+            </a>
+            !<br />
+            <br /> Non-developers: Drop your email and we'll contact you in
+            September 2024 for a free consultation!
+          </p>
+          <EmailForm />
+        </>
+      ),
     },
     {
       icon: "/trophy.svg",
       title: "Credits",
-      description: `Music (Candy Dream): Winter Holiday by Alec Koff
-      Music (Funky Gold): Electro Swinging Charleston by CueTracks
-      Music (Icy Winter): Christmas Chill by Roo Walker
-      Programming language icons: Tal Revivo (Icon 54)
-      Christmas icons: mehwishumar (Fiverr)
-      Font: Mona Sans by GitHub
-      Libraries used: Next.JS, Rough.JS`,
+      node: (
+        <p style={{ marginTop: -32 }}>
+          Music -{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://audiojungle.net/item/robots/35287595"
+          >
+            Robots
+          </a>{" "}
+          by Nicolas T. <br />
+          Design -{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://www.foronered.com/"
+          >
+            For One Red{" "}
+          </a>{" "}
+          <br />
+          Font -{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://github.com/github/mona-sans"
+          >
+            Mona Sans{" "}
+          </a>{" "}
+          by GitHub <br />
+          Libraries -{" "}
+          <a
+            style={{ color: "white", textDecoration: "underline" }}
+            href="https://github.com/vercel/next.js"
+          >
+            Next.js{" "}
+          </a>{" "}
+          <br />
+        </p>
+      ),
     },
     {
       icon: "/mail.svg",
