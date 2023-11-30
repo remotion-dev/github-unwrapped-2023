@@ -7,6 +7,7 @@ export const Stars: React.FC = () => {
     <AbsoluteFill
       style={{
         objectFit: "cover",
+        position: "fixed",
       }}
     >
       <svg viewBox="0 0 1442 997" preserveAspectRatio="xMidYMid slice">

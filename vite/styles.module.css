@@ -11,9 +11,10 @@
 }
 
 .octocat {
-  position: absolute;
+  height: 120px;
+  position: fixed;
   height: 236px;
-  bottom: -187px;
+  bottom: 130px;
   left: 0;
   right: 0;
   margin: 0 auto;

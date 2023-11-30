@@ -12,8 +12,8 @@ const Home = () => {
       <RadialGradient />
       <Stars />
       <HomeBackground />
-      <HomeForeground />
       <Planet />
+      <HomeForeground style={{ width: 1800, position: "fixed", bottom: -48 }} />
       <HomeBox />
     </div>
   );

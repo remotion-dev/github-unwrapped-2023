@@ -13,7 +13,7 @@ export const Planet: React.FC = () => {
         style={{
           width: 79,
           left: "50%",
-          position: "absolute",
+          position: "fixed",
           marginLeft: -79 / 2,
         }}
         viewBox="0 0 79 77"
