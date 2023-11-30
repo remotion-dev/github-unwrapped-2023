@@ -3,7 +3,7 @@
 
 **Try it out live:** [GitHubUnwrapped.com](https://www.githubunwrapped.com)
 
-A platform that generates a year-in-review video for each GitHub user. Built with Next.JS, Remotion and AWS Lambda.
+A platform that generates a year-in-review video for each GitHub user. Built with Vite, Remotion and AWS Lambda.
 
 ## Make your own
 
