@@ -1,5 +1,4 @@
-<img src="public/background.png">
-<img src="public/background.png">
+<img src="public/landing-page.png">
 
 **Try it out live:** [GitHubUnwrapped.com](https://www.githubunwrapped.com)
 
