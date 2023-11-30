@@ -19,6 +19,7 @@ import {
 } from "./JumpingNumber/JumpingNumber";
 import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
+import { Noise, noiseSchema } from "./Noise";
 import { OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -510,6 +511,19 @@ export const RemotionRoot: React.FC = () => {
         component={Stars}
         durationInFrames={10 * 30}
         fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="Noise"
+        component={Noise}
+        durationInFrames={10 * 30}
+        fps={FPS}
+        schema={noiseSchema}
+        defaultProps={{
+          translateX: 0,
+          translateY: 0,
+        }}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />

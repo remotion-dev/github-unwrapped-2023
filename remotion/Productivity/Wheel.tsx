@@ -43,7 +43,7 @@ const wheelSpring = ({
   });
 };
 
-export const WHEEL_INIT_SPEED =
+const WHEEL_INIT_SPEED =
   wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
   wheelSpring({ fps: FPS, frame: 0, delay: 0 });
 

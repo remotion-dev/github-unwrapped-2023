@@ -34,7 +34,7 @@ const getStatsCollection = async () => {
     .collection<ProfileStats>("stats");
 };
 
-export const dbEmailCollection = async () => {
+const dbEmailCollection = async () => {
   const client = await clientPromise;
   return client
     .db(backendCredentials().DB_NAME)

@@ -45,7 +45,7 @@ import {
   TypeScriptPlanetSVG,
 } from "./svgs/planets/TypeScriptPlanetSVG";
 
-export const ACTION_DURATION = 60;
+const ACTION_DURATION = 60;
 
 export const PLANET_1_POSITION = 0.55;
 export const PLANET_2_POSITION = 0.75;
@@ -75,12 +75,10 @@ export const newPath = translatePath(
 );
 export const complexCurvePathLength = getLength(newPath);
 
-export type LanguageType = z.infer<typeof LanguagesEnum>;
-
 const LanguageOptions = LanguagesEnum.options;
-export type LanguageEnumType = (typeof LanguageOptions)[number];
+type LanguageEnumType = (typeof LanguageOptions)[number];
 
-export type PlanetInfo = {
+type PlanetInfo = {
   boundingBox: PlanetBoundingBox;
   PlanetSVG: (
     props: SVGProps<SVGSVGElement> & {

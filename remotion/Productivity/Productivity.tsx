@@ -53,7 +53,7 @@ const Bar = (props: { productivity: number }) => {
   );
 };
 
-export const ProductivityGraph = (props: {
+const ProductivityGraph = (props: {
   productivityPerHour: Array<ProductivityPerHour>;
   style?: React.CSSProperties;
 }) => {

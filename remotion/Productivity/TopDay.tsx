@@ -15,7 +15,7 @@ export const topDaySchema = z.object({
   day: z.enum(days),
 });
 
-export const TOP_DAY_SPACING = 20;
+const TOP_DAY_SPACING = 20;
 
 export const TopDay: React.FC<z.infer<typeof topDaySchema>> = ({ day }) => {
   const maskImage = `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 70%, transparent 100%)`;
