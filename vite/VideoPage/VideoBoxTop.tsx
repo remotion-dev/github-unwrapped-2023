@@ -12,6 +12,9 @@ export const VideoBoxTop = () => {
       >
         #GitHubUnwrapped
       </h2>
+      {/**
+      // TODO: Add proper link
+       */}
       <div className={boxStyles.linkContainer}>
         <HomeLink
           href="https://example.com"
