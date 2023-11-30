@@ -46,8 +46,9 @@ const About = () => {
           in collaboration with{" "}
           <a className={styles.aboutLink} href="https://www.foronered.com">
             For One Red
-          </a>{" "}
-          For One Red was also responsible for the design of this project.
+          </a>
+          {", "}
+          who also made all the design for this project.
         </p>
       ),
     },
@@ -228,7 +229,7 @@ const About = () => {
                     marginBottom: -8,
                   }}
                 >
-                  <img src={item.icon} style={{ marginRight: 12 }}></img>
+                  <img src={item.icon} style={{ marginRight: 12 }} />
                   <h4 className={styles.aboutItemTitle} style={{ margin: 0 }}>
                     {item.title}
                   </h4>
