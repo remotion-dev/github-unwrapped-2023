@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import styles from "./action.styles.module.css";
+import styles from "./styles.module.css";
 
-export const Action: React.FC<{
+export const SharingAction: React.FC<{
   icon: (params: { width: number; color: string }) => ReactNode;
   label: string;
   onClick?: () => void;

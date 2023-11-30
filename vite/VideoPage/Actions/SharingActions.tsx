@@ -1,9 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import { LinkedInIcon } from "../../../icons/LinkedInIcon";
-import { UserIcon } from "../../../icons/UserIcon";
 import { XIcon } from "../../../icons/XIcon";
-import { signInWithGitHubLink } from "../../sign-in-with-github";
-import { Action } from "./Action";
+import { SharingAction } from "./SharingAction";
 
 const actionsWrapper: React.CSSProperties = {
   display: "flex",
@@ -11,10 +8,10 @@ const actionsWrapper: React.CSSProperties = {
   gap: 8,
 };
 
-export const Actions: React.FC = () => {
+export const SharingActions: React.FC = () => {
   return (
     <div style={actionsWrapper}>
-      <Action
+      <SharingAction
         icon={(params) => <XIcon {...params} />}
         label={"Post #GitHubUnwrapped"}
         onClick={() => {
@@ -25,25 +22,11 @@ export const Actions: React.FC = () => {
           );
         }}
       />
-      <Action
+      <SharingAction
         icon={(params) => <LinkedInIcon {...params} />}
-        label="Share to LinkedIn Network"
+        label="Share on LinkedIn"
         onClick={() => window.open("https://www.linkedin.com/")}
       />
-      <Link to="/">
-        <Action
-          icon={(params) => <UserIcon {...params} />}
-          label="Unwrap another user"
-        />
-      </Link>
-      {window.__USER__.loggedInWithGitHub ? null : (
-        <a href={signInWithGitHubLink()}>
-          <Action
-            icon={(params) => <UserIcon {...params} />}
-            label="Unlock private metrics"
-          />
-        </a>
-      )}
     </div>
   );
 };
