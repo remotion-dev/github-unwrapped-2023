@@ -1,4 +1,5 @@
-import type { SVGProps } from "react";
+import { useState, type SVGProps } from "react";
+import { random } from "remotion";
 import type { PlanetBoundingBox } from "../../planet-types";
 import { toViewBox } from "../../planet-types";
 
@@ -8,10 +9,12 @@ export const StandardPlanetBoundingBox: PlanetBoundingBox = {
 };
 
 export const StandardPlanet = (props: SVGProps<SVGSVGElement>) => {
+  const [id] = useState(() => random(null).toString().replace(".", ""));
+
   return (
     <svg viewBox={toViewBox(StandardPlanetBoundingBox)} fill="none" {...props}>
       <path
-        fill="url(#a)"
+        fill={"url(#" + id + ")"}
         d="M238.7 702.2c36.8 13.5 67.9 13 75.3 12.7 30.1-1 54.2-9.3 131-50.9 69.3-37.5 104-56.3 119.3-70.4 51.9-47.9 73.1-102.7 84-131.8 23.4-62.6 20-112.2 22.9-173.5 1.9-41.4 2-86.5-23.4-119.2-16.4-21.2-41.2-33.9-61.5-51.4C546 83.1 521.1 28.5 471.7 9 454.8 2.3 436.3.5 418.1.8c-39 .7-77.1 10.6-114.7 20.7-94.1 25-193.8 54.1-257.8 127.6-24.9 28.6-33.5 52.3-36.4 60.4-11.3 31.4-9.6 60.8-5.8 118.4 3 45.6 5.1 76.6 16.2 118.6 7.6 28.7 15.4 58.3 35.3 92.4 21.3 36.5 45.1 57.6 92.7 99.7 38.7 34.3 58.7 51.7 91.1 63.6Z"
       />
       <path
@@ -26,7 +29,7 @@ export const StandardPlanet = (props: SVGProps<SVGSVGElement>) => {
       />
       <defs>
         <radialGradient
-          id="a"
+          id={id}
           cx={0}
           cy={0}
           r={1}
