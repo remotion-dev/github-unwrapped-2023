@@ -13,7 +13,7 @@ const Home = () => {
       <Stars />
       <HomeBackground />
       <Planet />
-      <HomeForeground style={{ width: 1800, position: "fixed", bottom: -48 }} />
+      <HomeForeground className={styles.homeForeground} />
       <HomeBox />
     </div>
   );

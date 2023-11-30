@@ -14,11 +14,14 @@
 */
 
 .headerTopContainer {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 6px;
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.03);
+  display: none;
+  @media only screen and (min-width: 40em) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 6px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+  }
 }
 
 .linkContainer {

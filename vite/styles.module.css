@@ -11,13 +11,17 @@
 }
 
 .octocat {
-  height: 120px;
   position: fixed;
-  height: 236px;
-  bottom: 130px;
   left: 0;
   right: 0;
   margin: 0 auto;
+  height: 140px;
+  bottom: 27px;
+
+  @media only screen and (min-width: 40em) {
+    height: 196px;
+    bottom: 130px;
+  }
 }
 
 .gradientText2 {
@@ -27,4 +31,16 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.homeForeground {
+  position: fixed;
+  bottom: 0px;
+  width: 880px;
+  bottom: -16px;
+
+  @media only screen and (min-width: 40em) {
+    width: 1800px;
+    bottom: -48px;
+  }
 }

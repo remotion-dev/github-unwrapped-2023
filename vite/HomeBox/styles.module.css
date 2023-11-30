@@ -30,13 +30,12 @@
 
 .homeBoxWrapper {
   @media only screen and (min-width: 40em) {
-    bottom: 224px;
   }
 }
 
 .title {
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.1;
   margin-bottom: 12px;
   background: linear-gradient(270.02deg, #ddd 20.63%, #fff 99.87%);
@@ -48,11 +47,20 @@
   @media only screen and (min-width: 40em) {
     font-size: 44px;
     margin-bottom: 24px;
+    font-weight: 900;
+  }
+}
+
+.description {
+  font-weight: 400;
+
+  @media only screen and (min-width: 40em) {
+    font-weight: 500;
   }
 }
 
 .homeBoxBottomWrapper {
-  padding: 16px;
+  padding: 24px 16px;
 
   @media only screen and (min-width: 40em) {
     padding: 30px;
@@ -61,8 +69,14 @@
 
 .buttonContainer {
   display: flex;
+  flex-direction: column;
   flex: 1;
-  flex-direction: row;
+  gap: 16px;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+    gap: 0;
+  }
 }
 
 .mobileSubmitButton {
@@ -72,9 +86,24 @@
 }
 
 .desktopSubmitButton {
-  display: none;
-  width: 160px;
+  width: 100%;
+
   @media only screen and (min-width: 40em) {
+    width: 160px;
     display: inline;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.input {
+  font-weight: bold;
+  padding: 15px;
+  height: 56px;
+  font-size: 18px;
+
+  @media only screen and (min-width: 40em) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }

@@ -1,5 +1,5 @@
 .button {
-  background-color: black;
+  background-color: rgba(72, 74, 91, 1);
   color: white;
   height: 56px;
   /* padding: 0 50px; */
@@ -9,7 +9,7 @@
   justify-content: center;
   appearance: none;
   font-size: 16px;
-  border: 2px solid black;
+  border: 2px solid rgba(119, 122, 148, 1);
   border-radius: 5px;
   text-wrap: nowrap;
   cursor: pointer;
