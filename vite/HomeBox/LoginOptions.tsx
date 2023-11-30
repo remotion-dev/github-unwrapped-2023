@@ -60,9 +60,8 @@ export const LoginOptions: React.FC<Props> = ({
         </Button> */}
       </form>
       <div style={{ width: 20, display: "inline-block" }} />
-      <div style={{ fontSize: 16, fontWeight: 500 }}>
+      <div className={styles.privateContributions}>
         Want to include private contributions?
-        <div style={{ width: 10, display: "inline-block" }} />
         <SignInWithGitHub />
       </div>
     </div>

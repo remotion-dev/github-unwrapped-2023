@@ -107,3 +107,14 @@
     border-bottom-right-radius: 0;
   }
 }
+
+.privateContributions {
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+  }
+}
