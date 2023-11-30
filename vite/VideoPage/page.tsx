@@ -65,9 +65,18 @@ const parseTopLanguage = (topLanguage: {
   color: string;
 }): z.infer<typeof languageSchema> => {
   try {
-    return LanguagesEnum.parse(topLanguage.name);
+    // TODO: Rust1, Rust2, Rust3
+    const lang = LanguagesEnum.parse(topLanguage.name);
+    return {
+      type: "designed",
+      name: lang,
+    };
   } catch (e) {
-    return topLanguage;
+    return {
+      type: "other",
+      color: topLanguage.color,
+      name: topLanguage.name,
+    };
   }
 };
 

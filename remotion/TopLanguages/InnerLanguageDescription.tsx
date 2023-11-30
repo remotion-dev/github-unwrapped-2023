@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import type { z } from "zod";
+import type { languageSchema } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
 import { mapLanguageToPlanet } from "./constants";
 
@@ -48,9 +48,9 @@ export const InnerLanguageDescription: React.FC<{
     return {
       ...languageBaseStyle,
       color:
-        typeof language !== "string"
+        language.type === "other"
           ? language.color
-          : mapLanguageToPlanet[language].textColor,
+          : mapLanguageToPlanet[language.name].textColor,
     };
   }, [language]);
 
@@ -58,9 +58,9 @@ export const InnerLanguageDescription: React.FC<{
     <div style={label}>
       <div style={num}>{position}</div>
       <div style={languageStyle}>
-        {typeof language !== "string"
+        {language.type === "other"
           ? language.name
-          : mapLanguageToPlanet[language].name}
+          : mapLanguageToPlanet[language.name].name}
       </div>
     </div>
   );

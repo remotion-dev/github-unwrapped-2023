@@ -393,7 +393,7 @@ export const RemotionRoot: React.FC = () => {
           schema={zoomOutSchema}
           defaultProps={{
             corner: "top-right" as const,
-            language: "JavaScript" as const,
+            language: { type: "designed", name: "JavaScript" },
             position: 1,
           }}
         />
@@ -406,7 +406,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java",
+            language: { type: "designed", name: "Java" },
             position: 1,
             enterDirection: "right-counter-clockwise" as const,
           }}
@@ -420,7 +420,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java" as const,
+            language: { type: "designed", name: "Java" },
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
@@ -437,7 +437,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java" as const,
+            language: { type: "designed", name: "Java" },
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
@@ -470,9 +470,9 @@ export const RemotionRoot: React.FC = () => {
           }}
           defaultProps={{
             corner: "top-right" as const,
-            language1: "Python" as const,
-            language2: "Go" as const,
-            language3: "JavaScript" as const,
+            language1: { type: "designed", name: "Python" },
+            language2: { type: "designed", name: "Go" },
+            language3: { type: "designed", name: "JavaScript" },
             showHelperLine: false,
             login: "JonnyBurger",
           }}
@@ -489,9 +489,9 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
           corner: "bottom-left",
-          language1: "JavaScript",
-          language2: "TypeScript",
-          language3: "Rust2",
+          language1: { type: "designed", name: "JavaScript" },
+          language2: { type: "designed", name: "TypeScript" },
+          language3: { type: "designed", name: "Rust2" },
           showHelperLine: false,
           login: "JonnyBurger",
           planet: "Silver",

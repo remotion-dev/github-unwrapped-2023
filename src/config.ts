@@ -35,12 +35,17 @@ export const cornerTypeValues = [
 export const cornerType = z.enum(cornerTypeValues);
 export type Corner = z.infer<typeof cornerType>;
 
-export const languageSchema = LanguagesEnum.or(
+export const languageSchema = z.discriminatedUnion("type", [
   z.object({
+    type: z.literal("other"),
     name: z.string(),
     color: z.string(),
   }),
-);
+  z.object({
+    type: z.literal("designed"),
+    name: LanguagesEnum,
+  }),
+]);
 
 export const compositionSchema = z.object({
   language1: languageSchema,
