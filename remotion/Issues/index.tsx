@@ -10,9 +10,11 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
-import { Gradient } from "../Gradients/NativeGradient";
 import { Poof, POOF_DURATION } from "../Poof";
-import { Background } from "./Background";
+import {
+  WIGGLE_EXIT_DURATION,
+  WIGGLE_EXIT_SPRING_CONFIG,
+} from "../TopLanguages/PlaneScaleWiggle";
 import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
 import { getAudioHits } from "./get-audio-hits";
 import {
@@ -29,7 +31,6 @@ import {
   FPS,
   makeUfoPositions,
   UFO_ENTRANCE_DELAY,
-  UFO_ENTRANCE_DURATION,
   UFO_EXIT_START,
 } from "./make-ufo-positions";
 import {
@@ -58,8 +59,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     closedIndices,
     offsetDueToManyUfos,
     factor,
-    rowHeight,
-    rows,
+    totalHeight,
     columns,
   } = useMemo(() => {
     return makeUfoPositions({
@@ -71,10 +71,8 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   const entrace = spring({
     fps: FPS,
     frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: UFO_ENTRANCE_DURATION,
+    config: WIGGLE_EXIT_SPRING_CONFIG,
+    durationInFrames: WIGGLE_EXIT_DURATION,
     delay: UFO_ENTRANCE_DELAY,
   });
 
@@ -88,7 +86,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     durationInFrames: ISSUES_EXIT_DURATION,
   });
 
-  const entranceYOffset = interpolate(entrace, [0, 1], [-rows * rowHeight, 0], {
+  const entranceYOffset = interpolate(entrace, [0, 1], [-totalHeight, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -144,12 +142,6 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
-      </AbsoluteFill>
-      <AbsoluteFill>
-        <Background />
-      </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
         {withShootDurations.map((p, i) => {
           return (

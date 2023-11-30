@@ -4,9 +4,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-
-const barBackground = "rgb(0,0,0)";
-const barColor = "rgb(133,134,214)";
+import { TABLET_BG } from "./TabletSVG";
 
 type ProductivityPerHour = {
   time: number;
@@ -26,9 +24,6 @@ const Bar = (props: { productivity: number }) => {
     from: 0,
     to: 100,
     config: {
-      /**
-       * If the mass is 0 give it some mass as well
-       */
       mass: props.productivity * 10 + 0.1,
       damping: 200,
     },
@@ -37,20 +32,20 @@ const Bar = (props: { productivity: number }) => {
   return (
     <div
       style={{
-        width: 24,
+        width: 30,
         height: `${height}%`,
-        background: barBackground,
         display: "flex",
         alignItems: "flex-end",
-        borderRadius: 16,
+        borderRadius: 4,
       }}
     >
       <div
         style={{
-          background: barColor,
           width: "100%",
           height: `${props.productivity * 100}%`,
-          borderRadius: 16,
+          borderRadius: 4,
+          backgroundColor: "#181B28",
+          border: "3px solid rgba(255, 255, 255, 0.1)",
         }}
       />
     </div>
@@ -67,7 +62,7 @@ export const ProductivityGraph = (props: {
         display: "flex",
         alignItems: "flex-end",
         justifyContent: "center",
-        gap: 16,
+        gap: 10,
         height: 480,
         ...props.style,
       }}
@@ -107,7 +102,7 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
   return (
     <AbsoluteFill
       style={{
-        background: "rgb(21,20,39)",
+        background: TABLET_BG,
         display: "flex",
       }}
     >

@@ -1,76 +1,67 @@
-<img src="https://github.com/remotion-dev/template-next/assets/1629785/9092db5f-7c0c-4d38-97c4-5f5a61f5cc098" />
-<br/>
-<br/>
+<img src="public/background.png">
+<img src="public/background.png">
 
-This is a Next.js template for building programmatic video apps, with [`@remotion/player`](https://remotion.dev/player) and [`@remotion/lambda`](https://remotion.dev/lambda) built in.
+**Try it out live:** [GitHubUnwrapped.com](https://www.githubunwrapped.com)
 
-This template uses the Next.js App directory. There is a [Pages directory version](https://github.com/remotion-dev/template-next-pages-dir) of this template available.
+A platform that generates a year-in-review video for each GitHub user. Built with Vite, Remotion and AWS Lambda.
 
-<img src="https://github.com/remotion-dev/template-next/assets/1629785/c9c2e5ca-2637-4ec8-8e40-a8feb5740d88" />
+## Make your own
 
-## Getting Started
+Want to make your own year-in-review for your users?
 
-[Use this template](https://github.com/new?template_name=template-next-app-dir&template_owner=remotion-dev) to clone it into your GitHub account. Run
+- **Developers**: Feel free to fork use this repository as a template! Note the legal disclaimers at the bottom of this README.
+- **Non-developers**: Write to [hi@remotion.dev](mailto:hi@remotion.dev) for a free consultation in Fall 2024!
 
-```
-npm i
-```
+## Setup
 
-afterwards. Alternatively, use this command to scaffold a project:
+1. Run `npm i` to install dependencies.
+2. Rename `.env.example` to `.env`
+3. Set up your AWS account according to the [Remotion Lambda - Setup guide](https://remotion.dev/docs/lambda/setup). We use multiple accounts for load-balancing:
+   - Use `AWS_KEY_1` instead of `REMOTION_AWS_ACCESS_KEY_ID` and `AWS_SECRET_1` instead of `REMOTION_AWS_SECRET_ACCESS_KEY`.
+   - You can use `AWS_KEY_2` and `AWS_SECRET_2` to load-balance between two accounts, or paste the same credentials as before to use the same account.
+   - In `src/set-env-for-key.ts`, we rotate the environment variables.
+4. Deploy the functions into your AWS account(s):
+   ```
+   npx ts-node deploy.ts
+   ```
+   
+   Note that some AWS regions are disabled by default. [If you get an error, enable them or limit yourself to only default ones.](https://remotion.dev/docs/lambda/troubleshooting/security-token)
+5. For caching the videos and GitHub API responses, set up a MongoDB (we use a free MongoDB Atlas Cloud instance) to save the videos. Set the connection string as `MONGO_URL`.
+6. For fetching data from GitHub, create a personal access token in your user settings (no need to grant any scopes, the GraphQL API needs to be authenticated to get public information) and set it as `GITHUB_TOKEN_1`. Adding more tokens `GITHUB_TOKEN_2` etc. will rotate the personal access tokens.
+7. Optionally, provide `DISCORD_CHANNEL` and `DISCORD_TOKEN` values to send monitoring logs to Discord.
 
-```
-npx create-video@latest --next
-```
+You now have all environment variables.
 
-## Commands
+Run the web app:
 
-Start the Next.js dev server:
-
-```
+```console
 npm run dev
 ```
 
-Open the Remotion Studio:
+Edit the template in the Remotion preview:
 
-```
-npm run remotion
-```
-
-The following script will set up your Remotion Bundle and Lambda function on AWS:
-
-```
-node deploy.mjs
+```console
+npm run preview
 ```
 
-You should run this script after:
+To deploy, connect your repository to Vercel. Don't forget to also set the environment variables there too.
 
-- changing the video template
-- changing `config.mjs`
-- upgrading Remotion to a newer version
+## Scaling strategy
 
-## Set up rendering on AWS Lambda
+To allow thousands of people to render their video at the same time, we applied multiple strategies for scaling:
 
-This template supports rendering the videos via [Remotion Lambda](https://remotion.dev/lambda).
+- Caching the video whenever possible. Before each render, a MongoDB database lock is created to avoid multiple renders for the same GitHub user to be accidentally created.
+- Renders are distributed across an array of AWS regions and accounts to prevent hitting the [concurrency limit](https://www.remotion.dev/docs/lambda/troubleshooting/rate-limit).
 
-1. Copy the `.env.example` file to `.env` and fill in the values.
-   Complete the [Lambda setup guide](https://www.remotion.dev/docs/lambda/setup) to get your AWS credentials.
+## Credits
 
-1. Edit the `config.mjs` file to your desired Lambda settings.
+We thank [GitHub](https://github.com/github) and [For One Red](https://github.com/foronered) for their support in realization and promoting of this project. 
 
-1. Run `node deploy.mjs` to deploy your Lambda function and Remotion Bundle.
+## Music copyright disclaimer
 
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://remotion.dev/discord).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://remotion.dev/issue).
+The music was licensed for GitHubUnwrapped.com specifically. If you create a derivative project, you may not use it. The license to the music can purchased [here](https://audiojungle.net/item/robots/35287595).
 
 ## License
 
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+The code in this repository: Licensed under MIT.  
+The Remotion framework (a dependency of this project): Companies need to obtain a paid license. Read the terms [here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md#company-license).

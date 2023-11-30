@@ -1,6 +1,7 @@
 import { getLength, scalePath, translatePath } from "@remotion/paths";
 import type { SVGProps } from "react";
 import type { z } from "zod";
+import type { languageSchema } from "../../src/config";
 import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
@@ -67,7 +68,7 @@ export type LanguageType = z.infer<typeof LanguagesEnum>;
 const LanguageOptions = LanguagesEnum.options;
 export type LanguageEnumType = (typeof LanguageOptions)[number];
 
-type PlanetInfo = {
+export type PlanetInfo = {
   boundingBox: PlanetBoundingBox;
   PlanetSVG: (props: SVGProps<SVGSVGElement>) => JSX.Element;
   gradient: GradientType;
@@ -132,7 +133,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "brown",
     textColor: "#5F523E",
     name: "Rust",
-    opacity: 0.8,
+    opacity: 0.4,
   },
   [LanguagesEnum.Enum.Rust3]: {
     boundingBox: Rust3BoundingBox,
@@ -141,6 +142,23 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "yellow",
     textColor: "#E8A08A",
     name: "Rust",
-    opacity: 0.3,
+    opacity: 0.2,
   },
+};
+
+export const computePlanetInfo = (
+  langauge: z.infer<typeof languageSchema>,
+): PlanetInfo => {
+  if (typeof langauge === "string") {
+    return mapLanguageToPlanet[langauge];
+  }
+
+  return {
+    boundingBox: JavaPlanetBoundingBox,
+    PlanetSVG: JavaPlanetSVG,
+    gradient: "orange",
+    textColor: "black",
+    name: langauge.name,
+    opacity: 0.3,
+  };
 };

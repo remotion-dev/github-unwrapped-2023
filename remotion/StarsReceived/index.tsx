@@ -1,12 +1,12 @@
+import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
-import { AbsoluteFill, Sequence, random } from "remotion";
+import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
-import { Tablet } from "../Productivity/Tablet";
-import { GRAPH_DATA } from "../Productivity/constants";
+import { Noise } from "../Noise";
 import { AnimatedCockpit } from "./AnimatedCockpit";
-import { Description } from "./Description";
-import { HIT_RADIUS, Star } from "./Star";
+import { Shines } from "./Shines";
+import { HIT_RADIUS, STAR_ANIMATION_DURATION, Star } from "./Star";
 
 export const MAX_STARS = 50;
 export const TIME_INBETWEEN_STARS = 10;
@@ -23,7 +23,6 @@ export const starsReceivedSchema = z.object({
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & {
     style?: React.CSSProperties;
-    tabletTransition: number;
   }
 > = ({
   starsGiven,
@@ -32,8 +31,13 @@ export const StarsReceived: React.FC<
   showHitWindow,
   showCockpit,
   showDots,
-  tabletTransition,
 }) => {
+  const frame = useCurrentFrame();
+
+  const xShake = noise2D("xshake", frame / 10, 0) * 10;
+  const yShake = noise2D("yshake", frame / 10, 0) * 10;
+  const rotationShake = noise2D("rotateshake", frame / 10, 0) * 0.05;
+
   return (
     <AbsoluteFill style={style}>
       {showBackground ? (
@@ -41,6 +45,8 @@ export const StarsReceived: React.FC<
           <Gradient gradient="blueRadial" />
         </AbsoluteFill>
       ) : null}
+      <Noise translateX={0} translateY={0} />
+      <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
       {showHitWindow ? (
         <AbsoluteFill
           style={{
@@ -69,22 +75,19 @@ export const StarsReceived: React.FC<
           <Star
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
             id={`star-${index}`}
-            duration={20}
+            duration={STAR_ANIMATION_DURATION}
             starsShown={Math.min(starsGiven, MAX_STARS)}
             showDots={showDots}
           />
         </Sequence>
       ))}
-      {showCockpit ? <AnimatedCockpit /> : null}
-      <Description starsGiven={starsGiven} />
-      <Tablet
-        style={{
-          position: "absolute",
-          transformOrigin: "left bottom",
-          transform: `translateY(${500 - tabletTransition * 500}px) scale(0.5)`,
-        }}
-        graphData={GRAPH_DATA}
-      />
+      {showCockpit ? (
+        <AnimatedCockpit
+          rotationShake={rotationShake}
+          xShake={xShake}
+          yShake={yShake}
+        />
+      ) : null}
     </AbsoluteFill>
   );
 };

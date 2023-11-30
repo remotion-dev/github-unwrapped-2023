@@ -25,7 +25,8 @@ import { PullRequests } from "./Paths/Paths";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
-import { Tablet } from "./Productivity/Tablet";
+import { Tablet, tableSchema } from "./Productivity/Tablet";
+import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
   SevenSegment,
@@ -42,9 +43,11 @@ import {
   starsReceivedSchema,
 } from "./StarsReceived";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
+import { Shine, Shines, shineSchema } from "./StarsReceived/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
+  FIRST_PLACE_DURATION,
   allPlanetsSchema,
   getDurationOfAllPlanets,
 } from "./TopLanguages/AllPlanets";
@@ -239,9 +242,9 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           starsGiven: 10,
           showBackground: true,
-          showHitWindow: true,
+          showHitWindow: false,
           showCockpit: true,
-          showDots: true,
+          showDots: false,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -266,14 +269,27 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
+        id="Wheel"
+        component={Wheel}
+        durationInFrames={100}
+        fps={FPS}
+        height={1080}
+        width={1080}
+        defaultProps={{
+          topLayer: false,
+        }}
+      />
+      <Composition
         id={"Tablet"}
         component={Tablet}
         durationInFrames={10 * VIDEO_FPS}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={tableSchema}
         defaultProps={{
           graphData: GRAPH_DATA,
+          enterProgress: 0,
         }}
       />
       <Composition
@@ -370,7 +386,7 @@ export const RemotionRoot: React.FC = () => {
           id={"TopLanguagesWiggle"}
           component={PlanetScaleWiggle}
           schema={wiggleSchema}
-          durationInFrames={150}
+          durationInFrames={FIRST_PLACE_DURATION}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
@@ -467,6 +483,7 @@ export const RemotionRoot: React.FC = () => {
           starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,
+          totalPullRequests: 10,
         }}
       />
       <Composition
@@ -492,6 +509,34 @@ export const RemotionRoot: React.FC = () => {
             />
           );
         })}
+      </Folder>
+      <Folder name="StarsReceived">
+        <Composition
+          id="shine"
+          component={Shine}
+          fps={30}
+          durationInFrames={100}
+          height={1080}
+          width={1080}
+          schema={shineSchema}
+          defaultProps={{
+            rotation: 0.1,
+            showHelpers: false,
+          }}
+        />
+        <Composition
+          id="shines"
+          component={Shines}
+          fps={30}
+          durationInFrames={100}
+          height={1080}
+          width={1080}
+          defaultProps={{
+            rotationShake: 0,
+            xShake: 0,
+            yShake: 0,
+          }}
+        />
       </Folder>
     </>
   );

@@ -116,8 +116,7 @@ const makeXPosition = ({
 
 const UFOS_MUST_BE_ABOVE_LINE = VIDEO_HEIGHT * 0.4;
 
-export const UFO_ENTRANCE_DURATION = 30;
-export const UFO_ENTRANCE_DELAY = 0;
+export const UFO_ENTRANCE_DELAY = 5;
 
 export const UFO_EXIT_START = TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION + 30;
 
@@ -142,10 +141,9 @@ export const makeUfoPositions = ({
   ufos: UfoPosition[];
   closedIndices: number[];
   offsetDueToManyUfos: number;
-  rows: number;
-  rowHeight: number;
   factor: number;
   columns: number;
+  totalHeight: number;
 } => {
   const { factor, numberOfUfos: totalUfos } =
     reduceTotalNumberOfUfos(originalTotalUfos);
@@ -199,10 +197,9 @@ export const makeUfoPositions = ({
     closedIndices,
     ufos,
     offsetDueToManyUfos,
-    rowHeight,
-    rows,
     factor,
     columns,
+    totalHeight,
   };
 };
 

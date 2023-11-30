@@ -1,4 +1,5 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
+import About from "./About.jsx";
 import Home from "./Home.jsx";
 import { UserPage } from "./VideoPage/page.jsx";
 
@@ -26,8 +27,14 @@ const userRoute = new Route({
   component: UserPage,
 });
 
+const aboutRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/about",
+  component: About,
+});
+
 // Create the route tree using your routes
-const routeTree = rootRoute.addChildren([indexRoute, userRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, userRoute]);
 
 // Create the router using your route tree
 export const router = new Router({ routeTree });

@@ -15,8 +15,6 @@ const makeAppHead = async (username: string | null) => {
     token: getRandomGithubToken(),
   });
 
-  console.log("username: ", stats);
-
   const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
   const head = renderToString(
     <>

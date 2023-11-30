@@ -12,4 +12,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   starsGiven: 10,
   issuesClosed: 10,
   issuesOpened: 10,
+  totalPullRequests: 10,
 };
