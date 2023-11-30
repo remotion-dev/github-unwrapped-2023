@@ -46,7 +46,7 @@ Edit the template in the Remotion Studio:
 npm run remotion
 ```
 
-To deploy, connect your repository to Vercel. Don't forget to also set the environment variables there too.
+To deploy, connect your repository to [Render](https://render.com/). Don't forget to also set the environment variables there too.
 
 ## Scaling strategy
 
