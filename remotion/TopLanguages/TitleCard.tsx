@@ -9,11 +9,12 @@ import { TopLanguagesTitle } from "./TopLanguagesTitle";
 
 export const topLanguagesTitleCardSchema = z.object({
   login: z.string(),
+  pluralizeLanguages: z.boolean(),
 });
 
 export const TopLanguagesTitleCard: React.FC<
   z.infer<typeof topLanguagesTitleCardSchema>
-> = ({ login }) => {
+> = ({ login, pluralizeLanguages }) => {
   const frame = useCurrentFrame();
   const zoomOutProgress = interpolate(frame, [0, 80], [0, 1]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
@@ -42,7 +43,7 @@ export const TopLanguagesTitleCard: React.FC<
           alignItems: "center",
         }}
       >
-        <TopLanguagesTitle login={login} />
+        <TopLanguagesTitle pluralize={pluralizeLanguages} login={login} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
