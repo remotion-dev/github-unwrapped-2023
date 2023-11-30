@@ -199,8 +199,7 @@ export const computePlanetInfo = (
   return {
     boundingBox: StandardPlanetBoundingBox,
     PlanetSVG: StandardPlanet,
-    // TODO: Find right gradient
-    gradient: "orange",
+    gradient: "white",
     textColor: language.color,
     name: language.name,
     opacity: 0.3,

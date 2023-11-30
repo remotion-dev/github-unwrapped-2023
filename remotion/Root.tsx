@@ -407,7 +407,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           defaultProps={{
             position: 1,
-            language: { type: "other", name: "Swift", color: "#12b53b" },
+            language: { type: "other", name: "Scala", color: "#C22D40" },
             enterDirection: "right-counter-clockwise" as const,
           }}
         />
@@ -494,7 +494,7 @@ export const RemotionRoot: React.FC = () => {
           language3: {
             type: "other" as const,
             name: "Swift" as const,
-            color: "#12b53b",
+            color: "orange",
           },
           showHelperLine: false,
           login: "JonnyBurger",
