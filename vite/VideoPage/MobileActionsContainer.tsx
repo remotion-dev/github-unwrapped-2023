@@ -8,6 +8,8 @@ import styles from "./styles.module.css";
 export const MobileActionsContainer: React.FC = () => {
   return (
     <div className={styles.mobileActionsContainer}>
+      <FurtherActions />
+
       <div style={{ display: "flex", gap: 16 }}>
         <Button
           style={{
@@ -26,7 +28,6 @@ export const MobileActionsContainer: React.FC = () => {
           Share
         </Button>
       </div>
-      <FurtherActions />
     </div>
   );
 };
