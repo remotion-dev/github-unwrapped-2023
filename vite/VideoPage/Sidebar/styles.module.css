@@ -11,6 +11,7 @@
   width: 100%;
   display: flex;
   gap: 8px;
+  border: none;
 
   &:hover {
     background-color: rgba(80, 126, 255, 0.8);
