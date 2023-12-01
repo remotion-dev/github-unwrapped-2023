@@ -22,6 +22,7 @@ export const StarsAndProductivity: React.FC<
   showCockpit,
   showDots,
   topWeekday,
+  topHour,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -34,7 +35,7 @@ export const StarsAndProductivity: React.FC<
       mass: 4,
       damping: 200,
     },
-    durationInFrames: 40,
+    durationInFrames: 45,
   });
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;
@@ -53,12 +54,14 @@ export const StarsAndProductivity: React.FC<
           opacity: 1 - zoomTransition * 0.7,
         }}
         topWeekday={topWeekday}
+        topHour={topHour}
       />
       <Sequence from={ZOOM_DELAY}>
         <Tablet
           weekday={topWeekday}
           enterProgress={zoomTransition}
           graphData={GRAPH_DATA}
+          hour={topHour}
         />
       </Sequence>
     </AbsoluteFill>

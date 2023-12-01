@@ -1,6 +1,6 @@
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import type { Weekday } from "../config.js";
+import type { Hour, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -16,6 +16,7 @@ export type ProfileStats = {
   topLanguages: Array<{ name: string; color: string }>;
   bestHours: Record<string, number>;
   topWeekday: Weekday;
+  topHour: Hour;
 };
 
 type EmailCollection = {

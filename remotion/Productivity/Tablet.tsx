@@ -16,7 +16,7 @@ export const tableSchema = z.object({
 
 export const Tablet: React.FC<
   ComponentProps<typeof Productivity> & z.infer<typeof tableSchema>
-> = ({ graphData, enterProgress, weekday }) => {
+> = ({ graphData, enterProgress, weekday, hour }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -111,7 +111,7 @@ export const Tablet: React.FC<
         }}
       >
         <AbsoluteFill style={{ width: 1080, height: 1080 }}>
-          <Productivity weekday={weekday} graphData={graphData} />
+          <Productivity hour={hour} weekday={weekday} graphData={graphData} />
         </AbsoluteFill>
       </div>
     </AbsoluteFill>

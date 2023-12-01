@@ -4,7 +4,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { Weekday } from "../../src/config";
+import type { Hour, Weekday } from "../../src/config";
 import { TABLET_BG } from "./TabletSVG";
 import { TopDay } from "./TopDay";
 
@@ -16,6 +16,7 @@ type ProductivityPerHour = {
 type Props = {
   graphData: Array<ProductivityPerHour>;
   weekday: Weekday;
+  hour: Hour;
 };
 
 const Bar = (props: { productivity: number }) => {
@@ -101,7 +102,7 @@ const ProductivityGraph = (props: {
   );
 };
 
-export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
+export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
   return (
     <AbsoluteFill
       style={{
@@ -109,11 +110,68 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
         display: "flex",
       }}
     >
-      {/**
-       * TODO: Top hour
-       */}
-      <TopDay day={weekday} />
-      <TopDay day={weekday} />
+      <TopDay
+        values={[
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ]}
+        label="Most productive day"
+        value={weekday}
+        radius={130}
+        renderLabel={(value) => value}
+        delay={60}
+      />
+      <TopDay
+        values={[
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+        ]}
+        label="Most productive time"
+        value={hour}
+        radius={300}
+        delay={120}
+        renderLabel={(value) => {
+          if (value === "12") {
+            return "12 am";
+          }
+
+          if (Number(value) > 12) {
+            return `${Number(value) - 12} pm`;
+          }
+
+          return `${value} am`;
+        }}
+      />
+
       <div
         style={{
           display: "flex",

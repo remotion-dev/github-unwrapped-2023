@@ -222,6 +222,7 @@ export const RemotionRoot: React.FC = () => {
           showCockpit: true,
           showDots: false,
           topWeekday: "1",
+          topHour: "0",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -249,6 +250,7 @@ export const RemotionRoot: React.FC = () => {
           showCockpit: true,
           showDots: false,
           topWeekday: "3",
+          topHour: "0",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -271,6 +273,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           graphData: GRAPH_DATA,
           weekday: "4",
+          hour: "4",
         }}
       />
       <Composition
@@ -282,7 +285,20 @@ export const RemotionRoot: React.FC = () => {
         width={500}
         schema={topDaySchema}
         defaultProps={{
-          day: "6",
+          value: "6",
+          values: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          radius: 90,
+          label: "Most productive day",
+          renderLabel: (value) => value,
+          delay: 30,
         }}
       />
       <Composition
@@ -294,7 +310,12 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         schema={topDaySchema}
         defaultProps={{
-          day: "1",
+          value: "1",
+          values: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          label: "Most productive day",
+          radius: 90,
+          renderLabel: (value) => value,
+          delay: 30,
         }}
       />
       <Composition
@@ -309,6 +330,7 @@ export const RemotionRoot: React.FC = () => {
           graphData: GRAPH_DATA,
           enterProgress: 0,
           weekday: "6",
+          hour: "0",
         }}
       />
       <Composition
@@ -512,6 +534,7 @@ export const RemotionRoot: React.FC = () => {
           issuesOpened: 10,
           totalPullRequests: 10,
           topWeekday: "2",
+          topHour: "0",
         }}
       />
       <Composition
