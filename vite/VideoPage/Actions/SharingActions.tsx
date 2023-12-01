@@ -1,16 +1,11 @@
 import { LinkedInIcon } from "../../../icons/LinkedInIcon";
 import { XIcon } from "../../../icons/XIcon";
 import { SharingAction } from "./SharingAction";
-
-const actionsWrapper: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 8,
-};
+import styles from "./styles.module.css";
 
 export const SharingActions: React.FC = () => {
   return (
-    <div style={actionsWrapper}>
+    <div className={styles.sharingActionsWrapper}>
       <SharingAction
         icon={(params) => <XIcon {...params} />}
         label={"Post #GitHubUnwrapped"}

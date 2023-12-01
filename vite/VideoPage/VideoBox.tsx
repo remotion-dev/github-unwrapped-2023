@@ -2,6 +2,7 @@ import React from "react";
 import type { z } from "zod";
 import type { compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
+import { MobileActionsContainer } from "./MobileActionsContainer";
 import { PlayerContainer } from "./Player/Player";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { VideoBoxTop } from "./VideoBoxTop";
@@ -12,10 +13,11 @@ export const VideoBox: React.FC<{
 }> = ({ inputProps }) => {
   return (
     <Box style={{ overflow: "hidden", zIndex: 1 }}>
-      <VideoBoxTop />
+      <VideoBoxTop inputProps={inputProps} />
       <div className={styles.roworcolumn}>
         <PlayerContainer inputProps={inputProps} />
         <Sidebar inputProps={inputProps} />
+        <MobileActionsContainer />
       </div>
     </Box>
   );
