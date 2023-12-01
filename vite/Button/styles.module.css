@@ -9,7 +9,7 @@
   justify-content: center;
   appearance: none;
   font-size: 16px;
-  border: 2px solid rgba(119, 122, 148, 1);
+  border: 1px solid rgba(119, 122, 148, 1);
   border-radius: 5px;
   text-wrap: nowrap;
   cursor: pointer;
