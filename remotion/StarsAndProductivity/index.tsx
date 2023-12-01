@@ -35,7 +35,7 @@ export const StarsAndProductivity: React.FC<
       mass: 4,
       damping: 200,
     },
-    durationInFrames: 40,
+    durationInFrames: 45,
   });
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;

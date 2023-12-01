@@ -23,8 +23,9 @@ export const TopDay: React.FC<
     values: string[];
     radius: number;
     renderLabel: (value: string) => React.ReactNode;
+    delay: number;
   }
-> = ({ value, label, values, radius, renderLabel }) => {
+> = ({ value, label, values, radius, renderLabel, delay }) => {
   const maskImage = `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 70%, transparent 100%)`;
 
   return (
@@ -42,7 +43,7 @@ export const TopDay: React.FC<
         borderRadius: 50,
         position: "relative",
         overflow: "hidden",
-        border: "2px solid " + PANE_BORDER,
+        border: PANE_BORDER,
       }}
     >
       <div style={labelStyle}>{label}</div>
@@ -67,6 +68,7 @@ export const TopDay: React.FC<
             radius={radius}
             values={values}
             value={value}
+            delay={delay}
           />
         </AbsoluteFill>
       </div>

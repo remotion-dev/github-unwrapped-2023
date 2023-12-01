@@ -110,9 +110,6 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         display: "flex",
       }}
     >
-      {/**
-       * TODO: Top hour
-       */}
       <TopDay
         values={[
           "Monday",
@@ -129,6 +126,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         value={weekday}
         radius={130}
         renderLabel={(value) => value}
+        delay={60}
       />
       <TopDay
         values={[
@@ -160,6 +158,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         label="Most productive time"
         value={hour}
         radius={300}
+        delay={120}
         renderLabel={(value) => {
           if (value === "12") {
             return "12 am";
@@ -172,6 +171,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
           return `${value} am`;
         }}
       />
+
       <div
         style={{
           display: "flex",

@@ -37,11 +37,11 @@ export const Wheel: React.FC<{
   values: string[];
   radius: number;
   renderLabel: (value: string) => React.ReactNode;
-}> = ({ value, values, radius, renderLabel }) => {
+  delay: number;
+}> = ({ value, values, radius, renderLabel, delay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const delay = 30;
   const progress =
     wheelSpring({ fps, frame, delay }) +
     interpolate(frame, [delay - 1, delay], [-WHEEL_INIT_SPEED / 10, 0], {

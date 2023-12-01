@@ -298,6 +298,7 @@ export const RemotionRoot: React.FC = () => {
           radius: 90,
           label: "Most productive day",
           renderLabel: (value) => value,
+          delay: 30,
         }}
       />
       <Composition
@@ -314,6 +315,7 @@ export const RemotionRoot: React.FC = () => {
           label: "Most productive day",
           radius: 90,
           renderLabel: (value) => value,
+          delay: 30,
         }}
       />
       <Composition
