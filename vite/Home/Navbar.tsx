@@ -7,7 +7,7 @@ export const Navbar: React.FC = () => {
     <div className={styles.navbarWrapper}>
       <div style={{ flex: 1 }} />
       <h2 className={commonStyles.gradientText2} style={{ fontSize: 18 }}>
-        #GithubUnwrapped
+        #GitHubUnwrapped
       </h2>
       <div
         style={{

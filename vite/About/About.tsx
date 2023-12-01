@@ -94,7 +94,7 @@ const About = () => {
               </h1>
               <p className={styles.aboutDescription} style={{ maxWidth: 400 }}>
                 With this page we hope to answer all your questions for the
-                Github unwrapped 2023.
+                GitHub unwrapped 2023.
               </p>
             </div>
             <div
