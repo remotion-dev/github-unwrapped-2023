@@ -1,0 +1,42 @@
+.mobileOctocat {
+  position: absolute;
+  right: -100px;
+  bottom: -80px;
+  width: 300px;
+
+  @media only screen and (min-width: 40em) {
+    display: none;
+  }
+}
+
+.desktopOctocat {
+  display: none;
+
+  @media only screen and (min-width: 40em) {
+    display: block;
+    position: absolute;
+    right: -100px;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.clouds {
+  display: none;
+
+  @media only screen and (min-width: 40em) {
+    display: block;
+  }
+}
+
+.earth {
+  display: none;
+  position: fixed;
+  width: 650px;
+  left: -200px;
+  top: -200px;
+
+  @media only screen and (min-width: 40em) {
+    display: block;
+  }
+}

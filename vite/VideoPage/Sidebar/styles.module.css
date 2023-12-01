@@ -1,9 +1,13 @@
 .sidebarWrapper {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 40px;
   padding: 40px 32px;
   min-width: 350px;
+
+  @media only screen and (min-width: 40em) {
+    display: flex;
+  }
 }
 
 .downloadButton {

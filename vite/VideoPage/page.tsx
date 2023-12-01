@@ -9,10 +9,10 @@ import {
   type languageSchema,
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
+import { Navbar } from "../Home/Navbar";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
-
 declare global {
   interface Window {
     __USER__: ProfileStats;
@@ -90,6 +90,7 @@ export const UserPage = () => {
     <div className={styles.wrapper}>
       <VideoPageBackground />
       <AbsoluteFill id="videobackground" />
+      <Navbar />
       <VideoBox inputProps={inputProps} />
     </div>
   );
