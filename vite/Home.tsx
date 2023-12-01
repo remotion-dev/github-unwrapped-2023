@@ -1,5 +1,6 @@
 import { HomeBackground } from "./Home/HomeBackground";
 import { HomeForeground } from "./Home/HomeForeground";
+import { Navbar } from "./Home/Navbar";
 import { Planet } from "./Home/Planet";
 import { Stars } from "./Home/Stars";
 import { HomeBox } from "./HomeBox/HomeBox";
@@ -15,6 +16,7 @@ const Home = () => {
       <Planet />
       <HomeForeground className={styles.homeForeground} />
       <HomeBox />
+      <Navbar />
     </div>
   );
 };
