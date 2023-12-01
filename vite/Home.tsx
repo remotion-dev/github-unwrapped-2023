@@ -15,8 +15,8 @@ const Home = () => {
       <HomeBackground />
       <Planet />
       <HomeForeground className={styles.homeForeground} />
-      <HomeBox />
       <Navbar />
+      <HomeBox />
     </div>
   );
 };

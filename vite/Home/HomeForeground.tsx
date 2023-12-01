@@ -7,6 +7,7 @@ export const HomeForeground = (props: SVGProps<SVGSVGElement>) => (
     data-name="Layer 1"
     viewBox="0 0 1442 997"
     {...props}
+    style={{ zIndex: -1, ...props.style }}
   >
     <defs>
       <style>

@@ -16,6 +16,7 @@ export const HomeBackground: React.FC = () => {
           width: "100%",
           position: "fixed",
           bottom: 0,
+          zIndex: -1,
         }}
         className={styles.upanddown}
         viewBox="0 0 1442 997"

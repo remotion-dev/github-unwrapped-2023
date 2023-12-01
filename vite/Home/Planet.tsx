@@ -7,6 +7,7 @@ export const Planet: React.FC = () => {
     <AbsoluteFill
       style={{
         overflow: "hidden",
+        zIndex: -1,
       }}
     >
       <svg
