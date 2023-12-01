@@ -8,7 +8,7 @@ import styles from "./burger.module.css";
 export const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const transition = useTransition(isOpen, {
-    config: { mass: 20, clamp: true },
+    config: { mass: 0.5, clamp: true },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },

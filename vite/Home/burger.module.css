@@ -77,7 +77,7 @@
 
 .menui {
   background: #fff;
-  transition: 0.6s ease;
+  transition: 0.8s ease;
   transition-timing-function: cubic-bezier(0.75, 0, 0.29, 1.01);
   position: absolute;
   margin: 3.5px auto 0;
