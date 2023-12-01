@@ -21,7 +21,7 @@ export const StarSprite: React.FC<{
 
   const actualFrame = Math.round(frame - (burstFrame ?? 0));
 
-  const actualScale = 1.5;
+  const actualScale = 2;
 
   const renderSprite = () => {
     switch (actualFrame) {
