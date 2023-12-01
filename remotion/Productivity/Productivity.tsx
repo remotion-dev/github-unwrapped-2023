@@ -4,14 +4,9 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { Hour, Weekday } from "../../src/config";
+import type { Hour, ProductivityPerHour, Weekday } from "../../src/config";
 import { TABLET_BG } from "./TabletSVG";
 import { TopDay } from "./TopDay";
-
-type ProductivityPerHour = {
-  time: number;
-  productivity: number;
-};
 
 type Props = {
   graphData: Array<ProductivityPerHour>;

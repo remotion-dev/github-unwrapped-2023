@@ -135,7 +135,7 @@ export const getStatsFromGitHub = async ({
   const topLanguages = Object.entries(acc)
     .sort((a, b) => b[1].value - a[1].value)
     .map((i) => ({
-      name: i[0],
+      languageName: i[0],
       color: i[1].color,
     }))
     .slice(0, 3);
@@ -153,7 +153,16 @@ export const getStatsFromGitHub = async ({
     throw new Error("No most hour");
   }
 
-  console.log(mostHour);
+  const graphData = Object.entries(getTimesOfDay(commits)).map(
+    ([key, entry]) => {
+      return {
+        productivity: entry,
+        time: Number(key),
+      };
+    },
+  );
+
+  console.log(graphData);
 
   return {
     totalPullRequests: pullRequestData.length,
@@ -170,6 +179,7 @@ export const getStatsFromGitHub = async ({
     bestHours: getTimesOfDay(commits),
     topWeekday: productivity.most,
     topHour: String(mostHour[0]) as Hour,
+    graphData,
   };
 };
 

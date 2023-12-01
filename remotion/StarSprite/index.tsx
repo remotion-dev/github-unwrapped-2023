@@ -12,7 +12,7 @@ import StarSprite8SVG from "./sprites/Stars8SVG";
 const BIGGEST_WIDTH = 256;
 const BIGGEST_HEIGHT = 284;
 
-export const STAR_DURATION = 7;
+export const STAR_DURATION = 8;
 
 export const StarSprite: React.FC<{
   burstFrame?: number;

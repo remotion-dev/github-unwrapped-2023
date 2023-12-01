@@ -1,5 +1,6 @@
 import type { z } from "zod";
 import type { compositionSchema } from "../src/config";
+import { GRAPH_DATA } from "./Productivity/constants";
 
 export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   corner: "bottom-left",
@@ -15,4 +16,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   totalPullRequests: 10,
   topWeekday: "2",
   topHour: "2",
+  graphData: GRAPH_DATA,
 };

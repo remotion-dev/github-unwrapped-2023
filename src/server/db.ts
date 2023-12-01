@@ -1,6 +1,6 @@
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import type { Hour, Weekday } from "../config.js";
+import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -13,10 +13,11 @@ export type ProfileStats = {
   loggedInWithGitHub: boolean;
   totalStars: number;
   totalContributions: number;
-  topLanguages: Array<{ name: string; color: string }>;
+  topLanguages: Array<{ languageName: string; color: string }>;
   bestHours: Record<string, number>;
   topWeekday: Weekday;
   topHour: Hour;
+  graphData: ProductivityPerHour[];
 };
 
 type EmailCollection = {

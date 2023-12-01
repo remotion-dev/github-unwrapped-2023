@@ -3,6 +3,7 @@ import { Player } from "@remotion/player";
 import { useEffect, useMemo, useRef } from "react";
 import type { z } from "zod";
 import { Main, calculateDuration } from "../../../remotion/Main";
+import { MAXIMUM_NUMBER_OF_AUDIO_TAGS } from "../../../remotion/audio-tags";
 import type { compositionSchema } from "../../../src/config";
 import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../../types/constants";
 import styles from "./styles.module.css";
@@ -47,9 +48,8 @@ export const PlayerContainer: React.FC<{
 
   return (
     <Player
-      // TODO: Optimize
       ref={ref}
-      numberOfSharedAudioTags={10}
+      numberOfSharedAudioTags={MAXIMUM_NUMBER_OF_AUDIO_TAGS}
       component={Main}
       inputProps={inputProps}
       durationInFrames={durationInFrames}
