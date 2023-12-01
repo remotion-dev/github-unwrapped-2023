@@ -1,11 +1,16 @@
 .aboutTitle {
-  color: #fff;
-
+  color: white;
   font-family: Mona Sans;
-  font-size: 46px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  font-size: 32px;
+  margin: 0;
+
+  @media only screen and (min-width: 40em) {
+    font-size: 46px;
+    margin: auto;
+  }
 }
 
 .aboutDescription {
@@ -38,4 +43,51 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+.mobileHeaderWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media only screen and (min-width: 40em) {
+    display: none;
+  }
+}
+
+.mobileHeaderContent {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.navigateBack {
+  display: flex;
+  align-items: center;
+
+  @media only screen and (min-width: 40em) {
+    margin-bottom: 32px;
+  }
+}
+
+.desktopHeaderWrapper {
+  display: none;
+
+  @media only screen and (min-width: 40em) {
+    display: flex;
+    margin-top: 64px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 20px;
+  margin-top: 8px;
+
+  @media only screen and (min-width: 40em) {
+    padding: 0;
+    margin-top: 32px;
+  }
 }
