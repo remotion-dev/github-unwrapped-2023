@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { AbsoluteFill } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
@@ -9,16 +9,10 @@ import {
   type languageSchema,
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
+import { Navbar } from "../Home/Navbar";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
-
-const background: React.CSSProperties = {
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-};
-
 declare global {
   interface Window {
     __USER__: ProfileStats;
@@ -95,6 +89,7 @@ export const UserPage = () => {
     <div className={styles.wrapper}>
       <VideoPageBackground />
       <AbsoluteFill id="videobackground" />
+      <Navbar />
       <VideoBox inputProps={inputProps} />
     </div>
   );

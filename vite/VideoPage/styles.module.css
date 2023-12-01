@@ -1,12 +1,15 @@
 .wrapper {
   width: 100vw;
-  height: 100svh;
+  height: 180svh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 
   @media only screen and (min-width: 40em) {
+    height: 100svh;
     padding: 0 40px;
-    align-items: center;
+    justify-content: center;
   }
 }
 
