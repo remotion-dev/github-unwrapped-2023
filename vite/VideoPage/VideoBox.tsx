@@ -11,7 +11,7 @@ export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
 }> = ({ inputProps }) => {
   return (
-    <Box>
+    <Box style={{ overflow: "hidden", zIndex: 1 }}>
       <VideoBoxTop />
       <div className={styles.roworcolumn}>
         <PlayerContainer inputProps={inputProps} />

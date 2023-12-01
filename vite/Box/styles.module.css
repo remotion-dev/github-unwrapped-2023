@@ -3,9 +3,10 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   overflow: visible;
-  width: calc(100% - 50px);
+  width: calc(100% - 24px);
   max-width: 1000px;
   border-radius: 10px;
+  height: fit-content;
 }
 
 /*

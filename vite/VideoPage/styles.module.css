@@ -3,7 +3,11 @@
   height: 100svh;
   display: flex;
   justify-content: center;
-  align-items: center;
+
+  @media only screen and (min-width: 40em) {
+    padding: 0 40px;
+    align-items: center;
+  }
 }
 
 .mobileTitle {
