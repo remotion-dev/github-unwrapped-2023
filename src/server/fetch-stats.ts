@@ -1,3 +1,4 @@
+import type { Hour } from "../config.js";
 import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
@@ -93,7 +94,9 @@ export const getStatsFromGitHub = async ({
   let cursor;
   let safety = 0;
 
-  const commits = username ? await getALotOfGithubCommits(username, token) : [];
+  const commits = username
+    ? await getALotOfGithubCommits(username, token)
+    : await getALotOfGithubCommits(baseData.login, token);
 
   while (!done && safety < 10) {
     const data = await fetchFromGitHub<PullRequestQueryResponse>({
@@ -137,6 +140,21 @@ export const getStatsFromGitHub = async ({
     }))
     .slice(0, 3);
 
+  console.log(commits);
+  const productivity = getMostProductive(commits);
+
+  const bestHours = getTimesOfDay(commits);
+  const values = Object.entries(bestHours);
+  const most = Math.max(...values.map((v) => v[1]));
+
+  const mostHour = values.find(([, b]) => b === most);
+
+  if (!mostHour) {
+    throw new Error("No most hour");
+  }
+
+  console.log(mostHour);
+
   return {
     totalPullRequests: pullRequestData.length,
     topLanguages,
@@ -150,7 +168,8 @@ export const getStatsFromGitHub = async ({
     username: baseData.login,
     lowercasedUsername: baseData.login.toLowerCase(),
     bestHours: getTimesOfDay(commits),
-    topWeekday: getMostProductive(commits).most,
+    topWeekday: productivity.most,
+    topHour: String(mostHour[0]) as Hour,
   };
 };
 

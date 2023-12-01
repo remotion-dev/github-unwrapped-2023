@@ -5,7 +5,7 @@ import { days } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 import { Wheel } from "./Wheel";
 
-const label: React.CSSProperties = {
+const labelStyle: React.CSSProperties = {
   color: "white",
   fontWeight: "bold",
   fontSize: 45,
@@ -14,11 +14,16 @@ const label: React.CSSProperties = {
 
 export const topDaySchema = z.object({
   day: z.enum(days),
+  label: z.string(),
 });
 
 const TOP_DAY_SPACING = 20;
 
-export const TopDay: React.FC<z.infer<typeof topDaySchema>> = ({ day }) => {
+export const TopDay: React.FC<
+  z.infer<typeof topDaySchema> & {
+    values: string[];
+  }
+> = ({ day, label, values }) => {
   const maskImage = `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 70%, transparent 100%)`;
 
   return (
@@ -39,7 +44,7 @@ export const TopDay: React.FC<z.infer<typeof topDaySchema>> = ({ day }) => {
         border: "2px solid " + PANE_BORDER,
       }}
     >
-      <div style={label}>Most productive day</div>
+      <div style={labelStyle}>{label}</div>
       <div
         style={{
           position: "absolute",
@@ -56,7 +61,7 @@ export const TopDay: React.FC<z.infer<typeof topDaySchema>> = ({ day }) => {
             WebkitMaskImage: maskImage,
           }}
         >
-          <Wheel day={day} />
+          <Wheel values={values} day={day} />
         </AbsoluteFill>
       </div>
     </div>

@@ -66,6 +66,7 @@ export const Main: React.FC<Schema> = ({
   issuesOpened,
   topWeekday,
   totalPullRequests,
+  topHour,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -107,6 +108,7 @@ export const Main: React.FC<Schema> = ({
             showCockpit
             showDots={false}
             topWeekday={topWeekday}
+            topHour={topHour}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>

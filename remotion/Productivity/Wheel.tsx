@@ -36,21 +36,14 @@ const WHEEL_INIT_SPEED =
   wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
   wheelSpring({ fps: FPS, frame: 0, delay: 0 });
 
-const weekdayToName = (weekday: Weekday) => {
-  return [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ][weekday];
+const weekdayToName = (weekday: Weekday, values: string[]) => {
+  return values[weekday];
 };
 
 export const Wheel: React.FC<{
   day: Weekday;
-}> = ({ day }) => {
+  values: string[];
+}> = ({ day, values }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -72,7 +65,7 @@ export const Wheel: React.FC<{
       {new Array(items).fill(true).map((f, i) => {
         const index = i / items + rotation;
 
-        const thisIndex = (i + Number(day)) % 7;
+        const thisIndex = (i + Number(day)) % values.length;
         const zPosition = Math.cos(index * -Math.PI * 2) * radius;
         const y = Math.sin(index * Math.PI * 2) * radius;
         const r = interpolate(index, [0, 1], [0, Math.PI * 2]);
@@ -105,7 +98,7 @@ export const Wheel: React.FC<{
                 paddingRight: 40,
               }}
             >
-              {weekdayToName(days[thisIndex])}
+              {weekdayToName(days[thisIndex], values)}
             </div>
           </AbsoluteFill>
         );
