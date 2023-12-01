@@ -135,7 +135,7 @@ export const getStatsFromGitHub = async ({
   const topLanguages = Object.entries(acc)
     .sort((a, b) => b[1].value - a[1].value)
     .map((i) => ({
-      name: i[0],
+      languageName: i[0],
       color: i[1].color,
     }))
     .slice(0, 3);

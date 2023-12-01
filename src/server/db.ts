@@ -13,7 +13,7 @@ export type ProfileStats = {
   loggedInWithGitHub: boolean;
   totalStars: number;
   totalContributions: number;
-  topLanguages: Array<{ name: string; color: string }>;
+  topLanguages: Array<{ languageName: string; color: string }>;
   bestHours: Record<string, number>;
   topWeekday: Weekday;
   topHour: Hour;

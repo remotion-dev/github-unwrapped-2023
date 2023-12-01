@@ -34,12 +34,12 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
 };
 
 const parseTopLanguage = (topLanguage: {
-  name: string;
+  languageName: string;
   color: string;
 }): z.infer<typeof languageSchema> => {
   try {
     // TODO: Rust1, Rust2, Rust3
-    const lang = LanguagesEnum.parse(topLanguage.name);
+    const lang = LanguagesEnum.parse(topLanguage.languageName);
     return {
       type: "designed",
       name: lang,
@@ -48,7 +48,7 @@ const parseTopLanguage = (topLanguage: {
     return {
       type: "other",
       color: topLanguage.color,
-      name: topLanguage.name,
+      name: topLanguage.languageName,
     };
   }
 };
