@@ -135,13 +135,6 @@ const About = () => {
             Mona Sans{" "}
           </a>{" "}
           by GitHub <br />
-          Libraries -{" "}
-          <a
-            className={styles.aboutLink}
-            href="https://github.com/vercel/next.js"
-          >
-            Next.js{" "}
-          </a>{" "}
           <br />
         </p>
       ),
