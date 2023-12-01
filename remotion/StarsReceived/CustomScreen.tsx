@@ -1,13 +1,15 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
+import { PullRequests } from "../Paths/Paths";
 
 export const CustomScreen: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        marginLeft: 876,
-        marginTop: 850,
-        transform: "scale(1.5)",
+        marginLeft: 881,
+        marginTop: 853,
+        transform: "scale(1.51)",
+        opacity: 1,
       }}
     >
       <AbsoluteFill
@@ -17,7 +19,6 @@ export const CustomScreen: React.FC = () => {
             0, 0, 1, 0, 
             139, 125, 0, 1)`,
           transformOrigin: "0 0 0",
-          backgroundColor: "green",
           width: 1080,
           height: 1080,
         }}
@@ -28,9 +29,12 @@ export const CustomScreen: React.FC = () => {
             alignItems: "center",
             fontSize: 400,
             color: "white",
+            height: 1080,
+            width: 1080,
+            overflow: "hidden",
           }}
         >
-          123
+          <PullRequests totalPullRequests={15} />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>
