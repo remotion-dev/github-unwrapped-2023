@@ -6,11 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { days, type Weekday } from "../../src/config";
 import { FPS } from "../Issues/make-ufo-positions";
-
-const items = 7;
-const radius = 90;
 
 const wheelSpring = ({
   fps,
@@ -36,14 +32,12 @@ const WHEEL_INIT_SPEED =
   wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
   wheelSpring({ fps: FPS, frame: 0, delay: 0 });
 
-const weekdayToName = (weekday: Weekday, values: string[]) => {
-  return values[weekday];
-};
-
 export const Wheel: React.FC<{
-  day: Weekday;
+  value: string;
   values: string[];
-}> = ({ day, values }) => {
+  radius: number;
+  renderLabel: (value: string) => React.ReactNode;
+}> = ({ value, values, radius, renderLabel }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -62,10 +56,10 @@ export const Wheel: React.FC<{
         perspective: 10000,
       }}
     >
-      {new Array(items).fill(true).map((f, i) => {
-        const index = i / items + rotation;
+      {values.map((f, i) => {
+        const index = i / values.length + rotation;
 
-        const thisIndex = (i + Number(day)) % values.length;
+        const thisIndex = (i + Number(value)) % values.length;
         const zPosition = Math.cos(index * -Math.PI * 2) * radius;
         const y = Math.sin(index * Math.PI * 2) * radius;
         const r = interpolate(index, [0, 1], [0, Math.PI * 2]);
@@ -81,7 +75,7 @@ export const Wheel: React.FC<{
               backfaceVisibility: "hidden",
               perspective: 1000,
               color:
-                Number(day) === thisIndex && frame - 5 > delay
+                Number(value) === thisIndex && frame - 5 > delay
                   ? "white"
                   : "rgba(255, 255, 255, 0.3)",
               fontFamily: "Mona Sans",
@@ -94,11 +88,11 @@ export const Wheel: React.FC<{
                 backfaceVisibility: "hidden",
                 textAlign: "right",
                 lineHeight: 1,
-                width: 400,
-                paddingRight: 40,
+                width: 410,
+                paddingRight: 50,
               }}
             >
-              {weekdayToName(days[thisIndex], values)}
+              {renderLabel(values[thisIndex])}
             </div>
           </AbsoluteFill>
         );

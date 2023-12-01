@@ -102,7 +102,7 @@ const ProductivityGraph = (props: {
   );
 };
 
-export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
+export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
   return (
     <AbsoluteFill
       style={{
@@ -126,7 +126,9 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
           "Sunday",
         ]}
         label="Most productive day"
-        day={weekday}
+        value={weekday}
+        radius={130}
+        renderLabel={(value) => value}
       />
       <TopDay
         values={[
@@ -156,7 +158,19 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
           "23",
         ]}
         label="Most productive time"
-        day={weekday}
+        value={hour}
+        radius={300}
+        renderLabel={(value) => {
+          if (value === "12") {
+            return "12 am";
+          }
+
+          if (Number(value) > 12) {
+            return `${Number(value) - 12} pm`;
+          }
+
+          return `${value} am`;
+        }}
       />
       <div
         style={{

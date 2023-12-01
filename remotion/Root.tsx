@@ -273,7 +273,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           graphData: GRAPH_DATA,
           weekday: "4",
-          hour: "0",
+          hour: "4",
         }}
       />
       <Composition
@@ -285,7 +285,7 @@ export const RemotionRoot: React.FC = () => {
         width={500}
         schema={topDaySchema}
         defaultProps={{
-          day: "6",
+          value: "6",
           values: [
             "Monday",
             "Tuesday",
@@ -295,6 +295,7 @@ export const RemotionRoot: React.FC = () => {
             "Saturday",
             "Sunday",
           ],
+          radius: 90,
           label: "Most productive day",
         }}
       />
@@ -307,9 +308,10 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         schema={topDaySchema}
         defaultProps={{
-          day: "1",
+          value: "1",
           values: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           label: "Most productive day",
+          radius: 90,
         }}
       />
       <Composition
