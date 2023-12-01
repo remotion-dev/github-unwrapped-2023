@@ -27,9 +27,7 @@ export const BurgerMenu = () => {
                   Source Code
                 </div>
               </Link>
-              <Link
-                to={"https://github.com/remotion-dev/github-unwrapped-2023"}
-              >
+              <Link to={"/about"}>
                 <div className={styles.navLink}>
                   <NewRocketIcon width={24} height={24} />
                   About Unwrapped
