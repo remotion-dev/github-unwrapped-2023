@@ -1,9 +1,12 @@
-import { HomeBackground } from "./Home/HomeBackground";
 import { HomeForeground } from "./Home/HomeForeground";
 import { Navbar } from "./Home/Navbar";
 import { Planet } from "./Home/Planet";
+// import { HomeForeground } from "./Home/HomeForeground";
+// import { Navbar } from "./Home/Navbar";
+// import { Planet } from "./Home/Planet";
 import { Stars } from "./Home/Stars";
 import { HomeBox } from "./HomeBox/HomeBox";
+// import { HomeBox } from "./HomeBox/HomeBox";
 import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
 
@@ -12,9 +15,9 @@ const Home = () => {
     <div className={styles.container}>
       <RadialGradient />
       <Stars />
-      <HomeBackground />
+      {/* <HomeBackground /> */}
       <Planet />
-      <HomeForeground className={styles.homeForeground} />
+      <HomeForeground />
       <Navbar />
       <HomeBox />
     </div>

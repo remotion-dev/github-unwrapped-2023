@@ -1,13 +1,13 @@
 .container {
   width: 100vw;
-  height: 100svh;
+  height: 150svh;
   display: flex;
   flex-direction: column;
-  background-position: bottom;
-  background-size: cover;
   align-items: center;
+  position: relative;
 
   @media only screen and (min-width: 40em) {
+    height: 100svh;
     justify-content: center;
   }
 }
@@ -36,8 +36,6 @@
 }
 
 .homeForeground {
-  position: fixed;
-  bottom: 0px;
   width: 880px;
   bottom: -16px;
 
