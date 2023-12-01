@@ -10,11 +10,12 @@ const mixWithBackground = (color: string) => {
 
 export const HomeBackground: React.FC = () => {
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ overflow: "hidden" }}>
       <svg
         style={{
           width: "100%",
-          position: "fixed",
+          zIndex: -1,
+          position: "absolute",
           bottom: 0,
         }}
         className={styles.upanddown}

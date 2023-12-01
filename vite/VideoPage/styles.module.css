@@ -1,3 +1,15 @@
+.wrapper {
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (min-width: 40em) {
+    padding: 0 40px;
+    align-items: center;
+  }
+}
+
 .mobileTitle {
   flex-direction: column;
   align-items: center;
@@ -7,26 +19,22 @@
 
 .roworcolumn {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+  }
 }
 
-.videobox {
+.videoBoxTop {
+  display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.playerradius {
-  border-bottom-left-radius: 10px;
-}
-
-@media screen and (max-width: 900px) {
-  .roworcolumn {
-    flex-direction: column;
-  }
-  .videobox {
-    justify-content: flex-start;
-  }
-  .playerradius {
-    border-bottom-left-radius: 0;
-  }
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 6px;
+  justify-content: flex-end;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }

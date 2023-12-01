@@ -12,7 +12,7 @@ export const HomeBoxBottom: React.FC<{
   return (
     <div className={styles.homeBoxBottomWrapper}>
       <div className={styles.title}>Your coding year in review</div>
-      <div style={{ fontWeight: 500, fontSize: 16 }}>
+      <div className={styles.description}>
         Get a personalized video of your GitHub activity in 2023.
         <br />
         Type your username to get started!

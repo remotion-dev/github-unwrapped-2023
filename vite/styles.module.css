@@ -1,35 +1,54 @@
 .container {
   width: 100vw;
-  height: 100svh;
+  height: 140svh;
   display: flex;
   flex-direction: column;
-  background-position: bottom;
-  background-size: cover;
-
-  justify-content: center;
   align-items: center;
+  position: relative;
+
+  @media only screen and (min-width: 40em) {
+    height: 100svh;
+    justify-content: center;
+  }
 }
 
 .octocat {
   position: absolute;
-  height: 236px;
-  bottom: -187px;
   left: 0;
   right: 0;
   margin: 0 auto;
+  height: 176px;
+  bottom: 86px;
+
+  @media only screen and (min-width: 40em) {
+    height: 196px;
+    bottom: 130px;
+  }
+}
+
+.gradientText2 {
+  background: linear-gradient(270.02deg, #7172fd 3.63%, #0ee1eb 99.87%);
+  font-size: 24px;
+  margin: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.homeForeground {
+  width: 1080px;
+  transform: translateY(16px);
+
+  @media only screen and (min-width: 40em) {
+    transform: translateY(48px);
+    width: 1800px;
+  }
 }
 
 .gradientText {
   background: linear-gradient(270.02deg, #645278 20.63%, #82b6c6 99.87%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradientText2 {
-  background: linear-gradient(270deg, #7172fd 3.63%, #0ee1eb 99.87%);
-  background-clip: text;
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

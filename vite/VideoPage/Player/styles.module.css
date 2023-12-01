@@ -1,0 +1,15 @@
+.playerradius {
+  border-bottom-left-radius: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .roworcolumn {
+    flex-direction: column;
+  }
+  .videobox {
+    justify-content: flex-start;
+  }
+  .playerradius {
+    border-bottom-left-radius: 0;
+  }
+}

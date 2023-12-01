@@ -1,7 +1,10 @@
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
 import { signInWithGitHubLink } from "../sign-in-with-github";
-import styles from "../styles.module.css";
+import {
+  default as gradientStyles,
+  default as styles,
+} from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
 const header: React.CSSProperties = {
@@ -99,7 +102,7 @@ const About = () => {
               this project
             </a>
             !<br />
-            <br /> Non-developers: Drop your email and we'll contact you in
+            <br /> Non-developers: Drop your email and we\&aposll contact you in
             September 2024 for a free consultation!
           </p>
           <EmailForm />
@@ -185,12 +188,7 @@ const About = () => {
                 flex: 1,
               }}
             >
-              <h2
-                className={styles.gradientText2}
-                style={{ fontSize: 24, marginTop: 0 }}
-              >
-                #GitHubUnwrapped
-              </h2>
+              <h2 className={gradientStyles.gradientText2}>#GitHubUnwrapped</h2>
               <h1
                 className={styles.aboutTitle}
                 style={{ margin: "16px 0 24px 0" }}
@@ -199,7 +197,7 @@ const About = () => {
               </h1>
               <p className={styles.aboutDescription} style={{ maxWidth: 400 }}>
                 With this page we hope to answer all your questions for the
-                Github unwrapped 2023.
+                GitHub unwrapped 2023.
               </p>
             </div>
             <div

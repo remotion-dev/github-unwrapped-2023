@@ -37,6 +37,7 @@
     "mongodb": "^6.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3",
     "remotion": "4.0.74",
     "serve-static": "^1.15.0",
     "svgo": "^3.0.2",
