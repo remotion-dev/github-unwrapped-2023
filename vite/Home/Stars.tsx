@@ -7,7 +7,7 @@ export const Stars: React.FC = () => {
     <AbsoluteFill
       style={{
         objectFit: "cover",
-        position: "absolute",
+        position: "fixed",
         zIndex: -1,
       }}
     >

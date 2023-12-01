@@ -1,6 +1,6 @@
 .container {
   width: 100vw;
-  height: 150svh;
+  height: 140svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,12 +13,12 @@
 }
 
 .octocat {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
-  height: 140px;
-  bottom: 27px;
+  height: 176px;
+  bottom: 86px;
 
   @media only screen and (min-width: 40em) {
     height: 196px;
@@ -36,11 +36,11 @@
 }
 
 .homeForeground {
-  width: 880px;
-  bottom: -16px;
+  width: 1080px;
+  transform: translateY(16px);
 
   @media only screen and (min-width: 40em) {
+    transform: translateY(48px);
     width: 1800px;
-    bottom: -48px;
   }
 }
