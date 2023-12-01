@@ -7,7 +7,6 @@ import {
 } from "remotion";
 import type { z } from "zod";
 import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
-import { GRAPH_DATA } from "../Productivity/constants";
 import type { starsReceivedSchema } from "../StarsReceived";
 import { StarsReceived } from "../StarsReceived";
 
@@ -23,6 +22,7 @@ export const StarsAndProductivity: React.FC<
   showDots,
   topWeekday,
   topHour,
+  graphData,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -64,12 +64,13 @@ export const StarsAndProductivity: React.FC<
         }}
         topWeekday={topWeekday}
         topHour={topHour}
+        graphData={graphData}
       />
       <Sequence from={ZOOM_DELAY}>
         <Tablet
           weekday={topWeekday}
           enterProgress={zoomTransition}
-          graphData={GRAPH_DATA}
+          graphData={graphData}
           hour={topHour}
         />
       </Sequence>

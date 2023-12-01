@@ -78,6 +78,7 @@ const computeCompositionParameters = (
     totalPullRequests: userStats.totalPullRequests,
     topWeekday: userStats.topWeekday,
     topHour: userStats.topHour,
+    graphData: userStats.graphData,
   };
 };
 

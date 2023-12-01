@@ -223,6 +223,7 @@ export const RemotionRoot: React.FC = () => {
           showDots: false,
           topWeekday: "1",
           topHour: "0",
+          graphData: GRAPH_DATA,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -251,6 +252,7 @@ export const RemotionRoot: React.FC = () => {
           showDots: false,
           topWeekday: "3",
           topHour: "0",
+          graphData: GRAPH_DATA,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -535,6 +537,7 @@ export const RemotionRoot: React.FC = () => {
           totalPullRequests: 10,
           topWeekday: "2",
           topHour: "0",
+          graphData: GRAPH_DATA,
         }}
       />
       <Composition

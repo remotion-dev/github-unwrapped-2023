@@ -153,7 +153,16 @@ export const getStatsFromGitHub = async ({
     throw new Error("No most hour");
   }
 
-  console.log(mostHour);
+  const graphData = Object.entries(getTimesOfDay(commits)).map(
+    ([key, entry]) => {
+      return {
+        productivity: entry,
+        time: Number(key),
+      };
+    },
+  );
+
+  console.log(graphData);
 
   return {
     totalPullRequests: pullRequestData.length,
@@ -170,6 +179,7 @@ export const getStatsFromGitHub = async ({
     bestHours: getTimesOfDay(commits),
     topWeekday: productivity.most,
     topHour: String(mostHour[0]) as Hour,
+    graphData,
   };
 };
 

@@ -90,7 +90,6 @@ export const Tablet: React.FC<
   const left = interpolate(toFullscreen, [0, 1], [350, 0]);
   const top = interpolate(toFullscreen, [0, 1], [480, 0]);
 
-  console.log(toFullscreen);
   return (
     <AbsoluteFill
       style={{

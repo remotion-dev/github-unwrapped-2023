@@ -85,6 +85,13 @@ export type Hour = (typeof hours)[number];
 
 export type Weekday = (typeof days)[number];
 
+export const productivityPerHourSchema = z.object({
+  time: z.number(),
+  productivity: z.number(),
+});
+
+export type ProductivityPerHour = z.infer<typeof productivityPerHourSchema>;
+
 export const compositionSchema = z.object({
   language1: languageSchema,
   language2: languageSchema.or(z.null()),
@@ -99,6 +106,7 @@ export const compositionSchema = z.object({
   totalPullRequests: z.number(),
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
+  graphData: z.array(productivityPerHourSchema),
 });
 
 export const RenderRequest = z.object({

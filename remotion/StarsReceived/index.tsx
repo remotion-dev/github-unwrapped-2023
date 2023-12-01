@@ -2,7 +2,11 @@ import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { topHourSchema, topWeekdaySchema } from "../../src/config";
+import {
+  productivityPerHourSchema,
+  topHourSchema,
+  topWeekdaySchema,
+} from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { AnimatedCockpit } from "./AnimatedCockpit";
@@ -21,6 +25,7 @@ export const starsReceivedSchema = z.object({
   showDots: z.boolean(),
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
+  graphData: z.array(productivityPerHourSchema),
 });
 
 export const StarsReceived: React.FC<
