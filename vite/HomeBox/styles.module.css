@@ -96,11 +96,6 @@
 }
 
 .input {
-  font-weight: bold;
-  padding: 15px;
-  height: 56px;
-  font-size: 18px;
-
   @media only screen and (min-width: 40em) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
