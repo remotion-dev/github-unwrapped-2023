@@ -4,7 +4,6 @@
   align-items: center;
   width: 100%;
   padding: 20px;
-  z-index: 1;
   margin-bottom: 16px;
 
   @media only screen and (min-width: 40em) {
