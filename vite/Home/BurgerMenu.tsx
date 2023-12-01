@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { animated, useTransition } from "react-spring";
+import { GithubIcon } from "../../icons/GithubIcon";
+import { NewRocketIcon } from "../../icons/NewRocketIcon";
 import styles from "./burger.module.css";
 
 export const BurgerMenu = () => {
@@ -17,37 +19,22 @@ export const BurgerMenu = () => {
         (style, item) =>
           item && (
             <animated.div style={style} className={styles.navWrapper}>
-              <ul>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} to="/">
-                    Home
-                  </Link>
-                </li>
-
-                {/* <li>
-              <Link onClick={() => setIsOpen(false)} to="team/">
-                Team
+              <Link
+                to={"https://github.com/remotion-dev/github-unwrapped-2023"}
+              >
+                <div className={styles.navLink}>
+                  <GithubIcon width={24} height={24} />
+                  Source Code
+                </div>
               </Link>
-            </li> */}
-
-                {/* <li>
-              <Link onClick={() => setIsOpen(false)} to="event/">
-                Event
+              <Link
+                to={"https://github.com/remotion-dev/github-unwrapped-2023"}
+              >
+                <div className={styles.navLink}>
+                  <NewRocketIcon width={24} height={24} />
+                  About Unwrapped
+                </div>
               </Link>
-            </li>
-
-            <li>
-              <Link onClick={() => setIsOpen(false)} to="anmeldung/">
-                Anmelden
-              </Link>
-            </li> */}
-
-                <li>
-                  <Link onClick={() => setIsOpen(false)} to="/kontakt">
-                    Kontakt
-                  </Link>
-                </li>
-              </ul>
             </animated.div>
           ),
       )}
