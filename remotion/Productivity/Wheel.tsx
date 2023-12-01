@@ -6,35 +6,74 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { days, type Weekday } from "../../src/config";
+import { FPS } from "../Issues/make-ufo-positions";
 
-const items = 18;
-const radius = 200;
+const items = 7;
+const radius = 90;
 
-export const Wheel: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const progress = spring({
+const wheelSpring = ({
+  fps,
+  frame,
+  delay,
+}: {
+  fps: number;
+  frame: number;
+  delay: number;
+}) => {
+  return spring({
     fps,
     frame,
     config: {
       damping: 200,
     },
     durationInFrames: 30,
+    delay,
   });
+};
 
-  const rotation = (interpolate(progress, [0, 1], [0.2, 0]) % Math.PI) * 2;
+const WHEEL_INIT_SPEED =
+  wheelSpring({ fps: FPS, frame: 10, delay: 0 }) -
+  wheelSpring({ fps: FPS, frame: 0, delay: 0 });
+
+const weekdayToName = (weekday: Weekday) => {
+  return [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ][weekday];
+};
+
+export const Wheel: React.FC<{
+  day: Weekday;
+}> = ({ day }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const delay = 30;
+  const progress =
+    wheelSpring({ fps, frame, delay }) +
+    interpolate(frame, [delay - 1, delay], [-WHEEL_INIT_SPEED / 10, 0], {
+      extrapolateRight: "clamp",
+      extrapolateLeft: "extend",
+    });
+  const rotation = interpolate(progress, [0, 1], [1, 0]) % Math.PI;
 
   return (
     <AbsoluteFill
       style={{
-        perspective: 5000,
+        perspective: 10000,
       }}
     >
       {new Array(items).fill(true).map((f, i) => {
         const index = i / items + rotation;
 
-        const z = Math.cos(index * -Math.PI * 2) * radius;
+        const thisIndex = (i + Number(day)) % 7;
+        const zPosition = Math.cos(index * -Math.PI * 2) * radius;
         const y = Math.sin(index * Math.PI * 2) * radius;
         const r = interpolate(index, [0, 1], [0, Math.PI * 2]);
 
@@ -44,11 +83,14 @@ export const Wheel: React.FC = () => {
             key={i}
             style={{
               justifyContent: "center",
-              fontSize: 50,
-              transform: `translateZ(${z}px) translateY(${y}px) rotateX(${r}deg)`,
+              fontSize: 65,
+              transform: `translateZ(${zPosition}px) translateY(${y}px) rotateX(${r}deg)`,
               backfaceVisibility: "hidden",
               perspective: 1000,
-              color: "white",
+              color:
+                Number(day) === thisIndex && frame - 5 > delay
+                  ? "white"
+                  : "rgba(255, 255, 255, 0.3)",
               fontFamily: "Mona Sans",
               fontWeight: "bold",
             }}
@@ -57,28 +99,13 @@ export const Wheel: React.FC = () => {
               style={{
                 transform: `rotateX(-${r}rad)`,
                 backfaceVisibility: "hidden",
-                display: "flex",
-                flexDirection: "row",
-                width: 600,
-                marginLeft: 100,
+                textAlign: "right",
+                lineHeight: 1,
+                width: 400,
+                paddingRight: 40,
               }}
             >
-              <div
-                style={{
-                  lineHeight: 1,
-                }}
-              >
-                {
-                  [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                  ][i % 6]
-                }
-              </div>
+              {weekdayToName(days[thisIndex])}
             </div>
           </AbsoluteFill>
         );

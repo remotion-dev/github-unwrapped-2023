@@ -2,6 +2,7 @@ import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { topWeekdaySchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { AnimatedCockpit } from "./AnimatedCockpit";
@@ -18,6 +19,7 @@ export const starsReceivedSchema = z.object({
   showHitWindow: z.boolean(),
   showCockpit: z.boolean(),
   showDots: z.boolean(),
+  topWeekday: topWeekdaySchema,
 });
 
 export const StarsReceived: React.FC<

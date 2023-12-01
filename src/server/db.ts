@@ -1,5 +1,6 @@
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
+import type { Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -14,6 +15,11 @@ export type ProfileStats = {
   totalContributions: number;
   topLanguages: Array<{ name: string; color: string }>;
   bestHours: Record<string, number>;
+  topWeekday: Weekday;
+};
+
+type EmailCollection = {
+  email: string;
 };
 
 const mongoUrl = () => {
@@ -28,6 +34,37 @@ const getStatsCollection = async () => {
   return client
     .db(backendCredentials().DB_NAME)
     .collection<ProfileStats>("stats");
+};
+
+const dbEmailCollection = async () => {
+  const client = await clientPromise;
+  return client
+    .db(backendCredentials().DB_NAME)
+    .collection<EmailCollection>("email");
+};
+
+export const saveEmailAdress = async (email: string) => {
+  const collection = await dbEmailCollection();
+  await collection.updateOne(
+    {
+      email: email.toLowerCase(),
+    },
+    {
+      $set: {
+        email: email.toLowerCase(),
+      },
+    },
+    {
+      upsert: true,
+    },
+  );
+};
+
+export const getEmailFromDb = async (email: string) => {
+  const collection = await dbEmailCollection();
+  return collection.findOne({
+    email: email.toLowerCase(),
+  });
 };
 
 export const insertProfileStats = async (

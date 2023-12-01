@@ -1,5 +1,5 @@
 import { Composition, Folder, Still } from "remotion";
-import { COMP_NAME, LanguagesEnum, compositionSchema } from "../src/config";
+import { LanguagesEnum, compositionSchema } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -19,6 +19,7 @@ import {
 } from "./JumpingNumber/JumpingNumber";
 import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
+import { Noise, noiseSchema } from "./Noise";
 import { OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests } from "./Paths/Paths";
@@ -26,6 +27,7 @@ import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
 import { Tablet, tableSchema } from "./Productivity/Tablet";
+import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import {
@@ -219,6 +221,7 @@ export const RemotionRoot: React.FC = () => {
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
+          topWeekday: "1",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -245,6 +248,7 @@ export const RemotionRoot: React.FC = () => {
           showHitWindow: false,
           showCockpit: true,
           showDots: false,
+          topWeekday: "3",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -266,6 +270,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           graphData: GRAPH_DATA,
+          weekday: "4",
         }}
       />
       <Composition
@@ -273,10 +278,23 @@ export const RemotionRoot: React.FC = () => {
         component={Wheel}
         durationInFrames={100}
         fps={FPS}
-        height={1080}
-        width={1080}
+        height={500}
+        width={500}
+        schema={topDaySchema}
         defaultProps={{
-          topLayer: false,
+          day: "6",
+        }}
+      />
+      <Composition
+        id="TopDay"
+        component={TopDay}
+        durationInFrames={100}
+        fps={FPS}
+        height={200}
+        width={1080}
+        schema={topDaySchema}
+        defaultProps={{
+          day: "1",
         }}
       />
       <Composition
@@ -290,6 +308,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           graphData: GRAPH_DATA,
           enterProgress: 0,
+          weekday: "6",
         }}
       />
       <Composition
@@ -338,6 +357,9 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames={240}
           height={1080}
           width={1080}
+          defaultProps={{
+            totalPullRequests: 12,
+          }}
         />
       </Folder>
       <Folder name="TopLanguages">
@@ -351,6 +373,7 @@ export const RemotionRoot: React.FC = () => {
           schema={topLanguagesTitleCardSchema}
           defaultProps={{
             login: "JonnyBurger",
+            pluralizeLanguages: false,
           }}
         />
         <Composition
@@ -378,12 +401,12 @@ export const RemotionRoot: React.FC = () => {
           schema={zoomOutSchema}
           defaultProps={{
             corner: "top-right" as const,
-            language: "JavaScript" as const,
+            language: { type: "designed" as const, name: "JavaScript" },
             position: 1,
           }}
         />
         <Composition
-          id={"TopLanguagesWiggle"}
+          id="TopLanguagesWiggle"
           component={PlanetScaleWiggle}
           schema={wiggleSchema}
           durationInFrames={FIRST_PLACE_DURATION}
@@ -391,8 +414,8 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java",
             position: 1,
+            language: { type: "other", name: "Scala", color: "#C22D40" },
             enterDirection: "right-counter-clockwise" as const,
           }}
         />
@@ -405,7 +428,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java" as const,
+            language: { type: "designed" as const, name: "Java" as const },
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
@@ -422,7 +445,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            language: "Java" as const,
+            language: { type: "designed", name: "Java" },
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
@@ -455,16 +478,16 @@ export const RemotionRoot: React.FC = () => {
           }}
           defaultProps={{
             corner: "top-right" as const,
-            language1: "Python" as const,
-            language2: "Go" as const,
-            language3: "JavaScript" as const,
+            language1: { type: "designed" as const, name: "C++" as const },
+            language2: { type: "designed" as const, name: "Go" as const },
+            language3: { type: "designed" as const, name: "Ruby" as const },
             showHelperLine: false,
             login: "JonnyBurger",
           }}
         />
       </Folder>
       <Composition
-        id={COMP_NAME}
+        id="Main"
         component={Main}
         durationInFrames={60 * 30}
         fps={FPS}
@@ -473,17 +496,22 @@ export const RemotionRoot: React.FC = () => {
         schema={compositionSchema}
         calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
-          corner: "bottom-left",
-          language1: "JavaScript",
-          language2: "TypeScript",
-          language3: "Rust2",
+          corner: "bottom-left" as const,
+          language1: { type: "designed" as const, name: "JavaScript" as const },
+          language2: { type: "designed" as const, name: "TypeScript" as const },
+          language3: {
+            type: "other" as const,
+            name: "Swift" as const,
+            color: "orange",
+          },
           showHelperLine: false,
           login: "JonnyBurger",
-          planet: "Silver",
+          planet: "Silver" as const,
           starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,
           totalPullRequests: 10,
+          topWeekday: "2",
         }}
       />
       <Composition
@@ -491,6 +519,19 @@ export const RemotionRoot: React.FC = () => {
         component={Stars}
         durationInFrames={10 * 30}
         fps={FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id="Noise"
+        component={Noise}
+        durationInFrames={10 * 30}
+        fps={FPS}
+        schema={noiseSchema}
+        defaultProps={{
+          translateX: 0,
+          translateY: 0,
+        }}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
       />

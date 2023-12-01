@@ -1,9 +1,9 @@
 import type { AwsRegion } from "@remotion/lambda";
+import { zColor } from "@remotion/zod-types";
 import { z } from "zod";
 
 export const REGION: AwsRegion = "us-east-1";
 
-export const COMP_NAME = "Main";
 export const SITE_NAME = "unwrapped2023";
 export const RAM = 2048;
 export const DISK = 2048;
@@ -23,22 +23,36 @@ export const LanguagesEnum = z.enum([
   "Rust1",
   "Rust2",
   "Rust3",
+  "C++",
+  "Ruby",
 ]);
 
-export const cornerType = z.enum([
+export const cornerTypeValues = [
   "top-left",
   "top-right",
   "bottom-left",
   "bottom-right",
-]);
+] as const;
+
+export const cornerType = z.enum(cornerTypeValues);
 export type Corner = z.infer<typeof cornerType>;
 
-export const languageSchema = LanguagesEnum.or(
+export const languageSchema = z.discriminatedUnion("type", [
   z.object({
+    type: z.literal("other"),
     name: z.string(),
-    color: z.string(),
+    color: zColor(),
   }),
-);
+  z.object({
+    type: z.literal("designed"),
+    name: LanguagesEnum,
+  }),
+]);
+
+export const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
+export const topWeekdaySchema = z.enum(days);
+
+export type Weekday = (typeof days)[number];
 
 export const compositionSchema = z.object({
   language1: languageSchema,
@@ -52,6 +66,7 @@ export const compositionSchema = z.object({
   issuesOpened: z.number(),
   issuesClosed: z.number(),
   totalPullRequests: z.number(),
+  topWeekday: topWeekdaySchema,
 });
 
 export const RenderRequest = z.object({

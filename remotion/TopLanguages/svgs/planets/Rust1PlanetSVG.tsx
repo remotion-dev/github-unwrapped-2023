@@ -1,12 +1,12 @@
-import type { SVGProps } from "react";
 import { toViewBox, type PlanetBoundingBox } from "../../planet-types";
+import type { PlanetProps } from "./svg-types";
 
 export const Rust1PlanetBoundingBox: PlanetBoundingBox = {
   width: 963,
   height: 967,
 };
 
-export const Rust1PlanetSVG = (props: SVGProps<SVGSVGElement>) => (
+export const Rust1PlanetSVG = ({ customColor, ...props }: PlanetProps) => (
   <svg viewBox={toViewBox(Rust1PlanetBoundingBox)} fill="none" {...props}>
     <path
       fill="#181110"

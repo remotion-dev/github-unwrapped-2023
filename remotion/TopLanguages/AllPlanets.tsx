@@ -84,7 +84,10 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             overflow: "hidden",
           }}
         >
-          <TopLanguagesTitleCard login={login} />
+          <TopLanguagesTitleCard
+            pluralizeLanguages={language2 !== null}
+            login={login}
+          />
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition

@@ -11,7 +11,7 @@ import React from "react";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
-import { Background } from "./Background";
+import { Noise } from "../Noise";
 import { ContributionDot } from "./Dot";
 import { Sparkle } from "./Sparkle";
 import { computePositions } from "./compute-positions";
@@ -60,19 +60,8 @@ export const ContributionsScene: React.FC = () => {
         <Gradient gradient="blueRadial" />
       </AbsoluteFill>
       <AbsoluteFill>
-        <Background />
+        <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
-      <h1
-        style={{
-          fontSize: 100,
-          fontFamily: "Mona Sans",
-          color: "white",
-          opacity: 1 - entranceYOffset / TIMELINE_OFFSET_Y,
-        }}
-      >
-        Contributions
-      </h1>
-
       <div
         style={{
           width: "100%",

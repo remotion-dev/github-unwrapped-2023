@@ -64,6 +64,8 @@ export const Main: React.FC<Schema> = ({
   starsGiven,
   issuesClosed,
   issuesOpened,
+  topWeekday,
+  totalPullRequests,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -104,10 +106,11 @@ export const Main: React.FC<Schema> = ({
             showHitWindow={false}
             showCockpit
             showDots={false}
+            topWeekday={topWeekday}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
-          <PullRequests />
+          <PullRequests totalPullRequests={totalPullRequests} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene />

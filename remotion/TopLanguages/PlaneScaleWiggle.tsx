@@ -28,14 +28,13 @@ export const WIGGLE_EXIT_SPRING_CONFIG: Partial<SpringConfig> = {
 };
 export const WIGGLE_EXIT_DURATION = 30;
 
-export const WIGGLE_SCENE_DURATION = 90;
-
 export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
   position,
   enterDirection,
 }) => {
-  const { PlanetSVG, gradient, opacity } = computePlanetInfo(language);
+  const { PlanetSVG, gradient, opacity, customPlanetColor } =
+    computePlanetInfo(language);
 
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -99,6 +98,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         }}
       >
         <PlanetSVG
+          customColor={customPlanetColor}
           width={800}
           style={{
             scale: String(planetScale),

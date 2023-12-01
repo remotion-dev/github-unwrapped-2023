@@ -16,7 +16,7 @@ export const HomeBoxTop: React.FC = () => {
           icon={(props) => <GithubIcon {...props} />}
         />
         <HomeLink
-          href={"https://github.com/remotion-dev/github-unwrapped-2023"}
+          href={"/about"}
           label={"About"}
           icon={(props) => <RocketIcon {...props} />}
         />

@@ -4,7 +4,9 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { Weekday } from "../../src/config";
 import { TABLET_BG } from "./TabletSVG";
+import { TopDay } from "./TopDay";
 
 type ProductivityPerHour = {
   time: number;
@@ -13,6 +15,7 @@ type ProductivityPerHour = {
 
 type Props = {
   graphData: Array<ProductivityPerHour>;
+  weekday: Weekday;
 };
 
 const Bar = (props: { productivity: number }) => {
@@ -52,7 +55,7 @@ const Bar = (props: { productivity: number }) => {
   );
 };
 
-export const ProductivityGraph = (props: {
+const ProductivityGraph = (props: {
   productivityPerHour: Array<ProductivityPerHour>;
   style?: React.CSSProperties;
 }) => {
@@ -98,7 +101,7 @@ export const ProductivityGraph = (props: {
   );
 };
 
-export const Productivity: React.FC<Props> = ({ graphData }) => {
+export const Productivity: React.FC<Props> = ({ graphData, weekday }) => {
   return (
     <AbsoluteFill
       style={{
@@ -106,29 +109,11 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
         display: "flex",
       }}
     >
-      <div
-        style={{
-          color: "white",
-          fontSize: 120,
-          fontFamily: "Mona Sans",
-          fontWeight: 800,
-          paddingTop: 80,
-          textAlign: "center",
-        }}
-      >
-        Monday 3PM
-      </div>
-      <div
-        style={{
-          color: "white",
-          fontSize: 40,
-          fontFamily: "Mona Sans",
-          fontWeight: 300,
-          textAlign: "center",
-        }}
-      >
-        Is your most productive time
-      </div>
+      {/**
+       * TODO: Top hour
+       */}
+      <TopDay day={weekday} />
+      <TopDay day={weekday} />
       <div
         style={{
           display: "flex",

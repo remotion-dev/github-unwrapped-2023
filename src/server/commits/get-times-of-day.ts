@@ -1,6 +1,6 @@
 import type { Commit } from "./commits.js";
 
-export type Hour =
+type Hour =
   | 0
   | 1
   | 2

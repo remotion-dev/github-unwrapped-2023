@@ -1,7 +1,11 @@
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
-import gradientStyles from "../styles.module.css";
-import styles from "./styles.module.css";
+import { signInWithGitHubLink } from "../sign-in-with-github";
+import {
+  default as gradientStyles,
+  default as styles,
+} from "../styles.module.css";
+import { EmailForm } from "./EmailForm";
 
 const header: React.CSSProperties = {
   display: "flex",
@@ -22,7 +26,7 @@ const wrapper: React.CSSProperties = {
   width: "100%",
   maxWidth: 700,
   margin: "0 auto",
-  padding: "128px 0",
+  padding: "64px 0",
 };
 
 const About = () => {
@@ -33,14 +37,42 @@ const About = () => {
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
     },
     {
+      icon: "/detective.svg",
+      title: "Who is behind GitHub Unwrapped?",
+      description: "",
+      node: (
+        <p style={{ marginTop: -32 }}>
+          The project was implemented by{" "}
+          <a className={styles.aboutLink} href="https://www.remotion.dev">
+            Remotion
+          </a>{" "}
+          in collaboration with{" "}
+          <a className={styles.aboutLink} href="https://www.foronered.com">
+            For One Red
+          </a>
+          {", "}
+          who also made all the design for this project.
+        </p>
+      ),
+    },
+    {
+      icon: "/eyeball.svg",
+      title: "Private contributions not showing up?",
+      description: `To enable private contributions, you need to enable "Include private contributions on my profile" in your GitHub settings. Once you've done this, login in again and regenerate your video.`,
+      node: (
+        <a
+          className={styles.aboutButton}
+          style={{ lineHeight: "43px" }}
+          href={signInWithGitHubLink()}
+        >
+          Login again
+        </a>
+      ),
+    },
+    {
       icon: "/open-source.svg",
       title: "Is this project open source?",
       description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
-    },
-    {
-      icon: "/detective.svg",
-      title: "Who is behind GitHub Unwrapped?",
-      description: `This project was implemented by Remotion with support from GitHub.`,
     },
     {
       icon: "/calculator.svg",
@@ -51,25 +83,84 @@ const About = () => {
     {
       icon: "/chat.svg",
       title: "Want to host a year in review for your users?",
-      description: `Want to give your users their personalized video at the end of 2023?
-      Developers: Check out Remotion and the source code of this project!
-      Non-developers: Drop your email and we'll contact you in September 2023 for a free consultation!`,
+      description: ``,
+      node: (
+        <>
+          <p style={{ marginTop: -32 }}>
+            Want to give your users their personalized video at the end of 2024?
+            <br />
+            <br />
+            Developers: Check out{" "}
+            <a className={styles.aboutLink} href="https://www.remotion.dev">
+              Remotion
+            </a>{" "}
+            and the source code of{" "}
+            <a
+              className={styles.aboutLink}
+              href="https://github.com/remotion-dev/github-unwrapped-2023"
+            >
+              this project
+            </a>
+            !<br />
+            <br /> Non-developers: Drop your email and we\&aposll contact you in
+            September 2024 for a free consultation!
+          </p>
+          <EmailForm />
+        </>
+      ),
     },
     {
       icon: "/trophy.svg",
       title: "Credits",
-      description: `Music (Candy Dream): Winter Holiday by Alec Koff
-      Music (Funky Gold): Electro Swinging Charleston by CueTracks
-      Music (Icy Winter): Christmas Chill by Roo Walker
-      Programming language icons: Tal Revivo (Icon 54)
-      Christmas icons: mehwishumar (Fiverr)
-      Font: Mona Sans by GitHub
-      Libraries used: Next.JS, Rough.JS`,
+      node: (
+        <p style={{ marginTop: -32 }}>
+          Music -{" "}
+          <a
+            className={styles.aboutLink}
+            href="https://audiojungle.net/item/robots/35287595"
+          >
+            Robots
+          </a>{" "}
+          by Nicolas T. <br />
+          Design -{" "}
+          <a className={styles.aboutLink} href="https://www.foronered.com/">
+            For One Red{" "}
+          </a>{" "}
+          <br />
+          Font -{" "}
+          <a
+            className={styles.aboutLink}
+            href="https://github.com/github/mona-sans"
+          >
+            Mona Sans{" "}
+          </a>{" "}
+          by GitHub <br />
+          Libraries -{" "}
+          <a
+            className={styles.aboutLink}
+            href="https://github.com/vercel/next.js"
+          >
+            Next.js{" "}
+          </a>{" "}
+          <br />
+        </p>
+      ),
     },
     {
       icon: "/mail.svg",
       title: "Contact",
       description: ``,
+      node: (
+        <a
+          target="_blank"
+          href="mailto:hi@remotion.dev"
+          rel="noreferrer"
+          className={styles.aboutButton}
+          style={{ lineHeight: "43px", marginTop: -16 }}
+        >
+          hi@remotion.dev
+        </a>
+      ),
     },
   ];
 
@@ -79,6 +170,18 @@ const About = () => {
       <Stars />
       <div style={outerWrapper}>
         <div style={wrapper}>
+          <a
+            href="/"
+            style={{
+              display: "block",
+              marginBottom: 32,
+            }}
+          >
+            <img
+              src="/arrow.svg"
+              style={{ width: 32, height: 32, transform: "rotate(180deg)" }}
+            />
+          </a>
           <div style={header}>
             <div
               style={{
@@ -121,15 +224,16 @@ const About = () => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    marginBottom: 8,
+                    marginBottom: -8,
                   }}
                 >
-                  <img src={item.icon} style={{ marginRight: 12 }}></img>
+                  <img src={item.icon} style={{ marginRight: 12 }} />
                   <h4 className={styles.aboutItemTitle} style={{ margin: 0 }}>
                     {item.title}
                   </h4>
                 </div>
-                <p style={{ marginTop: 0 }}>{item.description}</p>
+                <p>{item.description}</p>
+                {item.node}
               </div>
             ))}
           </div>

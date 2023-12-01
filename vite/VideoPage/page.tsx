@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import type { z } from "zod";
+import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
   LanguagesEnum,
   PlanetEnum,
@@ -46,9 +47,18 @@ const parseTopLanguage = (topLanguage: {
   color: string;
 }): z.infer<typeof languageSchema> => {
   try {
-    return LanguagesEnum.parse(topLanguage.name);
+    // TODO: Rust1, Rust2, Rust3
+    const lang = LanguagesEnum.parse(topLanguage.name);
+    return {
+      type: "designed",
+      name: lang,
+    };
   } catch (e) {
-    return topLanguage;
+    return {
+      type: "other",
+      color: topLanguage.color,
+      name: topLanguage.name,
+    };
   }
 };
 
@@ -57,15 +67,16 @@ const computeCompositionParameters = (
 ): CompositionParameters => {
   return {
     login: userStats.username,
-    // TODO
-    corner: "bottom-right",
+    corner: generateRandomCorner({
+      lowercasedUsername: userStats.lowercasedUsername,
+    }),
     language1: parseTopLanguage(userStats.topLanguages[0]),
     language2:
       userStats.topLanguages.length > 1
         ? parseTopLanguage(userStats.topLanguages[1])
         : null,
     language3:
-      userStats.topLanguages.length > 1
+      userStats.topLanguages.length > 2
         ? parseTopLanguage(userStats.topLanguages[2])
         : null,
     showHelperLine: false,
@@ -74,6 +85,7 @@ const computeCompositionParameters = (
     issuesClosed: userStats.closedIssues,
     issuesOpened: userStats.openIssues,
     totalPullRequests: userStats.totalPullRequests,
+    topWeekday: userStats.topWeekday,
   };
 };
 
