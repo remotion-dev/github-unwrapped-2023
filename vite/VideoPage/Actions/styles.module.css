@@ -29,6 +29,12 @@
   align-items: center;
 }
 
+.sharingActionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .furtherActionsTitle {
   color: rgba(231, 231, 231, 1);
   font-size: 14px;

@@ -46,6 +46,7 @@
   /* right: 20px; */
   background-color: none;
   text-align: center;
+  cursor: pointer;
 }
 
 .topMenu {
