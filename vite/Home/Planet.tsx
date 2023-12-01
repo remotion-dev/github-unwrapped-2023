@@ -7,13 +7,13 @@ export const Planet: React.FC = () => {
     <AbsoluteFill
       style={{
         overflow: "hidden",
+        zIndex: -1,
       }}
     >
       <svg
         style={{
           width: 79,
           left: "50%",
-          position: "absolute",
           marginLeft: -79 / 2,
         }}
         viewBox="0 0 79 77"

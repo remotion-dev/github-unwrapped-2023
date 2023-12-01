@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { ChevronRight } from "../../icons/ChevronRight";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { SignInWithGitHub } from "../SignInWithGitHub";
@@ -37,34 +36,19 @@ export const LoginOptions: React.FC<Props> = ({
   );
 
   return (
-    <div>
+    <div className={styles.loginOptionsWrapper}>
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
           placeHolder="GitHub Username"
           setText={(s) => setUsername(s)}
           invalid={userNotFound}
-          style={{
-            fontWeight: "bold",
-            padding: 15,
-            fontFamily: "Mona Sans",
-            height: 56,
-            fontSize: 20,
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-          }}
+          className={styles.input}
         />
-        <Button
-          className={styles.desktopSubmitButton}
-          style={{
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          }}
-          type={"submit"}
-        >
+        <Button className={styles.desktopSubmitButton} type={"submit"}>
           Unwrap
         </Button>
-        <Button
+        {/* <Button
           className={styles.mobileSubmitButton}
           style={{
             borderTopLeftRadius: 0,
@@ -73,12 +57,11 @@ export const LoginOptions: React.FC<Props> = ({
           type={"submit"}
         >
           <ChevronRight />
-        </Button>
+        </Button> */}
       </form>
-      <div style={{ width: 20, display: "inline-block" }} />
-      <div style={{ fontSize: 16, fontWeight: 500 }}>
+      <div className={styles.divider} />
+      <div className={styles.privateContributions}>
         Want to include private contributions?
-        <div style={{ width: 10, display: "inline-block" }} />
         <SignInWithGitHub />
       </div>
     </div>

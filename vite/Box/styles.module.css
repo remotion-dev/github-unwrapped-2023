@@ -1,0 +1,35 @@
+.box {
+  background: #191c29eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  overflow: visible;
+  width: calc(100% - 24px);
+  max-width: 1000px;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+/*
+* SHARED STYLES
+*/
+
+.headerTopContainer {
+  display: none;
+  @media only screen and (min-width: 40em) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 6px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.linkContainer {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+
+  @media only screen and (min-width: 40em) {
+    justify-content: flex-end;
+  }
+}

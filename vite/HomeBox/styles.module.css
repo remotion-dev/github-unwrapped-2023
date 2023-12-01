@@ -20,7 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 30px;
   margin-top: 32px;
 
   @media only screen and (min-width: 40em) {
@@ -29,41 +28,13 @@
 }
 
 .homeBoxWrapper {
-  background: #191c29eb;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  position: fixed;
-  overflow: visible;
-  width: calc(100% - 50px);
-  max-width: 800px;
-  border-radius: 10px;
-
   @media only screen and (min-width: 40em) {
-    bottom: 224px;
   }
-}
-
-.linkContainer {
-  flex: 1;
-  display: flex;
-  gap: 6px;
-
-  @media only screen and (min-width: 40em) {
-    justify-content: flex-end;
-  }
-}
-
-.headerTopContainer {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 6px;
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.03);
 }
 
 .title {
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.1;
   margin-bottom: 12px;
   background: linear-gradient(270.02deg, #ddd 20.63%, #fff 99.87%);
@@ -75,11 +46,20 @@
   @media only screen and (min-width: 40em) {
     font-size: 44px;
     margin-bottom: 24px;
+    font-weight: 900;
+  }
+}
+
+.description {
+  font-weight: 400;
+
+  @media only screen and (min-width: 40em) {
+    font-weight: 500;
   }
 }
 
 .homeBoxBottomWrapper {
-  padding: 16px;
+  padding: 24px 16px;
 
   @media only screen and (min-width: 40em) {
     padding: 30px;
@@ -88,8 +68,14 @@
 
 .buttonContainer {
   display: flex;
+  flex-direction: column;
   flex: 1;
-  flex-direction: row;
+  gap: 16px;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+    gap: 0;
+  }
 }
 
 .mobileSubmitButton {
@@ -99,9 +85,46 @@
 }
 
 .desktopSubmitButton {
-  display: none;
-  width: 160px;
+  width: 100%;
+
   @media only screen and (min-width: 40em) {
+    width: 160px;
     display: inline;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
+}
+
+.input {
+  @media only screen and (min-width: 40em) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.privateContributions {
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+
+  @media only screen and (min-width: 40em) {
+    margin: 0 8px;
+    display: none;
+  }
+}
+
+.loginOptionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
