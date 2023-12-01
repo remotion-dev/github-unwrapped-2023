@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { AbsoluteFill } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
@@ -12,12 +12,6 @@ import type { ProfileStats } from "../../src/server/db";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
-
-const background: React.CSSProperties = {
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-};
 
 declare global {
   interface Window {
