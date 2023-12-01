@@ -6,7 +6,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
-import { Tablet } from "../Productivity/Tablet";
+import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
 import { GRAPH_DATA } from "../Productivity/constants";
 import type { starsReceivedSchema } from "../StarsReceived";
 import { StarsReceived } from "../StarsReceived";
@@ -27,16 +27,25 @@ export const StarsAndProductivity: React.FC<
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const zoomTransition = spring({
-    fps,
-    frame,
-    delay: ZOOM_DELAY,
-    config: {
-      mass: 4,
-      damping: 200,
-    },
-    durationInFrames: 45,
-  });
+  const zoomTransition =
+    spring({
+      fps,
+      frame,
+      delay: ZOOM_DELAY,
+      config: {
+        damping: 200,
+      },
+      durationInFrames: 45,
+    }) -
+    spring({
+      fps,
+      frame,
+      delay: ZOOM_DELAY + TABLET_SCENE_LENGTH,
+      config: {
+        damping: 200,
+      },
+      durationInFrames: 45,
+    });
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;
   const scale = 1 + zoomTransition * 0.5;

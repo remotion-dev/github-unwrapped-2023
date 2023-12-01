@@ -14,21 +14,35 @@ export const tableSchema = z.object({
   enterProgress: z.number().min(0).max(1).step(0.01),
 });
 
+export const TABLET_SCENE_LENGTH = 150;
+
 export const Tablet: React.FC<
   ComponentProps<typeof Productivity> & z.infer<typeof tableSchema>
 > = ({ graphData, enterProgress, weekday, hour }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const toFullscreen = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-      mass: 0.5,
-    },
-    delay: 30,
-  });
+  const toFullscreenFull =
+    spring({
+      fps,
+      frame,
+      config: {
+        damping: 200,
+        mass: 0.5,
+      },
+      delay: 30,
+    }) -
+    spring({
+      fps,
+      frame,
+      delay: TABLET_SCENE_LENGTH,
+      config: {
+        damping: 200,
+        mass: 0.5,
+      },
+    });
+
+  const toFullscreen = 0.68 * toFullscreenFull;
 
   const SCREEN_ROTATION_Y = 15;
   const SCREEN_ROTATION_X = -10;
@@ -76,6 +90,7 @@ export const Tablet: React.FC<
   const left = interpolate(toFullscreen, [0, 1], [350, 0]);
   const top = interpolate(toFullscreen, [0, 1], [480, 0]);
 
+  console.log(toFullscreen);
   return (
     <AbsoluteFill
       style={{
