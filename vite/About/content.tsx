@@ -20,7 +20,7 @@ export const content: Array<AboutItemContent> = [
     title: "Who is behind GitHub Unwrapped?",
     description: "",
     node: (
-      <p style={{ marginTop: -32 }}>
+      <p>
         The project was implemented by{" "}
         <a className={styles.aboutLink} href="https://www.remotion.dev">
           Remotion
@@ -65,7 +65,7 @@ export const content: Array<AboutItemContent> = [
     description: ``,
     node: (
       <>
-        <p style={{ marginTop: -32 }}>
+        <p>
           Want to give your users their personalized video at the end of 2024?
           <br />
           <br />
@@ -92,7 +92,7 @@ export const content: Array<AboutItemContent> = [
     icon: "/trophy.svg",
     title: "Credits",
     node: (
-      <p style={{ marginTop: -32 }}>
+      <p style={{ marginTop: 0 }}>
         Music -{" "}
         <a
           className={styles.aboutLink}
@@ -114,7 +114,6 @@ export const content: Array<AboutItemContent> = [
           Mona Sans{" "}
         </a>{" "}
         by GitHub <br />
-        <br />
       </p>
     ),
   },
@@ -128,7 +127,7 @@ export const content: Array<AboutItemContent> = [
         href="mailto:hi@remotion.dev"
         rel="noreferrer"
         className={styles.aboutButton}
-        style={{ lineHeight: "43px", marginTop: -16 }}
+        style={{ lineHeight: "43px" }}
       >
         hi@remotion.dev
       </a>

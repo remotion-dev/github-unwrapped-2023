@@ -45,7 +45,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 8px;
+  gap: 24px;
   border-radius: 8px;
   border: 2px solid #20222f;
   background: #171823;
@@ -53,6 +53,10 @@
   @media only screen and (min-width: 40em) {
     padding: 32px;
   }
+}
+
+.aboutItem p {
+  margin: 0;
 }
 
 .aboutItemTitle {

@@ -8,7 +8,7 @@ export const AboutItem: React.FC<{ item: AboutItemContent }> = ({ item }) => {
         <img src={item.icon} />
         <h4 className={styles.aboutItemTitle}>{item.title}</h4>
       </div>
-      <p>{item.description}</p>
+      {item.description && <p>{item.description}</p>}
       {item.node}
     </div>
   );
