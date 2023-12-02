@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 export const MobileHeader: React.FC = () => {
   return (
-    <div>
+    <div className={styles.mobileHeaderWrapper}>
       <Navbar>
         <NavigateBack />
       </Navbar>

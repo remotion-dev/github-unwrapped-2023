@@ -2,7 +2,14 @@ import { signInWithGitHubLink } from "../sign-in-with-github";
 import { default as styles } from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
-export const content = [
+export type AboutItemContent = {
+  icon: string;
+  title: string;
+  description?: string;
+  node?: React.ReactNode;
+};
+
+export const content: Array<AboutItemContent> = [
   {
     icon: "/book.svg",
     title: "How it works",
