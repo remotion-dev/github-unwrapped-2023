@@ -9,6 +9,7 @@ import {
   type languageSchema,
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
+import { NotFound } from "../404";
 import { Navbar } from "../Home/Navbar";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
@@ -90,7 +91,7 @@ export const UserPage = () => {
   }, []);
 
   if (inputProps === null) {
-    return <div>404</div>;
+    return <NotFound />;
   }
 
   return (
