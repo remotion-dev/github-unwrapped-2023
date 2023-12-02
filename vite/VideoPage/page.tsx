@@ -9,8 +9,8 @@ import {
   type languageSchema,
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
-import { NotFound } from "../404";
 import { Navbar } from "../Home/Navbar";
+import { NotFound } from "../NotFound/NotFound";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
