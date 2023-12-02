@@ -2,3 +2,22 @@
   height: 100vh;
   width: 100vw;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-left: 96px;
+  margin-top: 200px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 200px;
+  margin-bottom: -80px;
+}
+
+.description {
+  font-size: 25px;
+  font-weight: 400;
+}

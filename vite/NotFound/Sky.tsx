@@ -6,7 +6,8 @@ export const Sky: React.FC = () => {
       style={{
         background: "url('/sky.svg') no-repeat center center fixed",
         backgroundSize: "cover",
+        zIndex: -1,
       }}
-    ></AbsoluteFill>
+    />
   );
 };
