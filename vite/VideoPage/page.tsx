@@ -54,8 +54,10 @@ const parseTopLanguage = (topLanguage: {
 };
 
 const computeCompositionParameters = (
-  userStats: ProfileStats,
-): CompositionParameters => {
+  userStats: ProfileStats | null,
+): CompositionParameters | null => {
+  if (userStats === null) return null;
+
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -83,9 +85,13 @@ const computeCompositionParameters = (
 };
 
 export const UserPage = () => {
-  const inputProps: CompositionParameters = useMemo(() => {
+  const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
+
+  if (inputProps === null) {
+    return <div>404</div>;
+  }
 
   return (
     <div className={styles.wrapper}>
