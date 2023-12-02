@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   default as commonStyles,
   default as gradientStyles,
@@ -17,7 +18,9 @@ export const DesktopHeader = () => {
         }}
       >
         <NavigateBack />
-        <h2 className={gradientStyles.gradientText2}>#GitHubUnwrapped</h2>
+        <Link to={"/"}>
+          <h2 className={gradientStyles.gradientText2}>#GitHubUnwrapped</h2>
+        </Link>
         <h1
           className={commonStyles.aboutTitle}
           style={{ margin: "16px 0 24px 0" }}

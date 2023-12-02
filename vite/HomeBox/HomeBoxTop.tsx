@@ -3,12 +3,17 @@ import { GithubIcon } from "../../icons/GithubIcon";
 import { RocketIcon } from "../../icons/RocketIcon";
 import boxStyles from "../Box/styles.module.css";
 import { HomeLink } from "../HomeLink";
-import styles from "./styles.module.css";
+import gradientStyles from "../styles.module.css";
 
 export const HomeBoxTop: React.FC = () => {
   return (
     <div className={boxStyles.headerTopContainer}>
-      <div className={styles.gradientText}>#GitHubUnwrapped</div>
+      <h2
+        style={{ fontSize: 18, marginLeft: 7 }}
+        className={gradientStyles.gradientText2}
+      >
+        #GitHubUnwrapped
+      </h2>
       <div className={boxStyles.linkContainer}>
         <HomeLink
           href={"https://github.com/remotion-dev/github-unwrapped-2023"}
