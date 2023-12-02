@@ -81,7 +81,7 @@ export const content: Array<AboutItemContent> = [
             this project
           </a>
           !<br />
-          <br /> Non-developers: Drop your email and we\&aposll contact you in
+          <br /> Non-developers: Drop your email and we'll contact you in
           September 2024 for a free consultation!
         </p>
         <EmailForm />

@@ -92,50 +92,6 @@
   line-height: normal;
 }
 
-.aboutFormInput {
-  width: 250px;
-  height: 45px;
-  flex-shrink: 0;
-  border-radius: 5px 0px 0px 5px;
-  border: 1px solid #4b4d5a;
-  padding: 0 0 0 16px;
-
-  background: #363745;
-
-  color: white;
-
-  font-family: Mona Sans;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-
-  ::placeholder {
-    color: #7a7d8e;
-  }
-}
-
-.aboutFormSubmit {
-  display: flex;
-  height: 45px;
-  padding: 15.167px 22.751px;
-  justify-content: center;
-  align-items: center;
-  gap: 7.584px;
-
-  border-radius: 0px 4.74px 4.74px 0px;
-  background: #507eff;
-
-  color: #fff;
-
-  font-family: Mona Sans;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border: 0;
-}
-
 .aboutLink {
   color: #507eff;
   text-decoration: underline;

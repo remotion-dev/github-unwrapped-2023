@@ -1,0 +1,79 @@
+.emailFormWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.emailFormWrapper p {
+  margin: 0;
+}
+
+.emailForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-content: center;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.aboutFormInput {
+  flex: 1;
+  height: 45px;
+  flex: 0 0 45px;
+  padding: 0 0 0 16px;
+
+  color: white;
+
+  background: #363745;
+  border: 1px solid #4b4d5a;
+  border-radius: 5px;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  ::placeholder {
+    color: #7a7d8e;
+  }
+
+  @media only screen and (min-width: 40em) {
+    flex: 1;
+    border-radius: 5px 0px 0px 5px;
+    flex: 0 0 250px;
+  }
+}
+
+.aboutFormSubmit {
+  display: flex;
+  border-radius: 5px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+
+  background: #507eff;
+  color: #fff;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+
+  @media only screen and (min-width: 40em) {
+    border-radius: 0px 4.74px 4.74px 0px;
+    padding: 0 16px;
+  }
+}
+
+.submitMessage {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
