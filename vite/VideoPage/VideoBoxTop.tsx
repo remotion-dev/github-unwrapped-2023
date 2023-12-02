@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import type { z } from "zod";
 import { RocketIcon } from "../../icons/RocketIcon";
 import type { compositionSchema } from "../../src/config";
@@ -12,12 +13,15 @@ export const VideoBoxTop: React.FC<{
   return (
     <div className={boxStyles.headerTopContainer} style={{ display: "flex" }}>
       <div className={styles.videoBoxTopDesktop}>
-        <h2
-          className={gradientStyles.gradientText2}
-          style={{ fontSize: 18, marginLeft: 7 }}
-        >
-          #GitHubUnwrapped
-        </h2>
+        <Link to={"/"}>
+          <h2
+            className={gradientStyles.gradientText2}
+            style={{ fontSize: 18, marginLeft: 7 }}
+          >
+            #GitHubUnwrapped
+          </h2>
+        </Link>
+
         {/**
       // TODO: Add proper link
        */}
