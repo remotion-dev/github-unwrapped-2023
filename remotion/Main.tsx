@@ -8,7 +8,7 @@ import { ContributionsScene } from "./Contributions";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
 import { LandingScene } from "./Landing";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
-import { PullRequests } from "./Paths/Paths";
+import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { ALL_PLANETS_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";

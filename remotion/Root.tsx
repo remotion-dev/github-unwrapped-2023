@@ -22,7 +22,7 @@ import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
-import { PullRequests } from "./Paths/Paths";
+import { PullRequests, pullRequestsSchema } from "./Paths/PullRequests";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
@@ -362,7 +362,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{ num: 15, fontSize: 100, max: null }}
       />
-      <Folder name="Paths">
+      <Folder name="PullRequests">
         <Composition
           id="WholePaths"
           component={WholePaths}
@@ -375,14 +375,15 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
         <Composition
-          id="Paths"
+          id="PullRequests"
           component={PullRequests}
           fps={30}
           durationInFrames={240}
           height={1080}
           width={1080}
+          schema={pullRequestsSchema}
           defaultProps={{
-            totalPullRequests: 12,
+            totalPullRequests: 614,
           }}
         />
       </Folder>

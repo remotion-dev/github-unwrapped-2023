@@ -11,6 +11,8 @@ export const pullRequestsSchema = z.object({
   totalPullRequests: z.number().min(0),
 });
 
+const MAX_PATHS = 50;
+
 export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   totalPullRequests,
 }) => {
@@ -34,7 +36,11 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
       <AbsoluteFill>
         <Gradient gradient="blueRadial" />
       </AbsoluteFill>
-      <WholePaths extraPaths={totalPullRequests} />;
+      <WholePaths
+        initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
+        extraPaths={Math.min(MAX_PATHS, totalPullRequests)}
+      />
+      ;
     </AbsoluteFill>
   );
 };
