@@ -10,7 +10,6 @@ export const VideoPageBackground = () => {
     <AbsoluteFill
       style={{
         overflow: "hidden",
-        zIndex: -1,
         background:
           "radial-gradient(121.11% 121.11% at 47.08% 0%, #0F102E 0%, #000 100%)",
       }}
