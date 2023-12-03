@@ -7,6 +7,7 @@ export const Foreground: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
+        zIndex: -1,
       }}
     >
       <img src="/notFoundForeground.svg" />
