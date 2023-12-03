@@ -247,7 +247,7 @@ export const PlanetScaleSpiralWhole: React.FC<
             currentPosition.offset.x - TL_ROCKET_WIDTH / 2
           }px) translateY(${
             currentPosition.offset.y - TL_ROCKET_HEIGHT / 2
-          }px) rotate(${currentPosition.angleInDegrees}deg) scale(0.5)`,
+          }px) rotate(${currentPosition.angleInDegrees}deg) scale(0.9)`,
         }}
       />
     </AbsoluteFill>

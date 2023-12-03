@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { PullRequests } from "../Paths/Paths";
+import { PullRequests } from "../Paths/PullRequests";
 
 export const CustomScreen: React.FC = () => {
   return (

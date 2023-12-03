@@ -4,7 +4,7 @@ import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
 
-export const OPENING_SCENE_LENGTH = 60;
+export const OPENING_SCENE_LENGTH = 120;
 
 export const OpeningScene: React.FC = () => {
   return (

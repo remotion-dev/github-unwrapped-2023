@@ -51,13 +51,12 @@ button {
 }
 
 #videobackground {
-  opacity: 0;
-  background: rgba(0, 0, 0);
+  opacity: 1;
   transition: opacity 1s ease;
 }
 
 .videoplaying #videobackground {
-  opacity: 1;
+  opacity: 0.2;
 }
 
 a {

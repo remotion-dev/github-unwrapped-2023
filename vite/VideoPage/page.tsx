@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { AbsoluteFill } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
@@ -85,6 +84,16 @@ const computeCompositionParameters = (
   };
 };
 
+const background: React.CSSProperties = {
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  position: "absolute",
+};
+
 export const UserPage = () => {
   const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
@@ -95,9 +104,15 @@ export const UserPage = () => {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <VideoPageBackground />
-      <AbsoluteFill id="videobackground" />
+    <div
+      className={styles.wrapper}
+      style={{
+        backgroundColor: "#000",
+      }}
+    >
+      <div style={background} id="videobackground">
+        <VideoPageBackground />
+      </div>
       <Navbar />
       <VideoBox inputProps={inputProps} />
     </div>
