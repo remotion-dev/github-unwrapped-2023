@@ -195,12 +195,16 @@ export const getStatsFromGitHubOrCache = async ({
     return fromCache;
   }
 
-  const stats = await getStatsFromGitHub({
-    loggedInWithGitHub: false,
-    token,
-    username,
-  });
+  try {
+    const stats = await getStatsFromGitHub({
+      loggedInWithGitHub: false,
+      token,
+      username,
+    });
 
-  await insertProfileStats(stats);
-  return stats;
+    await insertProfileStats(stats);
+    return stats;
+  } catch (e) {
+    return null;
+  }
 };

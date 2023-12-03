@@ -9,6 +9,7 @@ import {
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
 import { Navbar } from "../Home/Navbar";
+import { NotFound } from "../NotFound/NotFound";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
@@ -53,8 +54,10 @@ const parseTopLanguage = (topLanguage: {
 };
 
 const computeCompositionParameters = (
-  userStats: ProfileStats,
-): CompositionParameters => {
+  userStats: ProfileStats | null,
+): CompositionParameters | null => {
+  if (userStats === null) return null;
+
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -92,9 +95,13 @@ const background: React.CSSProperties = {
 };
 
 export const UserPage = () => {
-  const inputProps: CompositionParameters = useMemo(() => {
+  const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
+
+  if (inputProps === null) {
+    return <NotFound />;
+  }
 
   return (
     <div

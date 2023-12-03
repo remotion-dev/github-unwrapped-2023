@@ -9,11 +9,9 @@ export const HomeBox: React.FC<{
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
 }> = (props) => {
   return (
-    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800, zIndex: 1 }}>
+    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800 }}>
       <HomeBoxTop />
       <HomeBoxBottom {...props} />
     </Box>
   );
 };
-
-/* <Octocat userNotFound={userNotFound} /> */
