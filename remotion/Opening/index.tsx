@@ -13,14 +13,34 @@ import { Gradient } from "../Gradients/NativeGradient";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
-import type { openingTitleSchema } from "./Title";
 import { OpeningTitle } from "./Title";
+import type { openingTitleSchema } from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 120;
+export const OPENING_SCENE_OUT_TRANSITION = 20;
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
 }) => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  const exitProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: durationInFrames - OPENING_SCENE_OUT_TRANSITION,
+    durationInFrames: OPENING_SCENE_OUT_TRANSITION * 3,
+  });
+
+  const distance = interpolate(exitProgress, [0, 1], [1, 0.05], {});
+  const scaleDivided = 1 / distance;
+  const translateX = (scaleDivided - 1) * 200;
+
+  const bottomTranslateY = interpolate(exitProgress, [0, 0.7], [0, 500]);
+
   return (
     <AbsoluteFill
       style={{
@@ -49,10 +69,19 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         <AbsoluteFill>
           <OpeningTitle login={login} />
         </AbsoluteFill>
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            transform: `translateY(${bottomTranslateY}px)`,
+          }}
+        >
           <Background />
         </AbsoluteFill>
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            transformOrigin: "bottom",
+            transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
+          }}
+        >
           <Foreground />
         </AbsoluteFill>
         <AbsoluteFill>
@@ -104,26 +133,8 @@ const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
 export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
 }) => {
-  const { fps, durationInFrames } = useVideoConfig();
-  const frame = useCurrentFrame();
-  const duration = 20;
-
-  const zoomOut = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    delay: durationInFrames - duration,
-    durationInFrames: duration,
-  });
-
   return (
-    <AbsoluteFill
-      style={{
-        transform: `scale(${interpolate(zoomOut, [0, 1], [1, 2])})`,
-      }}
-    >
+    <AbsoluteFill style={{}}>
       <OpeningSceneZoomOut login={login} />
     </AbsoluteFill>
   );
