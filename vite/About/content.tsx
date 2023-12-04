@@ -50,8 +50,31 @@ export const content: Array<AboutItemContent> = [
   },
   {
     icon: "/open-source.svg",
-    title: "Is this project open source?",
-    description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
+    title: "Is this project open-source?",
+    description: ``,
+    node: (
+      <p>
+        The source code of the project is open-source. View{" "}
+        <a
+          className={styles.aboutLink}
+          href="https://github.com/remotion-dev/github-unwrapped-2023"
+        >
+          source code
+        </a>
+        .
+        <br />
+        Remotion, the framework for making videos programmatically is required
+        as a dependency and is "source-available" and requires companies to
+        obtain a{" "}
+        <a
+          className={styles.aboutLink}
+          href="https://github.com/remotion-dev/remotion/blob/main/LICENSE.md"
+        >
+          license
+        </a>{" "}
+        to use it.
+      </p>
+    ),
   },
   {
     icon: "/calculator.svg",
@@ -69,7 +92,8 @@ export const content: Array<AboutItemContent> = [
           Want to give your users their personalized video at the end of 2024?
           <br />
           <br />
-          Developers: Check out{" "}
+          <strong>Developers</strong>: <br />
+          Check out{" "}
           <a className={styles.aboutLink} href="https://www.remotion.dev">
             Remotion
           </a>{" "}
@@ -81,8 +105,10 @@ export const content: Array<AboutItemContent> = [
             this project
           </a>
           !<br />
-          <br /> Non-developers: Drop your email and we'll contact you in
-          September 2024 for a free consultation!
+          <br /> <strong>Non-developers</strong>:
+          <br />
+          Drop your email and we'll contact you in September 2024 for a free
+          consultation!
         </p>
         <EmailForm />
       </>
