@@ -98,6 +98,8 @@ export const topLanguagesSchema = z.object({
   language3: languageSchema.or(z.null()),
 });
 
+export const openingSceneStartAngle = z.enum(["left", "right"]);
+
 export const compositionSchema = z.object({
   topLanguages: topLanguagesSchema.or(z.null()),
   corner: cornerType,
@@ -111,6 +113,7 @@ export const compositionSchema = z.object({
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
   graphData: z.array(productivityPerHourSchema),
+  openingSceneStartAngle,
 });
 
 export const RenderRequest = z.object({

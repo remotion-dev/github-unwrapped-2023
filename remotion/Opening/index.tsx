@@ -16,13 +16,14 @@ import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
 import { OpeningTitle } from "./Title";
-import type { openingTitleSchema } from "./TitleImage";
+import { type openingTitleSchema } from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_OVERLAP = 10;
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
+  startAngle,
 }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -76,7 +77,11 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         </AbsoluteFill>
         <Noise translateX={100} translateY={30} />
         <AbsoluteFill>
-          <OpeningTitle exitProgress={exitProgress} login={login} />
+          <OpeningTitle
+            startAngle={startAngle}
+            exitProgress={exitProgress}
+            login={login}
+          />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
@@ -103,6 +108,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
 
 export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
+  startAngle,
 }) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -125,16 +131,20 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
     });
 
   const scale = interpolate(zoomOut, [0, 1], [2.5, 1]);
-  const offset = interpolate(zoomOut, [0, 1], [width / 2, 0]);
+  const offset = interpolate(
+    zoomOut,
+    [0, 1],
+    [startAngle === "left" ? width / 2 - 300 : -width / 2, 0],
+  );
   const x = offset / scale;
 
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${scale}) translateX(-${x}px) translateY(50px)`,
+        transform: `scale(${scale}) translateX(${x}px) translateY(50px)`,
       }}
     >
-      <OpeningSceneFull login={login} />
+      <OpeningSceneFull startAngle={startAngle} login={login} />
     </AbsoluteFill>
   );
 };

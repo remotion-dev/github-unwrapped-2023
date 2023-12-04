@@ -69,6 +69,7 @@ export const Main: React.FC<Schema> = ({
   totalPullRequests,
   topHour,
   graphData,
+  openingSceneStartAngle,
 }) => {
   return (
     <AbsoluteFill
@@ -79,7 +80,7 @@ export const Main: React.FC<Schema> = ({
       <Audio src={staticFile("smartsound-wired.mp3")} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
-          <OpeningScene login={login} />
+          <OpeningScene startAngle={openingSceneStartAngle} login={login} />
         </Series.Sequence>
         {topLanguages ? (
           <Series.Sequence

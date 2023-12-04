@@ -8,12 +8,14 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { openingSceneStartAngle } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { UfoSvg } from "../Issues/UfoSvg";
 import { PANE_BORDER } from "../TopLanguages/Pane";
 
 export const openingTitleSchema = z.object({
   login: z.string(),
+  startAngle: openingSceneStartAngle,
 });
 
 export const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;

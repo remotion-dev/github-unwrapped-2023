@@ -28,7 +28,7 @@ export const OpeningTitle: React.FC<
   z.infer<typeof openingTitleSchema> & {
     exitProgress: number;
   }
-> = ({ login, exitProgress }) => {
+> = ({ login, exitProgress, startAngle }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -54,8 +54,17 @@ export const OpeningTitle: React.FC<
     durationInFrames: 65,
   });
 
+  const startRotation = -10;
+  const endRotation = 10;
+
   const rotation = interpolate(rotate, [0, 1], [Math.PI * 1.5, 0]);
-  const x = interpolate(frame, [60, 120], [-10, 10]);
+  const x = interpolate(
+    frame,
+    [60, 120],
+    startAngle === "left"
+      ? [endRotation, startRotation]
+      : [startRotation, endRotation],
+  );
   const y = interpolate(enter, [0, 1], [height, 0]);
 
   const distance = interpolate(exitProgress, [0, 1], [1, 0.000005], {});
@@ -94,7 +103,7 @@ export const OpeningTitle: React.FC<
           backfaceVisibility: "hidden",
         }}
       >
-        <TitleImage login={login} />
+        <TitleImage startAngle={startAngle} login={login} />
         <div>
           <div>
             This is my <strong>#GitHubUnwrapped</strong>

@@ -23,6 +23,7 @@ import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
+import { openingTitleSchema } from "./Opening/TitleImage";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests, pullRequestsSchema } from "./Paths/PullRequests";
 import { WholePaths } from "./Paths/WholePaths";
@@ -90,8 +91,10 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={openingTitleSchema}
         defaultProps={{
           login: "JonnyBurger",
+          startAngle: "left",
         }}
       />
       <Composition
@@ -104,6 +107,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           login: "JonnyBurger",
           exitProgress: 0,
+          startAngle: "left",
         }}
       />
       <Composition
@@ -671,6 +675,7 @@ export const RemotionRoot: React.FC = () => {
               time: 23,
             },
           ],
+          openingSceneStartAngle: "left",
         }}
       />
       <Composition
