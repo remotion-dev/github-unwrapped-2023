@@ -64,17 +64,20 @@ const computeCompositionParameters = (
     corner: generateRandomCorner({
       lowercasedUsername: userStats.lowercasedUsername,
     }),
-    topLanguages: {
-      language1: parseTopLanguage(userStats.topLanguages[0]),
-      language2:
-        userStats.topLanguages.length > 1
-          ? parseTopLanguage(userStats.topLanguages[1])
-          : null,
-      language3:
-        userStats.topLanguages.length > 2
-          ? parseTopLanguage(userStats.topLanguages[2])
-          : null,
-    },
+    topLanguages:
+      userStats.topLanguages.length > 0
+        ? {
+            language1: parseTopLanguage(userStats.topLanguages[0]),
+            language2:
+              userStats.topLanguages.length > 1
+                ? parseTopLanguage(userStats.topLanguages[1])
+                : null,
+            language3:
+              userStats.topLanguages.length > 2
+                ? parseTopLanguage(userStats.topLanguages[2])
+                : null,
+          }
+        : null,
     showHelperLine: false,
     planet: computePlanet(userStats),
     starsGiven: userStats.totalStars,
