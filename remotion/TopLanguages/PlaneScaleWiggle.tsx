@@ -22,7 +22,7 @@ export const wiggleSchema = z.object({
   enterDirection: enterDirectionSchema,
 });
 
-export const ALL_PLANETS_EXIT_DURATION = 12;
+export const TOP_LANGUAGES_EXIT_DURATION = 12;
 export const WIGGLE_EXIT_SPRING_CONFIG: Partial<SpringConfig> = {
   damping: 200,
 };
@@ -68,7 +68,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
     frame,
     config: WIGGLE_EXIT_SPRING_CONFIG,
     durationInFrames: WIGGLE_EXIT_DURATION,
-    delay: durationInFrames - ALL_PLANETS_EXIT_DURATION,
+    delay: durationInFrames - TOP_LANGUAGES_EXIT_DURATION,
   });
 
   const distance = interpolate(exitProgress, [0, 1], [1, 0.000000005], {});

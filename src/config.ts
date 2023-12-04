@@ -92,10 +92,14 @@ export const productivityPerHourSchema = z.object({
 
 export type ProductivityPerHour = z.infer<typeof productivityPerHourSchema>;
 
-export const compositionSchema = z.object({
+export const topLanguagesSchema = z.object({
   language1: languageSchema,
   language2: languageSchema.or(z.null()),
   language3: languageSchema.or(z.null()),
+});
+
+export const compositionSchema = z.object({
+  topLanguages: topLanguagesSchema.or(z.null()),
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
