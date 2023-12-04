@@ -145,7 +145,11 @@ export const RemotionRoot: React.FC = () => {
         schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const, accentColor: "blue" }}
+        defaultProps={{
+          planetType: "Silver" as const,
+          accentColor: "blue",
+          rocketType: "blue",
+        }}
       />
       <Composition
         id={"Contributions"}

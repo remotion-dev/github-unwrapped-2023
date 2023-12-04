@@ -162,7 +162,11 @@ export const Main: React.FC<Schema> = ({
           </Series.Sequence>
         ) : (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <LandingScene accentColor={accentColor} planetType={planet} />
+            <LandingScene
+              rocketType={rocket}
+              accentColor={accentColor}
+              planetType={planet}
+            />
           </Series.Sequence>
         )}
       </Series>
