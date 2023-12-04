@@ -18,7 +18,7 @@ import { OpeningTitle } from "./Title";
 import type { openingTitleSchema } from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 130;
-export const OPENING_SCENE_OUT_TRANSITION = 20;
+export const OPENING_SCENE_OUT_OVERLAP = 10;
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
@@ -32,8 +32,8 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
     config: {
       damping: 200,
     },
-    delay: durationInFrames - OPENING_SCENE_OUT_TRANSITION,
-    durationInFrames: OPENING_SCENE_OUT_TRANSITION * 3,
+    delay: durationInFrames - 20,
+    durationInFrames: 60,
   });
 
   const distance = interpolate(exitProgress, [0, 1], [1, 0.000005], {});

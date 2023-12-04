@@ -7,7 +7,11 @@ import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
 import { LandingScene } from "./Landing";
-import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
+import {
+  OPENING_SCENE_LENGTH,
+  OPENING_SCENE_OUT_OVERLAP,
+  OpeningScene,
+} from "./Opening";
 import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
@@ -39,7 +43,8 @@ export const calculateDuration = ({
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
     STARS_AND_PRODUCTIVITY +
-    OPENING_SCENE_LENGTH
+    OPENING_SCENE_LENGTH -
+    OPENING_SCENE_OUT_OVERLAP
   );
 };
 
@@ -70,7 +75,7 @@ export const Main: React.FC<Schema> = ({
       <Audio src={staticFile("smartsound-wired.mp3")} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
-          <OpeningScene />
+          <OpeningScene login={login} />
         </Series.Sequence>
         {topLanguages ? (
           <Series.Sequence
@@ -78,6 +83,7 @@ export const Main: React.FC<Schema> = ({
               topLanguages,
               fps: VIDEO_FPS,
             })}
+            offset={-OPENING_SCENE_OUT_OVERLAP}
           >
             <AllPlanets
               corner={corner}
@@ -89,7 +95,11 @@ export const Main: React.FC<Schema> = ({
         ) : null}
         <Series.Sequence
           durationInFrames={ISSUES_SCENE}
-          offset={-TOP_LANGUAGES_EXIT_DURATION}
+          offset={
+            topLanguages
+              ? -TOP_LANGUAGES_EXIT_DURATION
+              : -OPENING_SCENE_OUT_OVERLAP
+          }
         >
           <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
         </Series.Sequence>
