@@ -50,7 +50,7 @@ export const OpeningTitle: React.FC = () => {
   });
 
   const rotation = interpolate(rotate, [0, 1], [Math.PI * 2, 0]);
-
+  const x = interpolate(frame, [60, 120], [-10, 10]);
   const y = interpolate(enter, [0, 1], [height, 0]);
 
   return (
@@ -77,7 +77,7 @@ export const OpeningTitle: React.FC = () => {
           paddingLeft: PADDING,
           alignItems: "center",
           borderRadius: INNER_BORDER_RADIUS + PADDING,
-          transform: `rotateX(${rotation}rad)`,
+          transform: `rotateY(${x}deg) rotateX(${rotation}rad)`,
           backfaceVisibility: "hidden",
         }}
       >
