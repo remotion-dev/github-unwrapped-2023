@@ -92,8 +92,26 @@ const OpeningSceneZoomOut: React.FC = () => {
 };
 
 export const OpeningScene: React.FC = () => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+  const duration = 20;
+
+  const zoomOut = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: durationInFrames - duration,
+    durationInFrames: duration,
+  });
+
   return (
-    <AbsoluteFill style={{}}>
+    <AbsoluteFill
+      style={{
+        transform: `scale(${interpolate(zoomOut, [0, 1], [1, 2])})`,
+      }}
+    >
       <OpeningSceneZoomOut />
     </AbsoluteFill>
   );
