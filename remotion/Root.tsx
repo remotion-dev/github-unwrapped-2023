@@ -22,6 +22,7 @@ import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
+import { OpeningTitle } from "./Opening/Title";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests, pullRequestsSchema } from "./Paths/PullRequests";
 import { WholePaths } from "./Paths/WholePaths";
@@ -85,6 +86,14 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"Opening"}
         component={OpeningScene}
+        durationInFrames={OPENING_SCENE_LENGTH}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+      />
+      <Composition
+        id={"OpeningTitle"}
+        component={OpeningTitle}
         durationInFrames={OPENING_SCENE_LENGTH}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}

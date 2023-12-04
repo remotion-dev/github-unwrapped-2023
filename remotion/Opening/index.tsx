@@ -12,6 +12,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
+import { OpeningTitle } from "./Title";
 
 export const OPENING_SCENE_LENGTH = 120;
 
@@ -40,6 +41,9 @@ const OpeningSceneFull: React.FC = () => {
       >
         <AbsoluteFill>
           <Gradient gradient="blueRadial" />
+        </AbsoluteFill>
+        <AbsoluteFill>
+          <OpeningTitle />
         </AbsoluteFill>
         <AbsoluteFill>
           <Background />
