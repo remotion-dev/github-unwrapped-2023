@@ -54,6 +54,7 @@ export const FloatingOctocat: React.FC = () => {
       }}
       fill="none"
     >
+      <NewOctocatLine progress={progress} d={d} />
       <OctocatBody
         endOffsetX={endOffsetX}
         endOffsetY={endOffsetY}
@@ -61,7 +62,6 @@ export const FloatingOctocat: React.FC = () => {
         progress={progress}
         rotation={angleInRadians + Math.PI - 0.5}
       />
-      <NewOctocatLine progress={progress} d={d} />
     </svg>
   );
 };

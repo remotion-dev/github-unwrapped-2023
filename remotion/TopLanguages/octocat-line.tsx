@@ -55,8 +55,8 @@ export const getOctocatLine = ({
       cp1y: 927.1 + offsetY2,
       cp2x: 1174.59 + endOffsetX,
       cp2y: 847.88 + endOffsetY,
-      x: 1119.43 + endOffsetX,
-      y: 825.71 + endOffsetY,
+      x: 1117 + endOffsetX,
+      y: 823 + endOffsetY,
     },
   ]);
 

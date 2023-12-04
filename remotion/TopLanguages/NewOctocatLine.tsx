@@ -16,7 +16,6 @@ export const NewOctocatLine: React.FC<{
         strokeMiterlimit="10"
         strokeDasharray={strokeDasharray}
         strokeDashoffset={strokeDashoffset}
-        strokeLinecap="round"
       />
       <defs>
         <linearGradient
