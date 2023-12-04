@@ -46,6 +46,9 @@ export const computePositions = (params: {
       fps: params.fps,
       frame: params.frame,
       delay: appearDelay,
+      config: {
+        damping: 200,
+      },
       durationInFrames: 30,
     });
 
@@ -76,13 +79,13 @@ export const computePositions = (params: {
     const color = interpolateColors(
       appear + moveProgress,
       [0, 1, 2],
-      ["#202138", activityColor, starColor]
+      ["#202138", activityColor, starColor],
     );
 
     const opacity = interpolate(
       moveProgress,
       [0, 1],
-      [MIN_OPACITY, moveProgress * maxOpacity]
+      [MIN_OPACITY, moveProgress * maxOpacity],
     );
 
     const xDelta = noiseX * 200;
@@ -91,7 +94,7 @@ export const computePositions = (params: {
     const finalSize = interpolate(
       dataObject[i],
       [0, 128],
-      [MIN_STAR_SIZE, MAX_STAR_SIZE]
+      [MIN_STAR_SIZE, MAX_STAR_SIZE],
     );
 
     const sizeOffset = INITIAL_SIZE * (1 - moveProgress);
@@ -99,7 +102,7 @@ export const computePositions = (params: {
     const size = interpolate(
       moveProgress,
       [0, 1],
-      [INITIAL_SIZE, finalSize + sizeOffset]
+      [INITIAL_SIZE, finalSize + sizeOffset],
     );
 
     const maxGlow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
