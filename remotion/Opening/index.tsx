@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Sequence,
   interpolate,
   spring,
   staticFile,
@@ -49,12 +50,14 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         alignItems: "center",
       }}
     >
-      <Audio
-        startFrom={0}
-        src={staticFile(
-          "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
-        )}
-      />
+      <Sequence from={-20}>
+        <Audio
+          startFrom={0}
+          src={staticFile(
+            "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
+          )}
+        />
+      </Sequence>
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -98,7 +101,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   );
 };
 
-const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
+export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
 }) => {
   const { width, fps } = useVideoConfig();
@@ -132,16 +135,6 @@ const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
       }}
     >
       <OpeningSceneFull login={login} />
-    </AbsoluteFill>
-  );
-};
-
-export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
-  login,
-}) => {
-  return (
-    <AbsoluteFill style={{}}>
-      <OpeningSceneZoomOut login={login} />
     </AbsoluteFill>
   );
 };

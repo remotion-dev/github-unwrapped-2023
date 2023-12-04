@@ -72,7 +72,7 @@ export const OpeningTitle: React.FC<
         color: "white",
         fontFamily: "Mona Sans",
         fontSize: 40,
-        marginTop: -300 + y,
+        marginTop: -200 + y,
         perspective: 1000,
       }}
     >

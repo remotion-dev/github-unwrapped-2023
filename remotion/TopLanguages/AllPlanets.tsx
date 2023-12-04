@@ -74,7 +74,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   return (
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
-        <Sequence style={{}}>
+        <Sequence>
           <TopLanguagesTitleCard
             pluralizeLanguages={language2 !== null}
             login={login}
