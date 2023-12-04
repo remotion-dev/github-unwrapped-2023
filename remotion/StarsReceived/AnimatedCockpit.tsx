@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Sequence,
   interpolate,
   spring,
   useCurrentFrame,
@@ -41,7 +42,9 @@ export const AnimatedCockpit: React.FC<{
       }}
     >
       <CockpitSVG />
-      <CustomScreen accentColor={accentColor} />
+      <Sequence from={271}>
+        <CustomScreen accentColor={accentColor} />
+      </Sequence>
     </AbsoluteFill>
   );
 };

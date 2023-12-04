@@ -14,7 +14,7 @@ type Props = {
   hour: Hour;
 };
 
-const Bar = (props: { productivity: number }) => {
+const Bar = (props: { productivity: number; index: number }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const height = spring({
@@ -26,6 +26,7 @@ const Bar = (props: { productivity: number }) => {
       mass: props.productivity * 10 + 0.1,
       damping: 200,
     },
+    delay: 30 + props.index * 2,
   });
 
   return (
@@ -84,6 +85,7 @@ const ProductivityGraph = (props: {
             }}
           >
             <Bar
+              index={productivityPerHour.time}
               productivity={productivityPerHour.productivity / maxProductivity}
             />
             <div

@@ -1,5 +1,4 @@
 import React from "react";
-import { PANE_BACKGROUND } from "../TopLanguages/Pane";
 import { PATH_TARGET } from "./make-random-path";
 
 export const MergeStat: React.FC<{
@@ -9,7 +8,7 @@ export const MergeStat: React.FC<{
   return (
     <div
       style={{
-        backgroundColor: PANE_BACKGROUND,
+        backgroundColor: "#4C3772",
         border: "2px solid rgba(255, 255, 255, 0.1)",
         height: 350,
         width: 350,
