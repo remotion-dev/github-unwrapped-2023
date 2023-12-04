@@ -32,11 +32,13 @@ export const TakeOff: React.FC<{
       <AbsoluteFill />
       <AbsoluteFill
         style={{
-          transform:
-            "scale(0.4) translateX(445px) translateY(1250px) rotate(-90deg)",
+          transform: "rotate(-90deg) translateX(-180px) translateY(495px)",
         }}
       >
         <TransparentVideo
+          style={{
+            width: 472,
+          }}
           other={staticFile(
             "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
           )}

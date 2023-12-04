@@ -7,10 +7,11 @@ const IS_SAFARI = false;
 export const TransparentVideo: React.FC<{
   safari: string;
   other: string;
-}> = ({ safari, other }) => {
+  style: React.CSSProperties;
+}> = ({ safari, other, style }) => {
   if (IS_SAFARI) {
-    return <OffthreadVideo transparent src={safari} />;
+    return <OffthreadVideo style={style} transparent src={safari} />;
   }
 
-  return <OffthreadVideo transparent src={other} />;
+  return <OffthreadVideo style={style} transparent src={other} />;
 };
