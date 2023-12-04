@@ -58,19 +58,25 @@ const computeCompositionParameters = (
 ): CompositionParameters | null => {
   if (userStats === null) return null;
 
+  console.log(userStats);
   return {
     login: userStats.username,
     corner: generateRandomCorner({
       lowercasedUsername: userStats.lowercasedUsername,
     }),
-    language1: parseTopLanguage(userStats.topLanguages[0]),
-    language2:
-      userStats.topLanguages.length > 1
-        ? parseTopLanguage(userStats.topLanguages[1])
-        : null,
-    language3:
-      userStats.topLanguages.length > 2
-        ? parseTopLanguage(userStats.topLanguages[2])
+    topLanguages:
+      userStats.topLanguages.length > 0
+        ? {
+            language1: parseTopLanguage(userStats.topLanguages[0]),
+            language2:
+              userStats.topLanguages.length > 1
+                ? parseTopLanguage(userStats.topLanguages[1])
+                : null,
+            language3:
+              userStats.topLanguages.length > 2
+                ? parseTopLanguage(userStats.topLanguages[2])
+                : null,
+          }
         : null,
     showHelperLine: false,
     planet: computePlanet(userStats),

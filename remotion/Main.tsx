@@ -11,7 +11,7 @@ import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
-import { ALL_PLANETS_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
+import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 
 type Schema = z.infer<typeof compositionSchema>;
 
@@ -22,18 +22,17 @@ const LANDING_SCENE = 7 * VIDEO_FPS;
 const STARS_AND_PRODUCTIVITY = 400;
 
 export const calculateDuration = ({
-  language2,
-  language3,
+  topLanguages,
 }: z.infer<typeof compositionSchema>) => {
-  const topLanguagesScene = getDurationOfAllPlanets({
-    language2,
-    fps: VIDEO_FPS,
-    language3,
-  });
+  const topLanguagesScene = topLanguages
+    ? getDurationOfAllPlanets({
+        topLanguages,
+        fps: VIDEO_FPS,
+      }) - TOP_LANGUAGES_EXIT_DURATION
+    : 0;
 
   return (
-    topLanguagesScene -
-    ALL_PLANETS_EXIT_DURATION +
+    topLanguagesScene +
     ISSUES_SCENE -
     ISSUES_EXIT_DURATION +
     PULL_REQUESTS_SCENE +
@@ -54,9 +53,7 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
 
 export const Main: React.FC<Schema> = ({
   corner,
-  language1,
-  language2,
-  language3,
+  topLanguages,
   showHelperLine,
   login,
   planet,
@@ -68,12 +65,6 @@ export const Main: React.FC<Schema> = ({
   topHour,
   graphData,
 }) => {
-  const introScene = getDurationOfAllPlanets({
-    language2,
-    fps: VIDEO_FPS,
-    language3,
-  });
-
   return (
     <AbsoluteFill>
       <Audio src={staticFile("smartsound-wired.mp3")} />
@@ -81,19 +72,24 @@ export const Main: React.FC<Schema> = ({
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={introScene}>
-          <AllPlanets
-            corner={corner}
-            language1={language1}
-            language2={language2}
-            language3={language3}
-            showHelperLine={showHelperLine}
-            login={login}
-          />
-        </Series.Sequence>
+        {topLanguages ? (
+          <Series.Sequence
+            durationInFrames={getDurationOfAllPlanets({
+              topLanguages,
+              fps: VIDEO_FPS,
+            })}
+          >
+            <AllPlanets
+              corner={corner}
+              topLanguages={topLanguages}
+              showHelperLine={showHelperLine}
+              login={login}
+            />
+          </Series.Sequence>
+        ) : null}
         <Series.Sequence
           durationInFrames={ISSUES_SCENE}
-          offset={-ALL_PLANETS_EXIT_DURATION}
+          offset={-TOP_LANGUAGES_EXIT_DURATION}
         >
           <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
         </Series.Sequence>

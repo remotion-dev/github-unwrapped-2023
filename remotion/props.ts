@@ -4,9 +4,11 @@ import { GRAPH_DATA } from "./Productivity/constants";
 
 export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   corner: "bottom-left",
-  language1: { type: "designed", name: "JavaScript" },
-  language2: { type: "designed", name: "TypeScript" },
-  language3: { type: "designed", name: "Python" },
+  topLanguages: {
+    language1: { type: "designed", name: "JavaScript" },
+    language2: { type: "designed", name: "TypeScript" },
+    language3: { type: "designed", name: "Python" },
+  },
   showHelperLine: false,
   login: "JonnyBurger",
   planet: "Ice" as const,

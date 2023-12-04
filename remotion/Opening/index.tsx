@@ -1,12 +1,21 @@
 import React from "react";
-import { AbsoluteFill, Audio, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  interpolate,
+  spring,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { Gradient } from "../Gradients/NativeGradient";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
 
 export const OPENING_SCENE_LENGTH = 120;
 
-export const OpeningScene: React.FC = () => {
+const OpeningSceneFull: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
@@ -27,20 +36,83 @@ export const OpeningScene: React.FC = () => {
           fontSize: 60,
           width: "100%",
           height: "100%",
-          background:
-            "radial-gradient(121.11% 121.11% at 47.08% 100%, #0F102E 0%, #000 100%)",
         }}
       >
         <AbsoluteFill>
+          <Gradient gradient="blueRadial" />
+        </AbsoluteFill>
+        <AbsoluteFill>
           <Background />
         </AbsoluteFill>
-        <AbsoluteFill style={{ top: 0 }}>
+        <AbsoluteFill>
           <Foreground />
         </AbsoluteFill>
         <AbsoluteFill>
           <TakeOff />
         </AbsoluteFill>
       </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
+const OpeningSceneZoomOut: React.FC = () => {
+  const { width, fps } = useVideoConfig();
+  const frame = useCurrentFrame();
+  const delay = 10;
+  const durationInFrames = 60;
+
+  const zoomOut =
+    spring({
+      fps,
+      frame,
+      config: {
+        damping: 200,
+      },
+      durationInFrames,
+      delay,
+    }) *
+      0.9 +
+    interpolate(frame, [0, delay + durationInFrames], [-0.1, 0.1], {
+      extrapolateRight: "clamp",
+    });
+
+  const scale = interpolate(zoomOut, [0, 1], [2.5, 1]);
+  const offset = interpolate(zoomOut, [0, 1], [width / 2, 0]);
+  const x = offset / scale;
+
+  return (
+    <AbsoluteFill
+      style={{
+        transform: `scale(${scale}) translateX(-${x}px) translateY(50px)`,
+      }}
+    >
+      <OpeningSceneFull />
+    </AbsoluteFill>
+  );
+};
+
+export const OpeningScene: React.FC = () => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+  const duration = 20;
+
+  const zoomOut = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: durationInFrames - duration,
+    durationInFrames: duration,
+  });
+
+  return (
+    <AbsoluteFill
+      style={{
+        transform: `scale(${interpolate(zoomOut, [0, 1], [1, 2])})`,
+      }}
+    >
+      <OpeningSceneZoomOut />
     </AbsoluteFill>
   );
 };

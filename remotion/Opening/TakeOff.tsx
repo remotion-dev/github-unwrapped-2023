@@ -10,7 +10,7 @@ import { remapSpeed } from "../TopLanguages/remap-speed";
 import Spaceship from "./Spaceship";
 import { TransparentVideo } from "./TransparentVideo";
 
-const speedFunction = (f: number) => 10 ** interpolate(f, [0, 150], [-1, 4]);
+const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 

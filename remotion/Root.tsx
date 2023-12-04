@@ -21,7 +21,7 @@ import {
 import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
-import { OpeningScene } from "./Opening";
+import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
 import { PullRequests, pullRequestsSchema } from "./Paths/PullRequests";
 import { WholePaths } from "./Paths/WholePaths";
@@ -85,7 +85,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"Opening"}
         component={OpeningScene}
-        durationInFrames={12 * 30}
+        durationInFrames={OPENING_SCENE_LENGTH}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
@@ -502,20 +502,21 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
-          calculateMetadata={({ props: { language2, language3 } }) => {
+          calculateMetadata={({ props: { topLanguages } }) => {
             return {
               durationInFrames: getDurationOfAllPlanets({
-                language2,
-                language3,
+                topLanguages,
                 fps: VIDEO_FPS,
               }),
             };
           }}
           defaultProps={{
             corner: "top-right" as const,
-            language1: { type: "designed" as const, name: "C++" as const },
-            language2: { type: "designed" as const, name: "Go" as const },
-            language3: { type: "designed" as const, name: "Ruby" as const },
+            topLanguages: {
+              language1: { type: "designed" as const, name: "C++" as const },
+              language2: { type: "designed" as const, name: "Go" as const },
+              language3: { type: "designed" as const, name: "Ruby" as const },
+            },
             showHelperLine: false,
             login: "JonnyBurger",
           }}
@@ -532,12 +533,20 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
           corner: "bottom-left" as const,
-          language1: { type: "designed" as const, name: "JavaScript" as const },
-          language2: { type: "designed" as const, name: "TypeScript" as const },
-          language3: {
-            type: "other" as const,
-            name: "Swift" as const,
-            color: "orange",
+          topLanguages: {
+            language1: {
+              type: "designed" as const,
+              name: "JavaScript" as const,
+            },
+            language2: {
+              type: "designed" as const,
+              name: "TypeScript" as const,
+            },
+            language3: {
+              type: "other" as const,
+              name: "Swift" as const,
+              color: "orange",
+            },
           },
           showHelperLine: false,
           login: "JonnyBurger",
