@@ -3,7 +3,8 @@ import { PATH_TARGET } from "./make-random-path";
 
 export const MergeStat: React.FC<{
   num: number;
-}> = ({ num }) => {
+  totalNum: number;
+}> = ({ num, totalNum }) => {
   return (
     <div
       style={{
@@ -64,7 +65,7 @@ export const MergeStat: React.FC<{
           color: "#3B276C",
         }}
       >
-        pull requests
+        pull {totalNum === 1 ? "request" : "requests"}
         <br />
         merged
       </div>

@@ -69,7 +69,10 @@ export const WholePaths: React.FC<{
           />
         );
       })}
-      <MergeStat num={merged + counter} />
+      <MergeStat
+        totalNum={extraPaths + initialPullRequests}
+        num={merged + counter}
+      />
     </AbsoluteFill>
   );
 };
