@@ -40,15 +40,16 @@ export const TopLanguagesTitleCard: React.FC<
       >
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
+      <AbsoluteFill style={{ opacity: 0.5 }}>
+        <Noise translateX={0} translateY={0} />
+      </AbsoluteFill>
+
       <Sequence from={30} style={{ transform: `translateY(-300px)` }}>
         <AbsoluteFill style={{ marginTop: 100, marginLeft: 300 }}>
           <TopLanguagesRocket rocket={rocket} />
         </AbsoluteFill>
       </Sequence>
       <TitleCardOctocat accentColor={accentColor} />
-      <AbsoluteFill style={{ opacity: 0.5 }}>
-        <Noise translateX={0} translateY={0} />
-      </AbsoluteFill>
       <AbsoluteFill
         style={{
           justifyContent: "center",
