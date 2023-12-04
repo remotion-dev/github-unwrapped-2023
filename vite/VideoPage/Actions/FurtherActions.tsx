@@ -3,6 +3,7 @@ import { UserIcon } from "../../../icons/UserIcon";
 import { signInWithGitHubLink } from "../../sign-in-with-github";
 import { FurtherAction } from "./FurtherAction";
 import styles from "./styles.module.css";
+
 export const FurtherActions: React.FC = () => {
   return (
     <div className={styles.furtherActionsWrapper}>

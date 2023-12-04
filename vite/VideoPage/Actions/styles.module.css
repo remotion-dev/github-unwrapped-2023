@@ -1,7 +1,7 @@
 .wrapper {
   border: 1.5px solid rgba(55, 57, 69, 1);
   color: #e7e7e7;
-  height: 48px;
+  height: 56px;
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -39,6 +39,7 @@
   color: rgba(231, 231, 231, 1);
   font-size: 14px;
   margin-bottom: 24px;
+  font-weight: 500;
 }
 
 .furtherActionsButtonContainer {
