@@ -6,6 +6,7 @@ import {
   LanguagesEnum,
   PlanetEnum,
   accentColorValues,
+  rocketValues,
   type compositionSchema,
   type languageSchema,
 } from "../../src/config";
@@ -61,7 +62,19 @@ const computeCompositionParameters = (
   if (userStats === null) return null;
 
   const accentColor =
-    accentColorValues[random(userStats.lowercasedUsername + "accent")];
+    accentColorValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "accent") *
+          accentColorValues.length,
+      )
+    ];
+
+  const rocket =
+    rocketValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
+      )
+    ];
 
   return {
     login: userStats.username,
@@ -96,6 +109,7 @@ const computeCompositionParameters = (
         ? "left"
         : "right",
     accentColor,
+    rocket,
   };
 };
 

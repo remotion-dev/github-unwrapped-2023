@@ -96,6 +96,7 @@ export const RemotionRoot: React.FC = () => {
           login: "JonnyBurger",
           startAngle: "left",
           accentColor: "blue",
+          rocket: "blue",
         }}
       />
       <Composition
@@ -110,6 +111,7 @@ export const RemotionRoot: React.FC = () => {
           exitProgress: 0,
           startAngle: "left",
           accentColor: "blue",
+          rocket: "blue",
         }}
       />
       <Composition
@@ -615,6 +617,7 @@ export const RemotionRoot: React.FC = () => {
           ],
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
+          rocket: "blue",
         }}
       />
       <Composition

@@ -21,4 +21,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   graphData: GRAPH_DATA,
   openingSceneStartAngle: "left",
   accentColor: "blue",
+  rocket: "blue",
 };

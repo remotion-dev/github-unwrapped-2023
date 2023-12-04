@@ -478,14 +478,12 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
 
 export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({
   accentColor,
+  planetType,
 }) => {
   return (
     <Sequence>
       <Sequence durationInFrames={CUTOVER}>
-        <LandingScene
-          accentColor={accentColor}
-          planetType={PlanetEnum.Values.Ice}
-        />
+        <LandingScene accentColor={accentColor} planetType={planetType} />
       </Sequence>
       <Sequence
         style={{

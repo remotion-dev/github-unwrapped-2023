@@ -53,6 +53,7 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
 > = ({ props }) => {
   return {
     durationInFrames: calculateDuration(props),
+    props,
   };
 };
 
@@ -71,6 +72,7 @@ export const Main: React.FC<Schema> = ({
   graphData,
   openingSceneStartAngle,
   accentColor,
+  rocket,
 }) => {
   return (
     <AbsoluteFill
@@ -85,6 +87,7 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
             startAngle={openingSceneStartAngle}
             login={login}
+            rocket={rocket}
           />
         </Series.Sequence>
         {topLanguages ? (

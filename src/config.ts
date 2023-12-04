@@ -102,6 +102,11 @@ export const openingSceneStartAngle = z.enum(["left", "right"]);
 
 export const accentColorValues = ["blue", "purple"] as const;
 export const accentColorSchema = z.enum(accentColorValues);
+
+export const rocketValues = ["blue", "orange", "yellow"] as const;
+export const rocketSchema = z.enum(rocketValues);
+export type Rocket = (typeof rocketValues)[number];
+
 export type AccentColor = z.infer<typeof accentColorSchema>;
 
 export const compositionSchema = z.object({
@@ -119,6 +124,7 @@ export const compositionSchema = z.object({
   graphData: z.array(productivityPerHourSchema),
   openingSceneStartAngle,
   accentColor: accentColorSchema,
+  rocket: rocketSchema,
 });
 
 export const RenderRequest = z.object({
