@@ -1,10 +1,17 @@
 import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Series,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import type { z } from "zod";
-import { type compositionSchema } from "../src/config";
+import { PlanetEnum, type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
+import { GoldenScene } from "./Golden";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
 import { LandingScene } from "./Landing";
 import {
@@ -74,13 +81,19 @@ export const Main: React.FC<Schema> = ({
   accentColor,
   rocket,
 }) => {
+  const frame = useCurrentFrame();
+
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      <Audio src={staticFile("smartsound-wired.mp3")} />
+      {frame > 1460 && planet === "Gold" ? (
+        <Audio src={staticFile("church_chior.mp3")} />
+      ) : (
+        <Audio src={staticFile("smartsound-wired.mp3")} />
+      )}
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene
@@ -142,9 +155,15 @@ export const Main: React.FC<Schema> = ({
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene accentColor={accentColor} />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={LANDING_SCENE}>
-          <LandingScene accentColor={accentColor} planetType={planet} />
-        </Series.Sequence>
+        {planet === PlanetEnum.Enum.Gold ? (
+          <Series.Sequence durationInFrames={LANDING_SCENE}>
+            <GoldenScene />
+          </Series.Sequence>
+        ) : (
+          <Series.Sequence durationInFrames={LANDING_SCENE}>
+            <LandingScene accentColor={accentColor} planetType={planet} />
+          </Series.Sequence>
+        )}
       </Series>
     </AbsoluteFill>
   );
