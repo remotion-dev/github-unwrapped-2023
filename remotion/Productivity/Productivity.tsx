@@ -55,6 +55,10 @@ const ProductivityGraph = (props: {
   productivityPerHour: Array<ProductivityPerHour>;
   style?: React.CSSProperties;
 }) => {
+  const maxProductivity = Math.max(
+    ...props.productivityPerHour.map((p) => p.productivity),
+  );
+
   return (
     <div
       style={{
@@ -79,7 +83,9 @@ const ProductivityGraph = (props: {
               gap: 12,
             }}
           >
-            <Bar productivity={productivityPerHour.productivity} />
+            <Bar
+              productivity={productivityPerHour.productivity / maxProductivity}
+            />
             <div
               style={{
                 color: "white",
