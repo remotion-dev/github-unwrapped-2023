@@ -25,7 +25,7 @@ const Home = () => {
       <HomeForeground />
       <Navbar />
       <HomeBox userNotFound={userNotFound} setUserNotFound={setUserNotFound} />
-      <Octocat userNotFound={false} />
+      <Octocat userNotFound={userNotFound} />
     </div>
   );
 };
