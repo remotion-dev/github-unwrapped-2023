@@ -1,14 +1,14 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Img,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { z } from "zod";
+import type { z } from "zod";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
+import { TitleImage, type openingTitleSchema } from "./TitleImage";
 
 const title: React.CSSProperties = {
   fontSize: 80,
@@ -18,15 +18,11 @@ const title: React.CSSProperties = {
   WebkitBackgroundClip: "text",
   backgroundColor: "text",
   WebkitTextFillColor: "transparent",
-  lineHeight: 1,
+  lineHeight: 1.1,
 };
 
 const INNER_BORDER_RADIUS = 30;
 const PADDING = 20;
-
-export const openingTitleSchema = z.object({
-  login: z.string(),
-});
 
 export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
@@ -88,15 +84,7 @@ export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
           backfaceVisibility: "hidden",
         }}
       >
-        <Img
-          src={`https://github.com/${login}.png`}
-          style={{
-            borderRadius: INNER_BORDER_RADIUS,
-            height: 160,
-            border: PANE_BORDER,
-            marginRight: PADDING,
-          }}
-        />
+        <TitleImage login={login} />
         <div>
           <div>
             This is my <strong>#GitHubUnwrapped</strong>
