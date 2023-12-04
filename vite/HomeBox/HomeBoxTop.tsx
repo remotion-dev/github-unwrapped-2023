@@ -22,7 +22,7 @@ export const HomeBoxTop: React.FC = () => {
         />
         <HomeLink
           href={"/about"}
-          label={"About"}
+          label={"About this project"}
           icon={(props) => <RocketIcon {...props} />}
         />
       </div>
