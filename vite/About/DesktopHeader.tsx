@@ -29,7 +29,7 @@ export const DesktopHeader = () => {
         </h1>
         <p className={commonStyles.aboutDescription} style={{ maxWidth: 400 }}>
           With this page we hope to answer all your questions for the GitHub
-          unwrapped 2023.
+          Unwrapped 2023.
         </p>
       </div>
       <div

@@ -11,8 +11,8 @@ export const MobileHeader: React.FC = () => {
       <div className={styles.mobileHeaderContent}>
         <h1 className={styles.aboutTitle}>About</h1>
         <p className={styles.aboutDescription} style={{ maxWidth: 400 }}>
-          With this page we hope to answer all your questions for the GitHub
-          unwrapped 2023.
+          With this page we hope to answer all your questions about GitHub
+          Unwrapped 2023.
         </p>
       </div>
     </div>

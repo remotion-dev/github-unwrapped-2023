@@ -442,7 +442,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         )}
 
         {frame > LANDING_FRAME - 45 &&
-          (attributes.sparkles as any).map(
+          attributes.sparkles.map(
             (i: { x: number; y: number }, index: number) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
