@@ -12,12 +12,16 @@ export const topLanguagesTitleCardSchema = z.object({
   pluralizeLanguages: z.boolean(),
 });
 
+export const TITLE_CARD_DURATION = 100;
+
 export const TopLanguagesTitleCard: React.FC<
   z.infer<typeof topLanguagesTitleCardSchema>
 > = ({ login, pluralizeLanguages }) => {
   const frame = useCurrentFrame();
-  const zoomOutProgress = interpolate(frame, [0, 80], [0, 1]);
+  const zoomOutProgress = interpolate(frame, [0, TITLE_CARD_DURATION], [0, 1]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
+
+  const opacity = Math.min(frame / 30);
 
   return (
     <AbsoluteFill
@@ -25,7 +29,12 @@ export const TopLanguagesTitleCard: React.FC<
         transform: `scale(${scale})`,
       }}
     >
-      <AbsoluteFill style={{ opacity: 0.5 }}>
+      <AbsoluteFill
+        style={{
+          transform: `rotate(180deg)`,
+          opacity,
+        }}
+      >
         <Gradient gradient="blueRadial" />
       </AbsoluteFill>
       <Sequence from={30} style={{ transform: `translateY(-300px)` }}>

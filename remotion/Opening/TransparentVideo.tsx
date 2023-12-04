@@ -9,8 +9,8 @@ export const TransparentVideo: React.FC<{
   other: string;
 }> = ({ safari, other }) => {
   if (IS_SAFARI) {
-    return <OffthreadVideo src={safari} />;
+    return <OffthreadVideo transparent src={safari} />;
   }
 
-  return <OffthreadVideo src={other} />;
+  return <OffthreadVideo transparent src={other} />;
 };

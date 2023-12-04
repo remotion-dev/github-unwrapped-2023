@@ -64,10 +64,14 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
           height: "100%",
         }}
       >
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            opacity: interpolate(exitProgress, [0, 1], [1, 0]),
+          }}
+        >
           <Gradient gradient="blueRadial" />
         </AbsoluteFill>
-        <Noise translateX={0} translateY={0} />
+        <Noise translateX={100} translateY={30} />
         <AbsoluteFill>
           <OpeningTitle exitProgress={exitProgress} login={login} />
         </AbsoluteFill>

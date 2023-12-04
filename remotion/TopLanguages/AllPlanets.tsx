@@ -6,7 +6,7 @@ import { cornerType, topLanguagesSchema } from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
-import { TopLanguagesTitleCard } from "./TitleCard";
+import { TITLE_CARD_DURATION, TopLanguagesTitleCard } from "./TitleCard";
 import {
   deriveEnterDirectionFromCorner,
   mapEnterDirectionIntoSlideDirection,
@@ -28,7 +28,6 @@ const allPlanetsTransitionTiming = springTiming({
   durationInFrames: 15,
 });
 
-const TITLE_CARD_DURATION = 100;
 export const FIRST_PLACE_DURATION = 82;
 const SECOND_PLACE_DURATION = 112;
 const THIRD_PLACE_DURATION = 110;
@@ -75,11 +74,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   return (
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
-        <Sequence
-          style={{
-            overflow: "hidden",
-          }}
-        >
+        <Sequence style={{}}>
           <TopLanguagesTitleCard
             pluralizeLanguages={language2 !== null}
             login={login}
@@ -87,7 +82,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
-        presentation={slide({ direction: "from-top" })}
+        presentation={slide({ direction: "from-bottom" })}
         timing={allPlanetsTransitionTiming}
       />
       {language3 ? (

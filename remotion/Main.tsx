@@ -71,7 +71,11 @@ export const Main: React.FC<Schema> = ({
   graphData,
 }) => {
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        backgroundColor: "black",
+      }}
+    >
       <Audio src={staticFile("smartsound-wired.mp3")} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
