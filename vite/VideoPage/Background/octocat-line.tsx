@@ -175,6 +175,7 @@ export const OctocatLine: React.FC<Props> = (props) => {
           stroke="url(#octocatgradient)"
           strokeWidth="4"
           strokeMiterlimit="10"
+          strokeLinecap="round"
         />
       ) : (
         <path
