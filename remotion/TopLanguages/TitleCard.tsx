@@ -44,7 +44,7 @@ export const TopLanguagesTitleCard: React.FC<
           <Rocket />
         </AbsoluteFill>
       </Sequence>
-      <TitleCardOctocat />
+      <TitleCardOctocat accentColor={accentColor} />
       <AbsoluteFill style={{ opacity: 0.5 }}>
         <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
