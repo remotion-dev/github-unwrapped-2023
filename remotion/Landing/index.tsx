@@ -225,8 +225,6 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = (
 
   const attributes = mapPlanetToAttributes[planetType];
 
-  console.log(rocket);
-
   return (
     <AbsoluteFill
       style={{
