@@ -49,10 +49,10 @@ export const languageSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
+const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
 export const topWeekdaySchema = z.enum(days);
 
-export const hours = [
+const hours = [
   "0",
   "1",
   "2",
@@ -125,6 +125,7 @@ export const compositionSchema = z.object({
   openingSceneStartAngle,
   accentColor: accentColorSchema,
   rocket: rocketSchema,
+  contributionData: z.array(z.array(z.number())),
 });
 
 export const RenderRequest = z.object({

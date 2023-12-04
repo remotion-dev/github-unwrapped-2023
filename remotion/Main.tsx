@@ -77,6 +77,7 @@ export const Main: React.FC<Schema> = ({
   openingSceneStartAngle,
   accentColor,
   rocket,
+  contributionData,
 }) => {
   const frame = useCurrentFrame();
 
@@ -150,7 +151,10 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
-          <ContributionsScene accentColor={accentColor} />
+          <ContributionsScene
+            contributionData={contributionData}
+            accentColor={accentColor}
+          />
         </Series.Sequence>
         {planet === PlanetEnum.Enum.Gold ? (
           <Series.Sequence durationInFrames={LANDING_SCENE}>

@@ -140,6 +140,7 @@ const computeCompositionParameters = (
         : "right",
     accentColor,
     rocket,
+    contributionData: userStats.contributionData,
   };
 };
 

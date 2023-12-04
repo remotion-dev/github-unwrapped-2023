@@ -26,8 +26,8 @@ export const openingTitleSchema = z.object({
   rocket: rocketSchema,
 });
 
-export const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
-export const TITLE_IMAGE_BORDER_PADDING = 20;
+const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
+const TITLE_IMAGE_BORDER_PADDING = 20;
 
 export const accentColorToGradient = (
   accentColor: AccentColor,

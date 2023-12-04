@@ -236,7 +236,7 @@ const remapWeekdays = (weekday: number): Weekday => {
   throw new Error("unknown weekday" + weekday);
 };
 
-export type Weekdays = {
+type Weekdays = {
   least: Weekday;
   leastCount: number;
   mostCount: number;

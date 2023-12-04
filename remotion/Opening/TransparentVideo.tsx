@@ -1,7 +1,7 @@
 import React from "react";
 import { OffthreadVideo } from "remotion";
 
-export const isIosSafari = () => {
+const isIosSafari = () => {
   if (typeof window === "undefined") {
     return false;
   }

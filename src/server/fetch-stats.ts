@@ -162,7 +162,10 @@ export const getStatsFromGitHub = async ({
     },
   );
 
-  console.log(graphData);
+  const allDays = baseData.contributionsCollection.contributionCalendar.weeks
+    .map((w) => w.contributionDays)
+    .flat(1)
+    .filter((d) => d.date.startsWith("2023"));
 
   return {
     totalPullRequests: pullRequestData.length,
@@ -180,6 +183,7 @@ export const getStatsFromGitHub = async ({
     topWeekday: productivity.most,
     topHour: String(mostHour[0]) as Hour,
     graphData,
+    contributionData: allDays.map((d, i) => [i, d.contributionCount]),
   };
 };
 

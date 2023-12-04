@@ -1,7 +1,7 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import type { Rocket } from "../../src/config";
 
-export const getRocketSource = (rocket: Rocket) => {
+const getRocketSource = (rocket: Rocket) => {
   if (rocket === "blue") {
     return staticFile("rocket-side-blue.png");
   }

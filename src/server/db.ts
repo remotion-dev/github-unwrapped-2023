@@ -18,6 +18,7 @@ export type ProfileStats = {
   topWeekday: Weekday;
   topHour: Hour;
   graphData: ProductivityPerHour[];
+  contributionData: number[][];
 };
 
 type EmailCollection = {

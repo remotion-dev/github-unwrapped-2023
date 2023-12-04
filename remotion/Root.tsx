@@ -1,4 +1,4 @@
-import { Composition, Folder, Still } from "remotion";
+import { Composition, Folder, Still, random } from "remotion";
 import { LanguagesEnum, compositionSchema } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
@@ -71,7 +71,6 @@ import {
   TopLanguagesTitleCard,
   topLanguagesTitleCardSchema,
 } from "./TopLanguages/TitleCard";
-import { defaultMyCompProps } from "./props";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -152,7 +151,15 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          accentColor: "blue",
+          contributionData: new Array(364)
+            .fill(0)
+            .map((_, i) => [
+              i,
+              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
+            ]),
+        }}
       />
 
       <Folder name="Issues">
@@ -634,6 +641,12 @@ export const RemotionRoot: React.FC = () => {
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
           rocket: "blue",
+          contributionData: new Array(364)
+            .fill(0)
+            .map((_, i) => [
+              i,
+              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
+            ]),
         }}
       />
       <Composition
