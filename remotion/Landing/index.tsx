@@ -59,6 +59,8 @@ type PlanetAttributes = {
     y: number;
   }[];
   bgBrightness: number;
+  planetAdjustment: number;
+  planetSize: number;
 };
 
 const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
@@ -100,6 +102,8 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     planet: staticFile("planet-ice.png"),
     style: {},
     landingAdjustment: -90,
+    planetAdjustment: 0,
+    planetSize: 1,
   },
   [PlanetEnum.Values.Silver]: {
     colors: {
@@ -120,6 +124,8 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     },
     landingAdjustment: 0,
     sparkles: [],
+    planetAdjustment: 0,
+    planetSize: 1,
   },
   [PlanetEnum.Values.Gold]: {
     colors: {
@@ -130,24 +136,30 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
       color5: "#f5e87d",
     },
     bgBrightness: 500,
-    bgGradient: "linear-gradient(#02e3f2, #59b2ff)",
+    bgGradient: "linear-gradient(#382f15, #000000)",
     name: "Golden Planet",
     description:
       "You have reached the pinnacle of space discovery. A warm fuzzy feeling and mounds of gold assure you that you have made the right choice.",
-    planet: staticFile("planet-gold.png"),
+    planet: staticFile("gold-planet.svg"),
     style: {},
     landingAdjustment: 0,
     sparkles: [],
+    planetAdjustment: 900,
+    planetSize: 0.4,
   },
 };
 
 const CUTOVER = LANDING_FRAME - 60;
 
-export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
-  planetType,
-}) => {
+export const LandingScene: React.FC<z.infer<typeof planetSchema>> = (
+  {
+    // planetType,
+  },
+) => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
+
+  const planetType = PlanetEnum.Values.Silver;
 
   const cloud = spring({
     fps: VIDEO_FPS,
@@ -266,11 +278,20 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
 
         <div
           style={{
-            width: PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH,
+            width:
+              PLANET_SIZE * attributes.planetSize -
+              PLANET_GROWTH +
+              planet * PLANET_GROWTH,
             position: "absolute",
             left:
-              -(PLANET_SIZE - PLANET_GROWTH + planet * PLANET_GROWTH) / 2 + 530,
-            bottom: -850 + planet * 120,
+              -(
+                PLANET_SIZE * attributes.planetSize -
+                PLANET_GROWTH +
+                planet * PLANET_GROWTH
+              ) /
+                2 +
+              530,
+            bottom: -850 + planet * 120 + attributes.planetAdjustment,
           }}
         >
           <Img
