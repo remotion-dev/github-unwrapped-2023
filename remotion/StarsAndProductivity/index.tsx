@@ -23,6 +23,7 @@ export const StarsAndProductivity: React.FC<
   topWeekday,
   topHour,
   graphData,
+  accentColor,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -65,6 +66,7 @@ export const StarsAndProductivity: React.FC<
         topWeekday={topWeekday}
         topHour={topHour}
         graphData={graphData}
+        accentColor={accentColor}
       />
       <Sequence from={ZOOM_DELAY}>
         <Tablet

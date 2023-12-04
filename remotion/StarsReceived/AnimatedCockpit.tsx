@@ -6,6 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { AccentColor } from "../../src/config";
 import CockpitSVG from "./CockpitSVG";
 import { CustomScreen } from "./CustomScreen";
 
@@ -13,7 +14,8 @@ export const AnimatedCockpit: React.FC<{
   xShake: number;
   yShake: number;
   rotationShake: number;
-}> = ({ xShake, yShake, rotationShake }) => {
+  accentColor: AccentColor;
+}> = ({ xShake, yShake, rotationShake, accentColor }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -39,7 +41,7 @@ export const AnimatedCockpit: React.FC<{
       }}
     >
       <CockpitSVG />
-      <CustomScreen />
+      <CustomScreen accentColor={accentColor} />
     </AbsoluteFill>
   );
 };

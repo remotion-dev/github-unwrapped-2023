@@ -1,5 +1,5 @@
 import React from "react";
-import { Img } from "remotion";
+import { Img, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
 
@@ -14,38 +14,52 @@ const topLanguagesTitle = z.object({
 export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
   login,
   pluralize,
-}) => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "row",
-      backgroundColor: PANE_BACKGROUND,
-      border: PANE_BORDER,
-      padding: PADDING,
-      paddingRight: PADDING * 2,
-      alignItems: "center",
-      borderRadius: INNER_BORDER_RADIUS + PADDING,
-    }}
-  >
-    <Img
-      src={`https://github.com/${login}.png`}
-      style={{
-        borderRadius: INNER_BORDER_RADIUS,
-        height: 120,
-        border: PANE_BORDER,
-        marginRight: PADDING,
-      }}
-    />
+}) => {
+  const { fps } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  const spr = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+  });
+
+  return (
     <div
       style={{
-        color: "white",
-        fontSize: 55,
-        fontFamily: "Mona Sans",
-        fontWeight: 800,
-        lineHeight: 1.1,
+        display: "flex",
+        flexDirection: "row",
+        backgroundColor: PANE_BACKGROUND,
+        border: PANE_BORDER,
+        padding: PADDING,
+        paddingRight: PADDING * 2,
+        alignItems: "center",
+        borderRadius: INNER_BORDER_RADIUS + PADDING,
+        scale: String(spr),
       }}
     >
-      My top <br /> {pluralize ? "languages" : "language"}
+      <Img
+        src={`https://github.com/${login}.png`}
+        style={{
+          borderRadius: INNER_BORDER_RADIUS,
+          height: 120,
+          border: PANE_BORDER,
+          marginRight: PADDING,
+        }}
+      />
+      <div
+        style={{
+          color: "white",
+          fontSize: 55,
+          fontFamily: "Mona Sans",
+          fontWeight: 800,
+          lineHeight: 1.1,
+        }}
+      >
+        My top <br /> {pluralize ? "languages" : "language"}
+      </div>
     </div>
-  </div>
-);
+  );
+};

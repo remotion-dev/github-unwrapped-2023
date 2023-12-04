@@ -14,7 +14,11 @@ import { ContributionsScene } from "./Contributions";
 import { GoldenScene } from "./Golden";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
 import { LandingScene } from "./Landing";
-import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
+import {
+  OPENING_SCENE_LENGTH,
+  OPENING_SCENE_OUT_OVERLAP,
+  OpeningScene,
+} from "./Opening";
 import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
@@ -46,7 +50,8 @@ export const calculateDuration = ({
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
     STARS_AND_PRODUCTIVITY +
-    OPENING_SCENE_LENGTH
+    OPENING_SCENE_LENGTH -
+    OPENING_SCENE_OUT_OVERLAP
   );
 };
 
@@ -71,11 +76,17 @@ export const Main: React.FC<Schema> = ({
   totalPullRequests,
   topHour,
   graphData,
+  openingSceneStartAngle,
+  accentColor,
 }) => {
   const frame = useCurrentFrame();
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        backgroundColor: "black",
+      }}
+    >
       {frame > 1460 && planet === "Gold" ? (
         <Audio src={staticFile("church_chior.mp3")} />
       ) : (
@@ -83,7 +94,11 @@ export const Main: React.FC<Schema> = ({
       )}
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
-          <OpeningScene login="lukezirngibl" />
+          <OpeningScene
+            accentColor={accentColor}
+            startAngle={openingSceneStartAngle}
+            login={login}
+          />
         </Series.Sequence>
         {topLanguages ? (
           <Series.Sequence
@@ -91,18 +106,24 @@ export const Main: React.FC<Schema> = ({
               topLanguages,
               fps: VIDEO_FPS,
             })}
+            offset={-OPENING_SCENE_OUT_OVERLAP}
           >
             <AllPlanets
               corner={corner}
               topLanguages={topLanguages}
               showHelperLine={showHelperLine}
               login={login}
+              accentColor={accentColor}
             />
           </Series.Sequence>
         ) : null}
         <Series.Sequence
           durationInFrames={ISSUES_SCENE}
-          offset={-TOP_LANGUAGES_EXIT_DURATION}
+          offset={
+            topLanguages
+              ? -TOP_LANGUAGES_EXIT_DURATION
+              : -OPENING_SCENE_OUT_OVERLAP
+          }
         >
           <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
         </Series.Sequence>
@@ -119,13 +140,17 @@ export const Main: React.FC<Schema> = ({
             topWeekday={topWeekday}
             topHour={topHour}
             graphData={graphData}
+            accentColor={accentColor}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
-          <PullRequests totalPullRequests={totalPullRequests} />
+          <PullRequests
+            accentColor={accentColor}
+            totalPullRequests={totalPullRequests}
+          />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
-          <ContributionsScene />
+          <ContributionsScene accentColor={accentColor} />
         </Series.Sequence>
         {planet === PlanetEnum.Enum.Gold ? (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
@@ -133,7 +158,7 @@ export const Main: React.FC<Schema> = ({
           </Series.Sequence>
         ) : (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <LandingScene planetType={planet} />
+            <LandingScene accentColor={accentColor} planetType={planet} />
           </Series.Sequence>
         )}
       </Series>

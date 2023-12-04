@@ -1,9 +1,11 @@
 import { useMemo } from "react";
+import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
   LanguagesEnum,
   PlanetEnum,
+  accentColorValues,
   type compositionSchema,
   type languageSchema,
 } from "../../src/config";
@@ -58,7 +60,9 @@ const computeCompositionParameters = (
 ): CompositionParameters | null => {
   if (userStats === null) return null;
 
-  console.log(userStats);
+  const accentColor =
+    accentColorValues[random(userStats.lowercasedUsername + "accent")];
+
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -87,6 +91,11 @@ const computeCompositionParameters = (
     topWeekday: userStats.topWeekday,
     topHour: userStats.topHour,
     graphData: userStats.graphData,
+    openingSceneStartAngle:
+      random(userStats.lowercasedUsername + "startAngle") > 0.5
+        ? "left"
+        : "right",
+    accentColor,
   };
 };
 

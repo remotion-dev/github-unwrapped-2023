@@ -10,9 +10,10 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { Planet } from "../../src/config";
-import { PlanetEnum } from "../../src/config";
+import { PlanetEnum, accentColorSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
 import { Gradient } from "../Gradients/NativeGradient";
+import { accentColorToGradient } from "../Opening/TitleImage";
 import { Background } from "./Background";
 import Cloud1 from "./Cloud-1";
 import Cloud2 from "./Cloud-2";
@@ -23,6 +24,7 @@ import Sparkle from "./Sparkle2";
 
 export const planetSchema = z.object({
   planetType: PlanetEnum,
+  accentColor: accentColorSchema,
 });
 
 const PLANET_SIZE = 1400;
@@ -151,15 +153,12 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
 
 const CUTOVER = LANDING_FRAME - 60;
 
-export const LandingScene: React.FC<z.infer<typeof planetSchema>> = (
-  {
-    // planetType,
-  },
-) => {
+export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
+  planetType,
+  accentColor,
+}) => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
-
-  const planetType = PlanetEnum.Values.Silver;
 
   const cloud = spring({
     fps: VIDEO_FPS,
@@ -242,7 +241,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = (
         }}
       >
         <AbsoluteFill>
-          <Gradient gradient="blueRadial" />
+          <Gradient gradient={accentColorToGradient(accentColor)} />
         </AbsoluteFill>
         <AbsoluteFill>
           <Background />
@@ -477,11 +476,16 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = (
   );
 };
 
-export const LandingCut: React.FC<z.infer<typeof planetSchema>> = () => {
+export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({
+  accentColor,
+}) => {
   return (
     <Sequence>
       <Sequence durationInFrames={CUTOVER}>
-        <LandingScene planetType={PlanetEnum.Values.Ice} />
+        <LandingScene
+          accentColor={accentColor}
+          planetType={PlanetEnum.Values.Ice}
+        />
       </Sequence>
       <Sequence
         style={{
@@ -491,7 +495,10 @@ export const LandingCut: React.FC<z.infer<typeof planetSchema>> = () => {
         from={CUTOVER - 1}
       >
         <Sequence from={-CUTOVER - 1}>
-          <LandingScene planetType={PlanetEnum.Values.Ice} />
+          <LandingScene
+            accentColor={accentColor}
+            planetType={PlanetEnum.Values.Ice}
+          />
         </Sequence>
       </Sequence>
     </Sequence>

@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Sequence,
   interpolate,
   spring,
   staticFile,
@@ -10,17 +11,40 @@ import {
 } from "remotion";
 import type { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
-import type { openingTitleSchema } from "./Title";
 import { OpeningTitle } from "./Title";
+import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
 
-export const OPENING_SCENE_LENGTH = 120;
+export const OPENING_SCENE_LENGTH = 130;
+export const OPENING_SCENE_OUT_OVERLAP = 10;
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
+  startAngle,
+  accentColor,
 }) => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  const exitProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: durationInFrames - 20,
+    durationInFrames: 60,
+  });
+
+  const distance = interpolate(exitProgress, [0, 1], [1, 0.000005], {});
+  const scaleDivided = 1 / distance;
+  const translateX = (scaleDivided - 1) * 200;
+
+  const bottomTranslateY = interpolate(exitProgress, [0, 0.7], [0, 500]);
+
   return (
     <AbsoluteFill
       style={{
@@ -28,12 +52,14 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         alignItems: "center",
       }}
     >
-      <Audio
-        startFrom={0}
-        src={staticFile(
-          "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
-        )}
-      />
+      <Sequence from={-20}>
+        <Audio
+          startFrom={0}
+          src={staticFile(
+            "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
+          )}
+        />
+      </Sequence>
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -43,16 +69,35 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
           height: "100%",
         }}
       >
-        <AbsoluteFill>
-          <Gradient gradient="blueRadial" />
+        <AbsoluteFill
+          style={{
+            opacity: interpolate(exitProgress, [0, 1], [1, 0]),
+          }}
+        >
+          <Gradient gradient={accentColorToGradient(accentColor)} />
         </AbsoluteFill>
+        <Noise translateX={100} translateY={30} />
         <AbsoluteFill>
-          <OpeningTitle login={login} />
+          <OpeningTitle
+            startAngle={startAngle}
+            exitProgress={exitProgress}
+            login={login}
+            accentColor={accentColor}
+          />
         </AbsoluteFill>
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            transform: `translateY(${bottomTranslateY}px)`,
+          }}
+        >
           <Background />
         </AbsoluteFill>
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            transformOrigin: "bottom",
+            transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
+          }}
+        >
           <Foreground />
         </AbsoluteFill>
         <AbsoluteFill>
@@ -63,8 +108,10 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   );
 };
 
-const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
+export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
+  startAngle,
+  accentColor,
 }) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -87,44 +134,24 @@ const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
     });
 
   const scale = interpolate(zoomOut, [0, 1], [2.5, 1]);
-  const offset = interpolate(zoomOut, [0, 1], [width / 2, 0]);
+  const offset = interpolate(
+    zoomOut,
+    [0, 1],
+    [startAngle === "left" ? width / 2 - 300 : -width / 2, 0],
+  );
   const x = offset / scale;
 
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${scale}) translateX(-${x}px) translateY(50px)`,
+        transform: `scale(${scale}) translateX(${x}px) translateY(50px)`,
       }}
     >
-      <OpeningSceneFull login={login} />
-    </AbsoluteFill>
-  );
-};
-
-export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
-  login,
-}) => {
-  const { fps, durationInFrames } = useVideoConfig();
-  const frame = useCurrentFrame();
-  const duration = 20;
-
-  const zoomOut = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    delay: durationInFrames - duration,
-    durationInFrames: duration,
-  });
-
-  return (
-    <AbsoluteFill
-      style={{
-        transform: `scale(${interpolate(zoomOut, [0, 1], [1, 2])})`,
-      }}
-    >
-      <OpeningSceneZoomOut login={login} />
+      <OpeningSceneFull
+        accentColor={accentColor}
+        startAngle={startAngle}
+        login={login}
+      />
     </AbsoluteFill>
   );
 };

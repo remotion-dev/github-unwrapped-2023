@@ -2,11 +2,15 @@ import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
 import { Sequence } from "remotion";
 import { z } from "zod";
-import { cornerType, topLanguagesSchema } from "../../src/config";
+import {
+  accentColorSchema,
+  cornerType,
+  topLanguagesSchema,
+} from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
-import { TopLanguagesTitleCard } from "./TitleCard";
+import { TITLE_CARD_DURATION, TopLanguagesTitleCard } from "./TitleCard";
 import {
   deriveEnterDirectionFromCorner,
   mapEnterDirectionIntoSlideDirection,
@@ -19,6 +23,7 @@ export const allPlanetsSchema = z.object({
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
+  accentColor: accentColorSchema,
 });
 
 const allPlanetsTransitionTiming = springTiming({
@@ -28,7 +33,6 @@ const allPlanetsTransitionTiming = springTiming({
   durationInFrames: 15,
 });
 
-const TITLE_CARD_DURATION = 100;
 export const FIRST_PLACE_DURATION = 82;
 const SECOND_PLACE_DURATION = 112;
 const THIRD_PLACE_DURATION = 110;
@@ -67,6 +71,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   showHelperLine,
   login,
   topLanguages,
+  accentColor,
 }) => {
   const { language1, language2, language3 } = topLanguages;
   const enterDirection = deriveEnterDirectionFromCorner(corner);
@@ -75,19 +80,16 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   return (
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
-        <Sequence
-          style={{
-            overflow: "hidden",
-          }}
-        >
+        <Sequence>
           <TopLanguagesTitleCard
             pluralizeLanguages={language2 !== null}
             login={login}
+            accentColor={accentColor}
           />
         </Sequence>
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
-        presentation={slide({ direction: "from-top" })}
+        presentation={slide({ direction: "from-bottom" })}
         timing={allPlanetsTransitionTiming}
       />
       {language3 ? (

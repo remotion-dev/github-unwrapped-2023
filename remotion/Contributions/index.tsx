@@ -8,10 +8,12 @@ import {
 } from "remotion";
 
 import React from "react";
+import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
 import { Noise } from "../Noise";
+import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
 import { Sparkle } from "./Sparkle";
 import { computePositions } from "./compute-positions";
@@ -22,7 +24,9 @@ const data = new Array(364)
   .fill(0)
   .map((_, i) => [i, random(i) < 0.25 ? 0 : Math.floor(random(i) * 128)]);
 
-export const ContributionsScene: React.FC = () => {
+export const ContributionsScene: React.FC<{
+  accentColor: AccentColor;
+}> = ({ accentColor }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -57,7 +61,7 @@ export const ContributionsScene: React.FC = () => {
       }}
     >
       <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
+        <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
       <AbsoluteFill>
         <Noise translateX={0} translateY={0} />
