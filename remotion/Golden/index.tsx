@@ -73,12 +73,12 @@ export const GoldenScene: React.FC = () => {
   const threads: Array<ThreadT> = useMemo(
     () =>
       new Array(12).fill(0).map((_, i) => {
-        const left = Math.random() * 100 + 180 * i;
+        const left = Math.random() * 60 + 100 * i;
 
         return {
           left,
           speed: Math.random() * (THREAD_SPEED / 2) + THREAD_SPEED,
-          size: Math.random() * 0.5 + 0.5,
+          size: Math.random() * 0.5 + 0.7,
           orbs: new Array(12).fill(0).map((_, j) => ({
             top: Math.random() * 100 + 250 * j,
             type: Math.floor(Math.random() * 11) + 1,
