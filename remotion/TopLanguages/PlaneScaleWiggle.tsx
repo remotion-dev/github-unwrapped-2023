@@ -8,7 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import { languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
@@ -20,6 +20,7 @@ export const wiggleSchema = z.object({
   language: languageSchema,
   position: z.number(),
   enterDirection: enterDirectionSchema,
+  rocket: rocketSchema,
 });
 
 export const TOP_LANGUAGES_EXIT_DURATION = 12;
@@ -32,6 +33,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   language,
   position,
   enterDirection,
+  rocket,
 }) => {
   const { PlanetSVG, gradient, opacity, customPlanetColor } =
     computePlanetInfo(language);
@@ -89,7 +91,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
       >
         <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
-      <FlyRocketIntoPlanet enterDirection={enterDirection} />
+      <FlyRocketIntoPlanet rocket={rocket} enterDirection={enterDirection} />
       <AbsoluteFill
         style={{
           justifyContent: "center",

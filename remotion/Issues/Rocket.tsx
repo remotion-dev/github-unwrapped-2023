@@ -1,7 +1,8 @@
 import type { SVGProps } from "react";
 import { interpolate, useCurrentFrame } from "remotion";
+import type { Rocket } from "../../src/config";
 import {
-  NewRocketSVG,
+  RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "../TopLanguages/svgs/NewRocketSVG";
@@ -16,13 +17,15 @@ import { rocketRotation } from "./make-ufo-positions";
 export const ROCKET_JUMP_IN_DURATION = 20;
 export const ROCKET_JUMP_IN_DELAY = TIME_BEFORE_SHOOTING - 30;
 
-export const Rocket = ({
+export const RocketComponent = ({
   shots,
   jumpIn,
+  rocket,
   ...props
 }: SVGProps<SVGSVGElement> & {
   shots: ShotWithShootDelay[];
   jumpIn: number;
+  rocket: Rocket;
 }) => {
   const frame = useCurrentFrame();
 
@@ -51,7 +54,7 @@ export const Rocket = ({
         transformOrigin: `${TL_ROCKET_WIDTH / 2}px 0`,
       }}
     >
-      <NewRocketSVG {...props} />
+      <RocketFront rocket={rocket} {...props} />
     </div>
   );
 };

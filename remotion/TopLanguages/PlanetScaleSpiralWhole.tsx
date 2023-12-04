@@ -9,14 +9,14 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import { languageSchema, rocketSchema } from "../../src/config";
 import { moveAlongLine } from "../move-along-line";
 import { computePlanetInfo } from "./constants";
 import type { ClockDirection } from "./corner";
 import { clockDirectionSchema } from "./corner";
 import { remapSpeed } from "./remap-speed";
 import {
-  NewRocketSVG,
+  RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
@@ -32,6 +32,7 @@ const spiralWholeSchema = z.object({
   showHelperLine: z.boolean(),
   startRotationInRadians: z.number().step(0.1).min(0),
   clockDirection: clockDirectionSchema,
+  rocket: rocketSchema,
 });
 
 const progress = ({
@@ -77,7 +78,13 @@ const getPath = ({
 
 export const PlanetScaleSpiralWhole: React.FC<
   z.infer<typeof spiralWholeSchema>
-> = ({ language, showHelperLine, startRotationInRadians, clockDirection }) => {
+> = ({
+  language,
+  showHelperLine,
+  startRotationInRadians,
+  clockDirection,
+  rocket,
+}) => {
   const { PlanetSVG, customPlanetColor } = computePlanetInfo(language);
 
   const frame = useCurrentFrame();
@@ -241,7 +248,8 @@ export const PlanetScaleSpiralWhole: React.FC<
       >
         <PlanetSVG customColor={customPlanetColor} style={{ width: 400 }} />
       </AbsoluteFill>
-      <NewRocketSVG
+      <RocketFront
+        rocket={rocket}
         style={{
           transform: `translateX(${
             currentPosition.offset.x - TL_ROCKET_WIDTH / 2

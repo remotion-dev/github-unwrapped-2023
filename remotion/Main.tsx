@@ -117,6 +117,7 @@ export const Main: React.FC<Schema> = ({
               showHelperLine={showHelperLine}
               login={login}
               accentColor={accentColor}
+              rocket={rocket}
             />
           </Series.Sequence>
         ) : null}
@@ -128,7 +129,11 @@ export const Main: React.FC<Schema> = ({
               : -OPENING_SCENE_OUT_OVERLAP
           }
         >
-          <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
+          <Issues
+            rocket={rocket}
+            openIssues={issuesOpened}
+            closedIssues={issuesClosed}
+          />
         </Series.Sequence>
         <Series.Sequence
           durationInFrames={STARS_AND_PRODUCTIVITY}

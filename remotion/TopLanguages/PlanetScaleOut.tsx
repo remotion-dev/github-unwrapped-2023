@@ -10,7 +10,7 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { Corner } from "../../src/config";
-import { cornerType, languageSchema } from "../../src/config";
+import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { moveAlongLine } from "../move-along-line";
@@ -18,7 +18,7 @@ import { LanguageDescription } from "./LanguageDescription";
 import { computePlanetInfo } from "./constants";
 import { remapSpeed } from "./remap-speed";
 import {
-  NewRocketSVG,
+  RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
@@ -30,6 +30,7 @@ export const zoomOutSchema = z.object({
   corner: cornerType,
   language: languageSchema,
   position: z.number().int(),
+  rocket: rocketSchema,
 });
 
 const initialLeft = (corner: Corner) => {
@@ -124,6 +125,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   corner,
   language,
   position,
+  rocket,
 }) => {
   const { PlanetSVG, gradient, opacity, customPlanetColor } =
     computePlanetInfo(language);
@@ -168,6 +170,10 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
     extrapolateRight: "clamp",
   });
 
+  const noiseOpacity = interpolate(frame, [0, 15], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill>
       <AbsoluteFill
@@ -184,7 +190,11 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
         >
           <Gradient gradient={gradient} />
         </AbsoluteFill>
-        <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            opacity: noiseOpacity,
+          }}
+        >
           <Noise translateX={0} translateY={-1080} />
         </AbsoluteFill>
         <AbsoluteFill
@@ -197,7 +207,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
         </AbsoluteFill>
       </AbsoluteFill>
       <Sequence durationInFrames={50} from={10}>
-        <NewRocketSVG
+        <RocketFront
           style={{
             transform: `translateX(${
               move.offset.x - TL_ROCKET_WIDTH / 2
@@ -205,6 +215,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
               move.angleInDegrees
             }deg) scale(1.5)`,
           }}
+          rocket={rocket}
         />
       </Sequence>
       <Sequence from={60}>

@@ -164,7 +164,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 0, openIssues: 0 }}
+          defaultProps={{ closedIssues: 0, openIssues: 0, rocket: "orange" }}
         />
         <Composition
           id={"Issues2-0"}
@@ -174,7 +174,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 2, openIssues: 0 }}
+          defaultProps={{ closedIssues: 2, openIssues: 0, rocket: "blue" }}
         />
         <Composition
           id={"Issues20-15"}
@@ -184,7 +184,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 20, openIssues: 15 }}
+          defaultProps={{ closedIssues: 20, openIssues: 15, rocket: "orange" }}
         />
         <Composition
           id={"Issues80-20"}
@@ -194,7 +194,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 80, openIssues: 20 }}
+          defaultProps={{ closedIssues: 80, openIssues: 20, rocket: "yellow" }}
         />
         <Composition
           id={"Issues500-500"}
@@ -204,7 +204,11 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 3000, openIssues: 2000 }}
+          defaultProps={{
+            closedIssues: 3000,
+            openIssues: 2000,
+            rocket: "blue",
+          }}
         />
       </Folder>
       <Composition
@@ -215,7 +219,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
-        defaultProps={{ closedIssues: 75, openIssues: 0 }}
+        defaultProps={{ closedIssues: 75, openIssues: 0, rocket: "blue" }}
       />
 
       <Composition
@@ -440,6 +444,7 @@ export const RemotionRoot: React.FC = () => {
             login: "JonnyBurger",
             pluralizeLanguages: false,
             accentColor: "blue",
+            rocket: "blue",
           }}
         />
         <Composition
@@ -454,6 +459,7 @@ export const RemotionRoot: React.FC = () => {
             first: LanguagesEnum.enum.JavaScript,
             second: LanguagesEnum.enum.Python,
             third: LanguagesEnum.enum.Java,
+            rocket: "orange",
           }}
         />
 
@@ -469,6 +475,7 @@ export const RemotionRoot: React.FC = () => {
             corner: "top-right" as const,
             language: { type: "designed" as const, name: "JavaScript" },
             position: 1,
+            rocket: "orange",
           }}
         />
         <Composition
@@ -480,6 +487,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
+            rocket: "blue",
             position: 1,
             language: { type: "other", name: "Scala", color: "#C22D40" },
             enterDirection: "right-counter-clockwise" as const,
@@ -500,6 +508,7 @@ export const RemotionRoot: React.FC = () => {
             position: 1,
             startRotationInRadians: 0,
             clockDirection: "clockwise",
+            rocket: "blue",
           }}
         />
         <Composition
@@ -515,6 +524,7 @@ export const RemotionRoot: React.FC = () => {
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
+            rocket: "orange",
           }}
         />
         <Composition
@@ -554,6 +564,7 @@ export const RemotionRoot: React.FC = () => {
             showHelperLine: false,
             login: "JonnyBurger",
             accentColor: "blue",
+            rocket: "blue",
           }}
         />
       </Folder>

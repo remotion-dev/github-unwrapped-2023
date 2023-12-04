@@ -5,6 +5,7 @@ import { z } from "zod";
 import {
   accentColorSchema,
   cornerType,
+  rocketSchema,
   topLanguagesSchema,
 } from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
@@ -24,6 +25,7 @@ export const allPlanetsSchema = z.object({
   showHelperLine: z.boolean(),
   login: z.string(),
   accentColor: accentColorSchema,
+  rocket: rocketSchema,
 });
 
 const allPlanetsTransitionTiming = springTiming({
@@ -72,6 +74,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   login,
   topLanguages,
   accentColor,
+  rocket,
 }) => {
   const { language1, language2, language3 } = topLanguages;
   const enterDirection = deriveEnterDirectionFromCorner(corner);
@@ -82,6 +85,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
         <Sequence>
           <TopLanguagesTitleCard
+            rocket={rocket}
             pluralizeLanguages={language2 !== null}
             login={login}
             accentColor={accentColor}
@@ -98,7 +102,12 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
             key="language3"
             durationInFrames={THIRD_PLACE_DURATION}
           >
-            <PlanetScaleOut position={3} corner={corner} language={language3} />
+            <PlanetScaleOut
+              rocket={rocket}
+              position={3}
+              corner={corner}
+              language={language3}
+            />
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
             key="scene3"
@@ -123,6 +132,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
               language={language2}
               corner={corner}
               position={2}
+              rocket={rocket}
             />
           </TransitionSeries.Sequence>
           <TransitionSeries.Transition
@@ -144,6 +154,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           enterDirection={enterDirection}
           position={1}
           language={language1}
+          rocket={rocket}
         />
       </TransitionSeries.Sequence>
     </TransitionSeries>

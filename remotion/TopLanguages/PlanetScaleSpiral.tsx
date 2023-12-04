@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
-import { cornerType, languageSchema } from "../../src/config";
+import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
@@ -17,6 +17,7 @@ export const spiralSchema = z.object({
   showHelperLine: z.boolean(),
   corner: cornerType,
   position: z.number().int(),
+  rocket: rocketSchema,
 });
 
 export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
@@ -24,6 +25,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
   showHelperLine,
   corner,
   position,
+  rocket,
 }) => {
   const frame = useCurrentFrame();
 
@@ -54,6 +56,7 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
       </AbsoluteFill>
       <AbsoluteFill style={style}>
         <PlanetScaleSpiralWhole
+          rocket={rocket}
           startRotationInRadians={startRotation}
           showHelperLine={showHelperLine}
           language={language}
