@@ -8,7 +8,7 @@ import {
 } from "remotion";
 import type { Rocket } from "../../src/config";
 import { remapSpeed } from "../TopLanguages/remap-speed";
-import Spaceship from "./Spaceship";
+import Spaceship from "./RocketFront";
 import { TransparentVideo } from "./TransparentVideo";
 
 const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);

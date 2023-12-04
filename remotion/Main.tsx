@@ -158,7 +158,7 @@ export const Main: React.FC<Schema> = ({
         </Series.Sequence>
         {planet === PlanetEnum.Enum.Gold ? (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <GoldenScene />
+            <GoldenScene rocket={rocket} />
           </Series.Sequence>
         ) : (
           <Series.Sequence durationInFrames={LANDING_SCENE}>

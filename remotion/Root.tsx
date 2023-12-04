@@ -82,6 +82,9 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          rocket: "blue",
+        }}
       />
       <Composition
         id={"Opening"}

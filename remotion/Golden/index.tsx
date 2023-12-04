@@ -2,12 +2,12 @@ import React, { useMemo } from "react";
 import {
   AbsoluteFill,
   Img,
+  random,
   spring,
   staticFile,
   useCurrentFrame,
 } from "remotion";
 import { VIDEO_FPS } from "../../types/constants";
-import Spaceship from "./Spaceship";
 import Orb1 from "./orbs/orb1";
 import Orb10 from "./orbs/orb10";
 import Orb11 from "./orbs/orb11";
@@ -20,6 +20,8 @@ import Orb7 from "./orbs/orb7";
 import Orb8 from "./orbs/orb8";
 import Orb9 from "./orbs/orb9";
 
+import type { Rocket } from "../../src/config";
+import { RocketSide } from "../Spaceship";
 import Stars from "./SparkingStars";
 
 const THREAD_SPEED = 300;
@@ -59,6 +61,7 @@ const Thread = (props: { thread: ThreadT }) => {
     >
       {props.thread.orbs.map((orb, j) => (
         <AbsoluteFill
+          // eslint-disable-next-line react/no-array-index-key
           key={j}
           style={{ top: orb.top, transform: `scale(${props.thread.size})` }}
         >
@@ -69,21 +72,24 @@ const Thread = (props: { thread: ThreadT }) => {
   );
 };
 
-export const GoldenScene: React.FC = () => {
+export const GoldenScene: React.FC<{
+  rocket: Rocket;
+}> = ({ rocket }) => {
   const frame = useCurrentFrame();
 
   const threads: Array<ThreadT> = useMemo(
     () =>
       new Array(10).fill(0).map((_, i) => {
-        const left = Math.random() * 60 + 120 * i;
+        const left = random(i + "left") * 60 + 120 * i;
 
         return {
           left,
-          speed: Math.random() * (THREAD_SPEED / 2) + THREAD_SPEED,
-          size: Math.random() * 1 + 0.3,
+          speed: random(i + "speed") * (THREAD_SPEED / 2) + THREAD_SPEED,
+          size: Number(random(i + "size")) + 0.3,
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           orbs: new Array(12).fill(0).map((_, j) => ({
-            top: Math.random() * 100 + 250 * j,
-            type: Math.floor(Math.random() * 11) + 1,
+            top: random(i + "top") * 100 + 250 * j,
+            type: Math.floor(random(i + "type") * 11) + 1,
           })),
         };
       }),
@@ -108,7 +114,7 @@ export const GoldenScene: React.FC = () => {
 
   const channel = spring({
     fps: VIDEO_FPS,
-    frame: frame,
+    frame,
     delay: 30,
     config: {
       damping: 200,
@@ -140,7 +146,7 @@ export const GoldenScene: React.FC = () => {
           height: "100%",
         }}
       >
-        <AbsoluteFill style={{ background: "black" }}></AbsoluteFill>
+        <AbsoluteFill style={{ background: "black" }} />
 
         <AbsoluteFill style={{ background: "black" }}>
           <Stars />
@@ -152,11 +158,12 @@ export const GoldenScene: React.FC = () => {
             left: gradient * 800 - 800,
           }}
         >
-          <img src={staticFile("gold-gradient-bg.png")} />
+          <Img src={staticFile("gold-gradient-bg.png")} />
         </AbsoluteFill>
 
         {threads.map((thread, i) => (
-          <Thread thread={thread} key={i} />
+          // eslint-disable-next-line react/no-array-index-key
+          <Thread key={i} thread={thread} />
         ))}
 
         <div
@@ -169,7 +176,7 @@ export const GoldenScene: React.FC = () => {
             height: "100%",
             background: "rgba(255,255,255,0.05)",
           }}
-        ></div>
+        />
 
         <Img
           src={staticFile("golden-planet.png")}
@@ -194,7 +201,7 @@ export const GoldenScene: React.FC = () => {
               top: -600 + 1150 * starship,
             }}
           >
-            <Spaceship />
+            <RocketSide rocket={rocket} />
           </div>
         </AbsoluteFill>
       </AbsoluteFill>
