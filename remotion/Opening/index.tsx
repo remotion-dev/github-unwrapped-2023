@@ -10,13 +10,14 @@ import {
 } from "remotion";
 import type { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
 import { OpeningTitle } from "./Title";
 import type { openingTitleSchema } from "./TitleImage";
 
-export const OPENING_SCENE_LENGTH = 120;
+export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_TRANSITION = 20;
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
@@ -35,7 +36,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
     durationInFrames: OPENING_SCENE_OUT_TRANSITION * 3,
   });
 
-  const distance = interpolate(exitProgress, [0, 1], [1, 0.05], {});
+  const distance = interpolate(exitProgress, [0, 1], [1, 0.000005], {});
   const scaleDivided = 1 / distance;
   const translateX = (scaleDivided - 1) * 200;
 
@@ -66,8 +67,9 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         <AbsoluteFill>
           <Gradient gradient="blueRadial" />
         </AbsoluteFill>
+        <Noise translateX={0} translateY={0} />
         <AbsoluteFill>
-          <OpeningTitle login={login} />
+          <OpeningTitle exitProgress={exitProgress} login={login} />
         </AbsoluteFill>
         <AbsoluteFill
           style={{

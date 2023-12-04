@@ -103,6 +103,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           login: "JonnyBurger",
+          exitProgress: 0,
         }}
       />
       <Composition

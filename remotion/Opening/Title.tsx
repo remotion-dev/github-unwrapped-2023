@@ -24,9 +24,11 @@ const title: React.CSSProperties = {
 const INNER_BORDER_RADIUS = 30;
 const PADDING = 20;
 
-export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
-  login,
-}) => {
+export const OpeningTitle: React.FC<
+  z.infer<typeof openingTitleSchema> & {
+    exitProgress: number;
+  }
+> = ({ login, exitProgress }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -36,7 +38,7 @@ export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
     config: {
       damping: 200,
     },
-    delay: 45,
+    delay: 50,
     durationInFrames: 50,
   });
 
@@ -48,13 +50,19 @@ export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
       mass: 1.6,
       stiffness: 100,
     },
-    delay: 35,
+    delay: 40,
     durationInFrames: 65,
   });
 
-  const rotation = interpolate(rotate, [0, 1], [Math.PI * 2, 0]);
+  const rotation = interpolate(rotate, [0, 1], [Math.PI * 1.5, 0]);
   const x = interpolate(frame, [60, 120], [-10, 10]);
   const y = interpolate(enter, [0, 1], [height, 0]);
+
+  const distance = interpolate(exitProgress, [0, 1], [1, 0.000005], {});
+  const scaleDivided = 1 / distance;
+  const translateY = (scaleDivided - 1) * -400;
+
+  const rotateX = interpolate(exitProgress, [0, 1], [0, Math.PI * 0.2]);
 
   return (
     <AbsoluteFill
@@ -64,7 +72,7 @@ export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
         color: "white",
         fontFamily: "Mona Sans",
         fontSize: 40,
-        marginTop: -180 + y,
+        marginTop: -300 + y,
         perspective: 1000,
       }}
     >
@@ -80,7 +88,9 @@ export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
           paddingLeft: PADDING,
           alignItems: "center",
           borderRadius: INNER_BORDER_RADIUS + PADDING,
-          transform: `rotateY(${x}deg) rotateX(${rotation}rad)`,
+          transform: `scale(${scaleDivided}) rotateY(${x}deg) rotateX(${
+            rotation + rotateX
+          }rad) translateY(${translateY}px)`,
           backfaceVisibility: "hidden",
         }}
       >
