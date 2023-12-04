@@ -20,6 +20,8 @@ import Orb7 from "./orbs/orb7";
 import Orb8 from "./orbs/orb8";
 import Orb9 from "./orbs/orb9";
 
+import Stars from "./SparkingStars";
+
 const THREAD_SPEED = 300;
 
 const Orbs: any = {
@@ -72,13 +74,13 @@ export const GoldenScene: React.FC = () => {
 
   const threads: Array<ThreadT> = useMemo(
     () =>
-      new Array(12).fill(0).map((_, i) => {
-        const left = Math.random() * 60 + 100 * i;
+      new Array(10).fill(0).map((_, i) => {
+        const left = Math.random() * 60 + 120 * i;
 
         return {
           left,
           speed: Math.random() * (THREAD_SPEED / 2) + THREAD_SPEED,
-          size: Math.random() * 0.5 + 0.7,
+          size: Math.random() * 1 + 0.3,
           orbs: new Array(12).fill(0).map((_, j) => ({
             top: Math.random() * 100 + 250 * j,
             type: Math.floor(Math.random() * 11) + 1,
@@ -115,7 +117,7 @@ export const GoldenScene: React.FC = () => {
 
   const starship = spring({
     fps: VIDEO_FPS,
-    frame: frame / 9,
+    frame: frame / 12,
     delay: 0,
     config: {
       damping: 200,
@@ -139,6 +141,10 @@ export const GoldenScene: React.FC = () => {
         }}
       >
         <AbsoluteFill style={{ background: "black" }}></AbsoluteFill>
+
+        <AbsoluteFill style={{ background: "black" }}>
+          <Stars />
+        </AbsoluteFill>
 
         <AbsoluteFill
           style={{
