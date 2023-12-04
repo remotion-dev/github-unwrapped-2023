@@ -7,6 +7,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { z } from "zod";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 
 const title: React.CSSProperties = {
@@ -23,7 +24,13 @@ const title: React.CSSProperties = {
 const INNER_BORDER_RADIUS = 30;
 const PADDING = 20;
 
-export const OpeningTitle: React.FC = () => {
+export const openingTitleSchema = z.object({
+  login: z.string(),
+});
+
+export const OpeningTitle: React.FC<z.infer<typeof openingTitleSchema>> = ({
+  login,
+}) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -82,7 +89,7 @@ export const OpeningTitle: React.FC = () => {
         }}
       >
         <Img
-          src={`https://github.com/maria-paul.png`}
+          src={`https://github.com/${login}.png`}
           style={{
             borderRadius: INNER_BORDER_RADIUS,
             height: 160,
@@ -94,7 +101,7 @@ export const OpeningTitle: React.FC = () => {
           <div>
             This is my <strong>#GitHubUnwrapped</strong>
           </div>
-          <div style={title}>maria-paul</div>
+          <div style={title}>{login}</div>
         </div>
       </div>
     </AbsoluteFill>

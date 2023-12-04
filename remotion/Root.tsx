@@ -90,6 +90,9 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          login: "JonnyBurger",
+        }}
       />
       <Composition
         id={"OpeningTitle"}
@@ -98,6 +101,9 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          login: "JonnyBurger",
+        }}
       />
       <Composition
         id={"Sponsorships"}

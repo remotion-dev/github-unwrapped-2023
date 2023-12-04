@@ -8,15 +8,19 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { z } from "zod";
 import { Gradient } from "../Gradients/NativeGradient";
 import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
+import type { openingTitleSchema } from "./Title";
 import { OpeningTitle } from "./Title";
 
 export const OPENING_SCENE_LENGTH = 120;
 
-const OpeningSceneFull: React.FC = () => {
+const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
+  login,
+}) => {
   return (
     <AbsoluteFill
       style={{
@@ -43,7 +47,7 @@ const OpeningSceneFull: React.FC = () => {
           <Gradient gradient="blueRadial" />
         </AbsoluteFill>
         <AbsoluteFill>
-          <OpeningTitle />
+          <OpeningTitle login={login} />
         </AbsoluteFill>
         <AbsoluteFill>
           <Background />
@@ -59,7 +63,9 @@ const OpeningSceneFull: React.FC = () => {
   );
 };
 
-const OpeningSceneZoomOut: React.FC = () => {
+const OpeningSceneZoomOut: React.FC<z.infer<typeof openingTitleSchema>> = ({
+  login,
+}) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const delay = 10;
@@ -90,12 +96,14 @@ const OpeningSceneZoomOut: React.FC = () => {
         transform: `scale(${scale}) translateX(-${x}px) translateY(50px)`,
       }}
     >
-      <OpeningSceneFull />
+      <OpeningSceneFull login={login} />
     </AbsoluteFill>
   );
 };
 
-export const OpeningScene: React.FC = () => {
+export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
+  login,
+}) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
   const duration = 20;
@@ -116,7 +124,7 @@ export const OpeningScene: React.FC = () => {
         transform: `scale(${interpolate(zoomOut, [0, 1], [1, 2])})`,
       }}
     >
-      <OpeningSceneZoomOut />
+      <OpeningSceneZoomOut login={login} />
     </AbsoluteFill>
   );
 };
