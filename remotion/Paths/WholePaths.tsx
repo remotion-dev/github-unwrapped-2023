@@ -1,18 +1,34 @@
 import React, { useMemo } from "react";
 import {
   AbsoluteFill,
+  Easing,
+  interpolate,
   interpolateColors,
   random,
   useCurrentFrame,
 } from "remotion";
-import { makeRandomPath } from "./make-random-path";
 import { MergeStat } from "./MergeStat";
-import { Path, PATH_ANIMATION_DURATION } from "./Path";
+import { PATH_ANIMATION_DURATION, Path } from "./Path";
+import { makeRandomPath } from "./make-random-path";
 
 export const WholePaths: React.FC<{
   extraPaths: number;
-}> = ({ extraPaths }) => {
+  initialPullRequests: number;
+}> = ({ extraPaths, initialPullRequests }) => {
   const frame = useCurrentFrame();
+
+  const counter = Math.round(
+    interpolate(
+      frame,
+      [0, PATH_ANIMATION_DURATION - 40],
+      [0, initialPullRequests],
+      {
+        easing: Easing.out(Easing.ease),
+        extrapolateRight: "clamp",
+      },
+    ),
+  );
+
   const paths = useMemo(() => {
     return Array.from({ length: extraPaths }).map((_, i) => {
       const seed = `seed${random(i)}`;
@@ -28,10 +44,10 @@ export const WholePaths: React.FC<{
             interpolateColors(
               random(seed + "2"),
               [0, 1],
-              ["#7E52E4", "#3A2A73"]
+              ["#7E52E4", "#3A2A73"],
             ),
             "black",
-          ]
+          ],
         ),
       };
     });
@@ -53,7 +69,7 @@ export const WholePaths: React.FC<{
           />
         );
       })}
-      <MergeStat num={merged} />
+      <MergeStat num={merged + counter} />
     </AbsoluteFill>
   );
 };

@@ -9,7 +9,8 @@
     "rootDir": "src",
     "outDir": "dist",
     "jsx": "react-jsx",
-    "strict": true
+    "strict": true,
+    "sourceMap": true
   },
   "include": ["src"]
 }

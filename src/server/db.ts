@@ -1,5 +1,6 @@
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
+import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -12,8 +13,11 @@ export type ProfileStats = {
   loggedInWithGitHub: boolean;
   totalStars: number;
   totalContributions: number;
-  topLanguages: Array<{ name: string; color: string }>;
+  topLanguages: Array<{ languageName: string; color: string }>;
   bestHours: Record<string, number>;
+  topWeekday: Weekday;
+  topHour: Hour;
+  graphData: ProductivityPerHour[];
 };
 
 type EmailCollection = {
@@ -34,7 +38,7 @@ const getStatsCollection = async () => {
     .collection<ProfileStats>("stats");
 };
 
-export const dbEmailCollection = async () => {
+const dbEmailCollection = async () => {
   const client = await clientPromise;
   return client
     .db(backendCredentials().DB_NAME)

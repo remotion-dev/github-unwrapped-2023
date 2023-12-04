@@ -2,9 +2,9 @@ import { sendDiscordMessage } from "../discord.js";
 import type { Commit, commits } from "./commits.js";
 import { mapApiResponseToCommits } from "./map-api-response-to-commits.js";
 
-export const RATE_LIMIT_TOKEN = "rate-limit-token";
+const RATE_LIMIT_TOKEN = "rate-limit-token";
 
-export const getGithubCommits = async (
+const getGithubCommits = async (
   username: string,
   page: number,
   token: string,

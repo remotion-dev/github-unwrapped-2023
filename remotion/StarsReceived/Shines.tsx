@@ -123,6 +123,8 @@ export const Shines: React.FC<{
         return (
           // eslint-disable-next-line react/jsx-key
           <Sequence
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
             from={i * 0.3}
             style={{
               transform: `translateY(${height}px)`,
@@ -130,12 +132,7 @@ export const Shines: React.FC<{
             }}
             durationInFrames={10}
           >
-            <Shine
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              rotation={angle + rotationShake}
-              showHelpers={false}
-            />
+            <Shine rotation={angle + rotationShake} showHelpers={false} />
           </Sequence>
         );
       })}

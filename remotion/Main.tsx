@@ -6,10 +6,9 @@ import type { compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
-import { FPS } from "./Issues/make-ufo-positions";
 import { LandingScene } from "./Landing";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
-import { PullRequests } from "./Paths/Paths";
+import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { ALL_PLANETS_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
@@ -64,6 +63,10 @@ export const Main: React.FC<Schema> = ({
   starsGiven,
   issuesClosed,
   issuesOpened,
+  topWeekday,
+  totalPullRequests,
+  topHour,
+  graphData,
 }) => {
   const introScene = getDurationOfAllPlanets({
     language2,
@@ -73,7 +76,7 @@ export const Main: React.FC<Schema> = ({
 
   return (
     <AbsoluteFill>
-      <Audio startFrom={FPS} src={staticFile("music/robots-preview.mp3")} />
+      <Audio src={staticFile("smartsound-wired.mp3")} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene />
@@ -104,10 +107,13 @@ export const Main: React.FC<Schema> = ({
             showHitWindow={false}
             showCockpit
             showDots={false}
+            topWeekday={topWeekday}
+            topHour={topHour}
+            graphData={graphData}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
-          <PullRequests />
+          <PullRequests totalPullRequests={totalPullRequests} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
           <ContributionsScene />

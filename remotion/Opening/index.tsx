@@ -1,15 +1,12 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, Audio, staticFile } from "remotion";
 import Background from "./Background";
 import Foreground from "./Foreground";
-import Spaceship from "./Spaceship";
+import { TakeOff } from "./TakeOff";
 
-export const OPENING_SCENE_LENGTH = 60;
+export const OPENING_SCENE_LENGTH = 120;
 
 export const OpeningScene: React.FC = () => {
-  // const { fps, durationInFrames, width, height } = useVideoConfig();
-  // const frame = useCurrentFrame();
-
   return (
     <AbsoluteFill
       style={{
@@ -17,6 +14,12 @@ export const OpeningScene: React.FC = () => {
         alignItems: "center",
       }}
     >
+      <Audio
+        startFrom={0}
+        src={staticFile(
+          "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
+        )}
+      />
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -31,12 +34,11 @@ export const OpeningScene: React.FC = () => {
         <AbsoluteFill>
           <Background />
         </AbsoluteFill>
-
         <AbsoluteFill style={{ top: 0 }}>
           <Foreground />
         </AbsoluteFill>
-        <AbsoluteFill style={{ top: -100 }}>
-          <Spaceship />
+        <AbsoluteFill>
+          <TakeOff />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>

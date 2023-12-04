@@ -1,17 +1,12 @@
 import React from "react";
 
-export const Earth: React.FC = () => {
+export const Earth: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <svg
-      style={{
-        position: "fixed",
-        width: 650,
-        left: -200,
-        top: -200,
-      }}
       viewBox="0 0 650 651"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g style={{ opacity: 0.78 }}>
         <path

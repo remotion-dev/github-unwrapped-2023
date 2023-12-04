@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
@@ -8,38 +8,11 @@ import {
   type languageSchema,
 } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
+import { Navbar } from "../Home/Navbar";
+import { NotFound } from "../NotFound/NotFound";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
-
-const outer: React.CSSProperties = {
-  width: "100vw",
-  height: "100vh",
-  position: "absolute",
-  top: 0,
-  backgroundColor: "#000",
-};
-
-const background: React.CSSProperties = {
-  width: "100vw",
-  height: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  position: "absolute",
-};
-
-const container: React.CSSProperties = {
-  width: "100vw",
-  height: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  position: "absolute",
-  alignItems: "center",
-  overflow: "auto",
-};
-
 declare global {
   interface Window {
     __USER__: ProfileStats;
@@ -61,19 +34,30 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
 };
 
 const parseTopLanguage = (topLanguage: {
-  name: string;
+  languageName: string;
   color: string;
 }): z.infer<typeof languageSchema> => {
   try {
-    return LanguagesEnum.parse(topLanguage.name);
+    // TODO: Rust1, Rust2, Rust3
+    const lang = LanguagesEnum.parse(topLanguage.languageName);
+    return {
+      type: "designed",
+      name: lang,
+    };
   } catch (e) {
-    return topLanguage;
+    return {
+      type: "other",
+      color: topLanguage.color,
+      name: topLanguage.languageName,
+    };
   }
 };
 
 const computeCompositionParameters = (
-  userStats: ProfileStats,
-): CompositionParameters => {
+  userStats: ProfileStats | null,
+): CompositionParameters | null => {
+  if (userStats === null) return null;
+
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -94,22 +78,43 @@ const computeCompositionParameters = (
     issuesClosed: userStats.closedIssues,
     issuesOpened: userStats.openIssues,
     totalPullRequests: userStats.totalPullRequests,
+    topWeekday: userStats.topWeekday,
+    topHour: userStats.topHour,
+    graphData: userStats.graphData,
   };
 };
 
+const background: React.CSSProperties = {
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  position: "absolute",
+};
+
 export const UserPage = () => {
-  const inputProps: CompositionParameters = useMemo(() => {
+  const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
 
+  if (inputProps === null) {
+    return <NotFound />;
+  }
+
   return (
-    <div style={outer}>
+    <div
+      className={styles.wrapper}
+      style={{
+        backgroundColor: "#000",
+      }}
+    >
       <div style={background} id="videobackground">
         <VideoPageBackground />
       </div>
-      <div style={container} className={styles.videobox}>
-        <VideoBox inputProps={inputProps} />
-      </div>
+      <Navbar />
+      <VideoBox inputProps={inputProps} />
     </div>
   );
 };

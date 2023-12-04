@@ -4,15 +4,14 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { Hour, ProductivityPerHour, Weekday } from "../../src/config";
 import { TABLET_BG } from "./TabletSVG";
-
-type ProductivityPerHour = {
-  time: number;
-  productivity: number;
-};
+import { TopDay } from "./TopDay";
 
 type Props = {
   graphData: Array<ProductivityPerHour>;
+  weekday: Weekday;
+  hour: Hour;
 };
 
 const Bar = (props: { productivity: number }) => {
@@ -52,7 +51,7 @@ const Bar = (props: { productivity: number }) => {
   );
 };
 
-export const ProductivityGraph = (props: {
+const ProductivityGraph = (props: {
   productivityPerHour: Array<ProductivityPerHour>;
   style?: React.CSSProperties;
 }) => {
@@ -98,7 +97,7 @@ export const ProductivityGraph = (props: {
   );
 };
 
-export const Productivity: React.FC<Props> = ({ graphData }) => {
+export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
   return (
     <AbsoluteFill
       style={{
@@ -106,29 +105,68 @@ export const Productivity: React.FC<Props> = ({ graphData }) => {
         display: "flex",
       }}
     >
-      <div
-        style={{
-          color: "white",
-          fontSize: 120,
-          fontFamily: "Mona Sans",
-          fontWeight: 800,
-          paddingTop: 80,
-          textAlign: "center",
+      <TopDay
+        values={[
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ]}
+        label="Most productive day"
+        value={weekday}
+        radius={130}
+        renderLabel={(value) => value}
+        delay={60}
+      />
+      <TopDay
+        values={[
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+        ]}
+        label="Most productive time"
+        value={hour}
+        radius={300}
+        delay={120}
+        renderLabel={(value) => {
+          if (value === "12") {
+            return "12 am";
+          }
+
+          if (Number(value) > 12) {
+            return `${Number(value) - 12} pm`;
+          }
+
+          return `${value} am`;
         }}
-      >
-        Monday 3PM
-      </div>
-      <div
-        style={{
-          color: "white",
-          fontSize: 40,
-          fontFamily: "Mona Sans",
-          fontWeight: 300,
-          textAlign: "center",
-        }}
-      >
-        Is your most productive time
-      </div>
+      />
+
       <div
         style={{
           display: "flex",

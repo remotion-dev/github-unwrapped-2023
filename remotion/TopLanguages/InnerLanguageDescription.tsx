@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import type { z } from "zod";
+import type { languageSchema } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
-import { mapLanguageToPlanet } from "./constants";
+import { computePlanetInfo, mapLanguageToPlanet } from "./constants";
 
 const INNER_BORDER_RADIUS = 10;
 const HORIZONTAL_PADDING = 20;
@@ -47,10 +47,7 @@ export const InnerLanguageDescription: React.FC<{
   const languageStyle = useMemo(() => {
     return {
       ...languageBaseStyle,
-      color:
-        typeof language !== "string"
-          ? language.color
-          : mapLanguageToPlanet[language].textColor,
+      color: computePlanetInfo(language).textColor,
     };
   }, [language]);
 
@@ -58,9 +55,9 @@ export const InnerLanguageDescription: React.FC<{
     <div style={label}>
       <div style={num}>{position}</div>
       <div style={languageStyle}>
-        {typeof language !== "string"
+        {language.type === "other"
           ? language.name
-          : mapLanguageToPlanet[language].name}
+          : mapLanguageToPlanet[language.name].name}
       </div>
     </div>
   );

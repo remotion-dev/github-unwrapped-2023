@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { Octocat } from "../Octocat";
+import React from "react";
+import { Box } from "../Box/Box";
 import { HomeBoxBottom } from "./HomeBoxBottom";
 import { HomeBoxTop } from "./HomeBoxTop";
 import styles from "./styles.module.css";
 
-export const HomeBox: React.FC = () => {
-  const [userNotFound, setUserNotFound] = useState<boolean>(false);
-
+export const HomeBox: React.FC<{
+  userNotFound: boolean;
+  setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
+}> = (props) => {
   return (
-    <div className={styles.homeBoxWrapper}>
+    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800 }}>
       <HomeBoxTop />
-      <HomeBoxBottom
-        setUserNotFound={setUserNotFound}
-        userNotFound={userNotFound}
-      />
-      <Octocat userNotFound={userNotFound} />
-    </div>
+      <HomeBoxBottom {...props} />
+    </Box>
   );
 };

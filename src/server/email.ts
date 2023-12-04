@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { getEmailFromDb, saveEmailAdress } from "./db";
-import { sendDiscordMessage } from "./discord";
+import { getEmailFromDb, saveEmailAdress } from "./db.js";
+import { sendDiscordMessage } from "./discord.js";
 
 const NOT_FOUND_TOKEN = "Not found";
 
@@ -13,6 +13,7 @@ export const emailEndpoint = async (req: Request, res: Response) => {
   if (typeof email !== "string") {
     return res.status(400).json({ type: "error", error: "No email passed" });
   }
+
   try {
     const existingEmail = await getEmailFromDb(email);
     if (existingEmail) {
@@ -21,6 +22,7 @@ export const emailEndpoint = async (req: Request, res: Response) => {
         message: "Your email has already been provided.",
       });
     }
+
     sendDiscordMessage(`New email submitted: ${email}`);
     await saveEmailAdress(email);
     return res
@@ -34,6 +36,7 @@ export const emailEndpoint = async (req: Request, res: Response) => {
         error: "not-found",
       });
     }
+
     throw err;
   }
 };

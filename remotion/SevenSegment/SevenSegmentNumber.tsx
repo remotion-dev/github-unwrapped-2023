@@ -30,7 +30,6 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
       {new Array(digits).fill(true).map((n, i) => {
         const opacity = ((noise2D(i + "x", frame / 15, 0) + 1) / 2) * 0.3 + 0.7;
 
-        console.log({ opacity });
         const digit = fullNum[i];
         const allBeforeAreZeroes = fullNum
           .slice(0, i + 1)

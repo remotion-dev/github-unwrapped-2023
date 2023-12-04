@@ -78,7 +78,7 @@ const getPath = ({
 export const PlanetScaleSpiralWhole: React.FC<
   z.infer<typeof spiralWholeSchema>
 > = ({ language, showHelperLine, startRotationInRadians, clockDirection }) => {
-  const { PlanetSVG } = computePlanetInfo(language);
+  const { PlanetSVG, customPlanetColor } = computePlanetInfo(language);
 
   const frame = useCurrentFrame();
   const spedUpFrame = remapSpeed(frame, speedRemapFn);
@@ -239,7 +239,7 @@ export const PlanetScaleSpiralWhole: React.FC<
           rotate: `${rotation}rad`,
         }}
       >
-        <PlanetSVG style={{ width: 400 }} />
+        <PlanetSVG customColor={customPlanetColor} style={{ width: 400 }} />
       </AbsoluteFill>
       <NewRocketSVG
         style={{
@@ -247,7 +247,7 @@ export const PlanetScaleSpiralWhole: React.FC<
             currentPosition.offset.x - TL_ROCKET_WIDTH / 2
           }px) translateY(${
             currentPosition.offset.y - TL_ROCKET_HEIGHT / 2
-          }px) rotate(${currentPosition.angleInDegrees}deg) scale(0.5)`,
+          }px) rotate(${currentPosition.angleInDegrees}deg) scale(0.9)`,
         }}
       />
     </AbsoluteFill>

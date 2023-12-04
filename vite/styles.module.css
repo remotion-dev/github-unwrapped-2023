@@ -1,35 +1,54 @@
 .container {
   width: 100vw;
-  height: 100svh;
+  height: 140svh;
   display: flex;
   flex-direction: column;
-  background-position: bottom;
-  background-size: cover;
-
-  justify-content: center;
   align-items: center;
+  position: relative;
+
+  @media only screen and (min-width: 40em) {
+    height: 100svh;
+    justify-content: center;
+  }
 }
 
 .octocat {
   position: absolute;
-  height: 236px;
-  bottom: -187px;
   left: 0;
   right: 0;
   margin: 0 auto;
+  height: 176px;
+  bottom: 86px;
+
+  @media only screen and (min-width: 40em) {
+    height: 196px;
+    bottom: 130px;
+  }
+}
+
+.gradientText2 {
+  background: linear-gradient(270.02deg, #7172fd 3.63%, #0ee1eb 99.87%);
+  font-size: 24px;
+  margin: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.homeForeground {
+  width: 1080px;
+  transform: translateY(16px);
+
+  @media only screen and (min-width: 40em) {
+    transform: translateY(48px);
+    width: 1800px;
+  }
 }
 
 .gradientText {
   background: linear-gradient(270.02deg, #645278 20.63%, #82b6c6 99.87%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradientText2 {
-  background: linear-gradient(270deg, #7172fd 3.63%, #0ee1eb 99.87%);
-  background-clip: text;
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -53,27 +72,6 @@
   line-height: 24px; /* 150% */
 }
 
-.aboutItem {
-  display: flex;
-  padding: 30px 30px 32px 33px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 17px;
-  border-radius: 8px;
-  border: 2px solid #20222f;
-  background: #171823;
-}
-
-.aboutItemTitle {
-  color: white;
-  font-family: Mona Sans;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
 .aboutButton {
   width: 172px;
   height: 45px;
@@ -92,50 +90,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-}
-
-.aboutFormInput {
-  width: 250px;
-  height: 45px;
-  flex-shrink: 0;
-  border-radius: 5px 0px 0px 5px;
-  border: 1px solid #4b4d5a;
-  padding: 0 0 0 16px;
-
-  background: #363745;
-
-  color: white;
-
-  font-family: Mona Sans;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-
-  ::placeholder {
-    color: #7a7d8e;
-  }
-}
-
-.aboutFormSubmit {
-  display: flex;
-  height: 45px;
-  padding: 15.167px 22.751px;
-  justify-content: center;
-  align-items: center;
-  gap: 7.584px;
-
-  border-radius: 0px 4.74px 4.74px 0px;
-  background: #507eff;
-
-  color: #fff;
-
-  font-family: Mona Sans;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border: 0;
 }
 
 .aboutLink {

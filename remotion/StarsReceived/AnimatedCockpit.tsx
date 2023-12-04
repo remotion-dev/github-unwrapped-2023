@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import CockpitSVG from "./CockpitSVG";
+import { CustomScreen } from "./CustomScreen";
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -33,11 +34,12 @@ export const AnimatedCockpit: React.FC<{
         scale: String(scaleDivided),
         transform: `rotate(${rotationShake}rad) scale(${
           // +0.1 so noise doesn't cut off
-          scaleDivided + 0.1
+          scaleDivided + 0.05
         }) translate(${xShake}px, ${yShake}px)`,
       }}
     >
       <CockpitSVG />
+      <CustomScreen />
     </AbsoluteFill>
   );
 };

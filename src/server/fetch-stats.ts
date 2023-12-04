@@ -1,3 +1,5 @@
+import type { Hour } from "../config.js";
+import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
 import {
@@ -92,7 +94,9 @@ export const getStatsFromGitHub = async ({
   let cursor;
   let safety = 0;
 
-  const commits = username ? await getALotOfGithubCommits(username, token) : [];
+  const commits = username
+    ? await getALotOfGithubCommits(username, token)
+    : await getALotOfGithubCommits(baseData.login, token);
 
   while (!done && safety < 10) {
     const data = await fetchFromGitHub<PullRequestQueryResponse>({
@@ -131,12 +135,36 @@ export const getStatsFromGitHub = async ({
   const topLanguages = Object.entries(acc)
     .sort((a, b) => b[1].value - a[1].value)
     .map((i) => ({
-      name: i[0],
+      languageName: i[0],
       color: i[1].color,
     }))
     .slice(0, 3);
 
-  const stats = {
+  console.log(commits);
+  const productivity = getMostProductive(commits);
+
+  const bestHours = getTimesOfDay(commits);
+  const values = Object.entries(bestHours);
+  const most = Math.max(...values.map((v) => v[1]));
+
+  const mostHour = values.find(([, b]) => b === most);
+
+  if (!mostHour) {
+    throw new Error("No most hour");
+  }
+
+  const graphData = Object.entries(getTimesOfDay(commits)).map(
+    ([key, entry]) => {
+      return {
+        productivity: entry,
+        time: Number(key),
+      };
+    },
+  );
+
+  console.log(graphData);
+
+  return {
     totalPullRequests: pullRequestData.length,
     topLanguages,
     totalStars: baseData.starredRepositories.edges.length,
@@ -149,9 +177,10 @@ export const getStatsFromGitHub = async ({
     username: baseData.login,
     lowercasedUsername: baseData.login.toLowerCase(),
     bestHours: getTimesOfDay(commits),
+    topWeekday: productivity.most,
+    topHour: String(mostHour[0]) as Hour,
+    graphData,
   };
-
-  return stats;
 };
 
 export const getStatsFromGitHubOrCache = async ({
@@ -166,12 +195,16 @@ export const getStatsFromGitHubOrCache = async ({
     return fromCache;
   }
 
-  const stats = await getStatsFromGitHub({
-    loggedInWithGitHub: false,
-    token,
-    username,
-  });
+  try {
+    const stats = await getStatsFromGitHub({
+      loggedInWithGitHub: false,
+      token,
+      username,
+    });
 
-  await insertProfileStats(stats);
-  return stats;
+    await insertProfileStats(stats);
+    return stats;
+  } catch (e) {
+    return null;
+  }
 };

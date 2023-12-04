@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
-import styles from "../styles.module.css";
+import { CheckCircleIcion } from "../../icons/CheckCircke";
+import { CrossCircleIcon } from "../../icons/CrossCircleIcon";
+import formStyles from "./emailForm.styles.module.css";
 
 type EmailResponse =
   | {
@@ -40,6 +42,7 @@ export const EmailForm: React.FC<{}> = () => {
         } else {
           setError(res.statusText);
         }
+
         setLoading(false);
       } else {
         setError("Invalid email provided. Please try again");
@@ -57,35 +60,34 @@ export const EmailForm: React.FC<{}> = () => {
   );
 
   return (
-    <div>
-      <form
-        className="mobile-row"
-        onSubmit={onSubmit}
-        style={{
-          display: "flex",
-          alignContent: "center",
-        }}
-      >
+    <div className={formStyles.emailFormWrapper}>
+      <form onSubmit={onSubmit} className={formStyles.emailForm}>
         <input
           value={email}
           onChange={onChange}
           type={"email"}
           autoComplete="none"
-          className={styles.aboutFormInput}
+          className={formStyles.aboutFormInput}
           placeholder="Your email adress"
-        ></input>
+        />
         <input
           type="submit"
           value={loading ? "Sending..." : "Submit"}
-          className={styles.aboutFormSubmit}
+          className={formStyles.aboutFormSubmit}
         />
       </form>
       {error ? (
-        <p style={{ color: "red", marginBottom: -8 }}> {error}</p>
+        <p className={formStyles.submitMessage}>
+          <CrossCircleIcon width={15} />
+          {error}
+        </p>
       ) : null}
 
       {isSaved ? (
-        <p style={{ color: "#1bbf47", marginBottom: -8 }}>{successMessage}</p>
+        <p className={formStyles.submitMessage}>
+          <CheckCircleIcion style={{ color: "#1bbf47" }} width={18} />
+          {successMessage}
+        </p>
       ) : null}
     </div>
   );

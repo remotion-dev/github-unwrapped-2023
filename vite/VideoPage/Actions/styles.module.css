@@ -1,0 +1,76 @@
+.wrapper {
+  border: 1.5px solid rgba(55, 57, 69, 1);
+  color: #e7e7e7;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    opacity 0.2s ease-in-out,
+    background-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+}
+
+.iconContainer {
+  height: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sharingActionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.furtherActionsTitle {
+  color: rgba(231, 231, 231, 1);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.furtherActionsButtonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.furtherActionsWrapper {
+  margin-top: auto;
+}
+
+.furtherActionWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: white;
+  transition: font-weight 0.2s ease-in-out;
+
+  &:hover {
+    font-weight: 600;
+  }
+}
+
+.furtherActionIconContainer {
+  width: 32px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgba(23, 24, 35, 1);
+  border: 1px solid rgba(55, 57, 69, 1);
+  color: rgba(80, 126, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

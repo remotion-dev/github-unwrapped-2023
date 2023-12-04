@@ -1,0 +1,40 @@
+.wrapper {
+  height: 100svh;
+  width: 100vw;
+}
+
+.content {
+  margin-left: 0;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+
+  @media only screen and (min-width: 40em) {
+    align-items: flex-start;
+    margin-left: 96px;
+    margin-top: 200px;
+  }
+}
+
+.title {
+  font-weight: 700;
+  font-size: 128px;
+  margin-bottom: -16px;
+
+  @media only screen and (min-width: 40em) {
+    font-size: 200px;
+    margin-bottom: -40px;
+  }
+}
+
+.description {
+  font-size: 20px;
+  text-align: center;
+
+  @media only screen and (min-width: 40em) {
+    font-size: 25px;
+    font-weight: 400;
+  }
+}

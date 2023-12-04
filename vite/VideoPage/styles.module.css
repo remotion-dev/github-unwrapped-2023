@@ -1,3 +1,17 @@
+.wrapper {
+  width: 100vw;
+  height: 180svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  @media only screen and (min-width: 40em) {
+    height: 100svh;
+    padding: 0 40px;
+    justify-content: center;
+  }
+}
+
 .mobileTitle {
   flex-direction: column;
   align-items: center;
@@ -7,26 +21,54 @@
 
 .roworcolumn {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+  }
 }
 
-.videobox {
+.videoBoxTop {
+  display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 6px;
+  justify-content: flex-end;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.playerradius {
-  border-bottom-left-radius: 10px;
+.videoBoxTopDesktop {
+  display: none;
+  width: 100%;
+  height: 100%;
+
+  @media only screen and (min-width: 40em) {
+    display: flex;
+  }
 }
 
-@media screen and (max-width: 900px) {
-  .roworcolumn {
-    flex-direction: column;
+.videoBoxTopMobile {
+  display: flex;
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: 12px;
+
+  @media only screen and (min-width: 40em) {
+    display: none;
   }
-  .videobox {
-    justify-content: flex-start;
-  }
-  .playerradius {
-    border-bottom-left-radius: 0;
+}
+
+.mobileActionsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  gap: 32px;
+
+  @media only screen and (min-width: 40em) {
+    display: none;
   }
 }

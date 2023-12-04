@@ -81,7 +81,7 @@ export const startServer = async () => {
     app.get("*", handleIndexHtmlDev(vite));
   } else {
     app.use(serveStatic(viteDistDir));
-
+    app.get("/about", handleIndexHtmlProduction());
     app.get("/:username", handleIndexHtmlProduction());
     app.get("*", handleIndexHtmlProduction());
   }

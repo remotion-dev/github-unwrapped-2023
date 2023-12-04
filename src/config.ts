@@ -1,9 +1,9 @@
 import type { AwsRegion } from "@remotion/lambda";
+import { zColor } from "@remotion/zod-types";
 import { z } from "zod";
 
 export const REGION: AwsRegion = "us-east-1";
 
-export const COMP_NAME = "Main";
 export const SITE_NAME = "unwrapped2023";
 export const RAM = 2048;
 export const DISK = 2048;
@@ -23,6 +23,8 @@ export const LanguagesEnum = z.enum([
   "Rust1",
   "Rust2",
   "Rust3",
+  "C++",
+  "Ruby",
 ]);
 
 export const cornerTypeValues = [
@@ -35,12 +37,60 @@ export const cornerTypeValues = [
 export const cornerType = z.enum(cornerTypeValues);
 export type Corner = z.infer<typeof cornerType>;
 
-export const languageSchema = LanguagesEnum.or(
+export const languageSchema = z.discriminatedUnion("type", [
   z.object({
+    type: z.literal("other"),
     name: z.string(),
-    color: z.string(),
+    color: zColor(),
   }),
-);
+  z.object({
+    type: z.literal("designed"),
+    name: LanguagesEnum,
+  }),
+]);
+
+export const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
+export const topWeekdaySchema = z.enum(days);
+
+export const hours = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+] as const;
+
+export const topHourSchema = z.enum(hours);
+
+export type Hour = (typeof hours)[number];
+
+export type Weekday = (typeof days)[number];
+
+export const productivityPerHourSchema = z.object({
+  time: z.number(),
+  productivity: z.number(),
+});
+
+export type ProductivityPerHour = z.infer<typeof productivityPerHourSchema>;
 
 export const compositionSchema = z.object({
   language1: languageSchema,
@@ -54,6 +104,9 @@ export const compositionSchema = z.object({
   issuesOpened: z.number(),
   issuesClosed: z.number(),
   totalPullRequests: z.number(),
+  topWeekday: topWeekdaySchema,
+  topHour: topHourSchema,
+  graphData: z.array(productivityPerHourSchema),
 });
 
 export const RenderRequest = z.object({
