@@ -16,7 +16,8 @@ export const AnimatedCockpit: React.FC<{
   yShake: number;
   rotationShake: number;
   accentColor: AccentColor;
-}> = ({ xShake, yShake, rotationShake, accentColor }) => {
+  totalPullRequests: number;
+}> = ({ xShake, yShake, rotationShake, accentColor, totalPullRequests }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -43,7 +44,10 @@ export const AnimatedCockpit: React.FC<{
     >
       <CockpitSVG />
       <Sequence from={271}>
-        <CustomScreen accentColor={accentColor} />
+        <CustomScreen
+          totalPullRequests={totalPullRequests}
+          accentColor={accentColor}
+        />
       </Sequence>
     </AbsoluteFill>
   );

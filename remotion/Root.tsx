@@ -265,6 +265,7 @@ export const RemotionRoot: React.FC = () => {
           topHour: "0",
           graphData: GRAPH_DATA,
           accentColor: "purple",
+          totalPullRequests: 614,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -295,6 +296,7 @@ export const RemotionRoot: React.FC = () => {
           topHour: "0",
           graphData: GRAPH_DATA,
           accentColor: "blue",
+          totalPullRequests: 614,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);

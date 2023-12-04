@@ -146,6 +146,7 @@ export const Main: React.FC<Schema> = ({
             topHour={topHour}
             graphData={graphData}
             accentColor={accentColor}
+            totalPullRequests={totalPullRequests}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>

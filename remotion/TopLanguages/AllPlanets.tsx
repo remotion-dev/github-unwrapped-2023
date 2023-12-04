@@ -1,6 +1,5 @@
 import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
-import { Sequence } from "remotion";
 import { z } from "zod";
 import {
   accentColorSchema,
@@ -83,14 +82,12 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   return (
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={TITLE_CARD_DURATION}>
-        <Sequence>
-          <TopLanguagesTitleCard
-            rocket={rocket}
-            pluralizeLanguages={language2 !== null}
-            login={login}
-            accentColor={accentColor}
-          />
-        </Sequence>
+        <TopLanguagesTitleCard
+          rocket={rocket}
+          pluralizeLanguages={language2 !== null}
+          login={login}
+          accentColor={accentColor}
+        />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
         presentation={slide({ direction: "from-bottom" })}
