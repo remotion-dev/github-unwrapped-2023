@@ -2,7 +2,11 @@ import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
 import { Sequence } from "remotion";
 import { z } from "zod";
-import { cornerType, topLanguagesSchema } from "../../src/config";
+import {
+  accentColorSchema,
+  cornerType,
+  topLanguagesSchema,
+} from "../../src/config";
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
@@ -19,6 +23,7 @@ export const allPlanetsSchema = z.object({
   corner: cornerType,
   showHelperLine: z.boolean(),
   login: z.string(),
+  accentColor: accentColorSchema,
 });
 
 const allPlanetsTransitionTiming = springTiming({
@@ -66,6 +71,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   showHelperLine,
   login,
   topLanguages,
+  accentColor,
 }) => {
   const { language1, language2, language3 } = topLanguages;
   const enterDirection = deriveEnterDirectionFromCorner(corner);
@@ -78,6 +84,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           <TopLanguagesTitleCard
             pluralizeLanguages={language2 !== null}
             login={login}
+            accentColor={accentColor}
           />
         </Sequence>
       </TransitionSeries.Sequence>

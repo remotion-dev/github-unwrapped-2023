@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
+import type { AccentColor } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 import { TitleImage, type openingTitleSchema } from "./TitleImage";
 
@@ -27,8 +28,9 @@ const PADDING = 20;
 export const OpeningTitle: React.FC<
   z.infer<typeof openingTitleSchema> & {
     exitProgress: number;
+    accentColor: AccentColor;
   }
-> = ({ login, exitProgress, startAngle }) => {
+> = ({ login, exitProgress, startAngle, accentColor }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -103,7 +105,11 @@ export const OpeningTitle: React.FC<
           backfaceVisibility: "hidden",
         }}
       >
-        <TitleImage startAngle={startAngle} login={login} />
+        <TitleImage
+          accentColor={accentColor}
+          startAngle={startAngle}
+          login={login}
+        />
         <div>
           <div>
             This is my <strong>#GitHubUnwrapped</strong>

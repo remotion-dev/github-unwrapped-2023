@@ -8,21 +8,35 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { openingSceneStartAngle } from "../../src/config";
+import type { AccentColor } from "../../src/config";
+import { accentColorSchema, openingSceneStartAngle } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import type { GradientType } from "../Gradients/available-gradients";
 import { UfoSvg } from "../Issues/UfoSvg";
 import { PANE_BORDER } from "../TopLanguages/Pane";
 
 export const openingTitleSchema = z.object({
   login: z.string(),
   startAngle: openingSceneStartAngle,
+  accentColor: accentColorSchema,
 });
 
 export const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
 export const TITLE_IMAGE_BORDER_PADDING = 20;
 
+export const accentColorToGradient = (
+  accentColor: AccentColor,
+): GradientType => {
+  if (accentColor === "blue") {
+    return "blueRadial";
+  }
+
+  return "purpleRadial";
+};
+
 export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
+  accentColor,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -31,7 +45,7 @@ export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
     fps,
     frame,
     config: {},
-    delay: 70,
+    delay: 50,
   });
 
   const flipRad = interpolate(flip, [0, 1], [Math.PI, 0]);
@@ -73,7 +87,7 @@ export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
         }}
       >
         <AbsoluteFill>
-          <Gradient gradient="blueRadial" />
+          <Gradient gradient={accentColorToGradient(accentColor)} />
         </AbsoluteFill>
         <AbsoluteFill
           style={{

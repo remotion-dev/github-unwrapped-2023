@@ -2,7 +2,7 @@ import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
-import type { compositionSchema } from "../src/config";
+import { type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
@@ -70,6 +70,7 @@ export const Main: React.FC<Schema> = ({
   topHour,
   graphData,
   openingSceneStartAngle,
+  accentColor,
 }) => {
   return (
     <AbsoluteFill
@@ -80,7 +81,11 @@ export const Main: React.FC<Schema> = ({
       <Audio src={staticFile("smartsound-wired.mp3")} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
-          <OpeningScene startAngle={openingSceneStartAngle} login={login} />
+          <OpeningScene
+            accentColor={accentColor}
+            startAngle={openingSceneStartAngle}
+            login={login}
+          />
         </Series.Sequence>
         {topLanguages ? (
           <Series.Sequence
@@ -95,6 +100,7 @@ export const Main: React.FC<Schema> = ({
               topLanguages={topLanguages}
               showHelperLine={showHelperLine}
               login={login}
+              accentColor={accentColor}
             />
           </Series.Sequence>
         ) : null}
@@ -121,16 +127,20 @@ export const Main: React.FC<Schema> = ({
             topWeekday={topWeekday}
             topHour={topHour}
             graphData={graphData}
+            accentColor={accentColor}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
-          <PullRequests totalPullRequests={totalPullRequests} />
+          <PullRequests
+            accentColor={accentColor}
+            totalPullRequests={totalPullRequests}
+          />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
-          <ContributionsScene />
+          <ContributionsScene accentColor={accentColor} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={LANDING_SCENE}>
-          <LandingScene planetType={planet} />
+          <LandingScene accentColor={accentColor} planetType={planet} />
         </Series.Sequence>
       </Series>
     </AbsoluteFill>

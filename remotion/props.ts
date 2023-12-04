@@ -20,4 +20,5 @@ export const defaultMyCompProps: z.infer<typeof compositionSchema> = {
   topHour: "2",
   graphData: GRAPH_DATA,
   openingSceneStartAngle: "left",
+  accentColor: "blue",
 };

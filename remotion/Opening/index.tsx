@@ -16,7 +16,7 @@ import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff } from "./TakeOff";
 import { OpeningTitle } from "./Title";
-import { type openingTitleSchema } from "./TitleImage";
+import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_OVERLAP = 10;
@@ -24,6 +24,7 @@ export const OPENING_SCENE_OUT_OVERLAP = 10;
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
+  accentColor,
 }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -73,7 +74,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
             opacity: interpolate(exitProgress, [0, 1], [1, 0]),
           }}
         >
-          <Gradient gradient="blueRadial" />
+          <Gradient gradient={accentColorToGradient(accentColor)} />
         </AbsoluteFill>
         <Noise translateX={100} translateY={30} />
         <AbsoluteFill>
@@ -81,6 +82,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
             startAngle={startAngle}
             exitProgress={exitProgress}
             login={login}
+            accentColor={accentColor}
           />
         </AbsoluteFill>
         <AbsoluteFill
@@ -109,6 +111,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
 export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
+  accentColor,
 }) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -144,7 +147,11 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
         transform: `scale(${scale}) translateX(${x}px) translateY(50px)`,
       }}
     >
-      <OpeningSceneFull startAngle={startAngle} login={login} />
+      <OpeningSceneFull
+        accentColor={accentColor}
+        startAngle={startAngle}
+        login={login}
+      />
     </AbsoluteFill>
   );
 };

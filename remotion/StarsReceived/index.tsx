@@ -3,12 +3,14 @@ import { Pie } from "@remotion/shapes";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import {
+  accentColorSchema,
   productivityPerHourSchema,
   topHourSchema,
   topWeekdaySchema,
 } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
+import { accentColorToGradient } from "../Opening/TitleImage";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
 import { HIT_RADIUS, STAR_ANIMATION_DURATION, Star } from "./Star";
@@ -26,6 +28,7 @@ export const starsReceivedSchema = z.object({
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
   graphData: z.array(productivityPerHourSchema),
+  accentColor: accentColorSchema,
 });
 
 export const StarsReceived: React.FC<
@@ -39,6 +42,7 @@ export const StarsReceived: React.FC<
   showHitWindow,
   showCockpit,
   showDots,
+  accentColor,
 }) => {
   const frame = useCurrentFrame();
 
@@ -50,7 +54,7 @@ export const StarsReceived: React.FC<
     <AbsoluteFill style={style}>
       {showBackground ? (
         <AbsoluteFill>
-          <Gradient gradient="blueRadial" />
+          <Gradient gradient={accentColorToGradient(accentColor)} />
         </AbsoluteFill>
       ) : null}
       <Noise translateX={0} translateY={0} />
@@ -94,6 +98,7 @@ export const StarsReceived: React.FC<
           rotationShake={rotationShake}
           xShake={xShake}
           yShake={yShake}
+          accentColor={accentColor}
         />
       ) : null}
     </AbsoluteFill>

@@ -95,6 +95,7 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           login: "JonnyBurger",
           startAngle: "left",
+          accentColor: "blue",
         }}
       />
       <Composition
@@ -108,6 +109,7 @@ export const RemotionRoot: React.FC = () => {
           login: "JonnyBurger",
           exitProgress: 0,
           startAngle: "left",
+          accentColor: "blue",
         }}
       />
       <Composition
@@ -117,6 +119,9 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          accentColor: "blue",
+        }}
       />
       {/* <Composition
         id={"Landing"}
@@ -136,7 +141,7 @@ export const RemotionRoot: React.FC = () => {
         schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const }}
+        defaultProps={{ planetType: "Silver" as const, accentColor: "blue" }}
       />
       <Composition
         id={"Contributions"}
@@ -253,6 +258,7 @@ export const RemotionRoot: React.FC = () => {
           topWeekday: "1",
           topHour: "0",
           graphData: GRAPH_DATA,
+          accentColor: "purple",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -282,6 +288,7 @@ export const RemotionRoot: React.FC = () => {
           topWeekday: "3",
           topHour: "0",
           graphData: GRAPH_DATA,
+          accentColor: "blue",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -414,6 +421,7 @@ export const RemotionRoot: React.FC = () => {
           schema={pullRequestsSchema}
           defaultProps={{
             totalPullRequests: 614,
+            accentColor: "purple",
           }}
         />
       </Folder>
@@ -429,6 +437,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             login: "JonnyBurger",
             pluralizeLanguages: false,
+            accentColor: "blue",
           }}
         />
         <Composition
@@ -539,6 +548,7 @@ export const RemotionRoot: React.FC = () => {
             },
             showHelperLine: false,
             login: "JonnyBurger",
+            accentColor: "blue",
           }}
         />
       </Folder>
@@ -569,113 +579,42 @@ export const RemotionRoot: React.FC = () => {
             },
           },
           showHelperLine: false,
-          login: "JonnyBurger",
+          login: "iampato",
           planet: "Silver" as const,
           starsGiven: 10,
           issuesClosed: 10,
           issuesOpened: 10,
           totalPullRequests: 10,
-          topWeekday: "2",
-          topHour: "0",
+          topWeekday: "2" as const,
+          topHour: "0" as const,
           graphData: [
-            {
-              productivity: 0,
-              time: 0,
-            },
-            {
-              productivity: 0,
-              time: 1,
-            },
-            {
-              productivity: 0,
-              time: 2,
-            },
-            {
-              productivity: 0,
-              time: 3,
-            },
-            {
-              productivity: 0,
-              time: 4,
-            },
-            {
-              productivity: 0,
-              time: 5,
-            },
-            {
-              productivity: 0,
-              time: 6,
-            },
-            {
-              productivity: 5,
-              time: 7,
-            },
-            {
-              productivity: 29,
-              time: 8,
-            },
-            {
-              productivity: 49,
-              time: 9,
-            },
-            {
-              productivity: 58,
-              time: 10,
-            },
-            {
-              productivity: 49,
-              time: 11,
-            },
-            {
-              productivity: 17,
-              time: 12,
-            },
-            {
-              productivity: 48,
-              time: 13,
-            },
-            {
-              productivity: 43,
-              time: 14,
-            },
-            {
-              productivity: 54,
-              time: 15,
-            },
-            {
-              productivity: 33,
-              time: 16,
-            },
-            {
-              productivity: 52,
-              time: 17,
-            },
-            {
-              productivity: 35,
-              time: 18,
-            },
-            {
-              productivity: 12,
-              time: 19,
-            },
-            {
-              productivity: 9,
-              time: 20,
-            },
-            {
-              productivity: 5,
-              time: 21,
-            },
-            {
-              productivity: 2,
-              time: 22,
-            },
-            {
-              productivity: 0,
-              time: 23,
-            },
+            { productivity: 0, time: 0 },
+            { productivity: 0, time: 1 },
+            { productivity: 0, time: 2 },
+            { productivity: 0, time: 3 },
+            { productivity: 0, time: 4 },
+            { productivity: 0, time: 5 },
+            { productivity: 0, time: 6 },
+            { productivity: 5, time: 7 },
+            { productivity: 29, time: 8 },
+            { productivity: 49, time: 9 },
+            { productivity: 58, time: 10 },
+            { productivity: 49, time: 11 },
+            { productivity: 17, time: 12 },
+            { productivity: 48, time: 13 },
+            { productivity: 43, time: 14 },
+            { productivity: 54, time: 15 },
+            { productivity: 33, time: 16 },
+            { productivity: 52, time: 17 },
+            { productivity: 35, time: 18 },
+            { productivity: 12, time: 19 },
+            { productivity: 9, time: 20 },
+            { productivity: 5, time: 21 },
+            { productivity: 2, time: 22 },
+            { productivity: 0, time: 23 },
           ],
-          openingSceneStartAngle: "left",
+          openingSceneStartAngle: "left" as const,
+          accentColor: "blue" as const,
         }}
       />
       <Composition

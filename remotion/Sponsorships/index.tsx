@@ -1,10 +1,14 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
+import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { accentColorToGradient } from "../Opening/TitleImage";
 import { Background } from "./Background";
 import { Box } from "./Box";
 
-export const SponsorshipsScene: React.FC = () => {
+export const SponsorshipsScene: React.FC<{
+  accentColor: AccentColor;
+}> = ({ accentColor }) => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -17,7 +21,7 @@ export const SponsorshipsScene: React.FC = () => {
       }}
     >
       <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
+        <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
       <AbsoluteFill>
         <Background />

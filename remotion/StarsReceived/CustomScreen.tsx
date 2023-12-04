@@ -1,8 +1,11 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
+import type { AccentColor } from "../../src/config";
 import { PullRequests } from "../Paths/PullRequests";
 
-export const CustomScreen: React.FC = () => {
+export const CustomScreen: React.FC<{
+  accentColor: AccentColor;
+}> = ({ accentColor }) => {
   return (
     <AbsoluteFill
       style={{
@@ -34,7 +37,7 @@ export const CustomScreen: React.FC = () => {
             overflow: "hidden",
           }}
         >
-          <PullRequests totalPullRequests={15} />
+          <PullRequests accentColor={accentColor} totalPullRequests={15} />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>

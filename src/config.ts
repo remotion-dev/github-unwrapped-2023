@@ -100,6 +100,10 @@ export const topLanguagesSchema = z.object({
 
 export const openingSceneStartAngle = z.enum(["left", "right"]);
 
+export const accentColorValues = ["blue", "purple"] as const;
+export const accentColorSchema = z.enum(accentColorValues);
+export type AccentColor = z.infer<typeof accentColorSchema>;
+
 export const compositionSchema = z.object({
   topLanguages: topLanguagesSchema.or(z.null()),
   corner: cornerType,
@@ -114,6 +118,7 @@ export const compositionSchema = z.object({
   topHour: topHourSchema,
   graphData: z.array(productivityPerHourSchema),
   openingSceneStartAngle,
+  accentColor: accentColorSchema,
 });
 
 export const RenderRequest = z.object({

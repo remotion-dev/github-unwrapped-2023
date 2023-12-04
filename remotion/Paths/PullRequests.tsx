@@ -1,7 +1,9 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import { accentColorSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { accentColorToGradient } from "../Opening/TitleImage";
 import { PATHS_COMP_HEIGHT } from "./Path";
 import { WholePaths } from "./WholePaths";
 
@@ -9,12 +11,14 @@ const endHeight = 1080;
 
 export const pullRequestsSchema = z.object({
   totalPullRequests: z.number().min(0),
+  accentColor: accentColorSchema,
 });
 
 const MAX_PATHS = 50;
 
 export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   totalPullRequests,
+  accentColor,
 }) => {
   const initialOffset = PATHS_COMP_HEIGHT - endHeight;
   const frame = useCurrentFrame();
@@ -34,7 +38,7 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
       }}
     >
       <AbsoluteFill>
-        <Gradient gradient="blueRadial" />
+        <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
       <WholePaths
         initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
