@@ -159,7 +159,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         label="Most productive time"
         value={hour}
         radius={300}
-        delay={120}
+        delay={90}
         renderLabel={(value) => {
           if (value === "12") {
             return "12 am";
