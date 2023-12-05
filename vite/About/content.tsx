@@ -54,17 +54,17 @@ export const content: Array<AboutItemContent> = [
     description: ``,
     node: (
       <p>
-        The source code of the project is open-source. View{" "}
+        The{" "}
         <a
           className={styles.aboutLink}
           href="https://github.com/remotion-dev/github-unwrapped-2023"
         >
           source code
-        </a>
-        .
+        </a>{" "}
+        of the project is open-source.
         <br />
         Remotion, the framework for making videos programmatically is required
-        as a dependency and is "source-available" and requires companies to
+        as a dependency and is "source-available". It requires companies to
         obtain a{" "}
         <a
           className={styles.aboutLink}
