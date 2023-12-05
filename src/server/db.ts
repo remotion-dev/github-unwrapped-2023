@@ -1,4 +1,4 @@
-import { AwsRegion } from "@remotion/lambda";
+import type { AwsRegion } from "@remotion/lambda";
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
@@ -114,7 +114,7 @@ export const findRender = async (params: {
 }): Promise<WithId<Render> | null> => {
   const collection = await getRendersCollection();
   const value = await collection.findOne({
-    lowercasedUsername: params.username.toLowerCase(),
+    username: params.username.toLowerCase(),
     theme: params.theme,
   });
   return value;
