@@ -12,7 +12,7 @@ import { PlanetEnum, type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { GoldenScene } from "./Golden";
-import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
+import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import { LandingScene } from "./Landing";
 import {
   OPENING_SCENE_LENGTH,
@@ -25,13 +25,14 @@ import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 
 type Schema = z.infer<typeof compositionSchema>;
 
-const ISSUES_SCENE = 6 * VIDEO_FPS;
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
 const STARS_AND_PRODUCTIVITY = 400;
 
 export const calculateDuration = ({
   topLanguages,
+  issuesClosed,
+  issuesOpened,
 }: z.infer<typeof compositionSchema>) => {
   const topLanguagesScene = topLanguages
     ? getDurationOfAllPlanets({
@@ -42,7 +43,7 @@ export const calculateDuration = ({
 
   return (
     topLanguagesScene +
-    ISSUES_SCENE -
+    getIssuesDuration({ issuesClosed, issuesOpened }) -
     ISSUES_EXIT_DURATION +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
@@ -120,7 +121,7 @@ export const Main: React.FC<Schema> = ({
           </Series.Sequence>
         ) : null}
         <Series.Sequence
-          durationInFrames={ISSUES_SCENE}
+          durationInFrames={getIssuesDuration({ issuesClosed, issuesOpened })}
           offset={
             topLanguages
               ? -TOP_LANGUAGES_EXIT_DURATION

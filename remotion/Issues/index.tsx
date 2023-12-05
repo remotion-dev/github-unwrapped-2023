@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
   Audio,
@@ -11,6 +12,7 @@ import {
 } from "remotion";
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
+import { VIDEO_FPS } from "../../types/constants";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
   WIGGLE_EXIT_DURATION,
@@ -49,6 +51,32 @@ export const issuesSchema = z.object({
 });
 
 export const ISSUES_EXIT_DURATION = 20;
+
+export const getIssuesDuration = ({
+  issuesClosed,
+  issuesOpened,
+}: {
+  issuesClosed: number;
+  issuesOpened: number;
+}) => {
+  const totalIssues = issuesClosed + issuesOpened;
+  if (totalIssues === 0) {
+    return 140;
+  }
+
+  return 6 * VIDEO_FPS;
+};
+
+export const calculateIssueDuration: CalculateMetadataFunction<
+  z.infer<typeof issuesSchema>
+> = ({ defaultProps: { closedIssues, openIssues } }) => {
+  return {
+    durationInFrames: getIssuesDuration({
+      issuesClosed: closedIssues,
+      issuesOpened: openIssues,
+    }),
+  };
+};
 
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,

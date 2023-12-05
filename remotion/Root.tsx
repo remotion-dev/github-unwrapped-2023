@@ -12,7 +12,7 @@ import { GoldenScene } from "./Golden";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import {
   JumpingNumberDemo,
@@ -178,6 +178,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 0, openIssues: 0, rocket: "orange" }}
         />
         <Composition
@@ -188,6 +189,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 2, openIssues: 0, rocket: "blue" }}
         />
         <Composition
@@ -198,6 +200,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 20, openIssues: 15, rocket: "orange" }}
         />
         <Composition
@@ -208,6 +211,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 80, openIssues: 20, rocket: "yellow" }}
         />
         <Composition
@@ -218,6 +222,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{
             closedIssues: 3000,
             openIssues: 2000,
@@ -233,6 +238,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
+        calculateMetadata={calculateIssueDuration}
         defaultProps={{ closedIssues: 75, openIssues: 0, rocket: "blue" }}
       />
 
