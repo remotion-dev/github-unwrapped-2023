@@ -1,5 +1,5 @@
 import { VIDEO_WIDTH } from "../../types/constants";
-import { TL_ROCKET_HEIGHT } from "../TopLanguages/svgs/NewRocketSVG";
+import { TL_ROCKET_HEIGHT } from "../TopLanguages/svgs/FrontRocketSource";
 
 export const PADDING = 120;
 export const USABLE_CANVAS_WIDTH = VIDEO_WIDTH - PADDING * 2;

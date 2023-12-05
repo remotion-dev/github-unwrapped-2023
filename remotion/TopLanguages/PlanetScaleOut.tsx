@@ -21,7 +21,7 @@ import {
   RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
-} from "./svgs/NewRocketSVG";
+} from "./svgs/FrontRocketSource";
 
 const SCALE_FACTOR = 1;
 const PATH_EXTRAPOLATION = 0.1;
