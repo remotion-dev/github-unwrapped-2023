@@ -161,7 +161,6 @@ export const UserPage = () => {
 
   useEffect(() => {
     if (inputProps) {
-      console.log(inputProps, window.__USER__.username);
       fetch("/api/render", {
         method: "post",
         headers: {
@@ -190,6 +189,7 @@ export const UserPage = () => {
         <VideoPageBackground />
       </div>
       <Navbar />
+
       <VideoBox inputProps={inputProps} />
     </div>
   );

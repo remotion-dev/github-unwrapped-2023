@@ -64,22 +64,19 @@ export const renderEndPoint = async (request: Request, response: Response) => {
 
   await saveRender(newRender, _id);
 
-  const { renderId, bucketName, cloudWatchLogs, folderInS3Console } =
-    await renderMediaOnLambda({
-      codec: "h264",
-      functionName,
-      region,
-      serveUrl: SITE_NAME,
-      composition: "Main",
-      inputProps,
-      downloadBehavior: {
-        type: "download",
-        fileName: "video.mp4",
-      },
-      logLevel: "verbose",
-    });
-
-  console.log(cloudWatchLogs, folderInS3Console);
+  const { renderId, bucketName } = await renderMediaOnLambda({
+    codec: "h264",
+    functionName,
+    region,
+    serveUrl: SITE_NAME,
+    composition: "Main",
+    inputProps,
+    downloadBehavior: {
+      type: "download",
+      fileName: "video.mp4",
+    },
+    logLevel: "verbose",
+  });
 
   const updatedRender: Render = {
     ...newRender,

@@ -54,8 +54,6 @@ export const getProgress = async (render: Render) => {
 
     const finality = getFinality(renderProgress);
 
-    console.log(JSON.stringify(renderProgress));
-
     await updateRender({
       ...render,
       finality,
