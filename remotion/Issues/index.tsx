@@ -40,6 +40,7 @@ import {
   RocketComponent,
 } from "./Rocket";
 import { Ufo } from "./Ufo";
+import { ZeroIssues } from "./ZeroIssues";
 
 export const issuesSchema = z.object({
   openIssues: z.number().min(0),
@@ -163,6 +164,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             </Sequence>
           );
         })}
+        {totalIssues === 0 ? <ZeroIssues /> : false}
         {ufos.map((p, i) => {
           const explosion = explosions.find((e) => e.index === i);
           return (
@@ -211,13 +213,15 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             </Sequence>
           );
         })}
-        <AbsoluteFill>
-          <RocketComponent
-            rocket={rocket}
-            jumpIn={jumpIn}
-            shots={withShootDurations}
-          />
-        </AbsoluteFill>
+        {totalIssues > 0 ? (
+          <AbsoluteFill>
+            <RocketComponent
+              rocket={rocket}
+              jumpIn={jumpIn}
+              shots={withShootDurations}
+            />
+          </AbsoluteFill>
+        ) : null}
       </AbsoluteFill>
       <AbsoluteFill
         style={{

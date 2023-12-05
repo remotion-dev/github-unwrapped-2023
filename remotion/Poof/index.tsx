@@ -268,13 +268,26 @@ const BIGGEST_HEIGHT = 284;
 
 export const POOF_DURATION = 6;
 
+export const PoofSprite: React.FC = () => {
+  const frame = Math.round(useCurrentFrame() / 2);
+
+  return (
+    <>
+      {frame === 0 ? <Sprite1 /> : null}
+      {frame === 1 ? <Sprite2 /> : null}
+      {frame === 2 ? <Sprite3 /> : null}
+      {frame === 3 ? <Sprite4 /> : null}
+      {frame === 4 ? <Sprite5 /> : null}
+      {frame === 5 ? <Sprite6 /> : null}
+    </>
+  );
+};
+
 export const Poof: React.FC<{
   x: number;
   y: number;
   ufoScale: number;
 }> = ({ x, y, ufoScale }) => {
-  const frame = Math.round(useCurrentFrame() / 2);
-
   const actualScale = ufoScale * 1.5;
 
   return (
@@ -298,12 +311,7 @@ export const Poof: React.FC<{
           transform: `scale(${actualScale})`,
         }}
       >
-        {frame === 0 ? <Sprite1 /> : null}
-        {frame === 1 ? <Sprite2 /> : null}
-        {frame === 2 ? <Sprite3 /> : null}
-        {frame === 3 ? <Sprite4 /> : null}
-        {frame === 4 ? <Sprite5 /> : null}
-        {frame === 5 ? <Sprite6 /> : null}
+        <PoofSprite />
       </div>
     </AbsoluteFill>
   );
