@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AbsoluteFill,
   Img,
@@ -47,31 +47,36 @@ export const Shine: React.FC<z.infer<typeof shineSchema>> = ({
   const rotationX = Math.cos(rotation) * angle;
   const rotationY = -Math.sin(rotation) * angle;
 
+  const style: React.CSSProperties = useMemo(() => {
+    return {
+      perspective,
+      transform: `translateX(${x}px) translateY(${y}px)`,
+      opacity: interpolate(frame, [0, 5], [0, 0.2], {
+        extrapolateRight: "clamp",
+      }),
+    };
+  }, [frame, perspective, x, y]);
+
+  const inner: React.CSSProperties = useMemo(() => {
+    return {
+      justifyContent: "center",
+      alignItems: "center",
+      transform: `rotateY(${rotationY}deg) rotateX(${rotationX}deg) rotateZ(${-rotation}rad)`,
+    };
+  }, [rotation, rotationX, rotationY]);
+
+  const img: React.CSSProperties = useMemo(() => {
+    return {
+      width: WIDTH,
+      height: HEIGHT,
+      marginTop: HEIGHT + offset,
+    };
+  }, [offset]);
+
   return (
-    <AbsoluteFill
-      style={{
-        perspective,
-        transform: `translateX(${x}px) translateY(${y}px)`,
-        opacity: interpolate(frame, [0, 5], [0, 0.2], {
-          extrapolateRight: "clamp",
-        }),
-      }}
-    >
-      <AbsoluteFill
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          transform: `rotateY(${rotationY}deg) rotateX(${rotationX}deg) rotateZ(${-rotation}rad)`,
-        }}
-      >
-        <Img
-          style={{
-            width: WIDTH,
-            height: HEIGHT,
-            marginTop: HEIGHT + offset,
-          }}
-          src={staticFile("shine.png")}
-        />
+    <AbsoluteFill style={style}>
+      <AbsoluteFill style={inner}>
+        <Img style={img} src={staticFile("shine.png")} />
       </AbsoluteFill>{" "}
       {showHelpers ? (
         <div
@@ -101,12 +106,30 @@ export const Shine: React.FC<z.infer<typeof shineSchema>> = ({
   );
 };
 
+export const ShineSequence: React.FC<{
+  rotationShake: number;
+  i: number;
+}> = ({ i, rotationShake }) => {
+  return (
+    <AbsoluteFill
+      style={{
+        transform: `translateY(200px)`,
+        scale: String(1.5),
+      }}
+    >
+      <Shine
+        rotation={random(i) * Math.PI + Math.PI / 2 + rotationShake}
+        showHelpers={false}
+      />
+    </AbsoluteFill>
+  );
+};
+
 export const Shines: React.FC<{
   xShake: number;
   yShake: number;
   rotationShake: number;
 }> = ({ xShake, yShake, rotationShake }) => {
-  const frame = useCurrentFrame();
   return (
     <AbsoluteFill
       style={{
@@ -117,30 +140,24 @@ export const Shines: React.FC<{
         }px)`,
       }}
     >
-      {new Array(100).fill(true).map((a, i) => {
-        if (frame < i * 3) {
-          return null;
-        }
-
-        if (frame > i * 3 + 10) {
-          return null;
-        }
-
+      {new Array(200).fill(true).map((a, i) => {
         return (
           // eslint-disable-next-line react/jsx-key
           <Sequence
             // eslint-disable-next-line react/no-array-index-key
             key={i}
-            from={i * 3}
+            from={i * 1.5}
             style={{
-              transform: `translateY(${200}px)`,
+              transform: `translateY(200px)`,
               scale: String(1.5),
             }}
             durationInFrames={10}
           >
-            <Shine
-              rotation={random(i) * Math.PI + Math.PI / 2 + rotationShake}
-              showHelpers={false}
+            <ShineSequence
+              // eslint-disable-next-line react/no-array-index-key
+              key={i}
+              i={i}
+              rotationShake={rotationShake}
             />
           </Sequence>
         );
