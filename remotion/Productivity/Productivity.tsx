@@ -1,6 +1,8 @@
 import {
   AbsoluteFill,
+  Audio,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -113,6 +115,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         display: "flex",
       }}
     >
+      <Audio src={staticFile("decelerate.mp3")} volume={0.8} />
       <TopDay
         values={[
           "Monday",

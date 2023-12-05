@@ -7,7 +7,6 @@ import {
   interpolate,
   Sequence,
   spring,
-  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
@@ -243,11 +242,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           return (
             // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit.delay}>
-              {audioHit.type === "shot" ? (
-                <Audio src={staticFile("laser-shoot.mp3")} />
-              ) : (
-                <Audio src={staticFile("ufo-explode-1.mp3")} />
-              )}
+              <Audio src={audioHit.source} />
             </Sequence>
           );
         })}

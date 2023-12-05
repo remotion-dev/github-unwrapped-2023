@@ -21,10 +21,13 @@ const wheelSpring = ({
     fps,
     frame,
     config: {
+      mass: 10,
       damping: 200,
+      stiffness: 200,
     },
-    durationInFrames: 30,
+    durationInFrames: 100,
     delay,
+    durationRestThreshold: 0.0001,
   });
 };
 

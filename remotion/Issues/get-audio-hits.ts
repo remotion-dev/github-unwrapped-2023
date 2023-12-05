@@ -1,3 +1,4 @@
+import { staticFile } from "remotion";
 import { MAXIMUM_NUMBER_OF_AUDIO_TAGS } from "../audio-tags";
 import type {
   ExplosionExpanded,
@@ -17,7 +18,13 @@ if (MAX_SHOTS + MAX_HITS > MAXIMUM_NUMBER_OF_AUDIO_TAGS - 1) {
 type AudioSample = {
   type: "shot" | "explosion";
   delay: number;
+  source: string;
 };
+
+export const SHOT_SOUNDS = [
+  staticFile("space-shot-1.mp3"),
+  staticFile("space-shot-2.mp3"),
+];
 
 export const getAudioHits = (
   shots: ShotWithShootDelay[],
@@ -38,12 +45,14 @@ export const getAudioHits = (
       return {
         type: "shot" as const,
         delay: shots[index].shootDelay,
+        source: SHOT_SOUNDS[index % SHOT_SOUNDS.length],
       };
     }),
     ...explosionSamples.map((index): AudioSample => {
       return {
         type: "explosion" as const,
         delay: explosions[index].explodeAfterFrames - 2,
+        source: staticFile("ufo-explode-1.mp3"),
       };
     }),
   ];
