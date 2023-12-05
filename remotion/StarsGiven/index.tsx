@@ -12,6 +12,7 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { isIosSafari } from "../Opening/TransparentVideo";
 import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
@@ -117,7 +118,9 @@ export const StarsGiven: React.FC<
         </AbsoluteFill>
       ) : null}
       <Noise translateX={0} translateY={0} />
-      <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
+      {isIosSafari() ? null : (
+        <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
+      )}
       {showHitWindow ? (
         <AbsoluteFill
           style={{

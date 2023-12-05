@@ -29,11 +29,12 @@ export const PrefetchProgress: React.FC<{
         >
           <Pie
             progress={progress}
-            strokeWidth={10}
+            strokeWidth={20}
             stroke="#353CA3"
             fill="transparent"
             radius={40}
             strokeLinecap="round"
+            closePath={false}
           />
         </div>
       </div>
