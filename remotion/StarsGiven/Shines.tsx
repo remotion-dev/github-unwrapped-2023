@@ -106,6 +106,7 @@ export const Shines: React.FC<{
   yShake: number;
   rotationShake: number;
 }> = ({ xShake, yShake, rotationShake }) => {
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill
       style={{
@@ -116,23 +117,31 @@ export const Shines: React.FC<{
         }px)`,
       }}
     >
-      {new Array(1000).fill(true).map((a, i) => {
-        const angle = random(i) * Math.PI + Math.PI / 2;
-        const height = 200;
+      {new Array(100).fill(true).map((a, i) => {
+        if (frame < i * 3) {
+          return null;
+        }
+
+        if (frame > i * 3 + 10) {
+          return null;
+        }
 
         return (
           // eslint-disable-next-line react/jsx-key
           <Sequence
             // eslint-disable-next-line react/no-array-index-key
             key={i}
-            from={i * 0.3}
+            from={i * 3}
             style={{
-              transform: `translateY(${height}px)`,
+              transform: `translateY(${200}px)`,
               scale: String(1.5),
             }}
             durationInFrames={10}
           >
-            <Shine rotation={angle + rotationShake} showHelpers={false} />
+            <Shine
+              rotation={random(i) * Math.PI + Math.PI / 2 + rotationShake}
+              showHelpers={false}
+            />
           </Sequence>
         );
       })}
