@@ -1,0 +1,9 @@
+.rocketPicker {
+  scale: 1;
+  transition: scale 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.rocketPicker:hover {
+  scale: 1.1;
+}

@@ -4,8 +4,8 @@ import { DownloadIcon } from "../../../icons/DownloadIcon";
 import type { compositionSchema } from "../../../src/config";
 import { Button } from "../../Button/Button";
 import { FurtherActions } from "../Actions/FurtherActions";
-import { RocketPicker } from "../Actions/RocketPicker";
 import { SharingActions } from "../Actions/SharingActions";
+import { RocketPicker } from "../RocketSelection/RocketPicker";
 import type { RocketColor } from "../page";
 import styles from "./styles.module.css";
 

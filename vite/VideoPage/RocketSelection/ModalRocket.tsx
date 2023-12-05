@@ -13,6 +13,18 @@ const rocketStyle: React.CSSProperties = {
   cursor: "pointer",
 };
 
+const isIosSafari = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const isSafari = Boolean(
+    navigator.userAgent.match(/Version\/[\d.]+.*Safari/),
+  );
+  const isChrome = Boolean(navigator.userAgent.match(/CriOS\//));
+  return isSafari || isChrome;
+};
+
 export const ModalRocket: React.FC<{
   setRocket: React.Dispatch<SetStateAction<RocketColor>>;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -25,6 +37,12 @@ export const ModalRocket: React.FC<{
         ? "/rocket-side-blue.png"
         : "/rocket-side-yellow.png";
   }, [rocket]);
+
+  const safariSrc =
+    "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4";
+  const otherSrc =
+    "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm";
+  const fireSource = isIosSafari() ? safariSrc : otherSrc;
 
   const handleClick = useCallback(
     (selectedRocket: RocketColor) => {
@@ -40,6 +58,7 @@ export const ModalRocket: React.FC<{
       onClick={() => handleClick(rocket)}
     >
       <img src={source} style={rocketStyle} />
+      <video src={fireSource} muted style={{ height: 0 }} />
     </div>
   );
 };

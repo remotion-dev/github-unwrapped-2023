@@ -9,11 +9,17 @@ const modalStyle: React.CSSProperties = {
   zIndex: 10,
   borderRadius: 16,
   boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.04)",
-  position: "fixed",
   top: "45%",
   left: "10%",
   padding: 16,
   opacity: 1,
+};
+
+const modalWrapper: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 9,
 };
 
 const spacer: React.CSSProperties = {
@@ -29,10 +35,9 @@ export const RocketPickerModal: React.FC<{
   const modalRef = useRef<HTMLDivElement>(null);
 
   const dynamicBackground: React.CSSProperties = useMemo(() => {
-    console.log("isModalOpen", isModalOpen);
     return {
+      ...modalWrapper,
       backgroundColor: isModalOpen ? "rgba(0,0,0,0.5)" : "transparent",
-      zIndex: 9,
     };
   }, [isModalOpen]);
 
@@ -56,7 +61,6 @@ export const RocketPickerModal: React.FC<{
     };
   }, [isModalOpen, setIsModalOpen]);
 
-  console.log("isModalOpen: ", isModalOpen);
   return (
     <AbsoluteFill style={dynamicBackground}>
       <div ref={modalRef} style={modalStyle}>
