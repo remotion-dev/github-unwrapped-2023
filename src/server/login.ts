@@ -9,6 +9,7 @@ import { getStatsFromGitHub } from "./fetch-stats.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();
+
   const query = z
     .object({
       code: z.string(),

@@ -87,6 +87,8 @@ export const progressEndPoint = async (
   request: Request,
   response: Response,
 ) => {
+  if (request.method === "OPTIONS") return response.end();
+
   const { username, theme } = ProgressRequest.parse(request.body);
 
   const render = await findRender({ username, theme });

@@ -1,5 +1,5 @@
 import { AwsRegion } from "@remotion/lambda";
-import type { WithId } from "mongodb";
+import type { ObjectId, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
@@ -45,11 +45,11 @@ export type Finality =
     };
 
 export type Render = {
-  renderId: string;
+  renderId: string | null;
   region: AwsRegion;
   username: string;
   theme: string;
-  bucketName: string;
+  bucketName: string | null;
   finality: Finality | null;
   functionName: string;
   account: number;
@@ -114,9 +114,17 @@ export const findRender = async (params: {
 }): Promise<WithId<Render> | null> => {
   const collection = await getRendersCollection();
   const value = await collection.findOne({
-    lowercasedUsername: params.username.toLowerCase(),
+    username: params.username.toLowerCase(),
     theme: params.theme,
   });
+  return value;
+};
+
+export const findRenderById = async (
+  id: ObjectId,
+): Promise<WithId<Render> | null> => {
+  const collection = await getRendersCollection();
+  const value = await collection.findOne(id);
   return value;
 };
 
