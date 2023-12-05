@@ -140,7 +140,6 @@ export const Shines: React.FC<{
   const sequences = useMemo(() => {
     return new Array(200).fill(true).map((a, i) => {
       return (
-        // eslint-disable-next-line react/jsx-key
         <Sequence
           // eslint-disable-next-line react/no-array-index-key
           key={i}
