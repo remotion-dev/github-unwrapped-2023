@@ -1,5 +1,6 @@
 .wrapper {
-  border: 1.5px solid rgba(55, 57, 69, 1);
+  border: 1.5px solid;
+  border-color: rgba(55, 57, 69, 1);
   color: #e7e7e7;
   height: 56px;
   display: flex;
@@ -10,13 +11,17 @@
   padding: 4px;
   cursor: pointer;
   user-select: none;
+  font-weight: 500;
+  background-color: rgba(42, 44, 61, 1);
   transition:
     opacity 0.2s ease-in-out,
-    background-color 0.1s ease-in-out,
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
     color 0.1s ease-in-out;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(52, 55, 77, 1);
+    border-color: rgba(71, 74, 89, 1);
     color: white;
   }
 }
