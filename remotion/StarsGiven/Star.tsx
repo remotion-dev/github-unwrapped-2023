@@ -1,7 +1,10 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -12,11 +15,19 @@ export const HIT_RADIUS = 450;
 
 export const ANIMATION_DURATION_PER_STAR = 20;
 
+export const WINDSHIELD_HIT_SOUNDS = [
+  staticFile("impact-stone-1.mp3"),
+  staticFile("impact-stone-2.mp3"),
+  staticFile("impact-stone-3.mp3"),
+  staticFile("impact-stone-4.mp3"),
+  staticFile("impact-stone-5.mp3"),
+];
+
 export const Star: React.FC<{
   duration: number;
   angle: number;
   showDots: boolean;
-  hitSpaceship: boolean;
+  hitSpaceship: null | { index: number };
 }> = ({ duration, angle, showDots, hitSpaceship }) => {
   const frame = useCurrentFrame();
   const { height, width } = useVideoConfig();
@@ -45,7 +56,7 @@ export const Star: React.FC<{
 
   const scale = justScale + extraScale;
 
-  const shouldDisplay = hitSpaceship
+  const shouldDisplayHit = hitSpaceship
     ? frame < stop + 6
     : scale < 1000 && scale > 0;
 
@@ -57,7 +68,7 @@ export const Star: React.FC<{
         alignItems: "center",
       }}
     >
-      {shouldDisplay ? (
+      {shouldDisplayHit ? (
         <AbsoluteFill
           style={{
             display: "flex",
@@ -69,6 +80,18 @@ export const Star: React.FC<{
           }}
         >
           <StarSprite burstFrame={hitSpaceship ? stop : undefined} />
+          {hitSpaceship ? (
+            <Sequence>
+              <Audio
+                src={
+                  WINDSHIELD_HIT_SOUNDS[
+                    hitSpaceship.index % WINDSHIELD_HIT_SOUNDS.length
+                  ]
+                }
+                volume={0.2}
+              />
+            </Sequence>
+          ) : null}
         </AbsoluteFill>
       ) : null}
       {showDots ? (

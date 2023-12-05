@@ -146,7 +146,11 @@ export const StarsGiven: React.FC<
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
             duration={ANIMATION_DURATION_PER_STAR}
             showDots={showDots}
-            hitSpaceship={hitIndices.includes(index)}
+            hitSpaceship={
+              hitIndices.includes(index)
+                ? { index: hitIndices.indexOf(index) }
+                : null
+            }
           />
         </Sequence>
       ))}
