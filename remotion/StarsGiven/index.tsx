@@ -12,9 +12,8 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
-import { STAR_DURATION } from "../StarSprite";
+import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
-import { DESCRIPTION_SEQUENCE_DURATION } from "./Description";
 import { Shines } from "./Shines";
 import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
 
@@ -64,18 +63,19 @@ export const getHitIndexes = ({
 
 export const starFlyDuration = (starsDisplayed: number) => {
   const actualStars = getActualStars(starsDisplayed);
-  return (actualStars - 1) * TIME_INBETWEEN_STARS + STAR_DURATION;
+  return (
+    (actualStars - 1) * TIME_INBETWEEN_STARS +
+    ANIMATION_DURATION_PER_STAR +
+    STAR_ANIMATION_DELAY +
+    STAR_EXPLODE_DURATION
+  );
 };
 
 export const starsGivenCalculateMetadata: CalculateMetadataFunction<
   z.infer<typeof starsGivenSchema>
 > = ({ props }) => {
   return {
-    durationInFrames:
-      ANIMATION_DURATION_PER_STAR +
-      starFlyDuration(props.starsGiven) +
-      STAR_ANIMATION_DELAY +
-      DESCRIPTION_SEQUENCE_DURATION,
+    durationInFrames: starFlyDuration(props.starsGiven),
   };
 };
 

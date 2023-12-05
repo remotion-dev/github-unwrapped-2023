@@ -38,7 +38,7 @@ import {
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { SponsorshipsScene } from "./Sponsorships";
-import { STAR_DURATION, StarSprite } from "./StarSprite";
+import { STAR_EXPLODE_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
@@ -292,7 +292,7 @@ export const RemotionRoot: React.FC = () => {
           return {
             durationInFrames:
               (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-              STAR_DURATION +
+              STAR_EXPLODE_DURATION +
               DESCRIPTION_SEQUENCE_DURATION +
               100,
           };
