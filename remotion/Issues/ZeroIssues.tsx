@@ -54,6 +54,12 @@ export const UfoPosition: React.FC<{
 };
 
 export const ZeroIssues: React.FC = () => {
+  const frame = useCurrentFrame();
+
+  const opacity = interpolate(frame, [60, 80, 120, 140], [0, 1, 1, 0], {
+    extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill
       style={{
@@ -69,6 +75,17 @@ export const ZeroIssues: React.FC = () => {
           index={i}
         />
       ))}
+      <div
+        style={{
+          fontFamily: "Mona Sans",
+          fontWeight: "bold",
+          fontSize: 45,
+          marginTop: 400,
+          opacity,
+        }}
+      >
+        I take no issue with that.
+      </div>
     </AbsoluteFill>
   );
 };

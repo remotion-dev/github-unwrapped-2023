@@ -223,41 +223,47 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           </AbsoluteFill>
         ) : null}
       </AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          transform: `translateY(${rocketOffset}px)`,
-        }}
-      >
+      {totalIssues > 0 ? (
         <AbsoluteFill
           style={{
-            transform: `translateX(${interpolate(exit, [0, 1], [0, -500])}px)`,
+            transform: `translateY(${rocketOffset}px)`,
           }}
         >
-          <IssueGridLeft />
-          <IssueNumber
-            align="left"
-            label="Opened"
-            currentNumber={Math.round(currentNumber)}
-            max={totalIssues}
-          />
+          <AbsoluteFill
+            style={{
+              transform: `translateX(${interpolate(
+                exit,
+                [0, 1],
+                [0, -500],
+              )}px)`,
+            }}
+          >
+            <IssueGridLeft />
+            <IssueNumber
+              align="left"
+              label="Opened"
+              currentNumber={Math.round(currentNumber)}
+              max={totalIssues}
+            />
+          </AbsoluteFill>
+          <AbsoluteFill
+            style={{
+              transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
+            }}
+          >
+            <IssueGridRight />
+            <IssueNumber
+              align="right"
+              label="Closed"
+              currentNumber={Math.min(
+                closedIssues,
+                Math.round(closedIssuesSoFar.length * (1 / factor)),
+              )}
+              max={closedIssues}
+            />
+          </AbsoluteFill>
         </AbsoluteFill>
-        <AbsoluteFill
-          style={{
-            transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
-          }}
-        >
-          <IssueGridRight />
-          <IssueNumber
-            align="right"
-            label="Closed"
-            currentNumber={Math.min(
-              closedIssues,
-              Math.round(closedIssuesSoFar.length * (1 / factor)),
-            )}
-            max={closedIssues}
-          />
-        </AbsoluteFill>
-      </AbsoluteFill>
+      ) : null}
     </AbsoluteFill>
   );
 };
