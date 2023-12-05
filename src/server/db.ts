@@ -1,3 +1,4 @@
+import { AwsRegion } from "@remotion/lambda";
 import type { WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
@@ -31,6 +32,33 @@ const mongoUrl = () => {
 
 const clientPromise = new MongoClient(mongoUrl()).connect();
 
+export type Finality =
+  | {
+      type: "success";
+      url: string;
+      outputSize: number;
+    }
+  | {
+      type: "error";
+      errors: string;
+    };
+
+export type Render = {
+  renderId: string;
+  region: AwsRegion;
+  username: string;
+  theme: string;
+  bucketName: string;
+  finality: Finality | null;
+  functionName: string;
+  account: number;
+};
+
+const getRendersCollection = async () => {
+  const client = await clientPromise;
+  return client.db(backendCredentials().DB_NAME).collection<Render>("renders");
+};
+
 const getStatsCollection = async () => {
   const client = await clientPromise;
   return client
@@ -60,6 +88,35 @@ export const saveEmailAdress = async (email: string) => {
       upsert: true,
     },
   );
+};
+
+export const saveRender = async (render: Render) => {
+  const coll = await getRendersCollection();
+  await coll.updateOne(
+    {
+      region: render.region,
+      username: render.username.toLowerCase(),
+      theme: render.theme,
+    },
+    {
+      $set: render,
+    },
+    {
+      upsert: true,
+    },
+  );
+};
+
+export const findRender = async (params: {
+  username: string;
+  theme: string;
+}): Promise<WithId<Render> | null> => {
+  const collection = await getRendersCollection();
+  const value = await collection.findOne({
+    lowercasedUsername: params.username.toLowerCase(),
+    theme: params.theme,
+  });
+  return value;
 };
 
 export const getEmailFromDb = async (email: string) => {

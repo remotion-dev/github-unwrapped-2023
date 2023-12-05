@@ -1,11 +1,10 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
   LanguagesEnum,
   PlanetEnum,
-  accentColorValues,
   type compositionSchema,
   type languageSchema,
 } from "../../src/config";
@@ -60,8 +59,8 @@ const computeCompositionParameters = (
 ): CompositionParameters | null => {
   if (userStats === null) return null;
 
-  const accentColor =
-    accentColorValues[random(userStats.lowercasedUsername + "accent")];
+  // const accentColor =
+  //   accentColorValues[random(userStats.lowercasedUsername + "accent")];
 
   return {
     login: userStats.username,
@@ -95,7 +94,7 @@ const computeCompositionParameters = (
       random(userStats.lowercasedUsername + "startAngle") > 0.5
         ? "left"
         : "right",
-    accentColor,
+    accentColor: "blue",
   };
 };
 
@@ -113,6 +112,22 @@ export const UserPage = () => {
   const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
+
+  useEffect(() => {
+    if (inputProps) {
+      console.log(inputProps, window.__USER__.username);
+      fetch("/api/render", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputProps,
+          username: window.__USER__.username,
+        }),
+      });
+    }
+  }, [inputProps]);
 
   if (inputProps === null) {
     return <NotFound />;

@@ -122,6 +122,11 @@ export const compositionSchema = z.object({
 });
 
 export const RenderRequest = z.object({
-  id: z.string(),
+  username: z.string(),
   inputProps: compositionSchema,
+});
+
+export const ProgressRequest = z.object({
+  username: z.string(),
+  theme: z.string(),
 });

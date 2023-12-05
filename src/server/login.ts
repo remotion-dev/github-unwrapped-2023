@@ -46,8 +46,6 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     username: null,
   });
 
-  console.log(stats);
-
   await insertProfileStats(stats);
 
   return response.redirect(`/${stats.username}`);

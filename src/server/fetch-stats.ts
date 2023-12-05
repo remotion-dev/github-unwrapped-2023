@@ -77,12 +77,6 @@ export const getStatsFromGitHub = async ({
 }): Promise<ProfileStats> => {
   const fetchedAt = Date.now();
 
-  console.log({
-    username,
-    token,
-    loggedInWithGitHub,
-  });
-
   const baseData = await fetchFromGitHub<BaseQueryResponse>({
     username,
     token,
@@ -140,7 +134,6 @@ export const getStatsFromGitHub = async ({
     }))
     .slice(0, 3);
 
-  console.log(commits);
   const productivity = getMostProductive(commits);
 
   const bestHours = getTimesOfDay(commits);
@@ -161,8 +154,6 @@ export const getStatsFromGitHub = async ({
       };
     },
   );
-
-  console.log(graphData);
 
   return {
     totalPullRequests: pullRequestData.length,
