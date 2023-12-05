@@ -8,9 +8,21 @@ import {
 import type { z } from "zod";
 import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
 import type { starsGivenSchema } from "../StarsGiven";
-import { StarsGiven } from "../StarsGiven";
+import { StarsGiven, starFlyDuration } from "../StarsGiven";
 
-const ZOOM_DELAY = 120;
+export const TABLET_SCENE_HIDE_ANIMATION = 45;
+
+export const getStarsAndProductivityDuration = ({
+  starsGiven,
+}: {
+  starsGiven: number;
+}) => {
+  return (
+    starFlyDuration({ starsGiven }) +
+    TABLET_SCENE_LENGTH +
+    TABLET_SCENE_HIDE_ANIMATION
+  );
+};
 
 export const StarsAndProductivity: React.FC<
   z.infer<typeof starsGivenSchema>
@@ -30,11 +42,13 @@ export const StarsAndProductivity: React.FC<
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  const zoomDelay = starFlyDuration({ starsGiven });
+
   const zoomTransition =
     spring({
       fps,
       frame,
-      delay: ZOOM_DELAY,
+      delay: zoomDelay,
       config: {
         damping: 200,
       },
@@ -43,11 +57,11 @@ export const StarsAndProductivity: React.FC<
     spring({
       fps,
       frame,
-      delay: ZOOM_DELAY + TABLET_SCENE_LENGTH,
+      delay: zoomDelay + TABLET_SCENE_LENGTH,
       config: {
         damping: 200,
       },
-      durationInFrames: 45,
+      durationInFrames: TABLET_SCENE_HIDE_ANIMATION,
     });
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;
@@ -72,7 +86,7 @@ export const StarsAndProductivity: React.FC<
         totalPullRequests={totalPullRequests}
         login={login}
       />
-      <Sequence from={ZOOM_DELAY}>
+      <Sequence from={zoomDelay}>
         <Tablet
           weekday={topWeekday}
           enterProgress={zoomTransition}

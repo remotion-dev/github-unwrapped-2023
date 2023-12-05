@@ -61,8 +61,9 @@ export const getHitIndexes = ({
   return Array.from(hitIndexes);
 };
 
-export const starFlyDuration = (starsDisplayed: number) => {
-  const actualStars = getActualStars(starsDisplayed);
+export const starFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
+  const actualStars = getActualStars(starsGiven);
+
   return (
     (actualStars - 1) * TIME_INBETWEEN_STARS +
     ANIMATION_DURATION_PER_STAR +
@@ -75,7 +76,7 @@ export const starsGivenCalculateMetadata: CalculateMetadataFunction<
   z.infer<typeof starsGivenSchema>
 > = ({ props }) => {
   return {
-    durationInFrames: starFlyDuration(props.starsGiven),
+    durationInFrames: starFlyDuration({ starsGiven: props.starsGiven }),
   };
 };
 

@@ -19,7 +19,10 @@ import {
   OPENING_SCENE_OUT_OVERLAP,
   OpeningScene,
 } from "./Opening";
-import { StarsAndProductivity } from "./StarsAndProductivity";
+import {
+  StarsAndProductivity,
+  getStarsAndProductivityDuration,
+} from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 
@@ -27,12 +30,12 @@ type Schema = z.infer<typeof compositionSchema>;
 
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
-const STARS_AND_PRODUCTIVITY = 400;
 
 export const calculateDuration = ({
   topLanguages,
   issuesClosed,
   issuesOpened,
+  starsGiven,
 }: z.infer<typeof compositionSchema>) => {
   const topLanguagesScene = topLanguages
     ? getDurationOfAllPlanets({
@@ -47,7 +50,7 @@ export const calculateDuration = ({
     ISSUES_EXIT_DURATION +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
-    STARS_AND_PRODUCTIVITY +
+    getStarsAndProductivityDuration({ starsGiven }) +
     OPENING_SCENE_LENGTH -
     OPENING_SCENE_OUT_OVERLAP
   );
@@ -135,7 +138,7 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence
-          durationInFrames={STARS_AND_PRODUCTIVITY}
+          durationInFrames={getStarsAndProductivityDuration({ starsGiven })}
           offset={-ISSUES_EXIT_DURATION}
         >
           <StarsAndProductivity
