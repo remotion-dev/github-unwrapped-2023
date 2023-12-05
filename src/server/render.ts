@@ -1,14 +1,15 @@
-import { AwsRegion, getRegions } from "@remotion/lambda";
+import type { AwsRegion } from "@remotion/lambda";
+import { getRegions } from "@remotion/lambda";
 import {
   renderMediaOnLambda,
   speculateFunctionName,
 } from "@remotion/lambda/client";
-import { TIMEOUT } from "dns";
 import type { Request, Response } from "express";
-import { DISK, RAM, RenderRequest, SITE_NAME } from "../config.js";
+import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
-import { Render, findRender, saveRender } from "./db.js";
+import type { Render } from "./db.js";
+import { findRender, saveRender } from "./db.js";
 import { getProgress } from "./progress.js";
 
 const getRandomRegion = (): AwsRegion => {
@@ -16,7 +17,9 @@ const getRandomRegion = (): AwsRegion => {
 };
 
 export const renderEndPoint = async (request: Request, response: Response) => {
-  if (request.method === "OPTIONS") return response.end();
+  if (request.method === "OPTIONS") {
+    return response.end();
+  }
 
   const { username, inputProps } = RenderRequest.parse(request.body);
 
@@ -45,24 +48,27 @@ export const renderEndPoint = async (request: Request, response: Response) => {
 
   const theme = inputProps.accentColor;
 
-  const { renderId, bucketName } = await renderMediaOnLambda({
-    codec: "h264",
-    functionName,
-    region,
-    serveUrl: SITE_NAME,
-    composition: "Main",
-    inputProps: inputProps,
-    downloadBehavior: {
-      type: "download",
-      fileName: "video.mp4",
-    },
-  });
+  const { renderId, bucketName, cloudWatchLogs, folderInS3Console } =
+    await renderMediaOnLambda({
+      codec: "h264",
+      functionName,
+      region,
+      serveUrl: SITE_NAME,
+      composition: "Main",
+      inputProps,
+      downloadBehavior: {
+        type: "download",
+        fileName: "video.mp4",
+      },
+      logLevel: "verbose",
+    });
+  console.log(cloudWatchLogs, folderInS3Console);
 
   const newRender: Render = {
     region,
     bucketName,
     renderId,
-    username,
+    username: username.toLowerCase(),
     functionName,
     theme,
     account,
