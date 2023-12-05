@@ -1,3 +1,4 @@
+import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
   Sequence,
@@ -22,6 +23,16 @@ export const getStarsAndProductivityDuration = ({
     TABLET_SCENE_LENGTH +
     TABLET_SCENE_HIDE_ANIMATION
   );
+};
+
+export const starsAndProductivityCalculateMetadata: CalculateMetadataFunction<
+  z.infer<typeof starsGivenSchema>
+> = ({ props }) => {
+  return {
+    durationInFrames: getStarsAndProductivityDuration({
+      starsGiven: props.starsGiven,
+    }),
+  };
 };
 
 export const StarsAndProductivity: React.FC<

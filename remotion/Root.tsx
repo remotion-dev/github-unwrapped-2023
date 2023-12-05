@@ -38,16 +38,16 @@ import {
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { SponsorshipsScene } from "./Sponsorships";
-import { STAR_EXPLODE_DURATION, StarSprite } from "./StarSprite";
-import { StarsAndProductivity } from "./StarsAndProductivity";
+import { StarSprite } from "./StarSprite";
 import {
-  MAX_STARS,
+  StarsAndProductivity,
+  starsAndProductivityCalculateMetadata,
+} from "./StarsAndProductivity";
+import {
   StarsGiven,
-  TIME_INBETWEEN_STARS,
   starsGivenCalculateMetadata,
   starsGivenSchema,
 } from "./StarsGiven";
-import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsGiven/Description";
 import { Shine, Shines, shineSchema } from "./StarsGiven/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
@@ -287,16 +287,7 @@ export const RemotionRoot: React.FC = () => {
           totalPullRequests: 614,
           login: "JonnyBurger",
         }}
-        calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
-          return {
-            durationInFrames:
-              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-              STAR_EXPLODE_DURATION +
-              DESCRIPTION_SEQUENCE_DURATION +
-              100,
-          };
-        }}
+        calculateMetadata={starsAndProductivityCalculateMetadata}
       />
       <Composition
         id={"Productivity"}
