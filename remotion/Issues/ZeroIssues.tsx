@@ -13,7 +13,7 @@ import { UfoSvg } from "./UfoSvg";
 const UFOS = 9;
 export const ZERO_ISSUES_DURATION = 140;
 
-export const UfoPosition: React.FC<{
+const UfoPosition: React.FC<{
   index: number;
 }> = ({ index }) => {
   const frame = useCurrentFrame();

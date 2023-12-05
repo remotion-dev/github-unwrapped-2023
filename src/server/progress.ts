@@ -9,9 +9,7 @@ import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Finality, Render } from "./db.js";
 import { findRender, updateRender } from "./db.js";
 
-export const getFinality = (
-  renderProgress: RenderProgress,
-): Finality | null => {
+const getFinality = (renderProgress: RenderProgress): Finality | null => {
   if (renderProgress.outputFile) {
     return {
       type: "success",

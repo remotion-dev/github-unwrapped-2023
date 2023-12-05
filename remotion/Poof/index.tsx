@@ -268,7 +268,7 @@ const BIGGEST_HEIGHT = 284;
 
 export const POOF_DURATION = 6;
 
-export const PoofSprite: React.FC = () => {
+const PoofSprite: React.FC = () => {
   const frame = Math.round(useCurrentFrame());
 
   return (
