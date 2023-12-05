@@ -1,5 +1,5 @@
 import type { AwsRegion } from "@remotion/lambda";
-import type { WithId } from "mongodb";
+import type { ObjectId, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
@@ -91,7 +91,28 @@ export const saveEmailAdress = async (email: string) => {
   );
 };
 
-export const saveRender = async (render: Render) => {
+export const getRenders = async (params: {
+  username: string;
+  theme: string;
+}) => {
+  const coll = await getRendersCollection();
+  await coll.find({
+    username: params.username.toLowerCase(),
+    theme: params.theme,
+  });
+};
+
+export const deleteRender = async (_id: ObjectId) => {
+  const coll = await getRendersCollection();
+  await coll.deleteOne(_id);
+};
+
+export const saveRender = async (render: Render, _id: ObjectId) => {
+  const coll = await getRendersCollection();
+  await coll.insertOne({ ...render, _id });
+};
+
+export const updateRender = async (render: Render) => {
   const coll = await getRendersCollection();
   await coll.updateOne(
     {
@@ -155,4 +176,7 @@ export const getProfileStatsFromCache = async (
 export const ensureIndices = async () => {
   const stats = await getStatsCollection();
   await stats.createIndex({ lowercasedUsername: 1 }, { unique: true });
+
+  const renders = await getRendersCollection();
+  await renders.createIndex({ username: 1, theme: 1 }, { unique: true });
 };

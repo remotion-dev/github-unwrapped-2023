@@ -5,11 +5,12 @@ import {
   speculateFunctionName,
 } from "@remotion/lambda/client";
 import type { Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Render } from "./db.js";
-import { findRender, saveRender } from "./db.js";
+import { findRender, saveRender, updateRender } from "./db.js";
 import { getProgress } from "./progress.js";
 
 const getRandomRegion = (): AwsRegion => {
@@ -48,6 +49,21 @@ export const renderEndPoint = async (request: Request, response: Response) => {
 
   const theme = inputProps.accentColor;
 
+  const _id = new ObjectId();
+
+  const newRender: Render = {
+    region,
+    bucketName: null,
+    renderId: null,
+    username: username.toLowerCase(),
+    functionName,
+    theme,
+    account,
+    finality: null,
+  };
+
+  await saveRender(newRender, _id);
+
   const { renderId, bucketName, cloudWatchLogs, folderInS3Console } =
     await renderMediaOnLambda({
       codec: "h264",
@@ -62,22 +78,18 @@ export const renderEndPoint = async (request: Request, response: Response) => {
       },
       logLevel: "verbose",
     });
+
   console.log(cloudWatchLogs, folderInS3Console);
 
-  const newRender: Render = {
-    region,
+  const updatedRender: Render = {
+    ...newRender,
     bucketName,
     renderId,
-    username: username.toLowerCase(),
-    functionName,
-    theme,
-    account,
-    finality: null,
   };
 
-  await saveRender(newRender);
+  await updateRender(updatedRender);
 
-  return getProgress(newRender).then((progress) => {
+  return getProgress(updatedRender).then((progress) => {
     response.json(progress);
   });
 };

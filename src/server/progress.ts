@@ -7,7 +7,7 @@ import type { Request, Response } from "express";
 import { DISK, ProgressRequest, RAM, TIMEOUT } from "../config.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Finality, Render } from "./db.js";
-import { findRender, saveRender } from "./db.js";
+import { findRender, updateRender } from "./db.js";
 
 export const getFinality = (
   renderProgress: RenderProgress,
@@ -56,7 +56,7 @@ export const getProgress = async (render: Render) => {
 
     console.log(JSON.stringify(renderProgress));
 
-    await saveRender({
+    await updateRender({
       ...render,
       finality,
     });
