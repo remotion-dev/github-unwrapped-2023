@@ -14,7 +14,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import Background from "./Background";
 import Foreground from "./Foreground";
-import { TakeOff } from "./TakeOff";
+import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
 import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
 
@@ -26,7 +26,7 @@ const LAUNCH_SOUND = staticFile(
 );
 
 export const getOpeningAssetsToPrefetch = () => {
-  return [LAUNCH_SOUND];
+  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch()];
 };
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({

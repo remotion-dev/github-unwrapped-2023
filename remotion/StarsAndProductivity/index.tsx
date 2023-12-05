@@ -11,7 +11,7 @@ import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
 import type { starsGivenSchema } from "../StarsGiven";
 import { StarsGiven, starFlyDuration } from "../StarsGiven";
 
-export const TABLET_SCENE_HIDE_ANIMATION = 45;
+const TABLET_SCENE_HIDE_ANIMATION = 45;
 
 export const getStarsAndProductivityDuration = ({
   starsGiven,

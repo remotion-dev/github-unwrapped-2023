@@ -17,9 +17,9 @@ import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
 import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
 
-export const MAX_STARS = 50;
-export const TIME_INBETWEEN_STARS = 10;
-export const STAR_ANIMATION_DELAY = 20;
+const MAX_STARS = 50;
+const TIME_INBETWEEN_STARS = 10;
+const STAR_ANIMATION_DELAY = 20;
 
 export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
@@ -35,11 +35,11 @@ export const starsGivenSchema = z.object({
   login: z.string(),
 });
 
-export const getActualStars = (starsGiven: number) => {
+const getActualStars = (starsGiven: number) => {
   return Math.max(5, Math.min(starsGiven * 2, MAX_STARS));
 };
 
-export const getHitIndexes = ({
+const getHitIndexes = ({
   starsDisplayed,
   seed,
   starsGiven,

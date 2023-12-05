@@ -16,7 +16,7 @@ export const HIT_RADIUS = 450;
 
 export const ANIMATION_DURATION_PER_STAR = 20;
 
-export const WINDSHIELD_HIT_SOUNDS = [
+const WINDSHIELD_HIT_SOUNDS = [
   staticFile("impact-stone-1.mp3"),
   staticFile("impact-stone-2.mp3"),
   staticFile("impact-stone-3.mp3"),

@@ -108,7 +108,7 @@ export const Shine: React.FC<z.infer<typeof shineSchema>> = ({
   );
 };
 
-export const ShineSequence: React.FC<{
+const ShineSequence: React.FC<{
   rotationShake: number;
   i: number;
 }> = ({ i, rotationShake }) => {

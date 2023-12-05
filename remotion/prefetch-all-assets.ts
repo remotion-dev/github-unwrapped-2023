@@ -3,7 +3,7 @@ import type { Planet, Rocket } from "../src/config";
 import { getIssuesSoundsToPrefetch } from "./Issues";
 import { getLandingAssetsToPrefetch } from "./Landing";
 import { getMainAssetsToPrefetch } from "./Main";
-import { getTakeOffAssetToPrefetch } from "./Opening/TakeOff";
+import { getOpeningAssetsToPrefetch } from "./Opening";
 import { getProductivityAssetToPrefetch } from "./Productivity/Productivity";
 import { getSideRocketSource } from "./Spaceship";
 import { starsAssetsToPreload } from "./StarsGiven/Star";
@@ -23,9 +23,9 @@ export const collectAllAssetsToPrefetch = ({
     sideRocket,
     frontRocket,
     ...getMainAssetsToPrefetch(),
-    ...getTakeOffAssetToPrefetch(),
-    ...starsAssetsToPreload(),
+    ...getOpeningAssetsToPrefetch(),
     ...getIssuesSoundsToPrefetch(),
+    ...starsAssetsToPreload(),
     ...getProductivityAssetToPrefetch(),
     ...getLandingAssetsToPrefetch({ planetType }),
   ];
