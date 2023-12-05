@@ -1,11 +1,12 @@
+import type { RenderProgress } from "@remotion/lambda/client";
 import {
-  RenderProgress,
   getRenderProgress,
   speculateFunctionName,
 } from "@remotion/lambda/client";
 import type { Request, Response } from "express";
 import { DISK, ProgressRequest, RAM, TIMEOUT } from "../config.js";
-import { Finality, Render, findRender, saveRender } from "./db.js";
+import type { Finality, Render } from "./db.js";
+import { findRender, saveRender } from "./db.js";
 
 export const getFinality = (
   renderProgress: RenderProgress,
@@ -17,12 +18,14 @@ export const getFinality = (
       outputSize: renderProgress.outputSizeInBytes as number,
     };
   }
+
   if (renderProgress.fatalErrorEncountered) {
     return {
       type: "error",
       errors: renderProgress.errors[0].stack,
     };
   }
+
   return null;
 };
 
