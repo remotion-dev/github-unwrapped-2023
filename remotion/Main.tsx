@@ -65,6 +65,15 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
   };
 };
 
+export const getSoundtrack = () => {
+  // TODO: License
+  return staticFile("smartsound-wired.mp3");
+};
+
+export const getMainAssetsToPrefetch = () => {
+  return [getSoundtrack()];
+};
+
 export const Main: React.FC<Schema> = ({
   corner,
   topLanguages,
@@ -92,10 +101,10 @@ export const Main: React.FC<Schema> = ({
       }}
     >
       {frame > 1460 && planet === "Gold" ? (
+        // TODO: Prefetch and add license
         <Audio src={staticFile("church_chior.mp3")} />
-      ) : (
-        <Audio src={staticFile("smartsound-wired.mp3")} />
-      )}
+      ) : null}
+      <Audio src={getSoundtrack()} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene

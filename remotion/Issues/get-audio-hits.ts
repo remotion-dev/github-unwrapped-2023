@@ -26,6 +26,12 @@ export const SHOT_SOUNDS = [
   staticFile("space-shot-2.mp3"),
 ];
 
+export const EXPLODE_SOUNDS = [staticFile("ufo-explode-1.mp3")];
+
+export const getIssueSounds = () => {
+  return [...SHOT_SOUNDS, ...EXPLODE_SOUNDS];
+};
+
 export const getAudioHits = (
   shots: ShotWithShootDelay[],
   explosions: ExplosionExpanded[],
@@ -52,7 +58,7 @@ export const getAudioHits = (
       return {
         type: "explosion" as const,
         delay: explosions[index].explodeAfterFrames - 2,
-        source: staticFile("ufo-explode-1.mp3"),
+        source: EXPLODE_SOUNDS[0],
       };
     }),
   ];

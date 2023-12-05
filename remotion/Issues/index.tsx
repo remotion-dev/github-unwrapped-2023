@@ -18,7 +18,7 @@ import {
   WIGGLE_EXIT_SPRING_CONFIG,
 } from "../TopLanguages/PlaneScaleWiggle";
 import { getTotalShootDuration, TIME_BEFORE_SHOOTING } from "./constants";
-import { getAudioHits } from "./get-audio-hits";
+import { getAudioHits, getIssueSounds } from "./get-audio-hits";
 import {
   addShootDelays,
   getExplosions,
@@ -75,6 +75,10 @@ export const calculateIssueDuration: CalculateMetadataFunction<
       issuesOpened: openIssues,
     }),
   };
+};
+
+export const getIssuesSoundsToPrefetch = () => {
+  return [...getIssueSounds()];
 };
 
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({

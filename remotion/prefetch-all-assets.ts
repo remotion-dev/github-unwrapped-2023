@@ -1,14 +1,28 @@
 import { prefetch } from "remotion";
 import type { Rocket } from "../src/config";
+import { getIssuesSoundsToPrefetch } from "./Issues";
+import { getMainAssetsToPrefetch } from "./Main";
+import { getTakeOffAssetToPrefetch } from "./Opening/TakeOff";
 import { getSideRocketSource } from "./Spaceship";
 import { starsAssetsToPreload } from "./StarsGiven/Star";
 import { getFrontRocketSource } from "./TopLanguages/svgs/FrontRocketSource";
 
-export const collectAllAssetsToPrefetch = ({ rocket }: { rocket: Rocket }) => {
+export const collectAllAssetsToPrefetch = ({
+  rocket,
+}: {
+  rocket: Rocket;
+}): string[] => {
   const sideRocket = getSideRocketSource(rocket);
   const frontRocket = getFrontRocketSource(rocket);
 
-  return [sideRocket, frontRocket, ...starsAssetsToPreload()];
+  return [
+    sideRocket,
+    frontRocket,
+    ...getMainAssetsToPrefetch(),
+    ...getTakeOffAssetToPrefetch(),
+    ...starsAssetsToPreload(),
+    ...getIssuesSoundsToPrefetch(),
+  ];
 };
 
 export const prefetchAllAssets = ({
