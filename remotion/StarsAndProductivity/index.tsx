@@ -7,13 +7,13 @@ import {
 } from "remotion";
 import type { z } from "zod";
 import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
-import type { starsReceivedSchema } from "../StarsReceived";
-import { StarsReceived } from "../StarsReceived";
+import type { starsGivenSchema } from "../StarsGiven";
+import { StarsGiven } from "../StarsGiven";
 
 const ZOOM_DELAY = 120;
 
 export const StarsAndProductivity: React.FC<
-  z.infer<typeof starsReceivedSchema>
+  z.infer<typeof starsGivenSchema>
 > = ({
   starsGiven,
   showHitWindow,
@@ -54,7 +54,7 @@ export const StarsAndProductivity: React.FC<
 
   return (
     <AbsoluteFill>
-      <StarsReceived
+      <StarsGiven
         showBackground={showBackground}
         showHitWindow={showHitWindow}
         starsGiven={starsGiven}

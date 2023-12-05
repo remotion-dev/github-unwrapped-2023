@@ -19,7 +19,7 @@ export const MAX_STARS = 50;
 export const TIME_INBETWEEN_STARS = 10;
 export const STAR_DELAY = 20;
 
-export const starsReceivedSchema = z.object({
+export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
   showBackground: z.boolean(),
   showHitWindow: z.boolean(),
@@ -32,8 +32,8 @@ export const starsReceivedSchema = z.object({
   totalPullRequests: z.number(),
 });
 
-export const StarsReceived: React.FC<
-  z.infer<typeof starsReceivedSchema> & {
+export const StarsGiven: React.FC<
+  z.infer<typeof starsGivenSchema> & {
     style?: React.CSSProperties;
     totalPullRequests: number;
   }

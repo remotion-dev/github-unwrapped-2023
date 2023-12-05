@@ -43,12 +43,12 @@ import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
   STAR_DELAY,
-  StarsReceived,
+  StarsGiven,
   TIME_INBETWEEN_STARS,
-  starsReceivedSchema,
-} from "./StarsReceived";
-import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
-import { Shine, Shines, shineSchema } from "./StarsReceived/Shines";
+  starsGivenSchema,
+} from "./StarsGiven";
+import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsGiven/Description";
+import { Shine, Shines, shineSchema } from "./StarsGiven/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
@@ -268,44 +268,13 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
-        id={"StarsReceived"}
-        component={StarsReceived}
-        durationInFrames={10 * VIDEO_FPS}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        schema={starsReceivedSchema}
-        defaultProps={{
-          starsGiven: 43,
-          showBackground: true,
-          showHitWindow: false,
-          showCockpit: true,
-          showDots: false,
-          topWeekday: "1",
-          topHour: "0",
-          graphData: GRAPH_DATA,
-          accentColor: "purple",
-          totalPullRequests: 614,
-        }}
-        calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
-          return {
-            durationInFrames:
-              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-              STAR_DURATION +
-              STAR_DELAY +
-              DESCRIPTION_SEQUENCE_DURATION,
-          };
-        }}
-      />
-      <Composition
         id={"StarsAndProductivity"}
         component={StarsAndProductivity}
         durationInFrames={15 * VIDEO_FPS}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        schema={starsReceivedSchema}
+        schema={starsGivenSchema}
         defaultProps={{
           starsGiven: 10,
           showBackground: true,
@@ -699,7 +668,7 @@ export const RemotionRoot: React.FC = () => {
           );
         })}
       </Folder>
-      <Folder name="StarsReceived">
+      <Folder name="StarsGiven">
         <Composition
           id="shine"
           component={Shine}
@@ -724,6 +693,37 @@ export const RemotionRoot: React.FC = () => {
             rotationShake: 0,
             xShake: 0,
             yShake: 0,
+          }}
+        />
+        <Composition
+          id={"StarsGiven"}
+          component={StarsGiven}
+          durationInFrames={10 * VIDEO_FPS}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 43,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1",
+            topHour: "0",
+            graphData: GRAPH_DATA,
+            accentColor: "purple",
+            totalPullRequests: 614,
+          }}
+          calculateMetadata={({ props }) => {
+            const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
+            return {
+              durationInFrames:
+                (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
+                STAR_DURATION +
+                STAR_DELAY +
+                DESCRIPTION_SEQUENCE_DURATION,
+            };
           }}
         />
       </Folder>
