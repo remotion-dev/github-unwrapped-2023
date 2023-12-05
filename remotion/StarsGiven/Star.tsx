@@ -1,38 +1,25 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   AbsoluteFill,
   interpolate,
-  random,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { MAX_STARS } from ".";
 import { StarSprite } from "../StarSprite";
 
 const MOVE_AIM = 100;
 export const HIT_RADIUS = 450;
 
-const MAX_HITS = 10;
-export const STAR_ANIMATION_DURATION = 20;
+export const ANIMATION_DURATION_PER_STAR = 20;
 
 export const Star: React.FC<{
   duration: number;
-  starsShown: number;
-  id: string;
   angle: number;
   showDots: boolean;
-}> = ({ duration, id, starsShown, angle, showDots }) => {
+  hitSpaceship: boolean;
+}> = ({ duration, angle, showDots, hitSpaceship }) => {
   const frame = useCurrentFrame();
   const { height, width } = useVideoConfig();
-
-  const hitProbability = useMemo(
-    () => interpolate(starsShown, [0, MAX_HITS, MAX_STARS], [1, 0.9, 0.4]),
-    [starsShown],
-  );
-  const hitSpaceship = useMemo(
-    () => random(id) < hitProbability,
-    [hitProbability, id],
-  );
 
   const randomRadius = hitSpaceship ? 200 : 400;
 

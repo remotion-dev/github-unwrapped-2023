@@ -42,9 +42,9 @@ import { STAR_DURATION, StarSprite } from "./StarSprite";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import {
   MAX_STARS,
-  STAR_DELAY,
   StarsGiven,
   TIME_INBETWEEN_STARS,
+  starsGivenCalculateMetadata,
   starsGivenSchema,
 } from "./StarsGiven";
 import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsGiven/Description";
@@ -270,7 +270,6 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id={"StarsAndProductivity"}
         component={StarsAndProductivity}
-        durationInFrames={15 * VIDEO_FPS}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
@@ -286,6 +285,7 @@ export const RemotionRoot: React.FC = () => {
           graphData: GRAPH_DATA,
           accentColor: "blue",
           totalPullRequests: 614,
+          login: "JonnyBurger",
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -696,35 +696,48 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
         <Composition
-          id={"StarsGiven"}
+          id={"StarsGiven0"}
           component={StarsGiven}
-          durationInFrames={10 * VIDEO_FPS}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={starsGivenSchema}
           defaultProps={{
-            starsGiven: 43,
+            starsGiven: 0,
             showBackground: true,
             showHitWindow: false,
             showCockpit: true,
             showDots: false,
-            topWeekday: "1",
-            topHour: "0",
+            topWeekday: "1" as const,
+            topHour: "0" as const,
             graphData: GRAPH_DATA,
-            accentColor: "purple",
+            accentColor: "purple" as const,
             totalPullRequests: 614,
+            login: "JonnyBurger",
           }}
-          calculateMetadata={({ props }) => {
-            const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
-            return {
-              durationInFrames:
-                (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-                STAR_DURATION +
-                STAR_DELAY +
-                DESCRIPTION_SEQUENCE_DURATION,
-            };
+          calculateMetadata={starsGivenCalculateMetadata}
+        />
+        <Composition
+          id={"StarsGiven5"}
+          component={StarsGiven}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 5,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1" as const,
+            topHour: "0" as const,
+            graphData: GRAPH_DATA,
+            accentColor: "purple" as const,
+            totalPullRequests: 614,
+            login: "JonnyBurger",
           }}
+          calculateMetadata={starsGivenCalculateMetadata}
         />
       </Folder>
     </>

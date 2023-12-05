@@ -1,5 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
+import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import {
@@ -11,13 +12,15 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { STAR_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
+import { DESCRIPTION_SEQUENCE_DURATION } from "./Description";
 import { Shines } from "./Shines";
-import { HIT_RADIUS, STAR_ANIMATION_DURATION, Star } from "./Star";
+import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
 
 export const MAX_STARS = 50;
 export const TIME_INBETWEEN_STARS = 10;
-export const STAR_DELAY = 20;
+export const STAR_ANIMATION_DELAY = 20;
 
 export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
@@ -30,7 +33,51 @@ export const starsGivenSchema = z.object({
   graphData: z.array(productivityPerHourSchema),
   accentColor: accentColorSchema,
   totalPullRequests: z.number(),
+  login: z.string(),
 });
+
+export const getActualStars = (starsGiven: number) => {
+  return Math.max(5, Math.min(starsGiven * 2, MAX_STARS));
+};
+
+export const getHitIndexes = ({
+  starsDisplayed,
+  seed,
+  starsGiven,
+}: {
+  starsDisplayed: number;
+  starsGiven: number;
+  seed: string;
+}): number[] => {
+  const maxHits = Math.min(starsGiven, MAX_STARS);
+  // Select hit indices randomly
+  const hitIndexes = new Set<number>();
+
+  let i = 0;
+  while (hitIndexes.size < maxHits) {
+    i++;
+    hitIndexes.add(Math.floor(random(`${seed}${i}`) * starsDisplayed));
+  }
+
+  return Array.from(hitIndexes);
+};
+
+export const starFlyDuration = (starsDisplayed: number) => {
+  const actualStars = getActualStars(starsDisplayed);
+  return (actualStars - 1) * TIME_INBETWEEN_STARS + STAR_DURATION;
+};
+
+export const starsGivenCalculateMetadata: CalculateMetadataFunction<
+  z.infer<typeof starsGivenSchema>
+> = ({ props }) => {
+  return {
+    durationInFrames:
+      ANIMATION_DURATION_PER_STAR +
+      starFlyDuration(props.starsGiven) +
+      STAR_ANIMATION_DELAY +
+      DESCRIPTION_SEQUENCE_DURATION,
+  };
+};
 
 export const StarsGiven: React.FC<
   z.infer<typeof starsGivenSchema> & {
@@ -52,6 +99,14 @@ export const StarsGiven: React.FC<
   const xShake = noise2D("xshake", frame / 10, 0) * 10;
   const yShake = noise2D("yshake", frame / 10, 0) * 10;
   const rotationShake = noise2D("rotateshake", frame / 10, 0) * 0.05;
+
+  const starsDisplayed = getActualStars(starsGiven);
+
+  const hitIndices = getHitIndexes({
+    starsDisplayed,
+    seed: "starsGiven",
+    starsGiven,
+  });
 
   return (
     <AbsoluteFill style={style}>
@@ -82,17 +137,16 @@ export const StarsGiven: React.FC<
           />
         </AbsoluteFill>
       ) : null}
-      {new Array(starsGiven).fill("").map((_, index) => (
+      {new Array(getActualStars(starsGiven)).fill(true).map((_, index) => (
         <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}
-          from={index * TIME_INBETWEEN_STARS + STAR_DELAY}
+          from={index * TIME_INBETWEEN_STARS + STAR_ANIMATION_DELAY}
         >
           <Star
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
-            id={`star-${index}`}
-            duration={STAR_ANIMATION_DURATION}
-            starsShown={Math.min(starsGiven, MAX_STARS)}
+            duration={ANIMATION_DURATION_PER_STAR}
             showDots={showDots}
+            hitSpaceship={hitIndices.includes(index)}
           />
         </Sequence>
       ))}
