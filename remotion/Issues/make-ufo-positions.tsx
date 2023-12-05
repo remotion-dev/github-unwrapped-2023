@@ -5,9 +5,7 @@ import {
   PADDING,
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
-  TIME_BEFORE_SHOOTING,
   USABLE_CANVAS_WIDTH,
-  getTotalShootDuration,
 } from "./constants";
 import type { ShotWithShootDelay } from "./get-shots-to-fire";
 import { sampleUniqueIndices } from "./sample-indices";
@@ -117,9 +115,6 @@ const makeXPosition = ({
 const UFOS_MUST_BE_ABOVE_LINE = VIDEO_HEIGHT * 0.4;
 
 export const UFO_ENTRANCE_DELAY = 5;
-
-export const UFO_EXIT_START =
-  TIME_BEFORE_SHOOTING + getTotalShootDuration() + 30;
 
 const reduceTotalNumberOfUfos = (numberOfUfos: number) => {
   const maxUfos = 100;

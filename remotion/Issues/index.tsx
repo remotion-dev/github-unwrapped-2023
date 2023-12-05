@@ -34,7 +34,6 @@ import {
   FPS,
   makeUfoPositions,
   UFO_ENTRANCE_DELAY,
-  UFO_EXIT_START,
 } from "./make-ufo-positions";
 import {
   ROCKET_JUMP_IN_DELAY,
@@ -60,11 +59,12 @@ export const getIssuesDuration = ({
   issuesOpened: number;
 }) => {
   const totalIssues = issuesClosed + issuesOpened;
+
   if (totalIssues === 0) {
     return ZERO_ISSUES_DURATION;
   }
 
-  return 6 * VIDEO_FPS;
+  return 4 * VIDEO_FPS + getTotalShootDuration(issuesClosed);
 };
 
 export const calculateIssueDuration: CalculateMetadataFunction<
@@ -108,6 +108,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     delay: UFO_ENTRANCE_DELAY,
   });
 
+  const UFO_EXIT_START =
+    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 30;
+
   const exit = spring({
     fps: FPS,
     frame,
@@ -133,7 +136,10 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   const yOffset = interpolate(
     frame,
-    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + getTotalShootDuration()],
+    [
+      TIME_BEFORE_SHOOTING,
+      TIME_BEFORE_SHOOTING + getTotalShootDuration(UFO_EXIT_START),
+    ],
     [0, -offsetDueToManyUfos],
     {
       extrapolateLeft: "clamp",

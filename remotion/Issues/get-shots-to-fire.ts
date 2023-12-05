@@ -53,7 +53,7 @@ const findClosestUfoRemaining = ({
 };
 
 export const getShootDuration = (shots: Shot[]) => {
-  return getTotalShootDuration() / shots.length;
+  return getTotalShootDuration(shots.length) / shots.length;
 };
 
 export const addShootDelays = (shots: Shot[]) => {
