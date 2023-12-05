@@ -11,6 +11,7 @@ import { Poof } from "../Poof";
 import { UfoSvg } from "./UfoSvg";
 
 const UFOS = 9;
+export const ZERO_ISSUES_DURATION = 140;
 
 export const UfoPosition: React.FC<{
   index: number;
@@ -56,9 +57,14 @@ export const UfoPosition: React.FC<{
 export const ZeroIssues: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const opacity = interpolate(frame, [60, 80, 120, 140], [0, 1, 1, 0], {
-    extrapolateRight: "clamp",
-  });
+  const opacity = interpolate(
+    frame,
+    [60, 80, 120, ZERO_ISSUES_DURATION],
+    [0, 1, 1, 0],
+    {
+      extrapolateRight: "clamp",
+    },
+  );
 
   return (
     <AbsoluteFill

@@ -18,7 +18,7 @@ import {
   WIGGLE_EXIT_DURATION,
   WIGGLE_EXIT_SPRING_CONFIG,
 } from "../TopLanguages/PlaneScaleWiggle";
-import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
+import { getTotalShootDuration, TIME_BEFORE_SHOOTING } from "./constants";
 import { getAudioHits } from "./get-audio-hits";
 import {
   addShootDelays,
@@ -42,7 +42,7 @@ import {
   RocketComponent,
 } from "./Rocket";
 import { Ufo } from "./Ufo";
-import { ZeroIssues } from "./ZeroIssues";
+import { ZERO_ISSUES_DURATION, ZeroIssues } from "./ZeroIssues";
 
 export const issuesSchema = z.object({
   openIssues: z.number().min(0),
@@ -61,7 +61,7 @@ export const getIssuesDuration = ({
 }) => {
   const totalIssues = issuesClosed + issuesOpened;
   if (totalIssues === 0) {
-    return 140;
+    return ZERO_ISSUES_DURATION;
   }
 
   return 6 * VIDEO_FPS;
@@ -133,7 +133,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   const yOffset = interpolate(
     frame,
-    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
+    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + getTotalShootDuration()],
     [0, -offsetDueToManyUfos],
     {
       extrapolateLeft: "clamp",
