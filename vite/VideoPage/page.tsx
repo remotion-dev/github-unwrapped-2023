@@ -5,6 +5,8 @@ import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
 import {
   LanguagesEnum,
   PlanetEnum,
+  accentColorValues,
+  rocketValues,
   type compositionSchema,
   type languageSchema,
 } from "../../src/config";
@@ -34,12 +36,35 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
   return PlanetEnum.Enum.Ice;
 };
 
-const parseTopLanguage = (topLanguage: {
-  languageName: string;
-  color: string;
-}): z.infer<typeof languageSchema> => {
+const parseTopLanguage = (
+  topLanguage: {
+    languageName: string;
+    color: string;
+  },
+  rustRandomizer: number,
+): z.infer<typeof languageSchema> => {
   try {
-    // TODO: Rust1, Rust2, Rust3
+    if (topLanguage.languageName === "Rust") {
+      if (rustRandomizer < 0.33) {
+        return {
+          type: "designed",
+          name: LanguagesEnum.Enum.Rust1,
+        };
+      }
+
+      if (rustRandomizer < 0.66) {
+        return {
+          type: "designed",
+          name: LanguagesEnum.Enum.Rust2,
+        };
+      }
+
+      return {
+        type: "designed",
+        name: LanguagesEnum.Enum.Rust3,
+      };
+    }
+
     const lang = LanguagesEnum.parse(topLanguage.languageName);
     return {
       type: "designed",
@@ -57,10 +82,26 @@ const parseTopLanguage = (topLanguage: {
 const computeCompositionParameters = (
   userStats: ProfileStats | null,
 ): CompositionParameters | null => {
-  if (userStats === null) return null;
+  if (userStats === null) {
+    return null;
+  }
 
-  // const accentColor =
-  //   accentColorValues[random(userStats.lowercasedUsername + "accent")];
+  const rustRandomizer = random(userStats.lowercasedUsername + "rust");
+
+  const accentColor =
+    accentColorValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "accent") *
+          accentColorValues.length,
+      )
+    ];
+
+  const rocket =
+    rocketValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
+      )
+    ];
 
   return {
     login: userStats.username,
@@ -70,14 +111,17 @@ const computeCompositionParameters = (
     topLanguages:
       userStats.topLanguages.length > 0
         ? {
-            language1: parseTopLanguage(userStats.topLanguages[0]),
+            language1: parseTopLanguage(
+              userStats.topLanguages[0],
+              rustRandomizer,
+            ),
             language2:
               userStats.topLanguages.length > 1
-                ? parseTopLanguage(userStats.topLanguages[1])
+                ? parseTopLanguage(userStats.topLanguages[1], rustRandomizer)
                 : null,
             language3:
               userStats.topLanguages.length > 2
-                ? parseTopLanguage(userStats.topLanguages[2])
+                ? parseTopLanguage(userStats.topLanguages[2], rustRandomizer)
                 : null,
           }
         : null,
@@ -94,7 +138,9 @@ const computeCompositionParameters = (
       random(userStats.lowercasedUsername + "startAngle") > 0.5
         ? "left"
         : "right",
-    accentColor: "blue",
+    accentColor,
+    rocket,
+    contributionData: userStats.contributionData,
   };
 };
 

@@ -1,8 +1,8 @@
 .sidebarWrapper {
   display: none;
   flex-direction: column;
-  gap: 40px;
-  padding: 40px 32px;
+  gap: 30px;
+  padding: 20px;
   min-width: 350px;
 
   @media only screen and (min-width: 40em) {

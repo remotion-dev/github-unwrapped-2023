@@ -25,6 +25,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
   accentColor,
+  rocket,
 }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -83,6 +84,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
             exitProgress={exitProgress}
             login={login}
             accentColor={accentColor}
+            rocket={rocket}
           />
         </AbsoluteFill>
         <AbsoluteFill
@@ -101,7 +103,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
           <Foreground />
         </AbsoluteFill>
         <AbsoluteFill>
-          <TakeOff />
+          <TakeOff rocket={rocket} />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>
@@ -112,6 +114,7 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
   accentColor,
+  rocket,
 }) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -151,6 +154,7 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
         accentColor={accentColor}
         startAngle={startAngle}
         login={login}
+        rocket={rocket}
       />
     </AbsoluteFill>
   );

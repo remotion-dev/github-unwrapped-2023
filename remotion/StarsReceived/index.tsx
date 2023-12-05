@@ -29,11 +29,13 @@ export const starsReceivedSchema = z.object({
   topHour: topHourSchema,
   graphData: z.array(productivityPerHourSchema),
   accentColor: accentColorSchema,
+  totalPullRequests: z.number(),
 });
 
 export const StarsReceived: React.FC<
   z.infer<typeof starsReceivedSchema> & {
     style?: React.CSSProperties;
+    totalPullRequests: number;
   }
 > = ({
   starsGiven,
@@ -43,6 +45,7 @@ export const StarsReceived: React.FC<
   showCockpit,
   showDots,
   accentColor,
+  totalPullRequests,
 }) => {
   const frame = useCurrentFrame();
 
@@ -99,6 +102,7 @@ export const StarsReceived: React.FC<
           xShake={xShake}
           yShake={yShake}
           accentColor={accentColor}
+          totalPullRequests={totalPullRequests}
         />
       ) : null}
     </AbsoluteFill>

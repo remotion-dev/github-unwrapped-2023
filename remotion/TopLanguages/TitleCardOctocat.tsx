@@ -6,9 +6,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { AccentColor } from "../../src/config";
 import { FloatingOctocat } from "./FloatingOctocat";
 
-export const TitleCardOctocat: React.FC = () => {
+export const TitleCardOctocat: React.FC<{
+  accentColor: AccentColor;
+}> = ({ accentColor }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -32,7 +35,7 @@ export const TitleCardOctocat: React.FC = () => {
         transform: `translate(${x}px, ${y}px)`,
       }}
     >
-      <FloatingOctocat />
+      <FloatingOctocat accentColor={accentColor} />
     </AbsoluteFill>
   );
 };

@@ -27,8 +27,8 @@ export const VideoBoxTop: React.FC<{
        */}
         <div className={boxStyles.linkContainer}>
           <HomeLink
-            href="https://example.com"
-            label="About Unwrapped"
+            href="/about"
+            label="About this project"
             icon={(props) => <RocketIcon {...props} />}
           />
         </div>

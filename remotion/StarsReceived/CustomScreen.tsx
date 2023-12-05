@@ -5,7 +5,8 @@ import { PullRequests } from "../Paths/PullRequests";
 
 export const CustomScreen: React.FC<{
   accentColor: AccentColor;
-}> = ({ accentColor }) => {
+  totalPullRequests: number;
+}> = ({ accentColor, totalPullRequests }) => {
   return (
     <AbsoluteFill
       style={{
@@ -37,7 +38,10 @@ export const CustomScreen: React.FC<{
             overflow: "hidden",
           }}
         >
-          <PullRequests accentColor={accentColor} totalPullRequests={15} />
+          <PullRequests
+            accentColor={accentColor}
+            totalPullRequests={totalPullRequests}
+          />
         </AbsoluteFill>
       </AbsoluteFill>
     </AbsoluteFill>

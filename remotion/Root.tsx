@@ -1,4 +1,4 @@
-import { Composition, Folder, Still } from "remotion";
+import { Composition, Folder, Still, random } from "remotion";
 import { LanguagesEnum, compositionSchema } from "../src/config";
 import {
   TOP_LANGUAGES_DURATION,
@@ -71,7 +71,6 @@ import {
   TopLanguagesTitleCard,
   topLanguagesTitleCardSchema,
 } from "./TopLanguages/TitleCard";
-import { defaultMyCompProps } from "./props";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -83,6 +82,9 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        defaultProps={{
+          rocket: "blue",
+        }}
       />
       <Composition
         id={"Opening"}
@@ -96,6 +98,7 @@ export const RemotionRoot: React.FC = () => {
           login: "JonnyBurger",
           startAngle: "left",
           accentColor: "blue",
+          rocket: "blue",
         }}
       />
       <Composition
@@ -110,6 +113,7 @@ export const RemotionRoot: React.FC = () => {
           exitProgress: 0,
           startAngle: "left",
           accentColor: "blue",
+          rocket: "blue",
         }}
       />
       <Composition
@@ -141,7 +145,11 @@ export const RemotionRoot: React.FC = () => {
         schema={planetSchema}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const, accentColor: "blue" }}
+        defaultProps={{
+          planetType: "Silver" as const,
+          accentColor: "blue",
+          rocketType: "blue",
+        }}
       />
       <Composition
         id={"Contributions"}
@@ -150,7 +158,15 @@ export const RemotionRoot: React.FC = () => {
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        defaultProps={defaultMyCompProps}
+        defaultProps={{
+          accentColor: "blue",
+          contributionData: new Array(364)
+            .fill(0)
+            .map((_, i) => [
+              i,
+              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
+            ]),
+        }}
       />
 
       <Folder name="Issues">
@@ -162,7 +178,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 0, openIssues: 0 }}
+          defaultProps={{ closedIssues: 0, openIssues: 0, rocket: "orange" }}
         />
         <Composition
           id={"Issues2-0"}
@@ -172,7 +188,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 2, openIssues: 0 }}
+          defaultProps={{ closedIssues: 2, openIssues: 0, rocket: "blue" }}
         />
         <Composition
           id={"Issues20-15"}
@@ -182,7 +198,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 20, openIssues: 15 }}
+          defaultProps={{ closedIssues: 20, openIssues: 15, rocket: "orange" }}
         />
         <Composition
           id={"Issues80-20"}
@@ -192,7 +208,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 80, openIssues: 20 }}
+          defaultProps={{ closedIssues: 80, openIssues: 20, rocket: "yellow" }}
         />
         <Composition
           id={"Issues500-500"}
@@ -202,7 +218,11 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
-          defaultProps={{ closedIssues: 3000, openIssues: 2000 }}
+          defaultProps={{
+            closedIssues: 3000,
+            openIssues: 2000,
+            rocket: "blue",
+          }}
         />
       </Folder>
       <Composition
@@ -213,7 +233,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
-        defaultProps={{ closedIssues: 75, openIssues: 0 }}
+        defaultProps={{ closedIssues: 75, openIssues: 0, rocket: "blue" }}
       />
 
       <Composition
@@ -259,6 +279,7 @@ export const RemotionRoot: React.FC = () => {
           topHour: "0",
           graphData: GRAPH_DATA,
           accentColor: "purple",
+          totalPullRequests: 614,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -289,6 +310,7 @@ export const RemotionRoot: React.FC = () => {
           topHour: "0",
           graphData: GRAPH_DATA,
           accentColor: "blue",
+          totalPullRequests: 614,
         }}
         calculateMetadata={({ props }) => {
           const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
@@ -438,6 +460,7 @@ export const RemotionRoot: React.FC = () => {
             login: "JonnyBurger",
             pluralizeLanguages: false,
             accentColor: "blue",
+            rocket: "blue",
           }}
         />
         <Composition
@@ -452,6 +475,7 @@ export const RemotionRoot: React.FC = () => {
             first: LanguagesEnum.enum.JavaScript,
             second: LanguagesEnum.enum.Python,
             third: LanguagesEnum.enum.Java,
+            rocket: "orange",
           }}
         />
 
@@ -467,6 +491,7 @@ export const RemotionRoot: React.FC = () => {
             corner: "top-right" as const,
             language: { type: "designed" as const, name: "JavaScript" },
             position: 1,
+            rocket: "orange",
           }}
         />
         <Composition
@@ -478,6 +503,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
+            rocket: "blue",
             position: 1,
             language: { type: "other", name: "Scala", color: "#C22D40" },
             enterDirection: "right-counter-clockwise" as const,
@@ -498,6 +524,7 @@ export const RemotionRoot: React.FC = () => {
             position: 1,
             startRotationInRadians: 0,
             clockDirection: "clockwise",
+            rocket: "blue",
           }}
         />
         <Composition
@@ -513,6 +540,7 @@ export const RemotionRoot: React.FC = () => {
             showHelperLine: false,
             corner: "bottom-right",
             position: 1,
+            rocket: "orange",
           }}
         />
         <Composition
@@ -522,6 +550,9 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
+          defaultProps={{
+            accentColor: "blue",
+          }}
         />
         <Composition
           id={"AllPlanets"}
@@ -549,6 +580,7 @@ export const RemotionRoot: React.FC = () => {
             showHelperLine: false,
             login: "JonnyBurger",
             accentColor: "blue",
+            rocket: "blue",
           }}
         />
       </Folder>
@@ -582,8 +614,8 @@ export const RemotionRoot: React.FC = () => {
           login: "iampato",
           planet: "Silver" as const,
           starsGiven: 10,
-          issuesClosed: 10,
-          issuesOpened: 10,
+          issuesClosed: 200,
+          issuesOpened: 200,
           totalPullRequests: 10,
           topWeekday: "2" as const,
           topHour: "0" as const,
@@ -615,6 +647,13 @@ export const RemotionRoot: React.FC = () => {
           ],
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
+          rocket: "blue",
+          contributionData: new Array(364)
+            .fill(0)
+            .map((_, i) => [
+              i,
+              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
+            ]),
         }}
       />
       <Composition

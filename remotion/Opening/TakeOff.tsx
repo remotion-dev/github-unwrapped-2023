@@ -6,15 +6,18 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import type { Rocket } from "../../src/config";
 import { remapSpeed } from "../TopLanguages/remap-speed";
-import Spaceship from "./Spaceship";
+import Spaceship from "./RocketFront";
 import { TransparentVideo } from "./TransparentVideo";
 
 const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
-export const TakeOff: React.FC = () => {
+export const TakeOff: React.FC<{
+  rocket: Rocket;
+}> = ({ rocket }) => {
   const frame = useCurrentFrame();
   const acceleratedFrame = remapSpeed(frame, speedFunction);
   const acceleratedShakeFrame = remapSpeed(frame, speedFunctionShake);
@@ -29,15 +32,17 @@ export const TakeOff: React.FC = () => {
       <AbsoluteFill />
       <AbsoluteFill
         style={{
-          transform:
-            "scale(0.4) translateX(445px) translateY(1250px) rotate(-90deg)",
+          transform: "rotate(-90deg) translateX(-200px) translateY(495px)",
         }}
       >
         <TransparentVideo
-          safari={staticFile(
+          style={{
+            width: 472,
+          }}
+          other={staticFile(
             "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
           )}
-          other={staticFile(
+          safari={staticFile(
             "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4",
           )}
         />
@@ -49,7 +54,7 @@ export const TakeOff: React.FC = () => {
           }px)`,
         }}
       >
-        <Spaceship />
+        <Spaceship rocket={rocket} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

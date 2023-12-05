@@ -6,15 +6,17 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import type { Rocket } from "../../src/config";
 import {
   mapEnterDirectionToExitDirection,
   type EnterDirection,
 } from "./corner";
-import { NewRocketSVG } from "./svgs/NewRocketSVG";
+import { RocketFront } from "./svgs/NewRocketSVG";
 
 export const FlyRocketIntoPlanet: React.FC<{
   enterDirection: EnterDirection;
-}> = ({ enterDirection }) => {
+  rocket: Rocket;
+}> = ({ enterDirection, rocket }) => {
   const { height, fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const exitDirection = mapEnterDirectionToExitDirection(enterDirection);
@@ -65,7 +67,7 @@ export const FlyRocketIntoPlanet: React.FC<{
           marginTop,
         }}
       >
-        <NewRocketSVG />
+        <RocketFront rocket={rocket} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

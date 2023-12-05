@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Sequence,
   interpolate,
   spring,
   useCurrentFrame,
@@ -15,7 +16,8 @@ export const AnimatedCockpit: React.FC<{
   yShake: number;
   rotationShake: number;
   accentColor: AccentColor;
-}> = ({ xShake, yShake, rotationShake, accentColor }) => {
+  totalPullRequests: number;
+}> = ({ xShake, yShake, rotationShake, accentColor, totalPullRequests }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -41,7 +43,12 @@ export const AnimatedCockpit: React.FC<{
       }}
     >
       <CockpitSVG />
-      <CustomScreen accentColor={accentColor} />
+      <Sequence from={271}>
+        <CustomScreen
+          totalPullRequests={totalPullRequests}
+          accentColor={accentColor}
+        />
+      </Sequence>
     </AbsoluteFill>
   );
 };

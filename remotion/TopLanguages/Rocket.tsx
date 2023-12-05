@@ -1,5 +1,6 @@
 import { getPointAtLength } from "@remotion/paths";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import type { Rocket } from "../../src/config";
 import { TRANSFORM_PATH_X, TRANSFORM_PATH_Y } from "../../types/constants";
 import { moveAlongLine } from "../move-along-line";
 import {
@@ -17,7 +18,7 @@ import {
   thirdPushStart,
 } from "./constants";
 import {
-  NewRocketSVG,
+  RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
 } from "./svgs/NewRocketSVG";
@@ -61,7 +62,9 @@ const getNewRate = (frame: number) => {
   return push1 + push2 + push3 + push4;
 };
 
-export const Rocket: React.FC = () => {
+export const TopLanguagesRocket: React.FC<{
+  rocket: Rocket;
+}> = ({ rocket }) => {
   const frame = useCurrentFrame();
   const newRate = getNewRate(frame);
 
@@ -88,7 +91,8 @@ export const Rocket: React.FC = () => {
           <path d={newPath} stroke="white" strokeWidth="0" />
         </svg>
       </AbsoluteFill>
-      <NewRocketSVG
+      <RocketFront
+        rocket={rocket}
         style={{
           transform: `translateX(${rocketX}px) translateY(${rocketY}px) rotate(${angleInDegrees}deg)`,
           transformBox: "fill-box",

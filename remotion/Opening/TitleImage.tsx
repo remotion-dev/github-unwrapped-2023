@@ -9,7 +9,11 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { AccentColor } from "../../src/config";
-import { accentColorSchema, openingSceneStartAngle } from "../../src/config";
+import {
+  accentColorSchema,
+  openingSceneStartAngle,
+  rocketSchema,
+} from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import type { GradientType } from "../Gradients/available-gradients";
 import { UfoSvg } from "../Issues/UfoSvg";
@@ -19,10 +23,11 @@ export const openingTitleSchema = z.object({
   login: z.string(),
   startAngle: openingSceneStartAngle,
   accentColor: accentColorSchema,
+  rocket: rocketSchema,
 });
 
-export const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
-export const TITLE_IMAGE_BORDER_PADDING = 20;
+const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
+const TITLE_IMAGE_BORDER_PADDING = 20;
 
 export const accentColorToGradient = (
   accentColor: AccentColor,

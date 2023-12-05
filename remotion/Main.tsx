@@ -19,7 +19,6 @@ import {
   OPENING_SCENE_OUT_OVERLAP,
   OpeningScene,
 } from "./Opening";
-import { PullRequests } from "./Paths/PullRequests";
 import { StarsAndProductivity } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
@@ -27,7 +26,6 @@ import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 type Schema = z.infer<typeof compositionSchema>;
 
 const ISSUES_SCENE = 6 * VIDEO_FPS;
-const PULL_REQUESTS_SCENE = 8 * VIDEO_FPS;
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
 const STARS_AND_PRODUCTIVITY = 400;
@@ -46,7 +44,6 @@ export const calculateDuration = ({
     topLanguagesScene +
     ISSUES_SCENE -
     ISSUES_EXIT_DURATION +
-    PULL_REQUESTS_SCENE +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
     STARS_AND_PRODUCTIVITY +
@@ -60,6 +57,7 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
 > = ({ props }) => {
   return {
     durationInFrames: calculateDuration(props),
+    props,
   };
 };
 
@@ -78,6 +76,8 @@ export const Main: React.FC<Schema> = ({
   graphData,
   openingSceneStartAngle,
   accentColor,
+  rocket,
+  contributionData,
 }) => {
   const frame = useCurrentFrame();
 
@@ -98,6 +98,7 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
             startAngle={openingSceneStartAngle}
             login={login}
+            rocket={rocket}
           />
         </Series.Sequence>
         {topLanguages ? (
@@ -114,6 +115,7 @@ export const Main: React.FC<Schema> = ({
               showHelperLine={showHelperLine}
               login={login}
               accentColor={accentColor}
+              rocket={rocket}
             />
           </Series.Sequence>
         ) : null}
@@ -125,7 +127,11 @@ export const Main: React.FC<Schema> = ({
               : -OPENING_SCENE_OUT_OVERLAP
           }
         >
-          <Issues openIssues={issuesOpened} closedIssues={issuesClosed} />
+          <Issues
+            rocket={rocket}
+            openIssues={issuesOpened}
+            closedIssues={issuesClosed}
+          />
         </Series.Sequence>
         <Series.Sequence
           durationInFrames={STARS_AND_PRODUCTIVITY}
@@ -141,24 +147,26 @@ export const Main: React.FC<Schema> = ({
             topHour={topHour}
             graphData={graphData}
             accentColor={accentColor}
-          />
-        </Series.Sequence>
-        <Series.Sequence durationInFrames={PULL_REQUESTS_SCENE}>
-          <PullRequests
-            accentColor={accentColor}
             totalPullRequests={totalPullRequests}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
-          <ContributionsScene accentColor={accentColor} />
+          <ContributionsScene
+            contributionData={contributionData}
+            accentColor={accentColor}
+          />
         </Series.Sequence>
         {planet === PlanetEnum.Enum.Gold ? (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <GoldenScene />
+            <GoldenScene rocket={rocket} />
           </Series.Sequence>
         ) : (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <LandingScene accentColor={accentColor} planetType={planet} />
+            <LandingScene
+              rocketType={rocket}
+              accentColor={accentColor}
+              planetType={planet}
+            />
           </Series.Sequence>
         )}
       </Series>

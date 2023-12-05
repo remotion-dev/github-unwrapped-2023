@@ -182,7 +182,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     gradient: "red",
     textColor: "#DDA89F",
     name: "Ruby",
-    opacity: 0.2,
+    opacity: 0.3,
     customPlanetColor: null,
   },
 };

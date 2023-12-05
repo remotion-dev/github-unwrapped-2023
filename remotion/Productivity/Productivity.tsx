@@ -14,7 +14,7 @@ type Props = {
   hour: Hour;
 };
 
-const Bar = (props: { productivity: number }) => {
+const Bar = (props: { productivity: number; index: number }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const height = spring({
@@ -26,6 +26,7 @@ const Bar = (props: { productivity: number }) => {
       mass: props.productivity * 10 + 0.1,
       damping: 200,
     },
+    delay: 30 + props.index * 2,
   });
 
   return (
@@ -55,6 +56,10 @@ const ProductivityGraph = (props: {
   productivityPerHour: Array<ProductivityPerHour>;
   style?: React.CSSProperties;
 }) => {
+  const maxProductivity = Math.max(
+    ...props.productivityPerHour.map((p) => p.productivity),
+  );
+
   return (
     <div
       style={{
@@ -79,7 +84,10 @@ const ProductivityGraph = (props: {
               gap: 12,
             }}
           >
-            <Bar productivity={productivityPerHour.productivity} />
+            <Bar
+              index={productivityPerHour.time}
+              productivity={productivityPerHour.productivity / maxProductivity}
+            />
             <div
               style={{
                 color: "white",
@@ -153,7 +161,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         label="Most productive time"
         value={hour}
         radius={300}
-        delay={120}
+        delay={90}
         renderLabel={(value) => {
           if (value === "12") {
             return "12 am";

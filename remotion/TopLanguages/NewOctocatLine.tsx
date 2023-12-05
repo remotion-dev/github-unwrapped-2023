@@ -1,10 +1,24 @@
 import { evolvePath } from "@remotion/paths";
 import React from "react";
+import type { AccentColor } from "../../src/config";
+
+const getLeftColor = (accentColor: AccentColor) => {
+  if (accentColor === "blue") {
+    return ["#3772A7", "#8EAFB2"] as const;
+  }
+
+  if (accentColor === "purple") {
+    return ["#5e366e", "#7B6793"] as const;
+  }
+
+  throw new Error("Invalid accent color");
+};
 
 export const NewOctocatLine: React.FC<{
   progress: number;
   d: string;
-}> = ({ progress, d }) => {
+  accentColor: AccentColor;
+}> = ({ progress, d, accentColor }) => {
   const { strokeDasharray, strokeDashoffset } = evolvePath(progress, d);
 
   return (
@@ -16,7 +30,6 @@ export const NewOctocatLine: React.FC<{
         strokeMiterlimit="10"
         strokeDasharray={strokeDasharray}
         strokeDashoffset={strokeDashoffset}
-        strokeLinecap="round"
       />
       <defs>
         <linearGradient
@@ -27,8 +40,8 @@ export const NewOctocatLine: React.FC<{
           y2="720.3"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#3772A7" />
-          <stop offset="1" stopColor="#8EAFB2" />
+          <stop stopColor={getLeftColor(accentColor)[0]} />
+          <stop offset="1" stopColor={getLeftColor(accentColor)[1]} />
         </linearGradient>
       </defs>
     </>

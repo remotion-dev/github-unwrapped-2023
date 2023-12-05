@@ -49,10 +49,10 @@ export const languageSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
+const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
 export const topWeekdaySchema = z.enum(days);
 
-export const hours = [
+const hours = [
   "0",
   "1",
   "2",
@@ -102,6 +102,11 @@ export const openingSceneStartAngle = z.enum(["left", "right"]);
 
 export const accentColorValues = ["blue", "purple"] as const;
 export const accentColorSchema = z.enum(accentColorValues);
+
+export const rocketValues = ["blue", "orange", "yellow"] as const;
+export const rocketSchema = z.enum(rocketValues);
+export type Rocket = (typeof rocketValues)[number];
+
 export type AccentColor = z.infer<typeof accentColorSchema>;
 
 export const compositionSchema = z.object({
@@ -119,6 +124,8 @@ export const compositionSchema = z.object({
   graphData: z.array(productivityPerHourSchema),
   openingSceneStartAngle,
   accentColor: accentColorSchema,
+  rocket: rocketSchema,
+  contributionData: z.array(z.array(z.number())),
 });
 
 export const RenderRequest = z.object({

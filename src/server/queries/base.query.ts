@@ -32,6 +32,12 @@ contributionsCollection(
 	}
 	contributionCalendar {
 		totalContributions
+		weeks {
+			contributionDays {
+			  contributionCount
+			  date
+			}
+		}  
 	}
 	commitContributionsByRepository {
 		contributions {
@@ -77,6 +83,12 @@ export type BaseQueryResponse = {
   contributionsCollection: {
     contributionCalendar: {
       totalContributions: number;
+      weeks: {
+        contributionDays: {
+          contributionCount: number;
+          date: string;
+        }[];
+      }[];
     };
     commitContributionsByRepository: Array<{
       repository: {

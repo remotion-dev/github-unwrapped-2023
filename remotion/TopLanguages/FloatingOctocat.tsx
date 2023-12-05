@@ -1,11 +1,14 @@
 import { noise2D } from "@remotion/noise";
 import { getLength, getTangentAtLength } from "@remotion/paths";
 import { spring, useCurrentFrame, useVideoConfig } from "remotion";
+import type { AccentColor } from "../../src/config";
 import { OctocatBody } from "../../vite/VideoPage/Background/Octocat-body";
 import { NewOctocatLine } from "./NewOctocatLine";
 import { getOctocatLine } from "./octocat-line";
 
-export const FloatingOctocat: React.FC = () => {
+export const FloatingOctocat: React.FC<{
+  accentColor: AccentColor;
+}> = ({ accentColor }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -54,6 +57,7 @@ export const FloatingOctocat: React.FC = () => {
       }}
       fill="none"
     >
+      <NewOctocatLine accentColor={accentColor} progress={progress} d={d} />
       <OctocatBody
         endOffsetX={endOffsetX}
         endOffsetY={endOffsetY}
@@ -61,7 +65,6 @@ export const FloatingOctocat: React.FC = () => {
         progress={progress}
         rotation={angleInRadians + Math.PI - 0.5}
       />
-      <NewOctocatLine progress={progress} d={d} />
     </svg>
   );
 };

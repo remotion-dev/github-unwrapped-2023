@@ -1,7 +1,6 @@
 import {
   AbsoluteFill,
   interpolate,
-  random,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -20,17 +19,18 @@ import { computePositions } from "./compute-positions";
 
 const TIMELINE_OFFSET_Y = 420;
 
-const data = new Array(364)
-  .fill(0)
-  .map((_, i) => [i, random(i) < 0.25 ? 0 : Math.floor(random(i) * 128)]);
-
 export const ContributionsScene: React.FC<{
   accentColor: AccentColor;
-}> = ({ accentColor }) => {
+  contributionData: number[][];
+}> = ({ accentColor, contributionData }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const { positions, maxIndex } = computePositions({ frame, data, fps });
+  const { positions, maxIndex } = computePositions({
+    frame,
+    data: contributionData,
+    fps,
+  });
 
   const target = positions[maxIndex];
 

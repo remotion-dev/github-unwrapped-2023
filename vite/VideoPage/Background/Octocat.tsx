@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 export const OctoCat: React.FC = () => {
   return (
     <svg className={styles.desktopOctocat} viewBox="0 0 1442 997" fill="none">
+      <OctocatLine mode="imperative" />
       <OctocatBody
         d={getOctocatLine({
           noise1: 0,
@@ -21,7 +22,6 @@ export const OctoCat: React.FC = () => {
         rotation={0}
         progress={1}
       />
-      <OctocatLine mode="imperative" />
     </svg>
   );
 };

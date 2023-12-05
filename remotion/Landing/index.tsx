@@ -10,21 +10,22 @@ import {
 } from "remotion";
 import { z } from "zod";
 import type { Planet } from "../../src/config";
-import { PlanetEnum, accentColorSchema } from "../../src/config";
+import { PlanetEnum, accentColorSchema, rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
 import { Gradient } from "../Gradients/NativeGradient";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { RocketSide } from "../Spaceship";
 import { Background } from "./Background";
 import Cloud1 from "./Cloud-1";
 import Cloud2 from "./Cloud-2";
 import Fire from "./Fire";
-import Rocket from "./Rocket";
 import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 
 export const planetSchema = z.object({
   planetType: PlanetEnum,
   accentColor: accentColorSchema,
+  rocketType: rocketSchema,
 });
 
 const PLANET_SIZE = 1400;
@@ -156,6 +157,7 @@ const CUTOVER = LANDING_FRAME - 60;
 export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
   planetType,
   accentColor,
+  rocketType,
 }) => {
   // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -364,12 +366,10 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
               textAlign: "center",
               fontSize: 30,
               width: 460,
-
               fontFamily: "Mona Sans",
               color: "white",
               opacity: text2,
               left: 306,
-
               position: "absolute",
             }}
           >
@@ -423,7 +423,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
             // transformOrigin: "center center",
           }}
         >
-          <Rocket />
+          <RocketSide rocket={rocketType} />
         </div>
 
         {WITH_CLOUDS && (
@@ -442,7 +442,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
         )}
 
         {frame > LANDING_FRAME - 45 &&
-          (attributes.sparkles as any).map(
+          attributes.sparkles.map(
             (i: { x: number; y: number }, index: number) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
@@ -478,13 +478,16 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
 
 export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({
   accentColor,
+  planetType,
+  rocketType,
 }) => {
   return (
     <Sequence>
       <Sequence durationInFrames={CUTOVER}>
         <LandingScene
+          rocketType={rocketType}
           accentColor={accentColor}
-          planetType={PlanetEnum.Values.Ice}
+          planetType={planetType}
         />
       </Sequence>
       <Sequence
@@ -496,6 +499,7 @@ export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({
       >
         <Sequence from={-CUTOVER - 1}>
           <LandingScene
+            rocketType={rocketType}
             accentColor={accentColor}
             planetType={PlanetEnum.Values.Ice}
           />

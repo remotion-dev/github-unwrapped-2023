@@ -10,6 +10,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
+import { rocketSchema } from "../../src/config";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
   WIGGLE_EXIT_DURATION,
@@ -34,15 +35,16 @@ import {
   UFO_EXIT_START,
 } from "./make-ufo-positions";
 import {
-  Rocket,
   ROCKET_JUMP_IN_DELAY,
   ROCKET_JUMP_IN_DURATION,
+  RocketComponent,
 } from "./Rocket";
 import { Ufo } from "./Ufo";
 
 export const issuesSchema = z.object({
   openIssues: z.number().min(0),
   closedIssues: z.number().min(0),
+  rocket: rocketSchema,
 });
 
 export const ISSUES_EXIT_DURATION = 20;
@@ -50,6 +52,7 @@ export const ISSUES_EXIT_DURATION = 20;
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,
   openIssues,
+  rocket,
 }) => {
   const frame = useCurrentFrame();
   const totalIssues = openIssues + closedIssues;
@@ -204,12 +207,16 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           return (
             // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit}>
-              <Audio src={staticFile("laser-shoot.mp3")} />)
+              <Audio src={staticFile("laser-shoot.mp3")} />
             </Sequence>
           );
         })}
         <AbsoluteFill>
-          <Rocket jumpIn={jumpIn} shots={withShootDurations} />
+          <RocketComponent
+            rocket={rocket}
+            jumpIn={jumpIn}
+            shots={withShootDurations}
+          />
         </AbsoluteFill>
       </AbsoluteFill>
       <AbsoluteFill

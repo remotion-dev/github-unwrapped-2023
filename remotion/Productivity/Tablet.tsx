@@ -93,7 +93,7 @@ export const Tablet: React.FC<
   return (
     <AbsoluteFill
       style={{
-        transform: `translateY(${900 - enterProgress * 900}px)`,
+        transform: `translateY(${710 - enterProgress * 710}px)`,
       }}
     >
       <AbsoluteFill

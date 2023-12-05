@@ -30,7 +30,7 @@ export const OpeningTitle: React.FC<
     exitProgress: number;
     accentColor: AccentColor;
   }
-> = ({ login, exitProgress, startAngle, accentColor }) => {
+> = ({ login, exitProgress, startAngle, accentColor, rocket }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -109,6 +109,7 @@ export const OpeningTitle: React.FC<
           accentColor={accentColor}
           startAngle={startAngle}
           login={login}
+          rocket={rocket}
         />
         <div>
           <div>
