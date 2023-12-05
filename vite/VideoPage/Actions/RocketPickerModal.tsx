@@ -1,4 +1,4 @@
-import { useMemo, type SetStateAction } from "react";
+import { useEffect, useMemo, useRef, type SetStateAction } from "react";
 import { AbsoluteFill } from "remotion";
 import type { RocketColor } from "../page";
 import { ModalRocket } from "./ModalRocket";
@@ -26,6 +26,7 @@ export const RocketPickerModal: React.FC<{
   isModalOpen: boolean;
 }> = ({ setRocket, setIsModalOpen, isModalOpen }) => {
   // set rocket color based on which one is clicked
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const dynamicBackground: React.CSSProperties = useMemo(() => {
     console.log("isModalOpen", isModalOpen);
@@ -35,9 +36,30 @@ export const RocketPickerModal: React.FC<{
     };
   }, [isModalOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        console.log("clicked outside");
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isModalOpen, setIsModalOpen]);
+
+  console.log("isModalOpen: ", isModalOpen);
   return (
     <AbsoluteFill style={dynamicBackground}>
-      <div style={modalStyle}>
+      <div ref={modalRef} style={modalStyle}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={spacer} />
           <ModalRocket

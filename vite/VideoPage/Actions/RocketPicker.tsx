@@ -1,6 +1,7 @@
 import { useMemo, type SetStateAction } from "react";
 import { Button } from "../../Button/Button";
 import type { RocketColor } from "../page";
+import styles from "./styles.module.css";
 
 export const RocketPicker: React.FC<{
   rocket: RocketColor;
@@ -16,10 +17,11 @@ export const RocketPicker: React.FC<{
   return (
     <div>
       <Button
-        style={{ border: "none", backgroundColor: "" }}
+        style={{ border: "none", backgroundColor: "transparent" }}
         onClick={() => setIsModalOpen(true)}
+        className={styles.rocketPicker}
       >
-        <img src={source} style={{ width: 16 }} />
+        <img src={source} style={{ width: 20 }} />
       </Button>
     </div>
   );
