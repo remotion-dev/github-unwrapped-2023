@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import {
   AbsoluteFill,
+  Audio,
   Img,
   random,
   spring,
@@ -72,6 +73,10 @@ const Thread = (props: { thread: ThreadT }) => {
   );
 };
 
+export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
+export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
+export const GOLD_PLANET_SOUND = staticFile("church_chior.mp3");
+
 export const GoldenScene: React.FC<{
   rocket: Rocket;
 }> = ({ rocket }) => {
@@ -137,6 +142,11 @@ export const GoldenScene: React.FC<{
         alignItems: "center",
       }}
     >
+      <Audio
+        // TODO: License
+        // TODO: Mute other sound
+        src={staticFile("church_chior.mp3")}
+      />
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -146,8 +156,6 @@ export const GoldenScene: React.FC<{
           height: "100%",
         }}
       >
-        <AbsoluteFill style={{ background: "black" }} />
-
         <AbsoluteFill style={{ background: "black" }}>
           <Stars />
         </AbsoluteFill>
@@ -158,7 +166,7 @@ export const GoldenScene: React.FC<{
             left: gradient * 800 - 800,
           }}
         >
-          <Img src={staticFile("gold-gradient-bg.png")} />
+          <Img src={GOLD_PLANET_BG} />
         </AbsoluteFill>
 
         {threads.map((thread, i) => (

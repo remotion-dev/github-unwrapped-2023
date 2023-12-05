@@ -1,12 +1,6 @@
 import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import {
-  AbsoluteFill,
-  Audio,
-  Series,
-  staticFile,
-  useCurrentFrame,
-} from "remotion";
+import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
 import { PlanetEnum, type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
@@ -92,18 +86,12 @@ export const Main: React.FC<Schema> = ({
   rocket,
   contributionData,
 }) => {
-  const frame = useCurrentFrame();
-
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      {frame > 1460 && planet === "Gold" ? (
-        // TODO: Prefetch and add license
-        <Audio src={staticFile("church_chior.mp3")} />
-      ) : null}
       <Audio src={getSoundtrack()} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>

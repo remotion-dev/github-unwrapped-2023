@@ -121,6 +121,7 @@ export const PlayerContainer: React.FC<{
         isPlaying={isPlaying}
         props={{
           rocket: inputProps.rocket,
+          planetType: inputProps.planet,
         }}
         onClickPauseButton={onClickPauseButton}
         onClickPlayButton={onClickPlayButton}

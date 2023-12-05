@@ -107,6 +107,12 @@ const ProductivityGraph = (props: {
   );
 };
 
+const DECELERATE_SOUND = staticFile("decelerate.mp3");
+
+export const getProductivityAssetToPrefetch = () => {
+  return [DECELERATE_SOUND];
+};
+
 export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
   return (
     <AbsoluteFill
@@ -115,7 +121,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         display: "flex",
       }}
     >
-      <Audio src={staticFile("decelerate.mp3")} volume={0.8} />
+      <Audio src={DECELERATE_SOUND} volume={0.8} />
       <TopDay
         values={[
           "Monday",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AbsoluteFill } from "remotion";
 import { prefetchAllAssets } from "../../../remotion/prefetch-all-assets";
-import type { Rocket } from "../../../src/config";
+import type { Planet, Rocket } from "../../../src/config";
 import { PlayButton } from "./PlayButton";
 import { PrefetchProgress } from "./PrefetchProgress";
 
@@ -11,6 +11,7 @@ export const PlayState: React.FC<{
   onClickPauseButton: () => void;
   props: {
     rocket: Rocket;
+    planetType: Planet;
   };
 }> = ({ isPlaying, onClickPauseButton, onClickPlayButton, props }) => {
   const [progress, setProgress] = useState(0);
@@ -26,8 +27,9 @@ export const PlayState: React.FC<{
         console.log(loadingProgress);
         return setProgress(loadingProgress);
       },
+      planetType: props.planetType,
     });
-  }, [props.rocket]);
+  }, [props.planetType, props.rocket]);
 
   if (isPlaying) {
     return <AbsoluteFill onClick={onClickPauseButton} />;
