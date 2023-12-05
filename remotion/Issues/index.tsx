@@ -248,7 +248,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             label="Closed"
             currentNumber={Math.min(
               closedIssues,
-              closedIssuesSoFar.length * (1 / factor),
+              Math.round(closedIssuesSoFar.length * (1 / factor)),
             )}
             max={closedIssues}
           />
