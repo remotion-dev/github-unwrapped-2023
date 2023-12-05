@@ -39,7 +39,7 @@ export const UfoPosition: React.FC<{
         width: 70,
         position: "absolute",
         marginLeft: x,
-        marginTop: y - 300,
+        marginTop: y - 200,
         transform: `scale(1.5)`,
       }}
     >
@@ -80,7 +80,7 @@ export const ZeroIssues: React.FC = () => {
           fontFamily: "Mona Sans",
           fontWeight: "bold",
           fontSize: 45,
-          marginTop: 400,
+          marginTop: 650,
           opacity,
         }}
       >
