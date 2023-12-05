@@ -9,7 +9,8 @@ import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-}> = ({ inputProps }) => {
+  startPolling: boolean;
+}> = ({ inputProps, startPolling }) => {
   const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>();
@@ -28,14 +29,12 @@ export const Sidebar: React.FC<{
         }),
       }).then((v) => {
         v.json().then((v) => {
-          console.log(v);
           if (v.type === "done") {
             setUrl(v.url);
             return;
           }
 
           if (v.type === "error") {
-            console.error(v.error);
             setError(v.error);
             return;
           }
@@ -51,11 +50,13 @@ export const Sidebar: React.FC<{
   );
 
   useEffect(() => {
-    setTimeout(pollProgress, 100);
-  }, []);
+    if (startPolling) {
+      pollProgress();
+    }
+  }, [startPolling]);
 
   useEffect(() => {
-    if (!url && !error) {
+    if (!url && !error && startPolling) {
       const intervalId = setInterval(() => {
         pollProgress();
       }, 5000);
@@ -66,7 +67,7 @@ export const Sidebar: React.FC<{
     }
 
     return () => {};
-  }, [error, url]);
+  }, [error, url, startPolling]);
 
   const renderDownloadButton = () => (
     <Button
