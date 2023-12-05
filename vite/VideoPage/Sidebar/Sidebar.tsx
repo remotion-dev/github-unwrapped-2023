@@ -4,13 +4,17 @@ import { DownloadIcon } from "../../../icons/DownloadIcon";
 import type { compositionSchema } from "../../../src/config";
 import { Button } from "../../Button/Button";
 import { FurtherActions } from "../Actions/FurtherActions";
+import { RocketPicker } from "../Actions/RocketPicker";
 import { SharingActions } from "../Actions/SharingActions";
+import type { RocketColor } from "../page";
 import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   startPolling: boolean;
-}> = ({ inputProps, startPolling }) => {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  rocket: RocketColor;
+}> = ({ inputProps, startPolling, setIsModalOpen, rocket }) => {
   const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>();
@@ -106,8 +110,10 @@ export const Sidebar: React.FC<{
           renderDownloadButton()
         )}
       </div>
+
       {/* Sharing Actions */}
       <SharingActions />
+      <RocketPicker rocket={rocket} setIsModalOpen={setIsModalOpen} />
       {/* Further Action */}
       <FurtherActions />
     </div>

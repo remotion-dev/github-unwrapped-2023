@@ -102,7 +102,6 @@ const computeCompositionParameters = (
         random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
       )
     ];
-
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -154,31 +153,46 @@ const background: React.CSSProperties = {
   position: "absolute",
 };
 
+export type RocketColor = "orange" | "blue" | "yellow" | null;
+
 export const UserPage = () => {
   const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rocket, setRocket] = useState<RocketColor>(null);
   const [startPolling, setStartPolling] = useState(false);
 
+  const derivedInputProps = useMemo(() => {
+    if (inputProps && rocket) {
+      return {
+        ...inputProps,
+        rocket,
+      };
+    }
+
+    return inputProps;
+  }, [inputProps, rocket]);
+
   useEffect(() => {
-    if (inputProps) {
+    if (derivedInputProps) {
       fetch("/api/render", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputProps,
+          derivedInputProps,
           username: window.__USER__.username,
         }),
       }).then(() => {
         setStartPolling(true);
       });
     }
-  }, [inputProps]);
+  }, [derivedInputProps]);
 
-  if (inputProps === null) {
+  if (derivedInputProps === null) {
     return <NotFound />;
   }
 
@@ -193,8 +207,14 @@ export const UserPage = () => {
         <VideoPageBackground />
       </div>
       <Navbar />
-
-      <VideoBox inputProps={inputProps} startPolling={startPolling} />
+      <VideoBox
+        inputProps={derivedInputProps}
+        startPolling={startPolling}
+        rocket={rocket}
+        setRocket={setRocket}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
