@@ -167,7 +167,7 @@ export const getShotsToFire = ({
   return shots;
 };
 
-type ExplosionExpanded = {
+export type ExplosionExpanded = {
   index: number;
   explodeAfterFrames: number;
   x: number;

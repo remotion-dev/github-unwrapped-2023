@@ -1,9 +1,11 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -12,6 +14,8 @@ import { UfoSvg } from "./UfoSvg";
 
 const UFOS = 9;
 export const ZERO_ISSUES_DURATION = 140;
+
+export const EXPLODE_AFTER = 90;
 
 const UfoPosition: React.FC<{
   index: number;
@@ -92,6 +96,9 @@ export const ZeroIssues: React.FC = () => {
       >
         I take no issue with that.
       </div>
+      <Sequence from={90 - 5}>
+        <Audio volume={0.5} src={staticFile("ufo-explode-1.mp3")} />
+      </Sequence>
     </AbsoluteFill>
   );
 };

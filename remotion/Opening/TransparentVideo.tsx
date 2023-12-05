@@ -19,8 +19,8 @@ export const TransparentVideo: React.FC<{
   style: React.CSSProperties;
 }> = ({ safari, other, style }) => {
   if (isIosSafari()) {
-    return <OffthreadVideo style={style} transparent src={safari} />;
+    return <OffthreadVideo muted style={style} transparent src={safari} />;
   }
 
-  return <OffthreadVideo style={style} transparent src={other} />;
+  return <OffthreadVideo muted style={style} transparent src={other} />;
 };

@@ -131,8 +131,8 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   }, [closedIndices, ufos]);
 
   const withShootDurations = addShootDelays(shots);
-  const audioHits = getAudioHits(withShootDurations);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
+  const audioHits = getAudioHits(withShootDurations, explosions);
 
   const yOffset = interpolate(
     frame,
@@ -242,8 +242,12 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         {audioHits.map((audioHit, i) => {
           return (
             // eslint-disable-next-line react/no-array-index-key
-            <Sequence key={i} from={audioHit}>
-              <Audio src={staticFile("laser-shoot.mp3")} />
+            <Sequence key={i} from={audioHit.delay}>
+              {audioHit.type === "shot" ? (
+                <Audio src={staticFile("laser-shoot.mp3")} />
+              ) : (
+                <Audio src={staticFile("ufo-explode-1.mp3")} />
+              )}
             </Sequence>
           );
         })}

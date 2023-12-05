@@ -88,7 +88,7 @@ export const Star: React.FC<{
                     hitSpaceship.index % WINDSHIELD_HIT_SOUNDS.length
                   ]
                 }
-                volume={0.2}
+                volume={0.4}
               />
             </Sequence>
           ) : null}
