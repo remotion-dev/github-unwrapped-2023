@@ -1,13 +1,14 @@
 import { prefetch } from "remotion";
 import type { Rocket } from "../src/config";
 import { getSideRocketSource } from "./Spaceship";
+import { starsAssetsToPreload } from "./StarsGiven/Star";
 import { getFrontRocketSource } from "./TopLanguages/svgs/FrontRocketSource";
 
 export const collectAllAssetsToPrefetch = ({ rocket }: { rocket: Rocket }) => {
   const sideRocket = getSideRocketSource(rocket);
   const frontRocket = getFrontRocketSource(rocket);
 
-  return [sideRocket, frontRocket];
+  return [sideRocket, frontRocket, ...starsAssetsToPreload()];
 };
 
 export const prefetchAllAssets = ({

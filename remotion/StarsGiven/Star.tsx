@@ -9,6 +9,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { StarSprite } from "../StarSprite";
+import { SHINES_ASSETS } from "./Shines";
 
 const MOVE_AIM = 100;
 export const HIT_RADIUS = 450;
@@ -22,6 +23,10 @@ export const WINDSHIELD_HIT_SOUNDS = [
   staticFile("impact-stone-4.mp3"),
   staticFile("impact-stone-5.mp3"),
 ];
+
+export const starsAssetsToPreload = () => {
+  return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS];
+};
 
 export const Star: React.FC<{
   duration: number;
