@@ -30,9 +30,9 @@ export const VideoBox: React.FC<{
     <Box style={{ overflow: "hidden", zIndex: 1 }}>
       {isModalOpen ? (
         <RocketPickerModal
-          rocket={rocket}
           setRocket={setRocket}
           setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
         />
       ) : null}
       <VideoBoxTop inputProps={inputProps} />
