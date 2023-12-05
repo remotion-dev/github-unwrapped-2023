@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
@@ -159,6 +159,8 @@ export const UserPage = () => {
     return computeCompositionParameters(window.__USER__);
   }, []);
 
+  const [startPolling, setStartPolling] = useState(false);
+
   useEffect(() => {
     if (inputProps) {
       fetch("/api/render", {
@@ -170,6 +172,8 @@ export const UserPage = () => {
           inputProps,
           username: window.__USER__.username,
         }),
+      }).then(() => {
+        setStartPolling(true);
       });
     }
   }, [inputProps]);
@@ -190,7 +194,7 @@ export const UserPage = () => {
       </div>
       <Navbar />
 
-      <VideoBox inputProps={inputProps} />
+      <VideoBox inputProps={inputProps} startPolling={startPolling} />
     </div>
   );
 };

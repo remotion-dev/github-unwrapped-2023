@@ -10,13 +10,14 @@ import styles from "./styles.module.css";
 
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-}> = ({ inputProps }) => {
+  startPolling: boolean;
+}> = ({ inputProps, startPolling }) => {
   return (
     <Box style={{ overflow: "hidden", zIndex: 1 }}>
       <VideoBoxTop inputProps={inputProps} />
       <div className={styles.roworcolumn}>
         <PlayerContainer inputProps={inputProps} />
-        <Sidebar inputProps={inputProps} />
+        <Sidebar inputProps={inputProps} startPolling={startPolling} />
         <MobileActionsContainer />
       </div>
     </Box>
