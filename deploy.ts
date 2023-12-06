@@ -1,6 +1,7 @@
 import {
   deployFunction,
   deploySite,
+  getAwsClient,
   getOrCreateBucket,
   getRegions,
 } from "@remotion/lambda";
@@ -37,6 +38,24 @@ for (let i = 1; i <= count; i++) {
       entryPoint: path.join(process.cwd(), "remotion/index.ts"),
       region,
     });
+
+    const { sdk } = getAwsClient({ region, service: "s3" });
+
+    await getAwsClient({ region, service: "s3" }).client.send(
+      new sdk.PutBucketCorsCommand({
+        Bucket: bucketName,
+        CORSConfiguration: {
+          CORSRules: [
+            {
+              AllowedHeaders: ["*"],
+              AllowedMethods: ["GET", "HEAD"],
+              AllowedOrigins: ["*"],
+              MaxAgeSeconds: 3000,
+            },
+          ],
+        },
+      }),
+    );
     console.log(
       `  Deployed site to ${region} in account ${i} under ${serveUrl}`,
     );
