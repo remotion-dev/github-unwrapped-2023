@@ -1,16 +1,30 @@
+import type { PlayerRef } from "@remotion/player";
 import React, { useEffect, useMemo, useState } from "react";
 import type { z } from "zod";
 import type { compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
 import { SharingActions } from "../Actions/SharingActions";
+import { RocketPicker } from "../RocketSelection/RocketPicker";
+import type { RocketColor } from "../page";
 import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   startPolling: boolean;
-}> = ({ inputProps, startPolling }) => {
-  const [url, setUrl] = useState<string | null>(null);
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  rocket: RocketColor;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  playerRef: React.RefObject<PlayerRef>;
+}> = ({
+  inputProps,
+  startPolling,
+  setIsModalOpen,
+  rocket,
+  setIsPlaying,
+  playerRef,
+}) => {
+  const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
@@ -79,7 +93,16 @@ export const Sidebar: React.FC<{
   return (
     <div className={styles.sidebarWrapper}>
       <div>
-        <h2 className={styles.sidebarTitle}>@{inputProps.login}</h2>
+        <div className={styles.sidebarTitleContainer}>
+          <RocketPicker
+            rocket={rocket}
+            setIsModalOpen={setIsModalOpen}
+            setIsPlaying={setIsPlaying}
+            playerRef={playerRef}
+          />
+          <div style={{ width: 16 }} />
+          <h2>{inputProps.login}</h2>
+        </div>
 
         {url ? (
           <a href={url} target="_blank" rel="noreferrer">
@@ -97,6 +120,7 @@ export const Sidebar: React.FC<{
       )}
       {/* Sharing Actions */}
       <SharingActions />
+
       {/* Further Action */}
       <FurtherActions />
     </div>

@@ -102,7 +102,6 @@ const computeCompositionParameters = (
         random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
       )
     ];
-
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -155,22 +154,46 @@ const background: React.CSSProperties = {
   position: "absolute",
 };
 
+export type RocketColor = "orange" | "blue" | "yellow" | null;
+
 export const UserPage = () => {
   const inputProps: CompositionParameters | null = useMemo(() => {
     return computeCompositionParameters(window.__USER__);
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rocket, setRocket] = useState<RocketColor>(inputProps?.rocket ?? null);
   const [startPolling, setStartPolling] = useState(false);
 
   useEffect(() => {
-    if (inputProps) {
+    const root = document.body;
+    if (isModalOpen) {
+      root.style.overflow = "hidden";
+    } else {
+      root.style.overflow = "visible";
+    }
+  }, [isModalOpen]);
+
+  const derivedInputProps = useMemo(() => {
+    if (inputProps && rocket) {
+      return {
+        ...inputProps,
+        rocket,
+      };
+    }
+
+    return inputProps;
+  }, [inputProps, rocket]);
+
+  useEffect(() => {
+    if (derivedInputProps) {
       fetch("/api/render", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputProps,
+          derivedInputProps,
           username: window.__USER__.username,
         }),
       })
@@ -183,9 +206,9 @@ export const UserPage = () => {
           console.log(e);
         });
     }
-  }, [inputProps]);
+  }, [derivedInputProps]);
 
-  if (inputProps === null) {
+  if (derivedInputProps === null) {
     return <NotFound />;
   }
 
@@ -200,8 +223,14 @@ export const UserPage = () => {
         <VideoPageBackground />
       </div>
       <Navbar />
-
-      <VideoBox inputProps={inputProps} startPolling={startPolling} />
+      <VideoBox
+        inputProps={derivedInputProps}
+        startPolling={startPolling}
+        rocket={rocket}
+        setRocket={setRocket}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
