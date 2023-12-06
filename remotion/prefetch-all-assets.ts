@@ -23,7 +23,7 @@ export const collectAllAssetsToPrefetch = ({
     sideRocket,
     frontRocket,
     ...getMainAssetsToPrefetch(),
-    ...getOpeningAssetsToPrefetch(),
+    ...getOpeningAssetsToPrefetch(rocket),
     ...getIssuesSoundsToPrefetch(),
     ...starsAssetsToPreload(),
     ...getProductivityAssetToPrefetch(),
