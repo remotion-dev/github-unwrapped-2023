@@ -115,6 +115,7 @@ export const PlayerContainer: React.FC<{
         style={player}
         className={styles.playerradius}
         loop
+        spaceKeyToPlayOrPause
       />
       <PlayState
         isPlaying={isPlaying}
