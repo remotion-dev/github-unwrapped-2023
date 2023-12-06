@@ -24,7 +24,7 @@ export const Sidebar: React.FC<{
   setIsPlaying,
   playerRef,
 }) => {
-  const [url, setUrl] = useState<string>(null);
+  const [url, setUrl] = useState<string | null>(null);
 
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
