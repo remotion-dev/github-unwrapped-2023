@@ -9,7 +9,7 @@ const makeAppHead = async (username: string | null) => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;
 
-    const socialPreview = `${backendCredentials().VITE_HOST}/og_image.png`;
+    const socialPreview = `${backendCredentials().VITE_HOST}/og_image.jpg`;
     const canonical = `${backendCredentials().VITE_HOST}`;
     const description =
       "Get your personalized video of your GitHub activity in 2023.";
@@ -25,6 +25,8 @@ const makeAppHead = async (username: string | null) => {
         <meta name="twitter:image" content={socialPreview} />
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
+        <meta name="twitter:creator" content="@remotion" />
+        <meta name="twitter:site" content="@remotion" />
       </>,
     );
   }
