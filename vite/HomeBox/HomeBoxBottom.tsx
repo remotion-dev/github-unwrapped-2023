@@ -6,7 +6,8 @@ import styles from "./styles.module.css";
 export const HomeBoxBottom: React.FC<{
   userNotFound: boolean;
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ setUserNotFound, userNotFound }) => {
+  setLoading: (v: boolean) => void;
+}> = ({ setUserNotFound, userNotFound, setLoading }) => {
   const [username, setUsername] = useState<string>("");
 
   return (
@@ -20,6 +21,7 @@ export const HomeBoxBottom: React.FC<{
       <div className={styles.inputWrapper}>
         {userNotFound && <UserNotFound />}
         <LoginOptions
+          setLoading={setLoading}
           userNotFound={userNotFound}
           setUserNotFound={setUserNotFound}
           username={username}

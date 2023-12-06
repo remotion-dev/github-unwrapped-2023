@@ -12,6 +12,11 @@ import { z } from "zod";
 import type { Planet } from "../../src/config";
 import { PlanetEnum, accentColorSchema, rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import {
+  GOLD_PLANET_ASSET,
+  GOLD_PLANET_BG,
+  GOLD_PLANET_SOUND,
+} from "../Golden";
 import { Gradient } from "../Gradients/NativeGradient";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { RocketSide } from "../Spaceship";
@@ -66,6 +71,9 @@ type PlanetAttributes = {
   planetSize: number;
 };
 
+const SILVER_PLANET_ASSET = staticFile("planet-silver.png");
+const ICE_PLANET_ASSET = staticFile("planet-ice.png");
+
 const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
   [PlanetEnum.Values.Ice]: {
     colors: {
@@ -102,7 +110,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     name: "Ice Planet",
     description:
       "The ice planet is the home of many ice creatures. You will adapt to the cold and become one of them.",
-    planet: staticFile("planet-ice.png"),
+    planet: ICE_PLANET_ASSET,
     style: {},
     landingAdjustment: -90,
     planetAdjustment: 0,
@@ -118,7 +126,7 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     },
     bgBrightness: 400,
     bgGradient: "linear-gradient( #404040, #a8a8a8)",
-    planet: staticFile("planet-silver.png"),
+    planet: SILVER_PLANET_ASSET,
     name: "Titanium Planet",
     description:
       "Impressive, this planet is a rare discovery. However, the glint of gold in the night sky leaves you with a restless curiousity.",
@@ -143,13 +151,25 @@ const mapPlanetToAttributes: { [key in Planet]: PlanetAttributes } = {
     name: "Golden Planet",
     description:
       "You have reached the pinnacle of space discovery. A warm fuzzy feeling and mounds of gold assure you that you have made the right choice.",
-    planet: staticFile("gold-planet.svg"),
+    planet: GOLD_PLANET_ASSET,
     style: {},
     landingAdjustment: 0,
     sparkles: [],
     planetAdjustment: 900,
     planetSize: 0.4,
   },
+};
+
+export const getLandingAssetsToPrefetch = ({
+  planetType,
+}: {
+  planetType: Planet;
+}) => {
+  if (planetType === PlanetEnum.Values.Gold) {
+    return [GOLD_PLANET_ASSET, GOLD_PLANET_BG, GOLD_PLANET_SOUND];
+  }
+
+  return [mapPlanetToAttributes[planetType].planet];
 };
 
 const CUTOVER = LANDING_FRAME - 60;

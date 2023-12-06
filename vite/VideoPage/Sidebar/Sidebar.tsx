@@ -18,7 +18,7 @@ export const Sidebar: React.FC<{
   const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<boolean>();
 
   const pollProgress = useMemo(
     () => async () => {
@@ -31,24 +31,30 @@ export const Sidebar: React.FC<{
           theme: inputProps.accentColor,
           username: window.__USER__.username,
         }),
-      }).then((v) => {
-        v.json().then((v) => {
-          if (v.type === "done") {
-            setUrl(v.url);
-            return;
-          }
+      })
+        .then((v) => {
+          v.json().then((v) => {
+            if (v.type === "done") {
+              setUrl(v.url);
+              return;
+            }
 
-          if (v.type === "error") {
-            setError(v.error);
-            return;
-          }
+            if (v.type === "error") {
+              setError(true);
+              console.error(v.message);
+              return;
+            }
 
-          if (v.type === "progress") {
-            setProgress(v.progress);
-            return;
-          }
+            if (v.type === "progress") {
+              setProgress(v.progress);
+              return;
+            }
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+          setError(true);
         });
-      });
     },
     [],
   );
@@ -60,35 +66,41 @@ export const Sidebar: React.FC<{
   }, [startPolling]);
 
   useEffect(() => {
+    let intervalId: any | undefined = undefined;
+
     if (!url && !error && startPolling) {
-      const intervalId = setInterval(() => {
+      intervalId = setInterval(() => {
         pollProgress();
       }, 5000);
-
-      return () => {
-        clearInterval(intervalId);
-      };
     }
 
-    return () => {};
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
   }, [error, url, startPolling]);
 
   const renderDownloadButton = () => (
     <Button
       className={styles.downloadButton}
       style={
-        url
-          ? {}
-          : {
-              opacity: 0.5,
-              pointerEvents: "none",
-            }
+        error
+          ? { pointerEvents: "none" }
+          : url
+            ? {}
+            : {
+                opacity: 0.5,
+                pointerEvents: "none",
+              }
       }
     >
       {url ? (
         <>
           Download Video <DownloadIcon width={20} color="white" />
         </>
+      ) : error ? (
+        "An error has occured"
       ) : progress !== undefined ? (
         `Generating video... (${Math.floor(progress * 100)}%)`
       ) : (
@@ -114,7 +126,12 @@ export const Sidebar: React.FC<{
           renderDownloadButton()
         )}
       </div>
-
+      {error && (
+        <p style={{ marginTop: -12, fontSize: 14 }}>
+          We've been notified of the error and are looking into it. Please try
+          again later.
+        </p>
+      )}
       {/* Sharing Actions */}
       <SharingActions />
 

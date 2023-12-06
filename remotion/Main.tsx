@@ -1,37 +1,35 @@
 import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import {
-  AbsoluteFill,
-  Audio,
-  Series,
-  staticFile,
-  useCurrentFrame,
-} from "remotion";
+import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
 import { PlanetEnum, type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import { ContributionsScene } from "./Contributions";
 import { GoldenScene } from "./Golden";
-import { ISSUES_EXIT_DURATION, Issues } from "./Issues";
+import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import { LandingScene } from "./Landing";
 import {
   OPENING_SCENE_LENGTH,
   OPENING_SCENE_OUT_OVERLAP,
   OpeningScene,
 } from "./Opening";
-import { StarsAndProductivity } from "./StarsAndProductivity";
+import {
+  StarsAndProductivity,
+  getStarsAndProductivityDuration,
+} from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 
 type Schema = z.infer<typeof compositionSchema>;
 
-const ISSUES_SCENE = 6 * VIDEO_FPS;
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
-const STARS_AND_PRODUCTIVITY = 400;
 
 export const calculateDuration = ({
   topLanguages,
+  issuesClosed,
+  issuesOpened,
+  starsGiven,
 }: z.infer<typeof compositionSchema>) => {
   const topLanguagesScene = topLanguages
     ? getDurationOfAllPlanets({
@@ -42,11 +40,11 @@ export const calculateDuration = ({
 
   return (
     topLanguagesScene +
-    ISSUES_SCENE -
+    getIssuesDuration({ issuesClosed, issuesOpened }) -
     ISSUES_EXIT_DURATION +
     CONTRIBUTIONS_SCENE +
     LANDING_SCENE +
-    STARS_AND_PRODUCTIVITY +
+    getStarsAndProductivityDuration({ starsGiven }) +
     OPENING_SCENE_LENGTH -
     OPENING_SCENE_OUT_OVERLAP
   );
@@ -59,6 +57,15 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
     durationInFrames: calculateDuration(props),
     props,
   };
+};
+
+export const getSoundtrack = () => {
+  // TODO: License
+  return staticFile("smartsound-wired.mp3");
+};
+
+export const getMainAssetsToPrefetch = () => {
+  return [getSoundtrack()];
 };
 
 export const Main: React.FC<Schema> = ({
@@ -79,19 +86,13 @@ export const Main: React.FC<Schema> = ({
   rocket,
   contributionData,
 }) => {
-  const frame = useCurrentFrame();
-
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      {frame > 1460 && planet === "Gold" ? (
-        <Audio src={staticFile("church_chior.mp3")} />
-      ) : (
-        <Audio src={staticFile("smartsound-wired.mp3")} />
-      )}
+      <Audio src={getSoundtrack()} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene
@@ -120,7 +121,7 @@ export const Main: React.FC<Schema> = ({
           </Series.Sequence>
         ) : null}
         <Series.Sequence
-          durationInFrames={ISSUES_SCENE}
+          durationInFrames={getIssuesDuration({ issuesClosed, issuesOpened })}
           offset={
             topLanguages
               ? -TOP_LANGUAGES_EXIT_DURATION
@@ -134,7 +135,7 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence
-          durationInFrames={STARS_AND_PRODUCTIVITY}
+          durationInFrames={getStarsAndProductivityDuration({ starsGiven })}
           offset={-ISSUES_EXIT_DURATION}
         >
           <StarsAndProductivity
@@ -148,6 +149,7 @@ export const Main: React.FC<Schema> = ({
             graphData={graphData}
             accentColor={accentColor}
             totalPullRequests={totalPullRequests}
+            login={login}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>

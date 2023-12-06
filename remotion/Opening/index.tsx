@@ -10,16 +10,25 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
+import type { Rocket } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import Background from "./Background";
 import Foreground from "./Foreground";
-import { TakeOff } from "./TakeOff";
+import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
 import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_OVERLAP = 10;
+
+const LAUNCH_SOUND = staticFile(
+  "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
+);
+
+export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
+  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket)];
+};
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
@@ -54,12 +63,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
       }}
     >
       <Sequence from={-20}>
-        <Audio
-          startFrom={0}
-          src={staticFile(
-            "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
-          )}
-        />
+        <Audio startFrom={0} src={LAUNCH_SOUND} />
       </Sequence>
       <AbsoluteFill
         style={{

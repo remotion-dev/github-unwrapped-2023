@@ -186,9 +186,15 @@ export const UserPage = () => {
           derivedInputProps,
           username: window.__USER__.username,
         }),
-      }).then(() => {
-        setStartPolling(true);
-      });
+      })
+        .then(() => {
+          setStartPolling(true);
+        })
+        .catch((e) => {
+          // TODO - could be better
+          setStartPolling(true);
+          console.log(e);
+        });
     }
   }, [derivedInputProps]);
 

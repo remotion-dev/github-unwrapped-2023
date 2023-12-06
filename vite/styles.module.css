@@ -19,10 +19,15 @@
   margin: 0 auto;
   height: 176px;
   bottom: 86px;
-
   @media only screen and (min-width: 40em) {
     height: 196px;
     bottom: 130px;
+    transform: translateX(18px);
+  }
+  @media only screen and (min-width: 40em) and (max-height: 64em) {
+    height: 146px;
+    bottom: 75px;
+    transform: translateX(12px);
   }
 }
 
@@ -38,10 +43,14 @@
 .homeForeground {
   width: 1080px;
   transform: translateY(16px);
-
+  position: absolute;
   @media only screen and (min-width: 40em) {
     transform: translateY(48px);
     width: 1800px;
+  }
+  @media only screen and (min-width: 40em) and (max-height: 64em) {
+    transform: translateY(48px);
+    width: 1200px;
   }
 }
 
@@ -68,7 +77,6 @@
   font-family: Mona Sans;
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
   line-height: 24px; /* 150% */
 }
 
@@ -94,5 +102,5 @@
 
 .aboutLink {
   color: #507eff;
-  text-decoration: underline;
+  border-bottom: 1px solid #507eff;
 }

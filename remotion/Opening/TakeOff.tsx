@@ -2,6 +2,7 @@ import { noise2D } from "@remotion/noise";
 import React from "react";
 import {
   AbsoluteFill,
+  OffthreadVideo,
   interpolate,
   staticFile,
   useCurrentFrame,
@@ -9,11 +10,47 @@ import {
 import type { Rocket } from "../../src/config";
 import { remapSpeed } from "../TopLanguages/remap-speed";
 import Spaceship from "./RocketFront";
-import { TransparentVideo } from "./TransparentVideo";
+import { isIosSafari } from "./TransparentVideo";
 
 const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
+
+export const getFlame = (rocket: Rocket) => {
+  if (isIosSafari()) {
+    if (rocket === "yellow") {
+      return staticFile("exhaust-orange-hevc-safari.mp4");
+    }
+
+    if (rocket === "orange") {
+      return staticFile("exhaust-orange-hevc-safari.mp4");
+    }
+
+    if (rocket === "blue") {
+      return staticFile("exhaust-blue-hevc-safari.mp4");
+    }
+
+    throw new Error("Unknown rocket");
+  }
+
+  if (rocket === "yellow") {
+    return staticFile("exhaust-orange-vp9-chrome.webm");
+  }
+
+  if (rocket === "orange") {
+    return staticFile("exhaust-orange-hevc-safari.mp4");
+  }
+
+  if (rocket === "blue") {
+    return staticFile("exhaust-blue-hevc-safari.mp4");
+  }
+
+  throw new Error("Unknown rocket");
+};
+
+export const getTakeOffAssetToPrefetch = (rocket: Rocket) => {
+  return [getFlame(rocket)];
+};
 
 export const TakeOff: React.FC<{
   rocket: Rocket;
@@ -35,16 +72,12 @@ export const TakeOff: React.FC<{
           transform: "rotate(-90deg) translateX(-200px) translateY(495px)",
         }}
       >
-        <TransparentVideo
+        <OffthreadVideo
           style={{
             width: 472,
           }}
-          other={staticFile(
-            "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
-          )}
-          safari={staticFile(
-            "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4",
-          )}
+          muted
+          src={getFlame(rocket)}
         />
       </AbsoluteFill>
       <AbsoluteFill

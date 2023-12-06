@@ -1,7 +1,4 @@
-import React from "react";
-import { OffthreadVideo } from "remotion";
-
-const isIosSafari = () => {
+export const isIosSafari = () => {
   if (typeof window === "undefined") {
     return false;
   }
@@ -11,16 +8,4 @@ const isIosSafari = () => {
   );
   const isChrome = Boolean(navigator.userAgent.match(/CriOS\//));
   return isSafari || isChrome;
-};
-
-export const TransparentVideo: React.FC<{
-  safari: string;
-  other: string;
-  style: React.CSSProperties;
-}> = ({ safari, other, style }) => {
-  if (isIosSafari()) {
-    return <OffthreadVideo style={style} transparent src={safari} />;
-  }
-
-  return <OffthreadVideo style={style} transparent src={other} />;
 };

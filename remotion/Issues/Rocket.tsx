@@ -5,7 +5,7 @@ import {
   RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
-} from "../TopLanguages/svgs/NewRocketSVG";
+} from "../TopLanguages/svgs/FrontRocketSource";
 import {
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,

@@ -19,7 +19,7 @@ import {
   RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
-} from "./svgs/NewRocketSVG";
+} from "./svgs/FrontRocketSource";
 import SkySVG from "./svgs/SkySVG";
 
 const speedRemapFn = (f: number) => interpolate(f, [0, 200], [1, 2]);

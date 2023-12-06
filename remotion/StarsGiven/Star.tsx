@@ -1,38 +1,41 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
-  random,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { MAX_STARS } from ".";
 import { StarSprite } from "../StarSprite";
+import { SHINES_ASSETS } from "./Shines";
 
 const MOVE_AIM = 100;
 export const HIT_RADIUS = 450;
 
-const MAX_HITS = 10;
-export const STAR_ANIMATION_DURATION = 20;
+export const ANIMATION_DURATION_PER_STAR = 20;
+
+const WINDSHIELD_HIT_SOUNDS = [
+  staticFile("impact-stone-1.mp3"),
+  staticFile("impact-stone-2.mp3"),
+  staticFile("impact-stone-3.mp3"),
+  staticFile("impact-stone-4.mp3"),
+  staticFile("impact-stone-5.mp3"),
+];
+
+export const starsAssetsToPreload = () => {
+  return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS];
+};
 
 export const Star: React.FC<{
   duration: number;
-  starsShown: number;
-  id: string;
   angle: number;
   showDots: boolean;
-}> = ({ duration, id, starsShown, angle, showDots }) => {
+  hitSpaceship: null | { index: number };
+}> = ({ duration, angle, showDots, hitSpaceship }) => {
   const frame = useCurrentFrame();
   const { height, width } = useVideoConfig();
-
-  const hitProbability = useMemo(
-    () => interpolate(starsShown, [0, MAX_HITS, MAX_STARS], [1, 0.9, 0.4]),
-    [starsShown],
-  );
-  const hitSpaceship = useMemo(
-    () => random(id) < hitProbability,
-    [hitProbability, id],
-  );
 
   const randomRadius = hitSpaceship ? 200 : 400;
 
@@ -58,7 +61,7 @@ export const Star: React.FC<{
 
   const scale = justScale + extraScale;
 
-  const shouldDisplay = hitSpaceship
+  const shouldDisplayHit = hitSpaceship
     ? frame < stop + 6
     : scale < 1000 && scale > 0;
 
@@ -70,7 +73,7 @@ export const Star: React.FC<{
         alignItems: "center",
       }}
     >
-      {shouldDisplay ? (
+      {shouldDisplayHit ? (
         <AbsoluteFill
           style={{
             display: "flex",
@@ -82,6 +85,18 @@ export const Star: React.FC<{
           }}
         >
           <StarSprite burstFrame={hitSpaceship ? stop : undefined} />
+          {hitSpaceship ? (
+            <Sequence>
+              <Audio
+                src={
+                  WINDSHIELD_HIT_SOUNDS[
+                    hitSpaceship.index % WINDSHIELD_HIT_SOUNDS.length
+                  ]
+                }
+                volume={0.4}
+              />
+            </Sequence>
+          ) : null}
         </AbsoluteFill>
       ) : null}
       {showDots ? (

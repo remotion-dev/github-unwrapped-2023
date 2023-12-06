@@ -4,7 +4,7 @@ import {
   ROCKET_ORIGIN_X,
   ROCKET_TOP_Y,
   TIME_BEFORE_SHOOTING,
-  TOTAL_SHOOT_DURATION,
+  getTotalShootDuration,
 } from "./constants";
 import { findLineRectangleIntersection } from "./is-line-intersecting-rectangle";
 import type { UfoPosition } from "./make-ufo-positions";
@@ -53,7 +53,7 @@ const findClosestUfoRemaining = ({
 };
 
 export const getShootDuration = (shots: Shot[]) => {
-  return TOTAL_SHOOT_DURATION / shots.length;
+  return getTotalShootDuration(shots.length) / shots.length;
 };
 
 export const addShootDelays = (shots: Shot[]) => {
@@ -167,7 +167,7 @@ export const getShotsToFire = ({
   return shots;
 };
 
-type ExplosionExpanded = {
+export type ExplosionExpanded = {
   index: number;
   explodeAfterFrames: number;
   x: number;

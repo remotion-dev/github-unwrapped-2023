@@ -8,10 +8,9 @@ import { DISK, ProgressRequest, RAM, TIMEOUT } from "../config.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Finality, Render } from "./db.js";
 import { findRender, updateRender } from "./db.js";
+import { sendDiscordMessage } from "./discord.js";
 
-export const getFinality = (
-  renderProgress: RenderProgress,
-): Finality | null => {
+const getFinality = (renderProgress: RenderProgress): Finality | null => {
   if (renderProgress.outputFile) {
     return {
       type: "success",
@@ -60,6 +59,8 @@ export const getProgress = async (render: Render) => {
     });
 
     if (renderProgress.fatalErrorEncountered) {
+      sendDiscordMessage(`Error for renderId: ${render.renderId}`);
+
       return {
         type: "error",
         message: renderProgress.errors[0].message,

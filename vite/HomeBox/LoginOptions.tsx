@@ -9,6 +9,7 @@ type Props = {
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setLoading: (v: boolean) => void;
 };
 
 export const LoginOptions: React.FC<Props> = ({
@@ -16,15 +17,18 @@ export const LoginOptions: React.FC<Props> = ({
   setUsername,
   userNotFound,
   setUserNotFound,
+  setLoading,
 }) => {
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
+      setLoading(true);
       e.preventDefault();
       fetch(`https://api.github.com/users/${username}`)
         .then((response) => response.json())
         .then((result) => {
           if (result.message === "Not Found") {
             setUserNotFound(true);
+            setLoading(false);
           } else {
             setUserNotFound(false);
             window.location.href = `/${username}`;
