@@ -73,7 +73,7 @@ export const renderEndPoint = async (request: Request, response: Response) => {
     inputProps,
     downloadBehavior: {
       type: "download",
-      fileName: "video.mp4",
+      fileName: `unwrapped-${username}.mp4`,
     },
     logLevel: "verbose",
   });
