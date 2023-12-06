@@ -16,7 +16,11 @@ type Props = {
   hour: Hour;
 };
 
-const Bar = (props: { productivity: number; index: number }) => {
+const Bar = (props: {
+  productivity: number;
+  index: number;
+  mostProductive: boolean;
+}) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const height = spring({
@@ -46,7 +50,9 @@ const Bar = (props: { productivity: number; index: number }) => {
           width: "100%",
           height: `${props.productivity * 100}%`,
           borderRadius: 4,
-          backgroundColor: "#181B28",
+          backgroundColor: props.mostProductive
+            ? "rgba(255, 255, 255, 0.7)"
+            : "#181B28",
           border: "3px solid rgba(255, 255, 255, 0.1)",
         }}
       />
@@ -89,6 +95,9 @@ const ProductivityGraph = (props: {
             <Bar
               index={productivityPerHour.time}
               productivity={productivityPerHour.productivity / maxProductivity}
+              mostProductive={
+                productivityPerHour.productivity === maxProductivity
+              }
             />
             <div
               style={{
