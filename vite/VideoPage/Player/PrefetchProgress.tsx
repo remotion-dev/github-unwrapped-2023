@@ -13,30 +13,15 @@ export const PrefetchProgress: React.FC<{
       }}
     >
       <div>
-        <div
-          style={{
-            width: 200,
-            height: 200,
-            backgroundColor: "white",
-            borderRadius: 100,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0 0 30px rgba(0,0,0,0.3)",
-            flexDirection: "column",
-            color: "#353CA3",
-          }}
-        >
-          <Pie
-            progress={progress}
-            strokeWidth={20}
-            stroke="#353CA3"
-            fill="transparent"
-            radius={40}
-            strokeLinecap="round"
-            closePath={false}
-          />
-        </div>
+        <Pie
+          progress={progress}
+          strokeWidth={4}
+          stroke="#6D708C"
+          fill="transparent"
+          radius={67.11}
+          strokeLinecap="round"
+          closePath={false}
+        />
       </div>
     </AbsoluteFill>
   );
