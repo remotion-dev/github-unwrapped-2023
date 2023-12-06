@@ -579,7 +579,7 @@ export const RemotionRoot: React.FC = () => {
           showHelperLine: false,
           login: "iampato",
           planet: "Silver" as const,
-          starsGiven: 10,
+          starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
           totalPullRequests: 10,
