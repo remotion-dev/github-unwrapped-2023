@@ -21,12 +21,34 @@ export const content: Array<AboutItemContent> = [
           contributions{'"'} in your GitHub profile. Once you{"'"}ve done this,
           login in again and regenerate your video.
         </p>
-        <img
-          src="/privateactivity.png"
+        <div
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             width: "100%",
+            margin: "32px 0 48px 0",
           }}
-        />
+        >
+          <div
+            style={{
+              width: 300,
+              height: 172,
+              borderRadius: 4,
+              overflow: "hidden",
+              boxShadow: "0 4px 16px 8px rgba(0,0,0,0.2)",
+            }}
+          >
+            <img
+              src="/privateactivity.png"
+              style={{
+                objectFit: "cover",
+                width: "100%",
+              }}
+            />
+          </div>
+        </div>
+
         <a
           className={styles.aboutButton}
           style={{ lineHeight: "43px" }}

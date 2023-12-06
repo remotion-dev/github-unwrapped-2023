@@ -50,7 +50,9 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     username: null,
   });
 
-  await clearRendersForUsername({ username: stats.username });
+  if (query.reset === "true") {
+    await clearRendersForUsername({ username: stats.username });
+  }
 
   await insertProfileStats(stats);
 
