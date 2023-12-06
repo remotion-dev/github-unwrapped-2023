@@ -34,6 +34,7 @@ export const starsGivenSchema = z.object({
   accentColor: accentColorSchema,
   totalPullRequests: z.number(),
   login: z.string(),
+  sampleStarredRepos: z.array(z.string()),
 });
 
 const getActualStars = (starsGiven: number) => {
@@ -95,6 +96,7 @@ export const StarsGiven: React.FC<
   showDots,
   accentColor,
   totalPullRequests,
+  sampleStarredRepos,
 }) => {
   const frame = useCurrentFrame();
 
@@ -165,6 +167,7 @@ export const StarsGiven: React.FC<
           yShake={yShake}
           accentColor={accentColor}
           totalPullRequests={totalPullRequests}
+          repoText={sampleStarredRepos[0]}
         />
       ) : null}
     </AbsoluteFill>

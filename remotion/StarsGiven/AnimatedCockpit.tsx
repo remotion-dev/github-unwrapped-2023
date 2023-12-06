@@ -18,7 +18,15 @@ export const AnimatedCockpit: React.FC<{
   rotationShake: number;
   accentColor: AccentColor;
   totalPullRequests: number;
-}> = ({ xShake, yShake, rotationShake, accentColor, totalPullRequests }) => {
+  repoText: string;
+}> = ({
+  xShake,
+  yShake,
+  rotationShake,
+  accentColor,
+  totalPullRequests,
+  repoText,
+}) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -45,7 +53,7 @@ export const AnimatedCockpit: React.FC<{
 
   return (
     <AbsoluteFill style={shake}>
-      <HeadsUpDisplay />
+      <HeadsUpDisplay textToDisplay={repoText} />
       <CockpitSVG />
       <Sequence from={271}>
         <CustomScreen

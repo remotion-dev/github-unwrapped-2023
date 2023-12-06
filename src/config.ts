@@ -123,6 +123,7 @@ export const compositionSchema = z.object({
   accentColor: accentColorSchema,
   rocket: rocketSchema,
   contributionData: z.array(z.array(z.number())),
+  sampleStarredRepos: z.array(z.string()),
 });
 
 export const RenderRequest = z.object({

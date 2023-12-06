@@ -1,7 +1,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 
-export const HeadsUpDisplay: React.FC = () => {
+export const HeadsUpDisplay: React.FC<{
+  textToDisplay: string;
+}> = ({ textToDisplay }) => {
   return (
     <AbsoluteFill
       style={{
@@ -25,7 +27,7 @@ export const HeadsUpDisplay: React.FC = () => {
           fontWeight: "bold",
         }}
       >
-        remotion-dev/remotion
+        {textToDisplay}
       </div>
     </AbsoluteFill>
   );

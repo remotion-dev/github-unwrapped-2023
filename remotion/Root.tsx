@@ -1,5 +1,6 @@
 import { Composition, Folder, Still, random } from "remotion";
 import { LanguagesEnum, compositionSchema } from "../src/config";
+import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -286,6 +287,7 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
           totalPullRequests: 614,
           login: "JonnyBurger",
+          sampleStarredRepos: SAMPLE_STARRED_REPOS,
         }}
         calculateMetadata={starsAndProductivityCalculateMetadata}
       />
@@ -620,6 +622,7 @@ export const RemotionRoot: React.FC = () => {
               i,
               random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
             ]),
+          sampleStarredRepos: SAMPLE_STARRED_REPOS,
         }}
       />
       <Composition
@@ -705,6 +708,18 @@ export const RemotionRoot: React.FC = () => {
             accentColor: "purple" as const,
             totalPullRequests: 614,
             login: "JonnyBurger",
+            sampleStarredRepos: [
+              "remotion-dev/remotion",
+              "Shopify/React-native-skia",
+              "Shopify/argo",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+            ],
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -727,6 +742,7 @@ export const RemotionRoot: React.FC = () => {
             accentColor: "purple" as const,
             totalPullRequests: 614,
             login: "JonnyBurger",
+            sampleStarredRepos: SAMPLE_STARRED_REPOS,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -749,6 +765,7 @@ export const RemotionRoot: React.FC = () => {
             accentColor: "purple" as const,
             totalPullRequests: 614,
             login: "JonnyBurger",
+            sampleStarredRepos: SAMPLE_STARRED_REPOS,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />

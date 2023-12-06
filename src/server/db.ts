@@ -13,6 +13,7 @@ export type ProfileStats = {
   fetchedAt: number;
   loggedInWithGitHub: boolean;
   totalStars: number;
+  sampleStarredRepos: string[];
   totalContributions: number;
   topLanguages: Array<{ languageName: string; color: string }>;
   bestHours: Record<string, number>;

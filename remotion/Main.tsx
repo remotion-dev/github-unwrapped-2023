@@ -85,6 +85,7 @@ export const Main: React.FC<Schema> = ({
   accentColor,
   rocket,
   contributionData,
+  sampleStarredRepos,
 }) => {
   return (
     <AbsoluteFill
@@ -150,6 +151,7 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
             totalPullRequests={totalPullRequests}
             login={login}
+            sampleStarredRepos={sampleStarredRepos}
           />
         </Series.Sequence>
         <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>

@@ -49,6 +49,7 @@ export const StarsAndProductivity: React.FC<
   accentColor,
   totalPullRequests,
   login,
+  sampleStarredRepos,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -96,6 +97,7 @@ export const StarsAndProductivity: React.FC<
         accentColor={accentColor}
         totalPullRequests={totalPullRequests}
         login={login}
+        sampleStarredRepos={sampleStarredRepos}
       />
       <Sequence from={zoomDelay}>
         <Tablet

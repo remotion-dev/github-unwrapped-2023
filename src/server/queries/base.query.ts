@@ -109,6 +109,12 @@ export type BaseQueryResponse = {
   starredRepositories: {
     edges: Array<{
       starredAt: string;
+      node: {
+        name: string;
+        owner: {
+          login: string;
+        };
+      };
     }>;
   };
 };
