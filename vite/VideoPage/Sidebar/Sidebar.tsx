@@ -1,20 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import type { z } from "zod";
-import { DownloadIcon } from "../../../icons/DownloadIcon";
 import type { compositionSchema } from "../../../src/config";
-import { Button } from "../../Button/Button";
 import { FurtherActions } from "../Actions/FurtherActions";
 import { SharingActions } from "../Actions/SharingActions";
+import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   startPolling: boolean;
 }> = ({ inputProps, startPolling }) => {
-  const [url, setUrl] = useState<string>();
+  const [url, setUrl] = useState<string | null>(null);
 
-  const [progress, setProgress] = useState<number>();
-  const [error, setError] = useState<boolean>();
+  const [progress, setProgress] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
 
   const pollProgress = useMemo(
     () => () => {
@@ -77,34 +76,6 @@ export const Sidebar: React.FC<{
     };
   }, [error, url, startPolling, pollProgress]);
 
-  const renderDownloadButton = () => (
-    <Button
-      className={styles.downloadButton}
-      style={
-        error
-          ? { pointerEvents: "none" }
-          : url
-            ? {}
-            : {
-                opacity: 0.5,
-                pointerEvents: "none",
-              }
-      }
-    >
-      {url ? (
-        <>
-          Download Video <DownloadIcon width={20} color="white" />
-        </>
-      ) : error ? (
-        "Download unavailable due to error"
-      ) : progress === undefined ? (
-        "Generating .mp4 file..."
-      ) : (
-        `Generating .mp4 file... (${Math.floor(progress * 100)}%)`
-      )}
-    </Button>
-  );
-
   return (
     <div className={styles.sidebarWrapper}>
       <div>
@@ -112,10 +83,10 @@ export const Sidebar: React.FC<{
 
         {url ? (
           <a href={url} target="_blank" rel="noreferrer">
-            {renderDownloadButton()}
+            <DownloadButton error={error} progress={progress} url={url} />
           </a>
         ) : (
-          renderDownloadButton()
+          <DownloadButton error={error} progress={progress} url={url} />
         )}
       </div>
       {error && (
