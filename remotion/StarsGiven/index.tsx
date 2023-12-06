@@ -2,7 +2,13 @@ import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
 import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Sequence,
+  interpolate,
+  random,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
 import {
   accentColorSchema,
@@ -88,6 +94,17 @@ export const starsGivenCalculateMetadata: CalculateMetadataFunction<
   };
 };
 
+if (!Array.prototype.findLastIndex) {
+  // eslint-disable-next-line no-extend-native
+  Array.prototype.findLastIndex = function (callback, thisArg) {
+    for (let i = this.length - 1; i >= 0; i--) {
+      if (callback.call(thisArg, this[i], i, this)) return i;
+    }
+
+    return -1;
+  };
+}
+
 export const StarsGiven: React.FC<
   z.infer<typeof starsGivenSchema> & {
     style?: React.CSSProperties;
@@ -133,7 +150,30 @@ export const StarsGiven: React.FC<
       .sort((a, b) => a - b);
   }, [hitIndices]);
 
-  console.log("Hit indices TODO later", hits);
+  const text = useMemo(() => {
+    const lastItemWithFrameVisible = hits.findLastIndex((i) => {
+      return i < frame;
+    });
+
+    if (lastItemWithFrameVisible !== -1) {
+      const distanceToPreviousHit = Math.abs(
+        frame - hits[lastItemWithFrameVisible],
+      );
+      const distanceToNextHit = Math.abs(
+        frame - hits[lastItemWithFrameVisible + 1],
+      );
+
+      const distanceToHit = Math.min(distanceToPreviousHit, distanceToNextHit);
+      const opacity = interpolate(distanceToHit, [0, 3], [0, 1]);
+
+      return {
+        opacity,
+        text: sampleStarredRepos[lastItemWithFrameVisible],
+      };
+    }
+
+    return null;
+  }, [frame, hits, sampleStarredRepos]);
 
   return (
     <AbsoluteFill style={style}>
@@ -190,7 +230,7 @@ export const StarsGiven: React.FC<
           yShake={yShake}
           accentColor={accentColor}
           totalPullRequests={totalPullRequests}
-          repoText={sampleStarredRepos[0]}
+          repoText={text}
         />
       ) : null}
     </AbsoluteFill>

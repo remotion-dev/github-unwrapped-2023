@@ -1,9 +1,18 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 
+export type RepoText = {
+  text: string;
+  opacity: number;
+};
+
 export const HeadsUpDisplay: React.FC<{
-  textToDisplay: string;
+  textToDisplay: RepoText | null;
 }> = ({ textToDisplay }) => {
+  if (!textToDisplay) {
+    return null;
+  }
+
   return (
     <AbsoluteFill
       style={{
@@ -27,7 +36,13 @@ export const HeadsUpDisplay: React.FC<{
           fontWeight: "bold",
         }}
       >
-        {textToDisplay}
+        <span
+          style={{
+            opacity: textToDisplay.opacity,
+          }}
+        >
+          {textToDisplay.text}
+        </span>
       </div>
     </AbsoluteFill>
   );

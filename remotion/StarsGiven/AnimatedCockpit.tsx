@@ -10,6 +10,7 @@ import {
 import type { AccentColor } from "../../src/config";
 import CockpitSVG from "./CockpitSVG";
 import { CustomScreen } from "./CustomScreen";
+import type { RepoText } from "./HeadsUpDisplay";
 import { HeadsUpDisplay } from "./HeadsUpDisplay";
 
 export const AnimatedCockpit: React.FC<{
@@ -18,7 +19,7 @@ export const AnimatedCockpit: React.FC<{
   rotationShake: number;
   accentColor: AccentColor;
   totalPullRequests: number;
-  repoText: string;
+  repoText: RepoText | null;
 }> = ({
   xShake,
   yShake,

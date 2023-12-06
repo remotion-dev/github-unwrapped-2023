@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
+import type { RenderRequest } from "../../src/config";
 import {
   LanguagesEnum,
   PlanetEnum,
@@ -187,15 +188,17 @@ export const UserPage = () => {
 
   useEffect(() => {
     if (derivedInputProps) {
+      const renderRequest: z.infer<typeof RenderRequest> = {
+        inputProps: derivedInputProps,
+        username: window.__USER__.username,
+      };
+
       fetch("/api/render", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          derivedInputProps,
-          username: window.__USER__.username,
-        }),
+        body: JSON.stringify(renderRequest),
       })
         .then(() => {
           setStartPolling(true);
