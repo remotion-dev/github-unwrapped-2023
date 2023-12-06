@@ -17,7 +17,7 @@ export const Sidebar: React.FC<{
   const [error, setError] = useState<boolean>();
 
   const pollProgress = useMemo(
-    () => async () => {
+    () => () => {
       fetch("/api/progress", {
         method: "post",
         headers: {
@@ -62,7 +62,7 @@ export const Sidebar: React.FC<{
   }, [pollProgress, startPolling]);
 
   useEffect(() => {
-    let intervalId: any | undefined;
+    let intervalId: NodeJS.Timer | undefined;
 
     if (!url && !error && startPolling) {
       intervalId = setInterval(() => {
@@ -97,10 +97,10 @@ export const Sidebar: React.FC<{
         </>
       ) : error ? (
         "An error has occured"
-      ) : progress !== undefined ? (
-        `Generating video... (${Math.floor(progress * 100)}%)`
-      ) : (
+      ) : progress === undefined ? (
         "Generating video..."
+      ) : (
+        `Generating video... (${Math.floor(progress * 100)}%)`
       )}
     </Button>
   );
