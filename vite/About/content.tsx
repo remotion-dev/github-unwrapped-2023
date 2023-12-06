@@ -11,30 +11,6 @@ export type AboutItemContent = {
 
 export const content: Array<AboutItemContent> = [
   {
-    icon: "/book.svg",
-    title: "How it works",
-    description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
-  },
-  {
-    icon: "/detective.svg",
-    title: "Who is behind GitHub Unwrapped?",
-    description: "",
-    node: (
-      <p>
-        The project was implemented by{" "}
-        <a className={styles.aboutLink} href="https://www.remotion.dev">
-          Remotion
-        </a>{" "}
-        in collaboration with{" "}
-        <a className={styles.aboutLink} href="https://www.foronered.com">
-          For One Red
-        </a>
-        {", "}
-        who also designed the entirety of this project.
-      </p>
-    ),
-  },
-  {
     icon: "/eyeball.svg",
     title: "Private contributions not showing up?",
     description: "",
@@ -60,6 +36,17 @@ export const content: Array<AboutItemContent> = [
         </a>
       </>
     ),
+  },
+  {
+    icon: "/book.svg",
+    title: "How it works",
+    description: `We call GitHub's GraphQL API to fetch and calculate your statistics. The data cutoff is approximately 24 hours before you generated the video. The video gets created using Remotion.`,
+  },
+  {
+    icon: "/calculator.svg",
+    title: "How are my top languages calculated?",
+    description: `Your top languages are not exactly calculated in a scientific way but are estimated according to the following formula:
+      The list of repositories that you contributed to are fetched. A ranking is assigned to the top 3 languages (top language = 3 points, second = 2 points, third = 1 point) and they are multiplied by the contribution count and the amount of lines of that language in that repository.`,
   },
   {
     icon: "/open-source.svg",
@@ -91,12 +78,6 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
-    icon: "/calculator.svg",
-    title: "How are my top languages calculated?",
-    description: `Your top languages are not exactly calculated in a scientific way but are estimated according to the following formula:
-      The list of repositories that you contributed to are fetched. A ranking is assigned to the top 3 languages (top language = 3 points, second = 2 points, third = 1 point) and they are multiplied by the contribution count and the amount of lines of that language in that repository.`,
-  },
-  {
     icon: "/chat.svg",
     title: "Want to host a year in review for your users?",
     description: ``,
@@ -126,6 +107,25 @@ export const content: Array<AboutItemContent> = [
         </p>
         <EmailForm />
       </>
+    ),
+  },
+  {
+    icon: "/detective.svg",
+    title: "Who is behind GitHub Unwrapped?",
+    description: "",
+    node: (
+      <p>
+        The project was implemented by{" "}
+        <a className={styles.aboutLink} href="https://www.remotion.dev">
+          Remotion
+        </a>{" "}
+        in collaboration with{" "}
+        <a className={styles.aboutLink} href="https://www.foronered.com">
+          For One Red
+        </a>
+        {", "}
+        who also designed the entirety of this project.
+      </p>
     ),
   },
   {

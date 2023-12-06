@@ -1,19 +1,20 @@
 import React from "react";
-import { Img, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
 import { PANE_BACKGROUND, PANE_BORDER } from "./Pane";
+import { RotatingPlanet } from "./RotatingPlanet";
 
 const INNER_BORDER_RADIUS = 30;
 const PADDING = 20;
 
 const topLanguagesTitle = z.object({
-  login: z.string(),
   pluralize: z.boolean(),
+  randomizePlanetSeed: z.string(),
 });
 
 export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
-  login,
   pluralize,
+  randomizePlanetSeed,
 }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -40,15 +41,19 @@ export const TopLanguagesTitle: React.FC<z.infer<typeof topLanguagesTitle>> = ({
         scale: String(spr),
       }}
     >
-      <Img
-        src={`https://github.com/${login}.png`}
+      <div
         style={{
           borderRadius: INNER_BORDER_RADIUS,
           height: 120,
-          border: PANE_BORDER,
+          width: 120,
           marginRight: PADDING,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
+      >
+        <RotatingPlanet randomSeed={randomizePlanetSeed} />
+      </div>
       <div
         style={{
           color: "white",
