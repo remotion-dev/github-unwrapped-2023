@@ -1,3 +1,4 @@
+import type { PlayerRef } from "@remotion/player";
 import React, { useEffect, useMemo, useState } from "react";
 import type { z } from "zod";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
@@ -14,7 +15,16 @@ export const Sidebar: React.FC<{
   startPolling: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   rocket: RocketColor;
-}> = ({ inputProps, startPolling, setIsModalOpen, rocket }) => {
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  playerRef: React.RefObject<PlayerRef>;
+}> = ({
+  inputProps,
+  startPolling,
+  setIsModalOpen,
+  rocket,
+  setIsPlaying,
+  playerRef,
+}) => {
   const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>();
@@ -113,7 +123,12 @@ export const Sidebar: React.FC<{
     <div className={styles.sidebarWrapper}>
       <div>
         <div className={styles.sidebarTitleContainer}>
-          <RocketPicker rocket={rocket} setIsModalOpen={setIsModalOpen} />
+          <RocketPicker
+            rocket={rocket}
+            setIsModalOpen={setIsModalOpen}
+            setIsPlaying={setIsPlaying}
+            playerRef={playerRef}
+          />
           <div style={{ width: 16 }} />
           <h2>{inputProps.login}</h2>
         </div>

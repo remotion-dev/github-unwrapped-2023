@@ -1,3 +1,4 @@
+import type { PlayerRef } from "@remotion/player";
 import { useEffect, useMemo, useRef, type SetStateAction } from "react";
 import { AbsoluteFill } from "remotion";
 import { Button } from "../../Button/Button";
@@ -22,8 +23,10 @@ export const RocketPickerModal: React.FC<{
   setRocket: React.Dispatch<SetStateAction<RocketColor>>;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   isModalOpen: boolean;
+  playerRef: React.RefObject<PlayerRef>;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<SetStateAction<boolean>>;
 }> = ({ rocket, setRocket, setIsModalOpen, isModalOpen }) => {
-  // set rocket color based on which one is clicked
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonSvg = (
     <svg

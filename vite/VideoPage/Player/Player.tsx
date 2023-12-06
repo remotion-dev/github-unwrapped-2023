@@ -1,6 +1,6 @@
 import type { PlayerRef } from "@remotion/player";
 import { Player } from "@remotion/player";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import type { z } from "zod";
 import { Main, calculateDuration } from "../../../remotion/Main";
 import { MAXIMUM_NUMBER_OF_AUDIO_TAGS } from "../../../remotion/audio-tags";
@@ -24,13 +24,12 @@ const player: React.CSSProperties = {
 
 export const PlayerContainer: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-}> = ({ inputProps }) => {
-  const ref = useRef<PlayerRef>(null);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  playerRef: React.RefObject<PlayerRef>;
+}> = ({ inputProps, isPlaying, setIsPlaying, playerRef }) => {
   useEffect(() => {
-    const { current } = ref;
+    const { current } = playerRef;
     if (!current) {
       return;
     }
@@ -54,7 +53,7 @@ export const PlayerContainer: React.FC<{
 
   const onClickPlayButton = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      const { current } = ref;
+      const { current } = playerRef;
 
       if (!current) {
         return;
@@ -66,7 +65,7 @@ export const PlayerContainer: React.FC<{
   );
 
   const onClickPauseButton = useCallback(() => {
-    const { current } = ref;
+    const { current } = playerRef;
 
     if (!current) {
       return;
@@ -76,7 +75,7 @@ export const PlayerContainer: React.FC<{
   }, []);
 
   useEffect(() => {
-    const { current } = ref;
+    const { current } = playerRef;
 
     if (!current) {
       return;
@@ -105,7 +104,7 @@ export const PlayerContainer: React.FC<{
   return (
     <div style={outer}>
       <Player
-        ref={ref}
+        ref={playerRef}
         numberOfSharedAudioTags={MAXIMUM_NUMBER_OF_AUDIO_TAGS}
         component={Main}
         inputProps={inputProps}

@@ -161,7 +161,7 @@ export const UserPage = () => {
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [rocket, setRocket] = useState<RocketColor>(null);
+  const [rocket, setRocket] = useState<RocketColor>(inputProps?.rocket ?? null);
   const [startPolling, setStartPolling] = useState(false);
 
   const derivedInputProps = useMemo(() => {

@@ -1,5 +1,5 @@
 import type { SetStateAction } from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { getFlame } from "../../../remotion/Opening/TakeOff";
 import type { RocketColor } from "../page";
 
@@ -12,9 +12,9 @@ const rocketWrapper: React.CSSProperties = {
 };
 
 const rocketStyle: React.CSSProperties = {
-  width: 139,
-  height: 300,
+  maxHeight: 300,
   cursor: "pointer",
+  zIndex: 1,
 };
 
 export const ModalRocket: React.FC<{
@@ -22,7 +22,6 @@ export const ModalRocket: React.FC<{
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   rocket: RocketColor;
 }> = ({ rocket, setRocket, setIsModalOpen }) => {
-  const [isHovering, setIsHovering] = useState(false);
   const source = useMemo(() => {
     return rocket === "orange"
       ? "/rocket-side-orange.png"
@@ -41,29 +40,21 @@ export const ModalRocket: React.FC<{
     [setIsModalOpen, setRocket],
   );
   return (
-    <div
-      style={rocketWrapper}
-      onClick={() => handleClick(rocket)}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+    <div style={rocketWrapper} onClick={() => handleClick(rocket)}>
       <img src={source} style={rocketStyle} />
-      {isHovering ? (
-        <video
-          src={fireSource}
-          muted
-          loop
-          autoPlay
-          style={{
-            height: 64,
-            transform: "rotate(-90deg)",
-            marginLeft: 6,
-            marginTop: 10,
-          }}
-        />
-      ) : (
-        <div style={{ height: 74 }} />
-      )}
+
+      <video
+        src={fireSource}
+        muted
+        loop
+        autoPlay
+        style={{
+          height: 64,
+          transform: "rotate(-90deg)",
+          marginLeft: 6,
+          marginTop: 6,
+        }}
+      />
     </div>
   );
 };

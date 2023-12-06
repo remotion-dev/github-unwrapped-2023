@@ -1,5 +1,6 @@
+import type { PlayerRef } from "@remotion/player";
 import type { SetStateAction } from "react";
-import React from "react";
+import React, { useRef, useState } from "react";
 import type { z } from "zod";
 import type { compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
@@ -26,6 +27,8 @@ export const VideoBox: React.FC<{
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playerRef = useRef<PlayerRef>(null);
   return (
     <Box style={{ overflow: "hidden", zIndex: 1 }}>
       {isModalOpen ? (
@@ -34,16 +37,26 @@ export const VideoBox: React.FC<{
           setRocket={setRocket}
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
+          playerRef={playerRef}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
         />
       ) : null}
       <VideoBoxTop inputProps={inputProps} />
       <div className={styles.roworcolumn}>
-        <PlayerContainer inputProps={inputProps} />
+        <PlayerContainer
+          playerRef={playerRef}
+          inputProps={inputProps}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
         <Sidebar
           inputProps={inputProps}
           startPolling={startPolling}
           setIsModalOpen={setIsModalOpen}
           rocket={rocket}
+          setIsPlaying={setIsPlaying}
+          playerRef={playerRef}
         />
         <MobileActionsContainer />
       </div>
