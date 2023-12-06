@@ -1,6 +1,6 @@
 import { backendCredentials } from "../helpers/domain.js";
 
-const TOKENS = 3;
+const TOKENS = 4;
 
 export const getRandomGithubToken = (): string => {
   const index = Math.ceil(Math.random() * TOKENS);
@@ -14,6 +14,10 @@ export const getRandomGithubToken = (): string => {
 
   if (index === 3) {
     return backendCredentials().GITHUB_TOKEN_3;
+  }
+
+  if (index === 4) {
+    return backendCredentials().GITHUB_TOKEN_4;
   }
 
   throw new Error("GitHub token not found");
