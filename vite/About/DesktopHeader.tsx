@@ -41,7 +41,7 @@ export const DesktopHeader = () => {
           alignSelf: "flex-end",
         }}
       >
-        <img src="/preview2.png" style={{ width: "100%", height: "100%" }} />
+        <img src="/preview.png" style={{ width: "100%", height: "100%" }} />
       </div>
     </div>
   );
