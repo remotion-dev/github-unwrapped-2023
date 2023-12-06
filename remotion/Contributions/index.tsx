@@ -21,7 +21,7 @@ const TIMELINE_OFFSET_Y = 420;
 
 export const ContributionsScene: React.FC<{
   accentColor: AccentColor;
-  contributionData: number[][];
+  contributionData: number[];
 }> = ({ accentColor, contributionData }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();

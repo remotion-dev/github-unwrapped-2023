@@ -163,10 +163,9 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
           contributionData: new Array(364)
             .fill(0)
-            .map((_, i) => [
-              i,
+            .map((_, i) =>
               random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ]),
+            ),
         }}
       />
 
@@ -618,10 +617,9 @@ export const RemotionRoot: React.FC = () => {
           rocket: "blue",
           contributionData: new Array(364)
             .fill(0)
-            .map((_, i) => [
-              i,
+            .map((_, i) =>
               random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ]),
+            ),
           sampleStarredRepos: SAMPLE_STARRED_REPOS,
         }}
       />

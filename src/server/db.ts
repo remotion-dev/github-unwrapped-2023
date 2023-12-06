@@ -20,7 +20,7 @@ export type ProfileStats = {
   topWeekday: Weekday;
   topHour: Hour;
   graphData: ProductivityPerHour[];
-  contributionData: number[][];
+  contributionData: number[];
 };
 
 type EmailCollection = {
