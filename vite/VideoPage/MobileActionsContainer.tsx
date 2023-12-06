@@ -1,4 +1,6 @@
+import { useNavigate } from "@tanstack/react-router";
 import React from "react";
+import { staticFile } from "remotion";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
@@ -6,6 +8,8 @@ import { FurtherActions } from "./Actions/FurtherActions";
 import styles from "./styles.module.css";
 
 export const MobileActionsContainer: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.mobileActionsContainer}>
       <FurtherActions />
@@ -23,7 +27,36 @@ export const MobileActionsContainer: React.FC = () => {
           <DownloadIcon width={20} color="white" />
           Download
         </Button>
-        <Button style={{ flex: 1, gap: 8, height: 48 }}>
+        <Button
+          style={{ flex: 1, gap: 8, height: 48 }}
+          onClick={() => {
+            const sharable = Boolean(navigator.share);
+            if (sharable) {
+              fetch(staticFile("output.mp4"))
+                .then((v) => {
+                  return v.blob();
+                })
+                .then((blob) => {
+                  const file = new File([blob], "output.mp4", {
+                    type: "video/mp4",
+                  });
+
+                  window.alert("Sharing video");
+
+                  return navigator.share({
+                    files: [file],
+                    title: "Your GitHub Unwrapped 2023",
+                    text: "Check out my GitHub Unwrapped 2023! Get yours now on https://githubunwrapped.com",
+                  });
+                })
+                .catch((err) => {
+                  window.alert(Object.keys(navigator) + err.message);
+                });
+            } else {
+              navigate({ to: "./share" });
+            }
+          }}
+        >
           <ShareIcon width={20} color="white" />
           Share
         </Button>
