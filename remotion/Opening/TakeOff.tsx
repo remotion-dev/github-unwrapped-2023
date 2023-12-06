@@ -23,7 +23,7 @@ const getFlame = (rocket: Rocket) => {
     }
 
     if (rocket === "orange") {
-      return staticFile("exhaust-purple-hevc-safari.mp4");
+      return staticFile("exhaust-orange-hevc-safari.mp4");
     }
 
     if (rocket === "blue") {
@@ -38,7 +38,7 @@ const getFlame = (rocket: Rocket) => {
   }
 
   if (rocket === "orange") {
-    return staticFile("exhaust-purple-hevc-safari.mp4");
+    return staticFile("exhaust-orange-hevc-safari.mp4");
   }
 
   if (rocket === "blue") {
@@ -77,7 +77,7 @@ export const TakeOff: React.FC<{
             width: 472,
           }}
           muted
-          src={getFlame()}
+          src={getFlame(rocket)}
         />
       </AbsoluteFill>
       <AbsoluteFill
