@@ -21,12 +21,12 @@ type AudioSample = {
   source: string;
 };
 
-export const SHOT_SOUNDS = [
+const SHOT_SOUNDS = [
   staticFile("space-shot-1.mp3"),
   staticFile("space-shot-2.mp3"),
 ];
 
-export const EXPLODE_SOUNDS = [staticFile("ufo-explode-1.mp3")];
+const EXPLODE_SOUNDS = [staticFile("ufo-explode-1.mp3")];
 
 export const getIssueSounds = () => {
   return [...SHOT_SOUNDS, ...EXPLODE_SOUNDS];

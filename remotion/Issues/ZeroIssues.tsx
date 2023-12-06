@@ -15,8 +15,6 @@ import { UfoSvg } from "./UfoSvg";
 const UFOS = 9;
 export const ZERO_ISSUES_DURATION = 140;
 
-export const EXPLODE_AFTER = 90;
-
 const UfoPosition: React.FC<{
   index: number;
 }> = ({ index }) => {
@@ -52,7 +50,7 @@ const UfoPosition: React.FC<{
         <UfoSvg />
       </Sequence>
       <Sequence from={90}>
-        <Poof ufoScale={0.25} x={35} y={15} />
+        <Poof ufoScale={0.25} x={30} y={23} />
       </Sequence>
     </div>
   );

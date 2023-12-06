@@ -9,7 +9,7 @@ import { getSideRocketSource } from "./Spaceship";
 import { starsAssetsToPreload } from "./StarsGiven/Star";
 import { getFrontRocketSource } from "./TopLanguages/svgs/FrontRocketSource";
 
-export const collectAllAssetsToPrefetch = ({
+const collectAllAssetsToPrefetch = ({
   rocket,
   planetType,
 }: {

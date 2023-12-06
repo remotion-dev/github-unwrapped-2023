@@ -59,7 +59,7 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
   };
 };
 
-export const getSoundtrack = () => {
+const getSoundtrack = () => {
   // TODO: License
   return staticFile("smartsound-wired.mp3");
 };
