@@ -26,7 +26,7 @@ const apiEndpointWrapper = (
     req: Request,
     res: Response,
     next: NextFunction,
-  ) => Promise<void | Response<any, Record<string, any>>> | void,
+  ) => Promise<void | Response<unknown, Record<string, unknown>>> | void,
 ) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
