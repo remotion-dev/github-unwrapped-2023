@@ -1,6 +1,7 @@
 .wrapper {
   height: 100svh;
   width: 100vw;
+  overflow: hidden;
 }
 
 .content {
