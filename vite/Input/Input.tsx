@@ -1,22 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 
 export const Input: React.FC<{
   text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
+  setText: (v: string) => void;
   disabled?: boolean;
   placeHolder?: string;
   style?: React.CSSProperties;
   invalid?: boolean;
   className?: string;
 }> = ({ text, setText, disabled, placeHolder, style, invalid, className }) => {
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setText(e.currentTarget.value);
-    },
-    [setText]
-  );
-
   return (
     <input
       className={[
@@ -27,7 +20,7 @@ export const Input: React.FC<{
       disabled={disabled}
       name="title"
       value={text}
-      onChange={onChange}
+      onChange={(v) => setText(v.target.value)}
       placeholder={placeHolder}
       style={style}
     />

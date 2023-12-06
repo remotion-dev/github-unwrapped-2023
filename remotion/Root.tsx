@@ -1,5 +1,6 @@
 import { Composition, Folder, Still, random } from "remotion";
 import { LanguagesEnum, compositionSchema } from "../src/config";
+import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
   TOP_LANGUAGES_DURATION,
   VIDEO_FPS,
@@ -162,10 +163,9 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
           contributionData: new Array(364)
             .fill(0)
-            .map((_, i) => [
-              i,
+            .map((_, i) =>
               random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ]),
+            ),
         }}
       />
 
@@ -286,6 +286,7 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
           totalPullRequests: 614,
           login: "JonnyBurger",
+          sampleStarredRepos: SAMPLE_STARRED_REPOS,
         }}
         calculateMetadata={starsAndProductivityCalculateMetadata}
       />
@@ -423,7 +424,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={topLanguagesTitleCardSchema}
           defaultProps={{
-            login: "JonnyBurger",
+            randomizePlanetSeed: "randomizePlanetSeed",
             pluralizeLanguages: false,
             accentColor: "blue",
             rocket: "blue",
@@ -579,7 +580,7 @@ export const RemotionRoot: React.FC = () => {
           showHelperLine: false,
           login: "iampato",
           planet: "Silver" as const,
-          starsGiven: 10,
+          starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
           totalPullRequests: 10,
@@ -616,10 +617,10 @@ export const RemotionRoot: React.FC = () => {
           rocket: "blue",
           contributionData: new Array(364)
             .fill(0)
-            .map((_, i) => [
-              i,
+            .map((_, i) =>
               random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ]),
+            ),
+          sampleStarredRepos: SAMPLE_STARRED_REPOS,
         }}
       />
       <Composition
@@ -705,6 +706,18 @@ export const RemotionRoot: React.FC = () => {
             accentColor: "purple" as const,
             totalPullRequests: 614,
             login: "JonnyBurger",
+            sampleStarredRepos: [
+              "remotion-dev/remotion",
+              "Shopify/React-native-skia",
+              "Shopify/argo",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+              "Shopify/argo-admin",
+              "Shopify/argo-checkout",
+            ],
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -727,6 +740,30 @@ export const RemotionRoot: React.FC = () => {
             accentColor: "purple" as const,
             totalPullRequests: 614,
             login: "JonnyBurger",
+            sampleStarredRepos: SAMPLE_STARRED_REPOS,
+          }}
+          calculateMetadata={starsGivenCalculateMetadata}
+        />
+        <Composition
+          id={"StarsGiven50"}
+          component={StarsGiven}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 50,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1" as const,
+            topHour: "0" as const,
+            graphData: GRAPH_DATA,
+            accentColor: "purple" as const,
+            totalPullRequests: 614,
+            login: "JonnyBurger",
+            sampleStarredRepos: SAMPLE_STARRED_REPOS,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />

@@ -23,12 +23,10 @@ const MIN_OPACITY = 1;
 export const computePositions = (params: {
   frame: number;
   fps: number;
-  data: number[][];
+  data: number[];
 }) => {
-  const max = Math.max(...params.data.map((d) => d[1]));
-  const maxIndex = params.data.findIndex((d) => d[1] === max);
-
-  const dataObject: Record<number, number> = Object.fromEntries(params.data);
+  const max = Math.max(...params.data);
+  const maxIndex = params.data.findIndex((d) => d === max);
 
   const positions = new Array(364).fill(0).map((_, i): ContributionDotType => {
     const col = Math.floor(i / 7);
@@ -64,7 +62,7 @@ export const computePositions = (params: {
       durationInFrames: SPREAD_DURATION,
     });
 
-    const maxOpacity = interpolate(dataObject[i], [0, 128], [0.2, 1], {
+    const maxOpacity = interpolate(params.data[i], [0, 128], [0.2, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
@@ -72,9 +70,9 @@ export const computePositions = (params: {
     const starColor = "#a3d3ff";
 
     const activityColor =
-      dataObject[i] === 0
+      params.data[i] === 0
         ? "#202138"
-        : interpolateColors(dataObject[i], [0, 128], ["#0c2945", "#2486ff"]);
+        : interpolateColors(params.data[i], [0, 128], ["#0c2945", "#2486ff"]);
 
     const color = interpolateColors(
       appear + moveProgress,
@@ -92,7 +90,7 @@ export const computePositions = (params: {
     const yDelta = noiseY * 800 + 50;
 
     const finalSize = interpolate(
-      dataObject[i],
+      params.data[i],
       [0, 128],
       [MIN_STAR_SIZE, MAX_STAR_SIZE],
     );
@@ -105,7 +103,7 @@ export const computePositions = (params: {
       [INITIAL_SIZE, finalSize + sizeOffset],
     );
 
-    const maxGlow = interpolate(dataObject[i], [0, 128], [0, MAX_STAR_GLOW]);
+    const maxGlow = interpolate(params.data[i], [0, 128], [0, MAX_STAR_GLOW]);
     const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
 
     const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);

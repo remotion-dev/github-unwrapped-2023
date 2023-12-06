@@ -10,17 +10,17 @@ import { TitleCardOctocat } from "./TitleCardOctocat";
 import { TopLanguagesTitle } from "./TopLanguagesTitle";
 
 export const topLanguagesTitleCardSchema = z.object({
-  login: z.string(),
   pluralizeLanguages: z.boolean(),
   accentColor: accentColorSchema,
   rocket: rocketSchema,
+  randomizePlanetSeed: z.string(),
 });
 
 export const TITLE_CARD_DURATION = 100;
 
 export const TopLanguagesTitleCard: React.FC<
   z.infer<typeof topLanguagesTitleCardSchema>
-> = ({ login, pluralizeLanguages, accentColor, rocket }) => {
+> = ({ pluralizeLanguages, accentColor, rocket, randomizePlanetSeed }) => {
   const frame = useCurrentFrame();
   const zoomOutProgress = interpolate(frame, [0, TITLE_CARD_DURATION], [0, 1]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
@@ -56,7 +56,10 @@ export const TopLanguagesTitleCard: React.FC<
           alignItems: "center",
         }}
       >
-        <TopLanguagesTitle pluralize={pluralizeLanguages} login={login} />
+        <TopLanguagesTitle
+          pluralize={pluralizeLanguages}
+          randomizePlanetSeed={randomizePlanetSeed}
+        />
       </AbsoluteFill>
     </AbsoluteFill>
   );

@@ -96,38 +96,45 @@ export const Tablet: React.FC<
         transform: `translateY(${710 - enterProgress * 710}px)`,
       }}
     >
+      <AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            display: "flex",
+            position: "absolute",
+            transformOrigin: "left bottom",
+            transform: `scale(${masterScale}) rotateY(${rotateYParent}deg) rotateX(${rotateXParent}deg) skewX(${skewXParent}deg) skewY(${skewYParent}deg) scale(${scaleParent}) translateX(${translateX}px) translateY(${translateY}px)`,
+          }}
+        >
+          <TabletSVG
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              transform: "translateY(100px)",
+            }}
+          />
+        </AbsoluteFill>
+      </AbsoluteFill>
       <AbsoluteFill
         style={{
-          display: "flex",
-          position: "absolute",
-          transformOrigin: "left bottom",
-          transform: `scale(${masterScale}) rotateY(${rotateYParent}deg) rotateX(${rotateXParent}deg) skewX(${skewXParent}deg) skewY(${skewYParent}deg) scale(${scaleParent}) translateX(${translateX}px) translateY(${translateY}px)`,
+          transform: `translateZ(200px)`,
         }}
       >
-        <TabletSVG
+        <div
           style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            transform: "translateY(100px)",
+            left,
+            top,
+            position: "absolute",
+            display: "flex",
+            flexDirection: "column",
+            transform: `perspective(1200px) rotateY(${rotateYChart}deg) rotateX(${rotateXChart}deg) skewX(${skewXChart}deg) skewY(${skewYChart}deg) scale(${scaleChart})`,
           }}
-        />
+        >
+          <AbsoluteFill style={{ width: 1080, height: 1080 }}>
+            <Productivity hour={hour} weekday={weekday} graphData={graphData} />
+          </AbsoluteFill>
+        </div>
       </AbsoluteFill>
-
-      <div
-        style={{
-          left,
-          top,
-          position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          transform: `perspective(1200px) rotateY(${rotateYChart}deg) rotateX(${rotateXChart}deg) skewX(${skewXChart}deg) skewY(${skewYChart}deg) scale(${scaleChart})`,
-        }}
-      >
-        <AbsoluteFill style={{ width: 1080, height: 1080 }}>
-          <Productivity hour={hour} weekday={weekday} graphData={graphData} />
-        </AbsoluteFill>
-      </div>
     </AbsoluteFill>
   );
 };

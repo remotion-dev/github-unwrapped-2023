@@ -8,6 +8,8 @@ const frontendSchema = z.object({
 
 export const frontendCredentials = () => frontendSchema.parse(import.meta.env);
 
-export const makeRedirectUriFrontend = () => {
-  return `${frontendCredentials().VITE_HOST}${REDIRECT_URL_ENDPOINT}`;
+export const makeRedirectUriFrontend = (reset: boolean = false) => {
+  return `${
+    frontendCredentials().VITE_HOST
+  }${REDIRECT_URL_ENDPOINT}?reset=${reset}`;
 };

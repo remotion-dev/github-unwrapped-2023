@@ -59,7 +59,8 @@ export const getProgress = async (render: Render) => {
     });
 
     if (renderProgress.fatalErrorEncountered) {
-      sendDiscordMessage(`Error for renderId: ${render.renderId}`);
+      const { stack } = renderProgress.errors[0];
+      sendDiscordMessage(`Error for renderId: ${render.renderId}\n${stack}`);
 
       return {
         type: "error",

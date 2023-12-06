@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { UserNotFound } from "../UserNotFound";
 import { LoginOptions } from "./LoginOptions";
 import styles from "./styles.module.css";
@@ -8,8 +7,6 @@ export const HomeBoxBottom: React.FC<{
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
   setLoading: (v: boolean) => void;
 }> = ({ setUserNotFound, userNotFound, setLoading }) => {
-  const [username, setUsername] = useState<string>("");
-
   return (
     <div className={styles.homeBoxBottomWrapper}>
       <div className={styles.title}>Your coding year in review</div>
@@ -24,8 +21,6 @@ export const HomeBoxBottom: React.FC<{
           setLoading={setLoading}
           userNotFound={userNotFound}
           setUserNotFound={setUserNotFound}
-          username={username}
-          setUsername={setUsername}
         />
       </div>
     </div>

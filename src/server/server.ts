@@ -26,13 +26,16 @@ const apiEndpointWrapper = (
     req: Request,
     res: Response,
     next: NextFunction,
-  ) => Promise<void | Response<any, Record<string, any>>> | void,
+  ) => Promise<void | Response<unknown, Record<string, unknown>>> | void,
 ) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       await endpoint(req, res, next);
     } catch (error) {
-      Sentry.captureException(error);
+      if (nodeEnv !== "development") {
+        Sentry.captureException(error);
+      }
+
       res.status(500).end((error as Error).message);
     }
   };
@@ -80,6 +83,7 @@ export const startServer = async () => {
     app.get("/:username", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
+    app.get("/", handleIndexHtmlProduction());
     app.use(serveStatic(viteDistDir));
     app.get("/about", handleIndexHtmlProduction());
     app.get("/:username", handleIndexHtmlProduction());

@@ -13,13 +13,14 @@ export type ProfileStats = {
   fetchedAt: number;
   loggedInWithGitHub: boolean;
   totalStars: number;
+  sampleStarredRepos: string[];
   totalContributions: number;
   topLanguages: Array<{ languageName: string; color: string }>;
   bestHours: Record<string, number>;
   topWeekday: Weekday;
   topHour: Hour;
   graphData: ProductivityPerHour[];
-  contributionData: number[][];
+  contributionData: number[];
 };
 
 type EmailCollection = {
@@ -111,6 +112,13 @@ export const updateRender = async (render: Render) => {
       upsert: true,
     },
   );
+};
+
+export const clearRendersForUsername = async (params: { username: string }) => {
+  const collection = await getRendersCollection();
+  await collection.deleteMany({
+    username: params.username.toLowerCase(),
+  });
 };
 
 export const findRender = async (params: {

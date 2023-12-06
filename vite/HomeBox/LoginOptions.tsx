@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { SignInWithGitHub } from "../SignInWithGitHub";
@@ -7,18 +7,17 @@ import styles from "./styles.module.css";
 type Props = {
   userNotFound: boolean;
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
-  username: string;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
+
   setLoading: (v: boolean) => void;
 };
 
 export const LoginOptions: React.FC<Props> = ({
-  username,
-  setUsername,
   userNotFound,
   setUserNotFound,
   setLoading,
 }) => {
+  const [username, setUsername] = useState<string>("");
+
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       setLoading(true);
@@ -36,7 +35,7 @@ export const LoginOptions: React.FC<Props> = ({
         })
         .catch((error) => console.log("error", error));
     },
-    [setUserNotFound, username],
+    [setLoading, setUserNotFound, username],
   );
 
   return (
@@ -45,23 +44,13 @@ export const LoginOptions: React.FC<Props> = ({
         <Input
           text={username}
           placeHolder="GitHub Username"
-          setText={(s) => setUsername(s)}
+          setText={setUsername}
           invalid={userNotFound}
           className={styles.input}
         />
         <Button className={styles.desktopSubmitButton} type={"submit"}>
           Unwrap
         </Button>
-        {/* <Button
-          className={styles.mobileSubmitButton}
-          style={{
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          }}
-          type={"submit"}
-        >
-          <ChevronRight />
-        </Button> */}
       </form>
       <div className={styles.divider} />
       <div className={styles.privateContributions}>

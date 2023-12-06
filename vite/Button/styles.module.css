@@ -1,7 +1,7 @@
 .button {
   background-color: rgba(72, 74, 91, 1);
   color: white;
-  height: 56px;
+  height: 52px;
   /* padding: 0 50px; */
   transition: all 0.15s ease;
   display: flex;

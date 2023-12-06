@@ -140,6 +140,7 @@ const computeCompositionParameters = (
     accentColor,
     rocket,
     contributionData: userStats.contributionData,
+    sampleStarredRepos: userStats.sampleStarredRepos,
   };
 };
 
