@@ -1,9 +1,24 @@
 .rocketPicker {
-  scale: 1;
-  transition: scale 0.1s ease-in-out;
   cursor: pointer;
+  padding: 0;
+  height: 29px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #171823;
+  border-radius: 20px;
+  border: 1px solid;
 }
 
-.rocketPicker:hover {
+.avatarRocket {
+  scale: 1;
+  transition: scale 0.1s ease-in-out;
+  width: 13px;
+  height: 29px;
+}
+.avatarRocket:hover {
   scale: 1.1;
 }

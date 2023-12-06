@@ -100,7 +100,11 @@ export const Sidebar: React.FC<{
   return (
     <div className={styles.sidebarWrapper}>
       <div>
-        <h2 className={styles.sidebarTitle}>@{inputProps.login}</h2>
+        <div className={styles.sidebarTitleContainer}>
+          <RocketPicker rocket={rocket} setIsModalOpen={setIsModalOpen} />
+          <div style={{ width: 16 }} />
+          <h2>{inputProps.login}</h2>
+        </div>
 
         {url ? (
           <a href={url} target="_blank" rel="noreferrer">
@@ -113,7 +117,7 @@ export const Sidebar: React.FC<{
 
       {/* Sharing Actions */}
       <SharingActions />
-      <RocketPicker rocket={rocket} setIsModalOpen={setIsModalOpen} />
+
       {/* Further Action */}
       <FurtherActions />
     </div>

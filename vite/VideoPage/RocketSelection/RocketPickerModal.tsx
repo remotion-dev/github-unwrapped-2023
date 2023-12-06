@@ -47,7 +47,6 @@ export const RocketPickerModal: React.FC<{
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        console.log("clicked outside");
         setIsModalOpen(false);
       }
     };

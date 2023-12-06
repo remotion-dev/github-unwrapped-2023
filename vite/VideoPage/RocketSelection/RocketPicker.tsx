@@ -14,15 +14,27 @@ export const RocketPicker: React.FC<{
         ? "/rocket-side-blue.png"
         : "/rocket-side-yellow.png";
   }, [rocket]);
+
+  const adaptiveBorderColor: React.CSSProperties = useMemo(() => {
+    const orange = "#A93B10";
+    const blue = "#414DD5";
+    const yellow = "#E4B929";
+
+    const currentColor =
+      rocket === "orange" ? orange : rocket === "blue" ? blue : yellow;
+
+    return {
+      borderColor: currentColor,
+    };
+  }, [rocket]);
+
   return (
-    <div>
-      <Button
-        style={{ border: "none", backgroundColor: "transparent" }}
-        onClick={() => setIsModalOpen(true)}
-        className={styles.rocketPicker}
-      >
-        <img src={source} style={{ width: 20 }} />
-      </Button>
-    </div>
+    <Button
+      onClick={() => setIsModalOpen(true)}
+      className={styles.rocketPicker}
+      style={adaptiveBorderColor}
+    >
+      <img src={source} className={styles.avatarRocket} />
+    </Button>
   );
 };
