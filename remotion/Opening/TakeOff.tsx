@@ -19,14 +19,10 @@ const speedFunctionShake = (f: number) =>
 // TODO: Should be dependent on rocket
 const getFlame = () => {
   if (isIosSafari()) {
-    return staticFile(
-      "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4",
-    );
+    return staticFile("exhaust-orange-hevc-safari.mp4");
   }
 
-  return staticFile(
-    "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
-  );
+  return staticFile("exhaust-orange-vp9-chrome.webm");
 };
 
 export const getTakeOffAssetToPrefetch = () => {
