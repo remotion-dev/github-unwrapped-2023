@@ -1,0 +1,95 @@
+.rocketPicker {
+  cursor: pointer;
+  padding: 0;
+  height: 29px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #171823;
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.avatarRocket {
+  scale: 1;
+  transition: scale 0.1s ease-in-out;
+  width: 13px;
+  height: 29px;
+}
+.avatarRocket:hover {
+  scale: 1.1;
+}
+
+.closeButton {
+  width: 53px;
+  height: 53px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.rocketModalContainer {
+  width: 100%;
+  height: 100%;
+  background: #181b28;
+  border: 1.5px solid #373945;
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: 40em) {
+    max-height: 589px;
+    max-width: 637px;
+
+    border-radius: 6px;
+  }
+}
+
+.rocketModalTitleContainer {
+  background-color: #20222f;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1.5px solid #373945;
+  display: flex;
+  align-items: center;
+  padding-left: 33px;
+  padding-right: 16px;
+}
+
+.rocketModalTitle {
+  margin: 0;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.rocketModalInnerContainer {
+  margin-left: 33px;
+  margin-right: 33px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bigRocketContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #20222f;
+  flex: 1;
+  border: 1.5px solid #373945;
+  border-radius: 6px;
+  margin-bottom: 22px;
+}
+
+.colorPickerContainer {
+  margin-bottom: 24px;
+  margin-top: 24px;
+  display: flex;
+  column-gap: 16px;
+}
