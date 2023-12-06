@@ -1,19 +1,9 @@
 import { useEffect, useMemo, useRef, type SetStateAction } from "react";
 import { AbsoluteFill } from "remotion";
 import type { RocketColor } from "../page";
+import { ColorPicker } from "./ColorPicker";
 import { ModalRocket } from "./ModalRocket";
-
-const modalStyle: React.CSSProperties = {
-  background: "#181B28",
-  color: " black",
-  zIndex: 10,
-  borderRadius: 16,
-  boxShadow: "0 5px 20px 0 rgba(0, 0, 0, 0.04)",
-  top: "45%",
-  left: "10%",
-  padding: 16,
-  opacity: 1,
-};
+import styles from "./styles.module.css";
 
 const modalWrapper: React.CSSProperties = {
   display: "flex",
@@ -27,10 +17,11 @@ const spacer: React.CSSProperties = {
 };
 
 export const RocketPickerModal: React.FC<{
+  rocket: RocketColor;
   setRocket: React.Dispatch<SetStateAction<RocketColor>>;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   isModalOpen: boolean;
-}> = ({ setRocket, setIsModalOpen, isModalOpen }) => {
+}> = ({ rocket, setRocket, setIsModalOpen, isModalOpen }) => {
   // set rocket color based on which one is clicked
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -60,29 +51,62 @@ export const RocketPickerModal: React.FC<{
     };
   }, [isModalOpen, setIsModalOpen]);
 
+  const themeName = useMemo(() => {
+    const blueTheme = "The icy king";
+    const orangeTheme = "The firefly";
+    const yellowTheme = "The golden...";
+
+    return rocket === "blue"
+      ? blueTheme
+      : rocket === "orange"
+        ? orangeTheme
+        : yellowTheme;
+  }, [rocket]);
+
+  const themeNameColor = useMemo(() => {
+    const orange = "#EA4D48";
+    const blue = "#456BA9";
+    const yellow = "#CCAB60";
+
+    return rocket === "blue" ? blue : rocket === "orange" ? orange : yellow;
+  }, [rocket]);
+
   return (
     <AbsoluteFill style={dynamicBackground}>
-      <div ref={modalRef} style={modalStyle}>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <div style={spacer} />
-          <ModalRocket
-            rocket={"orange"}
-            setRocket={setRocket}
-            setIsModalOpen={setIsModalOpen}
-          />
-          <div style={spacer} />
-          <ModalRocket
-            rocket={"blue"}
-            setRocket={setRocket}
-            setIsModalOpen={setIsModalOpen}
-          />
-          <div style={spacer} />
-          <ModalRocket
-            rocket={"yellow"}
-            setRocket={setRocket}
-            setIsModalOpen={setIsModalOpen}
-          />
-          <div style={spacer} />
+      <div ref={modalRef} className={styles.rocketModalContainer}>
+        <div className={styles.rocketModalTitleContainer}>
+          <h3 style={{ margin: 0 }}>Choose your rocket</h3>
+        </div>
+
+        <div className={styles.rocketModalInnerContainer}>
+          <div className={styles.colorPickerContainer}>
+            <ColorPicker
+              color={"orange"}
+              rocket={rocket}
+              setRocket={setRocket}
+            />
+            <div style={{ width: 16 }} />
+            <ColorPicker color={"blue"} rocket={rocket} setRocket={setRocket} />
+            <div style={{ width: 16 }} />
+            <ColorPicker
+              color={"yellow"}
+              rocket={rocket}
+              setRocket={setRocket}
+            />
+            <div style={{ flex: 1 }} />
+            <h3 style={{ margin: 0, marginLeft: 16, color: themeNameColor }}>
+              {themeName}
+            </h3>
+          </div>
+          <div className={styles.bigRocketContainer}>
+            <div style={spacer} />
+            <ModalRocket
+              rocket={rocket}
+              setRocket={setRocket}
+              setIsModalOpen={setIsModalOpen}
+            />
+            <div style={spacer} />
+          </div>
         </div>
       </div>
     </AbsoluteFill>

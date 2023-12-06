@@ -2,10 +2,8 @@ import type { SetStateAction } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { staticFile } from "remotion";
 import type { RocketColor } from "../page";
-import styles from "./styles.module.css";
 
 const rocketWrapper: React.CSSProperties = {
-  width: 64,
   cursor: "pointer",
   display: "flex",
   flexDirection: "column",
@@ -14,7 +12,8 @@ const rocketWrapper: React.CSSProperties = {
 };
 
 const rocketStyle: React.CSSProperties = {
-  width: 64,
+  width: 139,
+  height: 300,
   cursor: "pointer",
 };
 
@@ -44,12 +43,46 @@ export const ModalRocket: React.FC<{
         : "/rocket-side-yellow.png";
   }, [rocket]);
 
-  const safariSrc = staticFile(
-    "FootageCrate-4K_Rocket_Exhaust_Orange_Angle_Front-prores-hevc-safari.mp4",
-  );
-  const otherSrc = staticFile(
-    "FootageCrate-4K_Rocket_Exhaust_Orange_Angle_Front-prores-vp9-chrome.webm",
-  );
+  const safariSrc = useMemo(() => {
+    const orangeExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Orange_Angle_Front-prores-hevc-safari.mp4",
+    );
+
+    const blueExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4",
+    );
+
+    const yellowExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Purple_Angle_Front-prores-hevc-safari.mp4",
+    );
+
+    return rocket === "orange"
+      ? orangeExhaust
+      : rocket === "blue"
+        ? blueExhaust
+        : yellowExhaust;
+  }, [rocket]);
+
+  const otherSrc = useMemo(() => {
+    const orangeExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Orange_Angle_Front-prores-vp9-chrome.webm",
+    );
+
+    const blueExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
+    );
+
+    const yellowExhaust = staticFile(
+      "FootageCrate-4K_Rocket_Exhaust_Purple_Angle_Front-prores-vp9-chrome.webm",
+    );
+
+    return rocket === "orange"
+      ? orangeExhaust
+      : rocket === "blue"
+        ? blueExhaust
+        : yellowExhaust;
+  }, [rocket]);
+
   const fireSource = isIosSafari() ? safariSrc : otherSrc;
 
   const handleClick = useCallback(
@@ -61,7 +94,6 @@ export const ModalRocket: React.FC<{
   );
   return (
     <div
-      className={styles.rocketPicker}
       style={rocketWrapper}
       onClick={() => handleClick(rocket)}
       onMouseEnter={() => setIsHovering(true)}
@@ -76,7 +108,9 @@ export const ModalRocket: React.FC<{
           autoPlay
           style={{ height: 48, transform: "rotate(-90deg)", marginLeft: 4 }}
         />
-      ) : null}
+      ) : (
+        <div style={{ height: 48 }}></div>
+      )}
     </div>
   );
 };
