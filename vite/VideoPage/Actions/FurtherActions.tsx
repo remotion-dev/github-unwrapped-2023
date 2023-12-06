@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { PrivateContributionsIcon } from "../../../icons/PrivateContributionsIcon";
 import { UserIcon } from "../../../icons/UserIcon";
 import { signInWithGitHubLink } from "../../sign-in-with-github";
 import { FurtherAction } from "./FurtherAction";
@@ -18,7 +19,9 @@ export const FurtherActions: React.FC = () => {
         {window.__USER__.loggedInWithGitHub ? null : (
           <a href={signInWithGitHubLink()}>
             <FurtherAction
-              icon={(params) => <UserIcon {...params} />}
+              icon={(params) => (
+                <PrivateContributionsIcon {...params} width={20} />
+              )}
               label="Unlock private metrics"
             />
           </a>
