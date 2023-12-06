@@ -1,5 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
+import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
@@ -16,7 +17,12 @@ import { isIosSafari } from "../Opening/TransparentVideo";
 import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
-import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
+import {
+  ANIMATION_DURATION_PER_STAR,
+  HIT_RADIUS,
+  Star,
+  getStarBurstFirstFrame,
+} from "./Star";
 
 const MAX_STARS = 20;
 const TIME_INBETWEEN_STARS = 10;
@@ -111,6 +117,23 @@ export const StarsGiven: React.FC<
     seed: "starsGiven",
     starsGiven,
   });
+
+  const hits = useMemo(() => {
+    return hitIndices
+      .map((index) => {
+        return (
+          getStarBurstFirstFrame({
+            duration: ANIMATION_DURATION_PER_STAR,
+            hitSpaceship: true,
+          }) +
+          index * TIME_INBETWEEN_STARS +
+          STAR_ANIMATION_DELAY
+        );
+      })
+      .sort((a, b) => a - b);
+  }, [hitIndices]);
+
+  console.log("Hit indices TODO later", hits);
 
   return (
     <AbsoluteFill style={style}>

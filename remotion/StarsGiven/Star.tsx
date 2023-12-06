@@ -28,6 +28,18 @@ export const starsAssetsToPreload = () => {
   return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS];
 };
 
+export const getStarBurstFirstFrame = ({
+  hitSpaceship,
+  duration,
+}: {
+  hitSpaceship: boolean;
+  duration: number;
+}) => {
+  const stop = hitSpaceship ? duration * 0.5 : duration;
+
+  return stop;
+};
+
 export const Star: React.FC<{
   duration: number;
   angle: number;
@@ -45,7 +57,10 @@ export const Star: React.FC<{
   const translateY = MOVE_AIM - y * randomRadius;
   const translateX = x * randomRadius;
 
-  const stop = hitSpaceship ? duration * 0.5 : duration;
+  const stop = getStarBurstFirstFrame({
+    duration,
+    hitSpaceship: Boolean(hitSpaceship),
+  });
 
   const distance = interpolate(frame, [0, stop], [1, stop ? 0.5 : 0.000001], {
     extrapolateRight: hitSpaceship ? "clamp" : "extend",
