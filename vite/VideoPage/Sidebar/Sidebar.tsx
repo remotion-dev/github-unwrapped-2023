@@ -35,7 +35,8 @@ export const Sidebar: React.FC<{
           }
 
           if (v.type === "error") {
-            setError(v.error);
+            setError(v.message);
+            console.error(v.message);
             return;
           }
 
@@ -56,35 +57,40 @@ export const Sidebar: React.FC<{
   }, [startPolling]);
 
   useEffect(() => {
+    let intervalId: any | undefined = undefined;
     if (!url && !error && startPolling) {
-      const intervalId = setInterval(() => {
+      intervalId = setInterval(() => {
         pollProgress();
       }, 5000);
-
-      return () => {
-        clearInterval(intervalId);
-      };
     }
 
-    return () => {};
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
   }, [error, url, startPolling]);
 
   const renderDownloadButton = () => (
     <Button
       className={styles.downloadButton}
       style={
-        url
-          ? {}
-          : {
-              opacity: 0.5,
-              pointerEvents: "none",
-            }
+        error
+          ? { pointerEvents: "none" }
+          : url
+            ? {}
+            : {
+                opacity: 0.5,
+                pointerEvents: "none",
+              }
       }
     >
       {url ? (
         <>
           Download Video <DownloadIcon width={20} color="white" />
         </>
+      ) : error ? (
+        "An error has occured"
       ) : progress !== undefined ? (
         `Generating video... (${Math.floor(progress * 100)}%)`
       ) : (
@@ -106,6 +112,12 @@ export const Sidebar: React.FC<{
           renderDownloadButton()
         )}
       </div>
+      {error && (
+        <p style={{ marginTop: -12, fontSize: 14 }}>
+          We've been notified of the error and are looking into it. Please try
+          again later.
+        </p>
+      )}
       {/* Sharing Actions */}
       <SharingActions />
       {/* Further Action */}
