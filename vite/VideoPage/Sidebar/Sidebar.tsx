@@ -29,40 +29,40 @@ export const Sidebar: React.FC<{
         }),
       })
         .then((v) => {
-          v.json().then((v) => {
-            if (v.type === "done") {
-              setUrl(v.url);
-              return;
-            }
+          return v.json();
+        })
+        .then((v) => {
+          if (v.type === "done") {
+            setUrl(v.url);
+            return;
+          }
 
-            if (v.type === "error") {
-              setError(true);
-              console.error(v.message);
-              return;
-            }
+          if (v.type === "error") {
+            setError(true);
+            console.error(v.message);
+            return;
+          }
 
-            if (v.type === "progress") {
-              setProgress(v.progress);
-              return;
-            }
-          });
+          if (v.type === "progress") {
+            setProgress(v.progress);
+          }
         })
         .catch((e) => {
           console.error(e);
           setError(true);
         });
     },
-    [],
+    [inputProps.accentColor],
   );
 
   useEffect(() => {
     if (startPolling) {
       pollProgress();
     }
-  }, [startPolling]);
+  }, [pollProgress, startPolling]);
 
   useEffect(() => {
-    let intervalId: any | undefined = undefined;
+    let intervalId: any | undefined;
 
     if (!url && !error && startPolling) {
       intervalId = setInterval(() => {
@@ -75,7 +75,7 @@ export const Sidebar: React.FC<{
         clearInterval(intervalId);
       }
     };
-  }, [error, url, startPolling]);
+  }, [error, url, startPolling, pollProgress]);
 
   const renderDownloadButton = () => (
     <Button
@@ -120,8 +120,8 @@ export const Sidebar: React.FC<{
       </div>
       {error && (
         <p style={{ marginTop: -12, fontSize: 14 }}>
-          We've been notified of the error and are looking into it. Please try
-          again later.
+          We{"'"}ve been notified of the error and are looking into it. Please
+          try again later.
         </p>
       )}
       {/* Sharing Actions */}
