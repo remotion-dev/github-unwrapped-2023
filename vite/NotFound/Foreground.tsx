@@ -10,7 +10,7 @@ export const Foreground: React.FC = () => {
         zIndex: -1,
       }}
     >
-      <img src="/notFoundForeground5.svg" />
+      <img src="/notFoundForeground.svg" />
     </AbsoluteFill>
   );
 };
