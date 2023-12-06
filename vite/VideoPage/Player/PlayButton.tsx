@@ -1,13 +1,15 @@
 import React, { useCallback, useRef, useState } from "react";
 import { AbsoluteFill, spring } from "remotion";
 import { PlayButtonSVG } from "./PlayButtonSVG";
+import { PrefetchProgress } from "./PrefetchProgress";
 import styles from "./playbutton.module.css";
 
 const HIDE_ANIMATION = 500;
 
 export const PlayButton: React.FC<{
   onPlay: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}> = ({ onPlay }) => {
+  progress: number;
+}> = ({ onPlay, progress }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = useCallback(
@@ -28,6 +30,10 @@ export const PlayButton: React.FC<{
   const onClickPlayButton: React.MouseEventHandler<HTMLDivElement> =
     useCallback(
       (e) => {
+        if (progress < 1) {
+          return;
+        }
+
         const start = Date.now();
         document.body.classList.add("videoplaying");
 
@@ -58,9 +64,10 @@ export const PlayButton: React.FC<{
 
         requestAnimationFrame(loop);
       },
-      [onPlay],
+      [onPlay, progress],
     );
 
+  const fakeProgress = 0.5;
   return (
     <AbsoluteFill
       style={{
@@ -68,7 +75,9 @@ export const PlayButton: React.FC<{
         alignItems: "center",
       }}
       onClick={onClickPlayButton}
+      aria-disabled={fakeProgress < 1}
     >
+      {progress < 1 ? <PrefetchProgress progress={progress} /> : null}
       <div
         className={styles.playbutton}
         onMouseEnter={() => setIsHovering(true)}
@@ -80,7 +89,7 @@ export const PlayButton: React.FC<{
           style={{ borderRadius: 119 }}
           onKeyDown={handleKeyDown}
         >
-          <PlayButtonSVG isHovering={isHovering} />
+          <PlayButtonSVG isHovering={isHovering} disabled={progress < 1} />
         </div>
       </div>
     </AbsoluteFill>
