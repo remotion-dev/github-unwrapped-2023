@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HomeForeground } from "./Home/HomeForeground";
 import { Navbar } from "./Home/Navbar";
 import { Planet } from "./Home/Planet";
@@ -17,23 +17,6 @@ const Home = () => {
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
   const [loading, setLoading] = useState(false);
-
-  const [isWindowSmall, setIsWindowSmall] = useState(window.innerHeight < 835);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsWindowSmall(window.innerHeight < 835);
-    };
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call the function to set the initial state
-    handleResize();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   if (loading) {
     return (
@@ -67,7 +50,7 @@ const Home = () => {
         setUserNotFound={setUserNotFound}
         setLoading={setLoading}
       />
-      {!isWindowSmall && <Octocat userNotFound={userNotFound} />}
+      <Octocat userNotFound={userNotFound} />
     </div>
   );
 };
