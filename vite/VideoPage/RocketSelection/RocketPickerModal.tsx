@@ -123,11 +123,7 @@ export const RocketPickerModal: React.FC<{
           </div>
           <div className={styles.bigRocketContainer}>
             <div style={spacer} />
-            <ModalRocket
-              rocket={rocket}
-              setRocket={setRocket}
-              setIsModalOpen={setIsModalOpen}
-            />
+            <ModalRocket rocket={rocket} />
             <div style={spacer} />
           </div>
         </div>
