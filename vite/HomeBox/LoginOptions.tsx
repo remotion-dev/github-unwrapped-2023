@@ -35,7 +35,7 @@ export const LoginOptions: React.FC<Props> = ({
         })
         .catch((error) => console.log("error", error));
     },
-    [setUserNotFound, username],
+    [setLoading, setUserNotFound, username],
   );
 
   return (
