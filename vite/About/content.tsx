@@ -40,7 +40,7 @@ export const content: Array<AboutItemContent> = [
   {
     icon: "/book.svg",
     title: "How it works",
-    description: `We call GitHub's GraphQL API to fetch and calculate your statistics.The data cutoff is approximately 24 hours before you generated the video.The video gets created using Remotion.`,
+    description: `We call GitHub's GraphQL API to fetch and calculate your statistics. The data cutoff is approximately 24 hours before you generated the video. The video gets created using Remotion.`,
   },
   {
     icon: "/calculator.svg",
