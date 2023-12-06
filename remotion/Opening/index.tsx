@@ -10,6 +10,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
+import type { Rocket } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import Background from "./Background";
@@ -25,8 +26,8 @@ const LAUNCH_SOUND = staticFile(
   "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
 );
 
-export const getOpeningAssetsToPrefetch = () => {
-  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch()];
+export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
+  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket)];
 };
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({

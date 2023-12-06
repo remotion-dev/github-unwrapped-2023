@@ -16,21 +16,40 @@ const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
-// TODO: Should be dependent on rocket
-const getFlame = () => {
+export const getFlame = (rocket: Rocket) => {
   if (isIosSafari()) {
-    return staticFile(
-      "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-hevc-safari.mp4",
-    );
+    if (rocket === "yellow") {
+      return staticFile("exhaust-orange-hevc-safari.mp4");
+    }
+
+    if (rocket === "orange") {
+      return staticFile("exhaust-orange-hevc-safari.mp4");
+    }
+
+    if (rocket === "blue") {
+      return staticFile("exhaust-blue-hevc-safari.mp4");
+    }
+
+    throw new Error("Unknown rocket");
   }
 
-  return staticFile(
-    "FootageCrate-4K_Rocket_Exhaust_Cyan_Angle_Front-prores-vp9-chrome.webm",
-  );
+  if (rocket === "yellow") {
+    return staticFile("exhaust-orange-vp9-chrome.webm");
+  }
+
+  if (rocket === "orange") {
+    return staticFile("exhaust-orange-hevc-safari.mp4");
+  }
+
+  if (rocket === "blue") {
+    return staticFile("exhaust-blue-hevc-safari.mp4");
+  }
+
+  throw new Error("Unknown rocket");
 };
 
-export const getTakeOffAssetToPrefetch = () => {
-  return [getFlame()];
+export const getTakeOffAssetToPrefetch = (rocket: Rocket) => {
+  return [getFlame(rocket)];
 };
 
 export const TakeOff: React.FC<{
@@ -58,7 +77,7 @@ export const TakeOff: React.FC<{
             width: 472,
           }}
           muted
-          src={getFlame()}
+          src={getFlame(rocket)}
         />
       </AbsoluteFill>
       <AbsoluteFill
