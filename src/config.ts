@@ -1,8 +1,5 @@
-import type { AwsRegion } from "@remotion/lambda";
 import { zColor } from "@remotion/zod-types";
 import { z } from "zod";
-
-export const REGION: AwsRegion = "us-east-1";
 
 export const SITE_NAME = "unwrapped2023";
 export const RAM = 2048;

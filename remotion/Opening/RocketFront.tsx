@@ -1,17 +1,6 @@
-import { AbsoluteFill, Img, staticFile } from "remotion";
+import { AbsoluteFill, Img } from "remotion";
 import type { Rocket } from "../../src/config";
-
-const getRocketSource = (rocket: Rocket) => {
-  if (rocket === "blue") {
-    return staticFile("rocket-side-blue.png");
-  }
-
-  if (rocket === "orange") {
-    return staticFile("rocket-side-orange.png");
-  }
-
-  return staticFile("rocket-side-yellow.png");
-};
+import { getSideRocketSource } from "../Spaceship";
 
 const SvgComponent = (props: { rocket: Rocket }) => (
   <AbsoluteFill
@@ -21,7 +10,7 @@ const SvgComponent = (props: { rocket: Rocket }) => (
     }}
   >
     <Img
-      src={getRocketSource(props.rocket)}
+      src={getSideRocketSource(props.rocket)}
       style={{
         width: 732 / 2,
         height: 1574 / 2,

@@ -1,5 +1,5 @@
 import { signInWithGitHubLink } from "../sign-in-with-github";
-import { default as styles } from "../styles.module.css";
+import styles from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
 export type AboutItemContent = {
@@ -30,22 +30,35 @@ export const content: Array<AboutItemContent> = [
           For One Red
         </a>
         {", "}
-        who also made all the design for this project.
+        who also designed the entirety of this project.
       </p>
     ),
   },
   {
     icon: "/eyeball.svg",
     title: "Private contributions not showing up?",
-    description: `To enable private contributions, you need to enable "Include private contributions on my profile" in your GitHub settings. Once you've done this, login in again and regenerate your video.`,
+    description: "",
     node: (
-      <a
-        className={styles.aboutButton}
-        style={{ lineHeight: "43px" }}
-        href={signInWithGitHubLink()}
-      >
-        Login again
-      </a>
+      <>
+        <p>
+          To enable private contributions, you need to enable {'"'}Private
+          contributions{'"'} in your GitHub profile. Once you{"'"}ve done this,
+          login in again and regenerate your video.
+        </p>
+        <img
+          src="/privateactivity.png"
+          style={{
+            width: "100%",
+          }}
+        />
+        <a
+          className={styles.aboutButton}
+          style={{ lineHeight: "43px" }}
+          href={signInWithGitHubLink()}
+        >
+          Login again
+        </a>
+      </>
     ),
   },
   {
@@ -63,9 +76,10 @@ export const content: Array<AboutItemContent> = [
         </a>{" "}
         of the project is open-source.
         <br />
+        <br />
         Remotion, the framework for making videos programmatically is required
-        as a dependency and is "source-available". It requires companies to
-        obtain a{" "}
+        as a dependency and is source-available. It requires companies to obtain
+        a{" "}
         <a
           className={styles.aboutLink}
           href="https://github.com/remotion-dev/remotion/blob/main/LICENSE.md"
@@ -107,7 +121,7 @@ export const content: Array<AboutItemContent> = [
           !<br />
           <br /> <strong>Non-developers</strong>:
           <br />
-          Drop your email and we'll contact you in September 2024 for a free
+          Drop your email and we{'"'}ll contact you in September 2024 for a free
           consultation!
         </p>
         <EmailForm />
@@ -119,14 +133,6 @@ export const content: Array<AboutItemContent> = [
     title: "Credits",
     node: (
       <p style={{ marginTop: 0 }}>
-        Music -{" "}
-        <a
-          className={styles.aboutLink}
-          href="https://audiojungle.net/item/robots/35287595"
-        >
-          Robots
-        </a>{" "}
-        by Nicolas T. <br />
         Design -{" "}
         <a className={styles.aboutLink} href="https://www.foronered.com/">
           For One Red{" "}
@@ -137,7 +143,7 @@ export const content: Array<AboutItemContent> = [
           className={styles.aboutLink}
           href="https://github.com/github/mona-sans"
         >
-          Mona Sans{" "}
+          Mona Sans
         </a>{" "}
         by GitHub <br />
       </p>

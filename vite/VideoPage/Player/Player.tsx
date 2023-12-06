@@ -1,13 +1,12 @@
 import type { PlayerRef } from "@remotion/player";
 import { Player } from "@remotion/player";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AbsoluteFill } from "remotion";
 import type { z } from "zod";
 import { Main, calculateDuration } from "../../../remotion/Main";
 import { MAXIMUM_NUMBER_OF_AUDIO_TAGS } from "../../../remotion/audio-tags";
 import type { compositionSchema } from "../../../src/config";
 import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../../types/constants";
-import { PlayButton } from "./PlayButton";
+import { PlayState } from "./PlayState";
 import styles from "./styles.module.css";
 
 const outer: React.CSSProperties = {
@@ -118,11 +117,15 @@ export const PlayerContainer: React.FC<{
         className={styles.playerradius}
         loop
       />
-      {isPlaying ? (
-        <AbsoluteFill onClick={onClickPauseButton} />
-      ) : (
-        <PlayButton onPlay={onClickPlayButton} />
-      )}
+      <PlayState
+        isPlaying={isPlaying}
+        props={{
+          rocket: inputProps.rocket,
+          planetType: inputProps.planet,
+        }}
+        onClickPauseButton={onClickPauseButton}
+        onClickPlayButton={onClickPlayButton}
+      />
     </div>
   );
 };

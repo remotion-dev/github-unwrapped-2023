@@ -1,7 +1,7 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import type { Rocket } from "../src/config";
 
-const getRocketSource = (rocket: Rocket) => {
+export const getSideRocketSource = (rocket: Rocket) => {
   if (rocket === "blue") {
     return staticFile("rocket-side-blue.png");
   }
@@ -21,7 +21,7 @@ export const RocketSide = (props: { rocket: Rocket }) => (
     }}
   >
     <Img
-      src={getRocketSource(props.rocket)}
+      src={getSideRocketSource(props.rocket)}
       style={{
         width: 732 / 2,
         height: 1574 / 2,

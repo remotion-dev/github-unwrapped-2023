@@ -5,14 +5,3 @@ export const getQuery = (username: string | null) => (query: string) => {
 
   return `{ user(login: "${username}") {${query}} }`;
 };
-
-// sponsoring(first: 100) {
-// 	nodes {
-// 		... on  Organization {
-// 			login
-// 		}
-// 		... on User {
-// 			login
-// 		}
-// 	}
-// }

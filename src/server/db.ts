@@ -91,22 +91,6 @@ export const saveEmailAdress = async (email: string) => {
   );
 };
 
-export const getRenders = async (params: {
-  username: string;
-  theme: string;
-}) => {
-  const coll = await getRendersCollection();
-  await coll.find({
-    username: params.username.toLowerCase(),
-    theme: params.theme,
-  });
-};
-
-export const deleteRender = async (_id: ObjectId) => {
-  const coll = await getRendersCollection();
-  await coll.deleteOne(_id);
-};
-
 export const saveRender = async (render: Render, _id: ObjectId) => {
   const coll = await getRendersCollection();
   await coll.insertOne({ ...render, _id });

@@ -49,7 +49,7 @@
   border-radius: 8px;
   border: 2px solid #20222f;
   background: #171823;
-
+  font-weight: 500;
   @media only screen and (min-width: 40em) {
     padding: 32px;
   }

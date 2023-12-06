@@ -21,7 +21,7 @@ import {
   RocketFront,
   TL_ROCKET_HEIGHT,
   TL_ROCKET_WIDTH,
-} from "./svgs/NewRocketSVG";
+} from "./svgs/FrontRocketSource";
 
 const getNewRate = (frame: number) => {
   const push1 = interpolate(frame, [0, firstPushEnd], [0, PLANET_1_POSITION], {

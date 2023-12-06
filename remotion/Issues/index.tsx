@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
   Audio,
@@ -6,18 +7,18 @@ import {
   interpolate,
   Sequence,
   spring,
-  staticFile,
   useCurrentFrame,
 } from "remotion";
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
+import { VIDEO_FPS } from "../../types/constants";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
   WIGGLE_EXIT_DURATION,
   WIGGLE_EXIT_SPRING_CONFIG,
 } from "../TopLanguages/PlaneScaleWiggle";
-import { TIME_BEFORE_SHOOTING, TOTAL_SHOOT_DURATION } from "./constants";
-import { getAudioHits } from "./get-audio-hits";
+import { getTotalShootDuration, TIME_BEFORE_SHOOTING } from "./constants";
+import { getAudioHits, getIssueSounds } from "./get-audio-hits";
 import {
   addShootDelays,
   getExplosions,
@@ -32,7 +33,6 @@ import {
   FPS,
   makeUfoPositions,
   UFO_ENTRANCE_DELAY,
-  UFO_EXIT_START,
 } from "./make-ufo-positions";
 import {
   ROCKET_JUMP_IN_DELAY,
@@ -40,6 +40,7 @@ import {
   RocketComponent,
 } from "./Rocket";
 import { Ufo } from "./Ufo";
+import { ZERO_ISSUES_DURATION, ZeroIssues } from "./ZeroIssues";
 
 export const issuesSchema = z.object({
   openIssues: z.number().min(0),
@@ -48,6 +49,37 @@ export const issuesSchema = z.object({
 });
 
 export const ISSUES_EXIT_DURATION = 20;
+
+export const getIssuesDuration = ({
+  issuesClosed,
+  issuesOpened,
+}: {
+  issuesClosed: number;
+  issuesOpened: number;
+}) => {
+  const totalIssues = issuesClosed + issuesOpened;
+
+  if (totalIssues === 0) {
+    return ZERO_ISSUES_DURATION;
+  }
+
+  return 4 * VIDEO_FPS + getTotalShootDuration(issuesClosed);
+};
+
+export const calculateIssueDuration: CalculateMetadataFunction<
+  z.infer<typeof issuesSchema>
+> = ({ defaultProps: { closedIssues, openIssues } }) => {
+  return {
+    durationInFrames: getIssuesDuration({
+      issuesClosed: closedIssues,
+      issuesOpened: openIssues,
+    }),
+  };
+};
+
+export const getIssuesSoundsToPrefetch = () => {
+  return [...getIssueSounds()];
+};
 
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   closedIssues,
@@ -79,6 +111,9 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     delay: UFO_ENTRANCE_DELAY,
   });
 
+  const UFO_EXIT_START =
+    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 30;
+
   const exit = spring({
     fps: FPS,
     frame,
@@ -99,12 +134,15 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   }, [closedIndices, ufos]);
 
   const withShootDurations = addShootDelays(shots);
-  const audioHits = getAudioHits(withShootDurations);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
+  const audioHits = getAudioHits(withShootDurations, explosions);
 
   const yOffset = interpolate(
     frame,
-    [TIME_BEFORE_SHOOTING, TIME_BEFORE_SHOOTING + TOTAL_SHOOT_DURATION],
+    [
+      TIME_BEFORE_SHOOTING,
+      TIME_BEFORE_SHOOTING + getTotalShootDuration(UFO_EXIT_START),
+    ],
     [0, -offsetDueToManyUfos],
     {
       extrapolateLeft: "clamp",
@@ -163,6 +201,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             </Sequence>
           );
         })}
+        {totalIssues === 0 ? <ZeroIssues /> : false}
         {ufos.map((p, i) => {
           const explosion = explosions.find((e) => e.index === i);
           return (
@@ -206,54 +245,62 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
         {audioHits.map((audioHit, i) => {
           return (
             // eslint-disable-next-line react/no-array-index-key
-            <Sequence key={i} from={audioHit}>
-              <Audio src={staticFile("laser-shoot.mp3")} />
+            <Sequence key={i} from={audioHit.delay}>
+              <Audio src={audioHit.source} />
             </Sequence>
           );
         })}
-        <AbsoluteFill>
-          <RocketComponent
-            rocket={rocket}
-            jumpIn={jumpIn}
-            shots={withShootDurations}
-          />
-        </AbsoluteFill>
+        {totalIssues > 0 ? (
+          <AbsoluteFill>
+            <RocketComponent
+              rocket={rocket}
+              jumpIn={jumpIn}
+              shots={withShootDurations}
+            />
+          </AbsoluteFill>
+        ) : null}
       </AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          transform: `translateY(${rocketOffset}px)`,
-        }}
-      >
+      {totalIssues > 0 ? (
         <AbsoluteFill
           style={{
-            transform: `translateX(${interpolate(exit, [0, 1], [0, -500])}px)`,
+            transform: `translateY(${rocketOffset}px)`,
           }}
         >
-          <IssueGridLeft />
-          <IssueNumber
-            align="left"
-            label="Opened"
-            currentNumber={Math.round(currentNumber)}
-            max={totalIssues}
-          />
+          <AbsoluteFill
+            style={{
+              transform: `translateX(${interpolate(
+                exit,
+                [0, 1],
+                [0, -500],
+              )}px)`,
+            }}
+          >
+            <IssueGridLeft />
+            <IssueNumber
+              align="left"
+              label="Opened"
+              currentNumber={Math.round(currentNumber)}
+              max={totalIssues}
+            />
+          </AbsoluteFill>
+          <AbsoluteFill
+            style={{
+              transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
+            }}
+          >
+            <IssueGridRight />
+            <IssueNumber
+              align="right"
+              label="Closed"
+              currentNumber={Math.min(
+                closedIssues,
+                Math.round(closedIssuesSoFar.length * (1 / factor)),
+              )}
+              max={closedIssues}
+            />
+          </AbsoluteFill>
         </AbsoluteFill>
-        <AbsoluteFill
-          style={{
-            transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
-          }}
-        >
-          <IssueGridRight />
-          <IssueNumber
-            align="right"
-            label="Closed"
-            currentNumber={Math.min(
-              closedIssues,
-              Math.round(closedIssuesSoFar.length * (1 / factor)),
-            )}
-            max={closedIssues}
-          />
-        </AbsoluteFill>
-      </AbsoluteFill>
+      ) : null}
     </AbsoluteFill>
   );
 };

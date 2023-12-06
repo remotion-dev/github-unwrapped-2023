@@ -49,46 +49,46 @@ export const Noise: React.FC<z.infer<typeof noiseSchema>> = ({
     });
   }, [unitOffsetX, unitOffsetY, unitsHorizontal, unitsVertical]);
 
-  return (
-    <AbsoluteFill>
-      {samples.map((sample, i) => {
-        return (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={i} style={{ display: "flex", flexDirection: "row" }}>
-            {sample.map((s, j) => {
-              if (s.x < 0.9) {
-                return null;
-              }
+  const memoizedSamples = useMemo(() => {
+    return samples.map((sample, i) => {
+      return (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={i} style={{ display: "flex", flexDirection: "row" }}>
+          {sample.map((s, j) => {
+            if (s.x < 0.9) {
+              return null;
+            }
 
-              const str = String(s.x);
-              const randomDigit = Number(str[2]);
-              const randomDigit2 = Number(str[4]);
-              const randomDigit3 = Number(str[6]);
+            const str = String(s.x);
+            const randomDigit = Number(str[2]);
+            const randomDigit2 = Number(str[4]);
+            const randomDigit3 = Number(str[6]);
 
-              return (
-                <div
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={`${i}-${j}`}
-                  style={{
-                    width: 6 * randomDigit2 * 0.1,
-                    height: 6 * randomDigit2 * 0.1,
-                    left: i * unitSize,
-                    top: j * unitSize,
-                    position: "absolute",
-                    transform: `translateY(${
-                      translateX % unitSize
-                    }px) translateX(${translateY % unitSize}px)`,
-                    backgroundColor: palette[randomDigit],
-                    fontSize: 10,
-                    borderRadius: "50%",
-                    opacity: randomDigit3 * 0.05 + 0.6,
-                  }}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
-    </AbsoluteFill>
-  );
+            return (
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${i}-${j}`}
+                style={{
+                  width: 6 * randomDigit2 * 0.1,
+                  height: 6 * randomDigit2 * 0.1,
+                  left: i * unitSize,
+                  top: j * unitSize,
+                  position: "absolute",
+                  transform: `translateY(${
+                    translateX % unitSize
+                  }px) translateX(${translateY % unitSize}px)`,
+                  backgroundColor: palette[randomDigit],
+                  fontSize: 10,
+                  borderRadius: "50%",
+                  opacity: randomDigit3 * 0.05 + 0.6,
+                }}
+              />
+            );
+          })}
+        </div>
+      );
+    });
+  }, [samples, translateX, translateY]);
+
+  return <AbsoluteFill>{memoizedSamples}</AbsoluteFill>;
 };

@@ -12,7 +12,7 @@ import { GoldenScene } from "./Golden";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
-import { Issues, issuesSchema } from "./Issues";
+import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import {
   JumpingNumberDemo,
@@ -38,17 +38,17 @@ import {
   sevenSegmentSchema,
 } from "./SevenSegment/SevenSegmentNumber";
 import { SponsorshipsScene } from "./Sponsorships";
-import { STAR_DURATION, StarSprite } from "./StarSprite";
-import { StarsAndProductivity } from "./StarsAndProductivity";
+import { StarSprite } from "./StarSprite";
 import {
-  MAX_STARS,
-  STAR_DELAY,
-  StarsReceived,
-  TIME_INBETWEEN_STARS,
-  starsReceivedSchema,
-} from "./StarsReceived";
-import { DESCRIPTION_SEQUENCE_DURATION } from "./StarsReceived/Description";
-import { Shine, Shines, shineSchema } from "./StarsReceived/Shines";
+  StarsAndProductivity,
+  starsAndProductivityCalculateMetadata,
+} from "./StarsAndProductivity";
+import {
+  StarsGiven,
+  starsGivenCalculateMetadata,
+  starsGivenSchema,
+} from "./StarsGiven";
+import { Shine, Shines, shineSchema } from "./StarsGiven/Shines";
 import { TopLanguagesCanvas, topLanguagesSchema } from "./TopLanguages";
 import {
   AllPlanets,
@@ -178,6 +178,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 0, openIssues: 0, rocket: "orange" }}
         />
         <Composition
@@ -188,6 +189,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 2, openIssues: 0, rocket: "blue" }}
         />
         <Composition
@@ -198,6 +200,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 20, openIssues: 15, rocket: "orange" }}
         />
         <Composition
@@ -208,6 +211,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{ closedIssues: 80, openIssues: 20, rocket: "yellow" }}
         />
         <Composition
@@ -218,6 +222,7 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           schema={issuesSchema}
+          calculateMetadata={calculateIssueDuration}
           defaultProps={{
             closedIssues: 3000,
             openIssues: 2000,
@@ -233,6 +238,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         schema={issuesSchema}
+        calculateMetadata={calculateIssueDuration}
         defaultProps={{ closedIssues: 75, openIssues: 0, rocket: "blue" }}
       />
 
@@ -262,44 +268,12 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
-        id={"StarsReceived"}
-        component={StarsReceived}
-        durationInFrames={10 * VIDEO_FPS}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        schema={starsReceivedSchema}
-        defaultProps={{
-          starsGiven: 43,
-          showBackground: true,
-          showHitWindow: false,
-          showCockpit: true,
-          showDots: false,
-          topWeekday: "1",
-          topHour: "0",
-          graphData: GRAPH_DATA,
-          accentColor: "purple",
-          totalPullRequests: 614,
-        }}
-        calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
-          return {
-            durationInFrames:
-              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-              STAR_DURATION +
-              STAR_DELAY +
-              DESCRIPTION_SEQUENCE_DURATION,
-          };
-        }}
-      />
-      <Composition
         id={"StarsAndProductivity"}
         component={StarsAndProductivity}
-        durationInFrames={15 * VIDEO_FPS}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
-        schema={starsReceivedSchema}
+        schema={starsGivenSchema}
         defaultProps={{
           starsGiven: 10,
           showBackground: true,
@@ -311,17 +285,9 @@ export const RemotionRoot: React.FC = () => {
           graphData: GRAPH_DATA,
           accentColor: "blue",
           totalPullRequests: 614,
+          login: "JonnyBurger",
         }}
-        calculateMetadata={({ props }) => {
-          const starsDisplayed = Math.min(props.starsGiven, MAX_STARS);
-          return {
-            durationInFrames:
-              (starsDisplayed - 1) * TIME_INBETWEEN_STARS +
-              STAR_DURATION +
-              DESCRIPTION_SEQUENCE_DURATION +
-              100,
-          };
-        }}
+        calculateMetadata={starsAndProductivityCalculateMetadata}
       />
       <Composition
         id={"Productivity"}
@@ -693,7 +659,7 @@ export const RemotionRoot: React.FC = () => {
           );
         })}
       </Folder>
-      <Folder name="StarsReceived">
+      <Folder name="StarsGiven">
         <Composition
           id="shine"
           component={Shine}
@@ -719,6 +685,50 @@ export const RemotionRoot: React.FC = () => {
             xShake: 0,
             yShake: 0,
           }}
+        />
+        <Composition
+          id={"StarsGiven0"}
+          component={StarsGiven}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 0,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1" as const,
+            topHour: "0" as const,
+            graphData: GRAPH_DATA,
+            accentColor: "purple" as const,
+            totalPullRequests: 614,
+            login: "JonnyBurger",
+          }}
+          calculateMetadata={starsGivenCalculateMetadata}
+        />
+        <Composition
+          id={"StarsGiven5"}
+          component={StarsGiven}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 5,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1" as const,
+            topHour: "0" as const,
+            graphData: GRAPH_DATA,
+            accentColor: "purple" as const,
+            totalPullRequests: 614,
+            login: "JonnyBurger",
+          }}
+          calculateMetadata={starsGivenCalculateMetadata}
         />
       </Folder>
     </>

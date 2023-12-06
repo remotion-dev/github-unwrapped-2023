@@ -6,7 +6,7 @@ const ROCKET_SCALE = 0.15;
 export const TL_ROCKET_WIDTH = 690 * ROCKET_SCALE;
 export const TL_ROCKET_HEIGHT = 1578 * ROCKET_SCALE;
 
-const getRocketSource = (rocket: Rocket) => {
+export const getFrontRocketSource = (rocket: Rocket) => {
   if (rocket === "blue") {
     return staticFile("rocket-front-blue.png");
   }
@@ -27,7 +27,7 @@ export const RocketFront = (props: {
   rocket: Rocket;
 }) => (
   <Img
-    src={getRocketSource(props.rocket)}
+    src={getFrontRocketSource(props.rocket)}
     width={TL_ROCKET_WIDTH}
     height={TL_ROCKET_HEIGHT}
     {...props}

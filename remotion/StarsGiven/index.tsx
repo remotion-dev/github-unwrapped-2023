@@ -1,5 +1,6 @@
 import { noise2D } from "@remotion/noise";
 import { Pie } from "@remotion/shapes";
+import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Sequence, random, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import {
@@ -11,15 +12,17 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { isIosSafari } from "../Opening/TransparentVideo";
+import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
-import { HIT_RADIUS, STAR_ANIMATION_DURATION, Star } from "./Star";
+import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
 
-export const MAX_STARS = 50;
-export const TIME_INBETWEEN_STARS = 10;
-export const STAR_DELAY = 20;
+const MAX_STARS = 50;
+const TIME_INBETWEEN_STARS = 10;
+const STAR_ANIMATION_DELAY = 20;
 
-export const starsReceivedSchema = z.object({
+export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
   showBackground: z.boolean(),
   showHitWindow: z.boolean(),
@@ -30,10 +33,56 @@ export const starsReceivedSchema = z.object({
   graphData: z.array(productivityPerHourSchema),
   accentColor: accentColorSchema,
   totalPullRequests: z.number(),
+  login: z.string(),
 });
 
-export const StarsReceived: React.FC<
-  z.infer<typeof starsReceivedSchema> & {
+const getActualStars = (starsGiven: number) => {
+  return Math.max(5, Math.min(starsGiven * 2, MAX_STARS));
+};
+
+const getHitIndexes = ({
+  starsDisplayed,
+  seed,
+  starsGiven,
+}: {
+  starsDisplayed: number;
+  starsGiven: number;
+  seed: string;
+}): number[] => {
+  const maxHits = Math.min(starsGiven, MAX_STARS);
+  // Select hit indices randomly
+  const hitIndexes = new Set<number>();
+
+  let i = 0;
+  while (hitIndexes.size < maxHits) {
+    i++;
+    hitIndexes.add(Math.floor(random(`${seed}${i}`) * starsDisplayed));
+  }
+
+  return Array.from(hitIndexes);
+};
+
+export const starFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
+  const actualStars = getActualStars(starsGiven);
+
+  return (
+    (actualStars - 1) * TIME_INBETWEEN_STARS +
+    ANIMATION_DURATION_PER_STAR +
+    STAR_ANIMATION_DELAY +
+    STAR_EXPLODE_DURATION
+  );
+};
+
+export const starsGivenCalculateMetadata: CalculateMetadataFunction<
+  z.infer<typeof starsGivenSchema>
+> = ({ props }) => {
+  return {
+    durationInFrames: starFlyDuration({ starsGiven: props.starsGiven }),
+  };
+};
+
+export const StarsGiven: React.FC<
+  z.infer<typeof starsGivenSchema> & {
     style?: React.CSSProperties;
     totalPullRequests: number;
   }
@@ -53,6 +102,14 @@ export const StarsReceived: React.FC<
   const yShake = noise2D("yshake", frame / 10, 0) * 10;
   const rotationShake = noise2D("rotateshake", frame / 10, 0) * 0.05;
 
+  const starsDisplayed = getActualStars(starsGiven);
+
+  const hitIndices = getHitIndexes({
+    starsDisplayed,
+    seed: "starsGiven",
+    starsGiven,
+  });
+
   return (
     <AbsoluteFill style={style}>
       {showBackground ? (
@@ -61,7 +118,9 @@ export const StarsReceived: React.FC<
         </AbsoluteFill>
       ) : null}
       <Noise translateX={0} translateY={0} />
-      <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
+      {isIosSafari() ? null : (
+        <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
+      )}
       {showHitWindow ? (
         <AbsoluteFill
           style={{
@@ -82,17 +141,20 @@ export const StarsReceived: React.FC<
           />
         </AbsoluteFill>
       ) : null}
-      {new Array(starsGiven).fill("").map((_, index) => (
+      {new Array(getActualStars(starsGiven)).fill(true).map((_, index) => (
         <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}
-          from={index * TIME_INBETWEEN_STARS + STAR_DELAY}
+          from={index * TIME_INBETWEEN_STARS + STAR_ANIMATION_DELAY}
         >
           <Star
             angle={random(`${index}a`) * Math.PI - Math.PI / 2}
-            id={`star-${index}`}
-            duration={STAR_ANIMATION_DURATION}
-            starsShown={Math.min(starsGiven, MAX_STARS)}
+            duration={ANIMATION_DURATION_PER_STAR}
             showDots={showDots}
+            hitSpaceship={
+              hitIndices.includes(index)
+                ? { index: hitIndices.indexOf(index) }
+                : null
+            }
           />
         </Sequence>
       ))}

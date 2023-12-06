@@ -11,7 +11,7 @@ import {
   mapEnterDirectionToExitDirection,
   type EnterDirection,
 } from "./corner";
-import { RocketFront } from "./svgs/NewRocketSVG";
+import { RocketFront } from "./svgs/FrontRocketSource";
 
 export const FlyRocketIntoPlanet: React.FC<{
   enterDirection: EnterDirection;

@@ -10,9 +10,7 @@ import type { Finality, Render } from "./db.js";
 import { findRender, updateRender } from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 
-export const getFinality = (
-  renderProgress: RenderProgress,
-): Finality | null => {
+const getFinality = (renderProgress: RenderProgress): Finality | null => {
   if (renderProgress.outputFile) {
     return {
       type: "success",
