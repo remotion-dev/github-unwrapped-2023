@@ -30,7 +30,7 @@ export const content: Array<AboutItemContent> = [
         <a
           className={styles.aboutButton}
           style={{ lineHeight: "43px" }}
-          href={signInWithGitHubLink()}
+          href={signInWithGitHubLink(true)}
         >
           Login again
         </a>

@@ -4,7 +4,7 @@ import {
   backendCredentials,
   makeRedirectUriBackend,
 } from "../helpers/domain.js";
-import { insertProfileStats } from "./db.js";
+import { clearRendersForUsername, insertProfileStats } from "./db.js";
 import { getStatsFromGitHub } from "./fetch-stats.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
@@ -13,8 +13,11 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   const query = z
     .object({
       code: z.string(),
+      reset: z.string(),
     })
     .parse(request.query);
+
+  console.log(query);
 
   const { CLIENT_SECRET, VITE_CLIENT_ID } = backendCredentials();
 
@@ -46,6 +49,8 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     token: access_token,
     username: null,
   });
+
+  await clearRendersForUsername({ username: stats.username });
 
   await insertProfileStats(stats);
 

@@ -1,8 +1,8 @@
 import { frontendCredentials, makeRedirectUriFrontend } from "./env";
 
-export const signInWithGitHubLink = () => {
+export const signInWithGitHubLink = (reset = false) => {
   const params = new URLSearchParams();
-  params.append("redirect_uri", makeRedirectUriFrontend());
+  params.append("redirect_uri", makeRedirectUriFrontend(reset));
   params.append("client_id", frontendCredentials().VITE_CLIENT_ID);
   params.append("scope", "user");
 

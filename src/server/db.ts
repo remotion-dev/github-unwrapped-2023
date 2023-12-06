@@ -113,6 +113,13 @@ export const updateRender = async (render: Render) => {
   );
 };
 
+export const clearRendersForUsername = async (params: { username: string }) => {
+  const collection = await getRendersCollection();
+  await collection.deleteMany({
+    username: params.username.toLowerCase(),
+  });
+};
+
 export const findRender = async (params: {
   username: string;
   theme: string;
