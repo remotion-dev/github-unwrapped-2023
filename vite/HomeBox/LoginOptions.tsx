@@ -51,16 +51,6 @@ export const LoginOptions: React.FC<Props> = ({
         <Button className={styles.desktopSubmitButton} type={"submit"}>
           Unwrap
         </Button>
-        {/* <Button
-          className={styles.mobileSubmitButton}
-          style={{
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          }}
-          type={"submit"}
-        >
-          <ChevronRight />
-        </Button> */}
       </form>
       <div className={styles.divider} />
       <div className={styles.privateContributions}>
