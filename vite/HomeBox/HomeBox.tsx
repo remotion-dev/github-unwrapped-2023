@@ -7,6 +7,7 @@ import styles from "./styles.module.css";
 export const HomeBox: React.FC<{
   userNotFound: boolean;
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: (v: boolean) => void;
 }> = (props) => {
   return (
     <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800 }}>
