@@ -85,8 +85,8 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
         <TopLanguagesTitleCard
           rocket={rocket}
           pluralizeLanguages={language2 !== null}
-          login={login}
           accentColor={accentColor}
+          randomizePlanetSeed={login}
         />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition

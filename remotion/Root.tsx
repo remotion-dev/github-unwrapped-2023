@@ -423,7 +423,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={topLanguagesTitleCardSchema}
           defaultProps={{
-            login: "JonnyBurger",
+            randomizePlanetSeed: "randomizePlanetSeed",
             pluralizeLanguages: false,
             accentColor: "blue",
             rocket: "blue",
