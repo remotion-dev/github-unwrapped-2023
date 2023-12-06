@@ -730,6 +730,28 @@ export const RemotionRoot: React.FC = () => {
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
+        <Composition
+          id={"StarsGiven50"}
+          component={StarsGiven}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={starsGivenSchema}
+          defaultProps={{
+            starsGiven: 50,
+            showBackground: true,
+            showHitWindow: false,
+            showCockpit: true,
+            showDots: false,
+            topWeekday: "1" as const,
+            topHour: "0" as const,
+            graphData: GRAPH_DATA,
+            accentColor: "purple" as const,
+            totalPullRequests: 614,
+            login: "JonnyBurger",
+          }}
+          calculateMetadata={starsGivenCalculateMetadata}
+        />
       </Folder>
     </>
   );

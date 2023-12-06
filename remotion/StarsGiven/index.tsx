@@ -18,7 +18,7 @@ import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
 import { ANIMATION_DURATION_PER_STAR, HIT_RADIUS, Star } from "./Star";
 
-const MAX_STARS = 50;
+const MAX_STARS = 20;
 const TIME_INBETWEEN_STARS = 10;
 const STAR_ANIMATION_DELAY = 20;
 
