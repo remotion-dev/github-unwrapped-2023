@@ -24,7 +24,6 @@ export const PlayState: React.FC<{
         console.error(e);
       },
       onProgress: (loadingProgress) => {
-        console.log(loadingProgress);
         return setProgress(loadingProgress);
       },
       planetType: props.planetType,

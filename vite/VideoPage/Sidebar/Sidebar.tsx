@@ -14,7 +14,7 @@ export const Sidebar: React.FC<{
   const [url, setUrl] = useState<string>();
 
   const [progress, setProgress] = useState<number>();
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<boolean>();
 
   const pollProgress = useMemo(
     () => async () => {
@@ -27,25 +27,30 @@ export const Sidebar: React.FC<{
           theme: inputProps.accentColor,
           username: window.__USER__.username,
         }),
-      }).then((v) => {
-        v.json().then((v) => {
-          if (v.type === "done") {
-            setUrl(v.url);
-            return;
-          }
+      })
+        .then((v) => {
+          v.json().then((v) => {
+            if (v.type === "done") {
+              setUrl(v.url);
+              return;
+            }
 
-          if (v.type === "error") {
-            setError(v.message);
-            console.error(v.message);
-            return;
-          }
+            if (v.type === "error") {
+              setError(true);
+              console.error(v.message);
+              return;
+            }
 
-          if (v.type === "progress") {
-            setProgress(v.progress);
-            return;
-          }
+            if (v.type === "progress") {
+              setProgress(v.progress);
+              return;
+            }
+          });
+        })
+        .catch((e) => {
+          console.error(e);
+          setError(true);
         });
-      });
     },
     [],
   );
@@ -58,6 +63,7 @@ export const Sidebar: React.FC<{
 
   useEffect(() => {
     let intervalId: any | undefined = undefined;
+
     if (!url && !error && startPolling) {
       intervalId = setInterval(() => {
         pollProgress();
