@@ -169,7 +169,7 @@ export const getLandingAssetsToPrefetch = ({
     return [GOLD_PLANET_ASSET, GOLD_PLANET_BG, GOLD_PLANET_SOUND];
   }
 
-  return mapPlanetToAttributes[planetType].planet;
+  return [mapPlanetToAttributes[planetType].planet];
 };
 
 const CUTOVER = LANDING_FRAME - 60;
