@@ -1,3 +1,4 @@
+import type { PlayerRef } from "@remotion/player";
 import { Link } from "@tanstack/react-router";
 import type { z } from "zod";
 import { RocketIcon } from "../../icons/RocketIcon";
@@ -5,11 +6,17 @@ import type { compositionSchema } from "../../src/config";
 import boxStyles from "../Box/styles.module.css";
 import { HomeLink } from "../HomeLink";
 import gradientStyles from "../styles.module.css";
+import { RocketPicker } from "./RocketSelection/RocketPicker";
+import type { RocketColor } from "./page";
 import styles from "./styles.module.css";
 
 export const VideoBoxTop: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-}> = ({ inputProps }) => {
+  rocket: RocketColor;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  playerRef: React.RefObject<PlayerRef>;
+}> = ({ inputProps, rocket, setIsModalOpen, setIsPlaying, playerRef }) => {
   return (
     <div className={boxStyles.headerTopContainer} style={{ display: "flex" }}>
       <div className={styles.videoBoxTopDesktop}>
@@ -33,7 +40,15 @@ export const VideoBoxTop: React.FC<{
           />
         </div>
       </div>
-      <div className={styles.videoBoxTopMobile}>@{inputProps.login}</div>
+      <div className={styles.videoBoxTopMobile}>
+        <RocketPicker
+          rocket={rocket}
+          setIsModalOpen={setIsModalOpen}
+          setIsPlaying={setIsPlaying}
+          playerRef={playerRef}
+        />
+        <div className={styles.videoBoxTopMobile}>{inputProps.login}</div>
+      </div>
     </div>
   );
 };

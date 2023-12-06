@@ -1,6 +1,7 @@
 import type { PlayerRef } from "@remotion/player";
 import type { SetStateAction } from "react";
 import React, { useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import type { z } from "zod";
 import type { compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
@@ -29,20 +30,36 @@ export const VideoBox: React.FC<{
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
+
+  const modalElement = document.getElementById("rocketModal");
+  if (!modalElement) {
+    return null;
+  }
+
   return (
     <Box style={{ overflow: "hidden", zIndex: 1 }}>
-      {isModalOpen ? (
-        <RocketPickerModal
-          rocket={rocket}
-          setRocket={setRocket}
-          setIsModalOpen={setIsModalOpen}
-          isModalOpen={isModalOpen}
-          playerRef={playerRef}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-        />
-      ) : null}
-      <VideoBoxTop inputProps={inputProps} />
+      {ReactDOM.createPortal(
+        isModalOpen ? (
+          <RocketPickerModal
+            rocket={rocket}
+            setRocket={setRocket}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+            playerRef={playerRef}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
+        ) : null,
+        modalElement,
+      )}
+
+      <VideoBoxTop
+        inputProps={inputProps}
+        rocket={rocket}
+        setIsModalOpen={setIsModalOpen}
+        setIsPlaying={setIsPlaying}
+        playerRef={playerRef}
+      />
       <div className={styles.roworcolumn}>
         <PlayerContainer
           playerRef={playerRef}

@@ -9,9 +9,9 @@ import styles from "./styles.module.css";
 
 const modalWrapper: React.CSSProperties = {
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
-  zIndex: 9,
+  zIndex: 1,
+  justifyContent: "center",
 };
 
 const spacer: React.CSSProperties = {
@@ -93,7 +93,7 @@ export const RocketPickerModal: React.FC<{
     <AbsoluteFill style={dynamicBackground}>
       <div ref={modalRef} className={styles.rocketModalContainer}>
         <div className={styles.rocketModalTitleContainer}>
-          <h3 style={{ margin: 0 }}>Choose your rocket</h3>
+          <h3 className={styles.rocketModalTitle}>Choose your rocket</h3>
           <div style={{ flex: 1 }}> </div>
           <Button
             className={styles.closeButton}
@@ -110,9 +110,7 @@ export const RocketPickerModal: React.FC<{
               rocket={rocket}
               setRocket={setRocket}
             />
-            <div style={{ width: 16 }} />
             <ColorPicker color={"blue"} rocket={rocket} setRocket={setRocket} />
-            <div style={{ width: 16 }} />
             <ColorPicker
               color={"yellow"}
               rocket={rocket}

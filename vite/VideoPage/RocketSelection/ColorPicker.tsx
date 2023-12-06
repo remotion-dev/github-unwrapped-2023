@@ -13,9 +13,9 @@ const pickerStyle: React.CSSProperties = {
   backgroundColor: "transparent",
   border: "2px solid #373945",
   cursor: "pointer",
-  display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  flexShrink: 0,
 };
 
 export const ColorPicker: React.FC<{

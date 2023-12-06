@@ -164,6 +164,15 @@ export const UserPage = () => {
   const [rocket, setRocket] = useState<RocketColor>(inputProps?.rocket ?? null);
   const [startPolling, setStartPolling] = useState(false);
 
+  useEffect(() => {
+    const root = document.body;
+    if (isModalOpen) {
+      root.style.overflow = "hidden";
+    } else {
+      root.style.overflow = "visible";
+    }
+  }, [isModalOpen]);
+
   const derivedInputProps = useMemo(() => {
     if (inputProps && rocket) {
       return {
