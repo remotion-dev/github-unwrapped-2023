@@ -16,7 +16,7 @@ const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
-const getFlame = (rocket: Rocket) => {
+export const getFlame = (rocket: Rocket) => {
   if (isIosSafari()) {
     if (rocket === "yellow") {
       return staticFile("exhaust-orange-hevc-safari.mp4");
