@@ -23,6 +23,15 @@
   scale: 1.1;
 }
 
+.closeButton {
+  width: 53px;
+  height: 53px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
 .rocketModalContainer {
   max-height: 589px;
   max-width: 637px;
@@ -46,7 +55,7 @@
   display: flex;
   align-items: center;
   padding-left: 33px;
-  padding-right: 33px;
+  padding-right: 16px;
 }
 .rocketModalInnerContainer {
   margin-left: 33px;
