@@ -31,6 +31,7 @@ import {
 } from "./Star";
 
 const MAX_STARS = 20;
+const MAX_HITS = 8;
 const TIME_INBETWEEN_STARS = 10;
 const STAR_ANIMATION_DELAY = 20;
 
@@ -62,7 +63,7 @@ const getHitIndexes = ({
   starsGiven: number;
   seed: string;
 }): number[] => {
-  const maxHits = Math.min(starsGiven, MAX_STARS);
+  const maxHits = Math.min(starsGiven, MAX_HITS);
   // Select hit indices randomly
   const hitIndexes = new Set<number>();
 

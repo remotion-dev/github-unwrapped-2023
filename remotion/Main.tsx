@@ -19,11 +19,14 @@ import {
 } from "./StarsAndProductivity";
 import { AllPlanets, getDurationOfAllPlanets } from "./TopLanguages/AllPlanets";
 import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
+import { injectFont } from "./font";
 
 type Schema = z.infer<typeof compositionSchema>;
 
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 const LANDING_SCENE = 7 * VIDEO_FPS;
+
+injectFont();
 
 export const calculateDuration = ({
   topLanguages,

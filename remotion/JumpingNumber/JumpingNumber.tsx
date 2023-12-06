@@ -2,15 +2,12 @@ import React from "react";
 
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { injectFont } from "../font";
 
 export const jumpingNumberSchema = z.object({
   duration: z.number().int().default(60),
   from: z.number().int().default(0),
   to: z.number().int().default(100),
 });
-
-injectFont();
 
 export const JumpingNumber: React.FC<z.infer<typeof jumpingNumberSchema>> = ({
   duration,
