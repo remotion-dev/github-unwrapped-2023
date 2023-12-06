@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AbsoluteFill,
   Sequence,
@@ -10,6 +10,7 @@ import {
 import type { AccentColor } from "../../src/config";
 import CockpitSVG from "./CockpitSVG";
 import { CustomScreen } from "./CustomScreen";
+import { HeadsUpDisplay } from "./HeadsUpDisplay";
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -32,16 +33,19 @@ export const AnimatedCockpit: React.FC<{
   const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
   const scaleDivided = 1 / distance;
 
+  const shake: React.CSSProperties = useMemo(() => {
+    return {
+      scale: String(scaleDivided),
+      transform: `rotate(${rotationShake}rad) scale(${
+        // +0.05 so noise doesn't cut off
+        scaleDivided + 0.05
+      }) translate(${xShake}px, ${yShake}px)`,
+    };
+  }, [rotationShake, scaleDivided, xShake, yShake]);
+
   return (
-    <AbsoluteFill
-      style={{
-        scale: String(scaleDivided),
-        transform: `rotate(${rotationShake}rad) scale(${
-          // +0.1 so noise doesn't cut off
-          scaleDivided + 0.05
-        }) translate(${xShake}px, ${yShake}px)`,
-      }}
-    >
+    <AbsoluteFill style={shake}>
+      <HeadsUpDisplay />
       <CockpitSVG />
       <Sequence from={271}>
         <CustomScreen

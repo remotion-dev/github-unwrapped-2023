@@ -86,6 +86,7 @@
 
 .desktopSubmitButton {
   width: 100%;
+  height: 56px;
 
   @media only screen and (min-width: 40em) {
     width: 160px;
