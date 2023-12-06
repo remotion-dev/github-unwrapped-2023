@@ -3,6 +3,8 @@ import type { SVGProps } from "react";
 const StarSprite8SVG = (props: SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 1080 1080"
+    width={1080}
+    height={1080}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
