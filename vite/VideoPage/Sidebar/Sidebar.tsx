@@ -96,11 +96,11 @@ export const Sidebar: React.FC<{
           Download Video <DownloadIcon width={20} color="white" />
         </>
       ) : error ? (
-        "An error has occured"
+        "Download unavailable due to error"
       ) : progress === undefined ? (
-        "Generating video..."
+        "Generating .mp4 file..."
       ) : (
-        `Generating video... (${Math.floor(progress * 100)}%)`
+        `Generating .mp4 file... (${Math.floor(progress * 100)}%)`
       )}
     </Button>
   );
