@@ -35,7 +35,6 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
       );
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
-      Sentry.captureException(err);
       console.error(err);
       response.status(500).end((err as Error).message);
     }
@@ -48,9 +47,9 @@ export const handleIndexHtmlProduction = () => {
   return async (req: Request, response: Response) => {
     try {
       response.status(200);
-      response.send(
-        await replaceAppHead(req.params.username ?? null, template),
-      );
+      const head = await replaceAppHead(req.params.username ?? null, template);
+      console.log(head);
+      response.send(head);
       response.end();
     } catch (err) {
       Sentry.captureException(err);
