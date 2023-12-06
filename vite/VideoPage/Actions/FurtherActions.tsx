@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { UserIcon } from "../../../icons/UserIcon";
 import { signInWithGitHubLink } from "../../sign-in-with-github";
+import { ShareButton } from "../Sidebar/ShareButton";
 import { FurtherAction } from "./FurtherAction";
 import styles from "./styles.module.css";
 
@@ -24,6 +25,7 @@ export const FurtherActions: React.FC = () => {
           </a>
         )}
       </div>
+      <ShareButton />
     </div>
   );
 };
