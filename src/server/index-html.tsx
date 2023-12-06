@@ -48,7 +48,6 @@ export const handleIndexHtmlProduction = () => {
     try {
       response.status(200);
       const head = await replaceAppHead(req.params.username ?? null, template);
-      console.log(head);
       response.send(head);
       response.end();
     } catch (err) {
