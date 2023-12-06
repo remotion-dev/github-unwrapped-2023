@@ -6,9 +6,28 @@ import styles from "./styles.module.css";
 export const HomeBoxBottom: React.FC<{
   userNotFound: boolean;
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
-  setLoading: (v: boolean) => void;
-}> = ({ setUserNotFound, userNotFound, setLoading }) => {
+}> = ({ setUserNotFound, userNotFound }) => {
   const [username, setUsername] = useState<string>("");
+
+  const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    return (
+      <div className={styles.homeBoxBottomWrapper}>
+        <div
+          style={{
+            height: 212,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p>Loading</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.homeBoxBottomWrapper}>
