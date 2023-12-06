@@ -111,7 +111,4 @@ export type BaseQueryResponse = {
       starredAt: string;
     }>;
   };
-  sponsoring: {
-    nodes: Array<unknown>;
-  };
 };

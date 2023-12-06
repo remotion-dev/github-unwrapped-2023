@@ -77,7 +77,6 @@
   font-family: Mona Sans;
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
   line-height: 24px; /* 150% */
 }
 
@@ -103,5 +102,5 @@
 
 .aboutLink {
   color: #507eff;
-  text-decoration: underline;
+  border-bottom: 1px solid #507eff;
 }
