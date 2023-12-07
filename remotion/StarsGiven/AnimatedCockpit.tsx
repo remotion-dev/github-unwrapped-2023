@@ -7,12 +7,12 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import type { AccentColor } from "../../src/config";
+import { type AccentColor } from "../../src/config";
 import { PullRequests } from "../Paths/PullRequests";
 import { Cockpit } from "./Cockpit";
 import type { RepoText } from "./HeadsUpDisplay";
 
-export const TRANSITION_TO_PULL_REQUESTS = 20;
+export const TRANSITION_TO_PULL_REQUESTS = 60;
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -48,6 +48,16 @@ export const AnimatedCockpit: React.FC<{
     },
   });
 
+  const transitionToPullRequest = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: TRANSITION_TO_PULL_REQUESTS,
+    delay: timeUntilTabletIsHidden + 10,
+  });
+
   const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
   const scaleDivided = 1 / distance;
 
@@ -63,6 +73,8 @@ export const AnimatedCockpit: React.FC<{
 
   const durationOfStarsWithShake = durationOfStars + 30;
 
+  const scale = interpolate(transitionToPullRequest, [0, 1], [1, 3], {});
+
   return (
     <AbsoluteFill style={shake}>
       <Sequence from={timeUntilTabletIsHidden}>
@@ -71,7 +83,7 @@ export const AnimatedCockpit: React.FC<{
           totalPullRequests={totalPullRequests}
         />
       </Sequence>
-      <AbsoluteFill>
+      <AbsoluteFill style={{ scale: String(scale) }}>
         <Cockpit
           durationOfStarsWithShake={durationOfStarsWithShake}
           repoText={repoText}
