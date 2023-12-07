@@ -1,4 +1,5 @@
 import React from "react";
+import { ShineEffect } from "../../remotion/ShineEffect";
 import { Box } from "../Box/Box";
 import { HomeBoxBottom } from "./HomeBoxBottom";
 import { HomeBoxTop } from "./HomeBoxTop";
@@ -10,7 +11,8 @@ export const HomeBox: React.FC<{
   setLoading: (v: boolean) => void;
 }> = (props) => {
   return (
-    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800 }}>
+    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800, border: 0 }}>
+      <ShineEffect borderRadius={10} />
       <HomeBoxTop />
       <HomeBoxBottom {...props} />
     </Box>
