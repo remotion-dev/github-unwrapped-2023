@@ -182,7 +182,7 @@ export const StarsGiven: React.FC<
 
   return (
     <AbsoluteFill style={style}>
-      <Sequence from={timeUntilTabletEnters}>
+      <Sequence durationInFrames={timeUntilTabletEnters}>
         {showBackground ? (
           <Gradient gradient={accentColorToGradient(accentColor)} />
         ) : null}

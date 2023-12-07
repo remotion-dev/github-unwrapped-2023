@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import { accentColorSchema } from "../../src/config";
@@ -28,23 +28,27 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.ease),
   });
-  const offset = interpolate(evolution, [0, 1], [initialOffset, 0], {});
+  const offset = interpolate(evolution, [0, 1], [initialOffset, 0]);
+
+  const style: React.CSSProperties = useMemo(() => {
+    return {
+      height: PATHS_COMP_HEIGHT,
+      width: 1080,
+      marginTop: -offset,
+    };
+  }, [offset]);
 
   return (
-    <AbsoluteFill
-      style={{
-        height: PATHS_COMP_HEIGHT,
-        width: 1080,
-        marginTop: -offset,
-      }}
-    >
+    <AbsoluteFill>
       <AbsoluteFill>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
-      <WholePaths
-        initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
-        extraPaths={Math.min(MAX_PATHS, totalPullRequests)}
-      />
+      <AbsoluteFill style={style}>
+        <WholePaths
+          initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
+          extraPaths={Math.min(MAX_PATHS, totalPullRequests)}
+        />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

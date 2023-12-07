@@ -27,7 +27,7 @@ export const PATH_TARGET = {
 };
 
 const getX = (seed: string | number, noiseRatio: number) => {
-  return (noise2D(seed, noiseRatio, random(seed) * noiseRatio) * width) / 2;
+  return (noise2D(seed, noiseRatio, random(seed) * noiseRatio) * width) / 2.5;
 };
 
 const getNoiseRatio = ({
@@ -99,7 +99,7 @@ export const makeRandomPath = (seed: string | number) => {
       {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
-      }
+      },
     );
 
     const st = {
