@@ -44,13 +44,13 @@ const Home = () => {
       <HomeBackground />
       <Planet />
       <HomeForeground />
+      <Octocat userNotFound={userNotFound} />
       <Navbar />
       <HomeBox
         userNotFound={userNotFound}
         setUserNotFound={setUserNotFound}
         setLoading={setLoading}
       />
-      <Octocat userNotFound={userNotFound} />
     </div>
   );
 };
