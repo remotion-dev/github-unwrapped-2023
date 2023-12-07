@@ -17,7 +17,7 @@ export const getTransitionToPullRequest = ({
     config: {
       damping: 200,
     },
-    delay: start - 20,
+    delay: start,
     durationInFrames: TRANSITION_TO_PULL_REQUESTS,
     reverse: true,
   });

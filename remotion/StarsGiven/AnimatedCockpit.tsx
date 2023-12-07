@@ -50,7 +50,7 @@ export const AnimatedCockpit: React.FC<{
     },
   });
 
-  const start = timeUntilTabletHides + TABLET_SCENE_HIDE_ANIMATION;
+  const start = timeUntilTabletHides + TABLET_SCENE_HIDE_ANIMATION - 20;
   const transitionToPullRequest = getTransitionToPullRequest({
     start,
     frame,

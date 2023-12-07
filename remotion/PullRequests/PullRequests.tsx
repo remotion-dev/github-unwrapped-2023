@@ -1,11 +1,18 @@
 import React, { useMemo } from "react";
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { z } from "zod";
 import { accentColorSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { PATHS_COMP_HEIGHT } from "./Path";
 import { WholePaths } from "./WholePaths";
+import { ANIMATE_OUT_DURATION_PR, animateOutPullRequest } from "./animate-out";
 
 const endHeight = 1080;
 
@@ -15,7 +22,7 @@ export const pullRequestsSchema = z.object({
 });
 
 const MAX_PATHS = 50;
-export const PULL_REQUESTS_DURATION = 240;
+export const PULL_REQUESTS_DURATION = 260;
 
 export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   totalPullRequests,
@@ -23,6 +30,7 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
 }) => {
   const initialOffset = PATHS_COMP_HEIGHT - endHeight;
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const evolution = interpolate(frame, [0, 200], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -38,8 +46,20 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
     };
   }, [offset]);
 
+  const { scaleDivided, entryProgress } = animateOutPullRequest({
+    fps,
+    frame,
+    start: PULL_REQUESTS_DURATION - ANIMATE_OUT_DURATION_PR,
+  });
+
+  const translateY = interpolate(entryProgress, [1, 2], [0, 500]);
+
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        transform: `scale(${scaleDivided}) translateY(${translateY}px)`,
+      }}
+    >
       <AbsoluteFill style={style}>
         <AbsoluteFill>
           <Gradient gradient={accentColorToGradient(accentColor)} />
