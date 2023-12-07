@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 import { MergeIcon } from "./MergeIcon";
 import { MergeNumber } from "./MergeNumber";
+import { RemotionShineEffect } from "./RemotionShineEffect";
 import { PATH_TARGET } from "./make-random-path";
 
 export const MergeStat: React.FC<{
@@ -47,6 +48,12 @@ export const MergeStat: React.FC<{
 
   return (
     <div style={container}>
+      <RemotionShineEffect
+        height={300}
+        width={300}
+        id="pullrequest"
+        borderRadius={150}
+      />
       <div style={inner}>
         <MergeIcon />
         <MergeNumber num={num} />
