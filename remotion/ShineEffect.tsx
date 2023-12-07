@@ -46,7 +46,7 @@ export const ShineEffect: React.FC<{
   }, [svg]);
 
   return (
-    <AbsoluteFill ref={ref} style={{ pointerEvents: "none", opacity: 0.7 }}>
+    <AbsoluteFill ref={ref} style={{ pointerEvents: "none", opacity: 0.5 }}>
       {svg ? (
         <svg
           style={{
