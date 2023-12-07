@@ -7,12 +7,13 @@ export const DownloadButton: React.FC<{
   url: string | null;
   error: boolean;
   progress: number;
-}> = ({ url, error, progress }) => {
+  style?: React.CSSProperties;
+}> = ({ url, error, progress, style }) => {
   if (error) {
     return (
       <Button
         className={styles.downloadButton}
-        style={{ pointerEvents: "none" }}
+        style={{ pointerEvents: "none", ...style }}
       >
         Download unavailable due to error
       </Button>
@@ -23,7 +24,7 @@ export const DownloadButton: React.FC<{
     return (
       <Button
         className={styles.downloadButton}
-        style={{ pointerEvents: "none" }}
+        style={{ pointerEvents: "none", ...style }}
       >
         Generating .mp4 file...
       </Button>
@@ -34,7 +35,7 @@ export const DownloadButton: React.FC<{
     return (
       <Button
         className={styles.downloadButton}
-        style={{ pointerEvents: "none" }}
+        style={{ pointerEvents: "none", ...style }}
       >
         Download Video <DownloadIcon width={20} color="white" />
       </Button>
@@ -42,7 +43,10 @@ export const DownloadButton: React.FC<{
   }
 
   return (
-    <Button className={styles.downloadButton} style={{ pointerEvents: "none" }}>
+    <Button
+      className={styles.downloadButton}
+      style={{ pointerEvents: "none", ...style }}
+    >
       Generating .mp4 file... ({Math.floor(progress * 100)}%)
     </Button>
   );

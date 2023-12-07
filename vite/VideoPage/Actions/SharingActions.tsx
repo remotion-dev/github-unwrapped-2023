@@ -3,6 +3,12 @@ import { XIcon } from "../../../icons/XIcon";
 import { SharingAction } from "./SharingAction";
 import styles from "./styles.module.css";
 
+export const twitterSharingLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+  "This is my #GitHubUnwrapped! Get your own: https://www.staging.githubunwrapped.com\n\n[Delete this placeholder, download and drag your MP4 video in here]",
+)}`;
+
+export const linkedInSharingLink = "https://www.linkedin.com/";
+
 export const SharingActions: React.FC = () => {
   return (
     <div className={styles.sharingActionsWrapper}>
@@ -10,17 +16,13 @@ export const SharingActions: React.FC = () => {
         icon={(params) => <XIcon {...params} />}
         label={"Post #GitHubUnwrapped"}
         onClick={() => {
-          window.open(
-            `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com\n\n[Delete this placeholder, download and drag your MP4 video in here]",
-            )}`,
-          );
+          window.open(twitterSharingLink);
         }}
       />
       <SharingAction
         icon={(params) => <LinkedInIcon {...params} />}
         label="Share on LinkedIn"
-        onClick={() => window.open("https://www.linkedin.com/")}
+        onClick={() => window.open(linkedInSharingLink)}
       />
     </div>
   );

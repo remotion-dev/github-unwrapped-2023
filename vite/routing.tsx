@@ -1,6 +1,7 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import About from "./About/About.jsx";
 import Home from "./Home.jsx";
+import { SharePage } from "./Share/page.jsx";
 import { UserPage } from "./VideoPage/page.jsx";
 
 const Root = () => {
@@ -27,6 +28,18 @@ const userRoute = new Route({
   component: UserPage,
 });
 
+export const userShare = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/share",
+  component: SharePage,
+  validateSearch: (search: Record<string, unknown>) => {
+    // validate and parse the search params into a typed state
+    return {
+      platform: search?.platform ?? "twitter",
+    };
+  },
+});
+
 const aboutRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/about",
@@ -34,7 +47,12 @@ const aboutRoute = new Route({
 });
 
 // Create the route tree using your routes
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, userRoute]);
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  aboutRoute,
+  userShare,
+  userRoute,
+]);
 
 // Create the router using your route tree
 export const router = new Router({ routeTree });
