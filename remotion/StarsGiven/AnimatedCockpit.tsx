@@ -66,67 +66,28 @@ export const AnimatedCockpit: React.FC<{
     };
   }, [rotationShake, scaleDivided, xShake, yShake]);
 
-  const durationOfStarsWithShake = durationOfStars + 17;
+  const durationOfStarsWithShake = durationOfStars + 30;
 
   return (
     <AbsoluteFill style={shake}>
       <Sequence from={timeUntilTabletIsHidden}>
-        <PullRequests accentColor="blue" totalPullRequests={20} />
+        <PullRequests
+          accentColor={accentColor}
+          totalPullRequests={totalPullRequests}
+        />
       </Sequence>
       <Sequence durationInFrames={durationOfStarsWithShake}>
         <HeadsUpDisplay textToDisplay={repoText} />
       </Sequence>
       <CockpitSVG />
       <CockpitLeftScreen>
-        <AbsoluteFill
-          style={{
-            backgroundColor: "#100714",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "white",
-            fontSize: 700,
-            fontFamily: "Seven Segment",
-          }}
-        >
-          <AmountOfStarsDisplay
-            starCount={starCount}
-            totalStarCount={totalStarCount}
-          />
-        </AbsoluteFill>
+        <AmountOfStarsDisplay
+          starCount={starCount}
+          totalStarCount={totalStarCount}
+        />
       </CockpitLeftScreen>
       <CockpitRightScreen>
-        <Sequence durationInFrames={durationOfStarsWithShake}>
-          <AbsoluteFill
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              height: 1080,
-              width: 1080,
-              overflow: "hidden",
-              backgroundColor: "#100714",
-            }}
-          >
-            <ShinyStarOutline />
-          </AbsoluteFill>
-        </Sequence>
-        <Sequence from={timeUntilTabletIsHidden}>
-          <AbsoluteFill
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 400,
-              color: "white",
-              height: 1080,
-              width: 1080,
-              overflow: "hidden",
-            }}
-          >
-            <PullRequests
-              accentColor={accentColor}
-              totalPullRequests={totalPullRequests}
-            />
-          </AbsoluteFill>
-        </Sequence>
+        <ShinyStarOutline />
       </CockpitRightScreen>
     </AbsoluteFill>
   );

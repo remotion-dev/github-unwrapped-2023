@@ -45,7 +45,6 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
         initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
         extraPaths={Math.min(MAX_PATHS, totalPullRequests)}
       />
-      ;
     </AbsoluteFill>
   );
 };

@@ -1,7 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import {
   accentColorSchema,
@@ -78,6 +78,7 @@ export const StarsGiven: React.FC<
   z.infer<typeof starsSceneSchema> & {
     style?: React.CSSProperties;
     totalPullRequests: number;
+    timeUntilTabletEnters: number;
   }
 > = ({
   starsGiven,
@@ -88,6 +89,7 @@ export const StarsGiven: React.FC<
   totalPullRequests,
   sampleStarredRepos,
   timeUntilTabletIsHidden,
+  timeUntilTabletEnters,
 }) => {
   const frame = useCurrentFrame();
 
@@ -180,16 +182,20 @@ export const StarsGiven: React.FC<
 
   return (
     <AbsoluteFill style={style}>
-      {showBackground ? (
-        <AbsoluteFill>
+      <Sequence from={timeUntilTabletEnters}>
+        {showBackground ? (
           <Gradient gradient={accentColorToGradient(accentColor)} />
-        </AbsoluteFill>
-      ) : null}
-      <Noise translateX={0} translateY={0} />
-      {isLessPowerfulDevice() ? null : (
-        <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
-      )}
-      <StarsFlying hitIndices={hitIndices} starsGiven={starCount} />
+        ) : null}
+        <Noise translateX={0} translateY={0} />
+        {isLessPowerfulDevice() ? null : (
+          <Shines
+            rotationShake={rotationShake}
+            xShake={xShake}
+            yShake={yShake}
+          />
+        )}
+        <StarsFlying hitIndices={hitIndices} starsGiven={starCount} />
+      </Sequence>
       {showCockpit ? (
         <AnimatedCockpit
           rotationShake={rotationShake}

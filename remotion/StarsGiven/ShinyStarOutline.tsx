@@ -7,12 +7,23 @@ export const ShinyStarOutline: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        opacity: 0.8,
-        scale: "0.75",
-        pointerEvents: "none",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 1080,
+        width: 1080,
+        overflow: "hidden",
+        backgroundColor: "#100714",
       }}
     >
-      <Img src={SHINY_STAR_OUTLINE_ASSET} />
+      <AbsoluteFill
+        style={{
+          opacity: 0.8,
+          scale: "0.75",
+          pointerEvents: "none",
+        }}
+      >
+        <Img src={SHINY_STAR_OUTLINE_ASSET} />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

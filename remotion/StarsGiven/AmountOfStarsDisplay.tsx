@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { AbsoluteFill } from "remotion";
 import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
 
 export const AmountOfStarsDisplay: React.FC<{
@@ -23,12 +24,22 @@ export const AmountOfStarsDisplay: React.FC<{
   }, [totalStarCount]);
 
   return (
-    <div style={{ position: "absolute" }}>
+    <AbsoluteFill
+      style={{
+        position: "absolute",
+        backgroundColor: "#100714",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white",
+        fontSize: 700,
+        fontFamily: "Seven Segment",
+      }}
+    >
       <SevenSegment
         fontSize={fontSizeOfSevenSegmentDisplay}
         num={starCount}
         max={totalStarCount}
       />
-    </div>
+    </AbsoluteFill>
   );
 };

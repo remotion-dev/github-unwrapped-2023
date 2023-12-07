@@ -14,6 +14,7 @@ import type { starsGivenSchema } from "../StarsGiven";
 import { StarsGiven, getStarFlyDuration } from "../StarsGiven";
 
 const TABLET_SCENE_HIDE_ANIMATION = 45;
+const TABLET_ENTER_DURATION = 45;
 
 export const getTimeUntilTabletHides = ({
   starsGiven,
@@ -74,7 +75,7 @@ export const StarsAndProductivity: React.FC<
       config: {
         damping: 200,
       },
-      durationInFrames: 45,
+      durationInFrames: TABLET_ENTER_DURATION,
     }) -
     spring({
       fps,
@@ -96,6 +97,8 @@ export const StarsAndProductivity: React.FC<
       opacity: 1 - zoomTransition * 0.7,
     };
   }, [translateX, translateY, scale, zoomTransition]);
+
+  const timeUntilTabletIsEntered = starFlyDuration + TABLET_SCENE_LENGTH;
 
   return (
     <AbsoluteFill>
