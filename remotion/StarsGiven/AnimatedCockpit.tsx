@@ -9,13 +9,8 @@ import {
 } from "remotion";
 import type { AccentColor } from "../../src/config";
 import { PullRequests } from "../Paths/PullRequests";
-import { AmountOfStarsDisplay } from "./AmountOfStarsDisplay";
-import CockpitSVG from "./CockpitSVG";
-import { CockpitRightScreen } from "./CustomScreen";
+import { Cockpit } from "./Cockpit";
 import type { RepoText } from "./HeadsUpDisplay";
-import { HeadsUpDisplay } from "./HeadsUpDisplay";
-import { CockpitLeftScreen } from "./LeftScreenCockpit";
-import { ShinyStarOutline } from "./ShinyStarOutline";
 
 export const TRANSITION_TO_PULL_REQUESTS = 20;
 
@@ -76,19 +71,14 @@ export const AnimatedCockpit: React.FC<{
           totalPullRequests={totalPullRequests}
         />
       </Sequence>
-      <Sequence durationInFrames={durationOfStarsWithShake}>
-        <HeadsUpDisplay textToDisplay={repoText} />
-      </Sequence>
-      <CockpitSVG />
-      <CockpitLeftScreen>
-        <AmountOfStarsDisplay
+      <AbsoluteFill>
+        <Cockpit
+          durationOfStarsWithShake={durationOfStarsWithShake}
+          repoText={repoText}
           starCount={starCount}
           totalStarCount={totalStarCount}
         />
-      </CockpitLeftScreen>
-      <CockpitRightScreen>
-        <ShinyStarOutline />
-      </CockpitRightScreen>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
