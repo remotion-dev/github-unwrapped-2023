@@ -10,7 +10,7 @@
   margin-left: 10px;
   font-weight: bolder;
   line-height: 1;
-
+  position: relative;
   @media only screen and (min-width: 40em) {
     display: inline;
   }

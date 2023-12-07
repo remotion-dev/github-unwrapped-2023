@@ -11,7 +11,10 @@ export const HomeBox: React.FC<{
   setLoading: (v: boolean) => void;
 }> = (props) => {
   return (
-    <Box className={styles.homeBoxWrapper} style={{ maxWidth: 800, border: 0 }}>
+    <Box
+      className={styles.homeBoxWrapper}
+      style={{ maxWidth: 800, border: 0, position: "relative" }}
+    >
       <ShineEffect borderRadius={10} />
       <HomeBoxTop />
       <HomeBoxBottom {...props} />
