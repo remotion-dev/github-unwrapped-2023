@@ -2,8 +2,8 @@ import React from "react";
 import {
   AbsoluteFill,
   Img,
+  OffthreadVideo,
   Sequence,
-  interpolate,
   spring,
   staticFile,
   useCurrentFrame,
@@ -18,12 +18,10 @@ import {
   GOLD_PLANET_SOUND,
 } from "../Golden";
 import { Gradient } from "../Gradients/NativeGradient";
+import { getFlame } from "../Opening/TakeOff";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { RocketSide } from "../Spaceship";
 import { Background } from "./Background";
-import Cloud1 from "./Cloud-1";
-import Cloud2 from "./Cloud-2";
-import Fire from "./Fire";
 import { Smoke } from "./Smoke";
 import Sparkle from "./Sparkle2";
 
@@ -39,8 +37,6 @@ const PLANET_GROWTH = 400;
 const LANDING_FRAME = 115;
 
 const SPARKLE_SPEED = 40;
-
-const WITH_CLOUDS = true;
 
 const SHOW_TEXT_LENGTH = 60;
 
@@ -179,26 +175,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
   accentColor,
   rocketType,
 }) => {
-  // const { fps, durationInFrames, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
-
-  const cloud = spring({
-    fps: VIDEO_FPS,
-    frame: frame / 4.5,
-    config: {
-      damping: 100,
-    },
-  });
-
-  const cloudOffset = interpolate(cloud, [0, 1], [60, 320], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  const cloudSize = interpolate(cloud, [0, 1], [1, 1.3], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
 
   const planet = spring({
     fps: VIDEO_FPS,
@@ -235,7 +212,7 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
     },
   });
 
-  const rocket = spring({
+  const rocketAnim = spring({
     fps: VIDEO_FPS,
     frame: frame > CUTOVER ? frame / 7.5 : frame / 4.5,
     delay: 0,
@@ -283,18 +260,6 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
           }}
         />
 
-        {/* <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <Stars />
-      </div> */}
-
         <div
           style={{
             width:
@@ -317,39 +282,11 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
             src={attributes.planet}
             style={{ width: "100%", height: "100%", ...attributes.style }}
           />
-
-          {/* <Planet /> */}
         </div>
 
-        {WITH_CLOUDS && (
-          <div
-            style={{
-              width: 900 + 100 * cloud,
-              position: "absolute",
-              bottom: -450 + cloudOffset * 5.6,
-              left: -150,
-              transform: `scale(${cloudSize})`,
-              opacity: ((1 - cloud) * 1 + 0.7) * 0.07,
-            }}
-          >
-            <Cloud1 {...attributes.colors} />
-          </div>
-        )}
-
-        {frame < LANDING_FRAME - 40 && (
-          <div
-            style={{
-              position: "absolute",
-              left: 352,
-              top: -480 + rocket * 1150 - attributes.landingAdjustment,
-              width: 400,
-              transform: `scale(${1 - rocket + 0.2})`,
-              transformOrigin: "center top",
-            }}
-          >
-            <Fire />
-          </div>
-        )}
+        <div style={{}}>
+          <OffthreadVideo src={getFlame(rocketType)} />
+        </div>
 
         <Smoke
           currentFrame={frame}
@@ -415,51 +352,18 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
           GitHubUnwrapped.com
         </h1>
 
-        {/* <h2
-        style={{
-          fontSize: 32,
-          fontFamily: "Mona Sans",
-          color: "white",
-          opacity: text,
-          textAlign: "left",
-          left: 96,
-          top: 256,
-          position: "absolute",
-          width: 800,
-          fontWeight: 400,
-        }}
-      >
-        <span style={{ opacity: 0.8 }}>{attributes.description}</span>
-      </h2> */}
-
         <div
           style={{
             position: "absolute",
             left: 410,
-            top: -700 + rocket * 1100 - attributes.landingAdjustment,
+            top: -700 + rocketAnim * 1100 - attributes.landingAdjustment,
             width: 300,
 
-            transform: `scale(${1 - rocket + 0.6})`,
-            // transformOrigin: "center center",
+            transform: `scale(${1 - rocketAnim + 0.6})`,
           }}
         >
           <RocketSide rocket={rocketType} />
         </div>
-
-        {WITH_CLOUDS && (
-          <div
-            style={{
-              width: 1000 + 100 * cloud,
-              position: "absolute",
-              bottom: -400 + cloudOffset * 3.8,
-              right: -200,
-              transform: `scale(${cloudSize})`,
-              opacity: ((1 - cloud) * 1 + 0.7) * 0.07,
-            }}
-          >
-            <Cloud2 {...attributes.colors} />
-          </div>
-        )}
 
         {frame > LANDING_FRAME - 45 &&
           attributes.sparkles.map(
@@ -485,12 +389,6 @@ export const LandingScene: React.FC<z.infer<typeof planetSchema>> = ({
               </div>
             ),
           )}
-
-        {/* <div
-        style={{ width: 1600, position: "absolute", top: -720, right: -544 }}
-      >
-        <Swish />
-      </div> */}
       </AbsoluteFill>
     </AbsoluteFill>
   );
@@ -521,7 +419,7 @@ export const LandingCut: React.FC<z.infer<typeof planetSchema>> = ({
           <LandingScene
             rocketType={rocketType}
             accentColor={accentColor}
-            planetType={PlanetEnum.Values.Ice}
+            planetType={planetType}
           />
         </Sequence>
       </Sequence>
