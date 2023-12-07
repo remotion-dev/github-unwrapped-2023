@@ -9,3 +9,7 @@ export const isIosSafari = () => {
   const isChrome = Boolean(navigator.userAgent.match(/CriOS\//));
   return isSafari || isChrome;
 };
+
+export const isLessPowerfulDevice = () => {
+  return isIosSafari() || window.navigator.userAgent.includes("Android");
+};

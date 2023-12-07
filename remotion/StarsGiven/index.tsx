@@ -1,13 +1,7 @@
 import { noise2D } from "@remotion/noise";
 import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import {
-  AbsoluteFill,
-  Sequence,
-  interpolate,
-  random,
-  useCurrentFrame,
-} from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { z } from "zod";
 import {
   accentColorSchema,
@@ -18,26 +12,23 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
-import { isIosSafari } from "../Opening/TransparentVideo";
+import { isLessPowerfulDevice } from "../Opening/devices";
 import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
+import { ANIMATION_DURATION_PER_STAR, getStarBurstFirstFrame } from "./Star";
 import {
-  ANIMATION_DURATION_PER_STAR,
-  Star,
-  getStarBurstFirstFrame,
-} from "./Star";
-
-const MAX_STARS = 20;
-const MAX_HITS = 8;
-const TIME_INBETWEEN_STARS = 10;
-const STAR_ANIMATION_DELAY = 20;
+  STAR_ANIMATION_DELAY,
+  StarsFlying,
+  TIME_INBETWEEN_STARS,
+  getActualStars,
+  getHitIndexes,
+} from "./StarsFlying";
 
 export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
   showBackground: z.boolean(),
   showCockpit: z.boolean(),
-  showDots: z.boolean(),
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
   graphData: z.array(productivityPerHourSchema),
@@ -46,32 +37,6 @@ export const starsGivenSchema = z.object({
   login: z.string(),
   sampleStarredRepos: z.array(z.string()),
 });
-
-const getActualStars = (starsGiven: number) => {
-  return Math.max(5, Math.min(starsGiven * 2, MAX_STARS));
-};
-
-const getHitIndexes = ({
-  starsDisplayed,
-  seed,
-  starsGiven,
-}: {
-  starsDisplayed: number;
-  starsGiven: number;
-  seed: string;
-}): number[] => {
-  const maxHits = Math.min(starsGiven, MAX_HITS);
-  // Select hit indices randomly
-  const hitIndexes = new Set<number>();
-
-  let i = 0;
-  while (hitIndexes.size < maxHits) {
-    i++;
-    hitIndexes.add(Math.floor(random(`${seed}${i}`) * starsDisplayed));
-  }
-
-  return Array.from(hitIndexes);
-};
 
 export const getStarFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
   const actualStars = getActualStars(starsGiven);
@@ -119,7 +84,6 @@ export const StarsGiven: React.FC<
   style,
   showBackground,
   showCockpit,
-  showDots,
   accentColor,
   totalPullRequests,
   sampleStarredRepos,
@@ -222,27 +186,10 @@ export const StarsGiven: React.FC<
         </AbsoluteFill>
       ) : null}
       <Noise translateX={0} translateY={0} />
-      {isIosSafari() ? null : (
+      {isLessPowerfulDevice() ? null : (
         <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
       )}
-
-      {new Array(getActualStars(starsGiven)).fill(true).map((_, index) => (
-        <Sequence // eslint-disable-next-line react/no-array-index-key
-          key={index}
-          from={index * TIME_INBETWEEN_STARS + STAR_ANIMATION_DELAY}
-        >
-          <Star
-            angle={random(`${index}a`) * Math.PI - Math.PI / 2}
-            duration={ANIMATION_DURATION_PER_STAR}
-            showDots={showDots}
-            hitSpaceship={
-              hitIndices.includes(index)
-                ? { index: hitIndices.indexOf(index) }
-                : null
-            }
-          />
-        </Sequence>
-      ))}
+      <StarsFlying hitIndices={hitIndices} starsGiven={starCount} />
       {showCockpit ? (
         <AnimatedCockpit
           rotationShake={rotationShake}

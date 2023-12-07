@@ -282,7 +282,6 @@ export const RemotionRoot: React.FC = () => {
           starsGiven: 10,
           showBackground: true,
           showCockpit: true,
-          showDots: false,
           topWeekday: "3",
           topHour: "0",
           graphData: GRAPH_DATA,
@@ -702,7 +701,6 @@ export const RemotionRoot: React.FC = () => {
             starsGiven: 9,
             showBackground: true,
             showCockpit: true,
-            showDots: false,
             topWeekday: "1" as const,
             topHour: "0" as const,
             graphData: [
@@ -761,7 +759,6 @@ export const RemotionRoot: React.FC = () => {
             starsGiven: 504,
             showBackground: true,
             showCockpit: true,
-            showDots: false,
             topWeekday: "1" as const,
             topHour: "0" as const,
             graphData: [
@@ -820,7 +817,6 @@ export const RemotionRoot: React.FC = () => {
             starsGiven: 50,
             showBackground: true,
             showCockpit: true,
-            showDots: false,
             topWeekday: "1" as const,
             topHour: "0" as const,
             graphData: GRAPH_DATA,

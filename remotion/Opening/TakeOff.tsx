@@ -10,7 +10,7 @@ import {
 import type { Rocket } from "../../src/config";
 import { remapSpeed } from "../TopLanguages/remap-speed";
 import Spaceship from "./RocketFront";
-import { isIosSafari } from "./TransparentVideo";
+import { isIosSafari } from "./devices";
 
 const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
 const speedFunctionShake = (f: number) =>

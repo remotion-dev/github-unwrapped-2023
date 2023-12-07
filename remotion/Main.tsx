@@ -146,7 +146,6 @@ export const Main: React.FC<Schema> = ({
             starsGiven={starsGiven}
             showBackground={false}
             showCockpit
-            showDots={false}
             topWeekday={topWeekday}
             topHour={topHour}
             graphData={graphData}

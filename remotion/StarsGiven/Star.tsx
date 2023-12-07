@@ -6,7 +6,6 @@ import {
   interpolate,
   staticFile,
   useCurrentFrame,
-  useVideoConfig,
 } from "remotion";
 import { StarSprite } from "../StarSprite";
 import { SHINES_ASSETS } from "./Shines";
@@ -43,11 +42,9 @@ export const getStarBurstFirstFrame = ({
 export const Star: React.FC<{
   duration: number;
   angle: number;
-  showDots: boolean;
   hitSpaceship: null | { index: number };
-}> = ({ duration, angle, showDots, hitSpaceship }) => {
+}> = ({ duration, angle, hitSpaceship }) => {
   const frame = useCurrentFrame();
-  const { height, width } = useVideoConfig();
 
   const randomRadius = hitSpaceship ? 200 : 400;
 
@@ -112,18 +109,6 @@ export const Star: React.FC<{
               />
             </Sequence>
           ) : null}
-        </AbsoluteFill>
-      ) : null}
-      {showDots ? (
-        <AbsoluteFill>
-          <svg viewBox="0 0 1080 1080">
-            <circle
-              r={10}
-              fill="red"
-              cx={width / 2 + translateX}
-              cy={height / 2 + translateY}
-            />
-          </svg>
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>

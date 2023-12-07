@@ -47,7 +47,6 @@ export const StarsAndProductivity: React.FC<
   starsGiven,
   showBackground,
   showCockpit,
-  showDots,
   topWeekday,
   topHour,
   graphData,
@@ -104,7 +103,6 @@ export const StarsAndProductivity: React.FC<
         showBackground={showBackground}
         starsGiven={starsGiven}
         showCockpit={showCockpit}
-        showDots={showDots}
         style={style}
         topWeekday={topWeekday}
         topHour={topHour}
