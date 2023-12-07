@@ -29,6 +29,9 @@
     bottom: 75px;
     transform: translateX(12px);
   }
+  @media only screen and (min-width: 1280px) and (max-height: 834px) {
+    display: none;
+  }
 }
 
 .gradientText2 {
