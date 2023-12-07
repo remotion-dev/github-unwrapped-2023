@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { Button } from "../../Button/Button";
 import type { RocketColor } from "../page";
 
-const DIAMETER = 31;
+const DIAMETER = 32;
 const pickerStyle: React.CSSProperties = {
   width: DIAMETER,
   height: DIAMETER,
@@ -13,9 +13,6 @@ const pickerStyle: React.CSSProperties = {
   backgroundColor: "transparent",
   border: "2px solid #373945",
   cursor: "pointer",
-  justifyContent: "center",
-  alignItems: "center",
-  flexShrink: 0,
 };
 
 export const ColorPicker: React.FC<{
@@ -60,7 +57,7 @@ export const ColorPicker: React.FC<{
     >
       <div
         style={{
-          color: "red",
+          display: "block",
           backgroundColor: fillColor,
           height: 20,
           width: 20,

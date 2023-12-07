@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
@@ -9,20 +10,28 @@ import {
 import type { z } from "zod";
 import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
 import type { starsGivenSchema } from "../StarsGiven";
-import { StarsGiven, starFlyDuration } from "../StarsGiven";
+import { StarsGiven, getStarFlyDuration } from "../StarsGiven";
 
 const TABLET_SCENE_HIDE_ANIMATION = 45;
+
+export const getTimeUntilTabletIsHidden = ({
+  starsGiven,
+}: {
+  starsGiven: number;
+}) => {
+  return (
+    getStarFlyDuration({ starsGiven }) +
+    TABLET_SCENE_LENGTH +
+    TABLET_SCENE_HIDE_ANIMATION
+  );
+};
 
 export const getStarsAndProductivityDuration = ({
   starsGiven,
 }: {
   starsGiven: number;
 }) => {
-  return (
-    starFlyDuration({ starsGiven }) +
-    TABLET_SCENE_LENGTH +
-    TABLET_SCENE_HIDE_ANIMATION
-  );
+  return getTimeUntilTabletIsHidden({ starsGiven });
 };
 
 export const starsAndProductivityCalculateMetadata: CalculateMetadataFunction<
@@ -54,13 +63,19 @@ export const StarsAndProductivity: React.FC<
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const zoomDelay = starFlyDuration({ starsGiven });
+  const starFlyDuration = useMemo(() => {
+    return getStarFlyDuration({ starsGiven });
+  }, [starsGiven]);
+
+  const timeUntilTabletIsHidden = useMemo(() => {
+    return getTimeUntilTabletIsHidden({ starsGiven });
+  }, [starsGiven]);
 
   const zoomTransition =
     spring({
       fps,
       frame,
-      delay: zoomDelay,
+      delay: starFlyDuration,
       config: {
         damping: 200,
       },
@@ -69,12 +84,13 @@ export const StarsAndProductivity: React.FC<
     spring({
       fps,
       frame,
-      delay: zoomDelay + TABLET_SCENE_LENGTH,
+      delay: starFlyDuration + TABLET_SCENE_LENGTH,
       config: {
         damping: 200,
       },
       durationInFrames: TABLET_SCENE_HIDE_ANIMATION,
     });
+
   const translateX = zoomTransition * 270;
   const translateY = zoomTransition * -270;
   const scale = 1 + zoomTransition * 0.5;
@@ -98,8 +114,9 @@ export const StarsAndProductivity: React.FC<
         totalPullRequests={totalPullRequests}
         login={login}
         sampleStarredRepos={sampleStarredRepos}
+        timeUntilTabletIsHidden={timeUntilTabletIsHidden}
       />
-      <Sequence from={zoomDelay}>
+      <Sequence from={starFlyDuration}>
         <Tablet
           weekday={topWeekday}
           enterProgress={zoomTransition}

@@ -62,7 +62,6 @@ const ButtonForward: React.ForwardRefRenderFunction<
           flexDirection: "row",
         }}
       >
-        {" "}
         {children}
       </AbsoluteFill>
     </button>

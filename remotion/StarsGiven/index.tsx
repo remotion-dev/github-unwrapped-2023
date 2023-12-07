@@ -76,7 +76,7 @@ const getHitIndexes = ({
   return Array.from(hitIndexes);
 };
 
-export const starFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
+export const getStarFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
   const actualStars = getActualStars(starsGiven);
 
   return (
@@ -87,11 +87,17 @@ export const starFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
   );
 };
 
+const starsSceneSchema = starsGivenSchema.merge(
+  z.object({
+    timeUntilTabletIsHidden: z.number(),
+  }),
+);
+
 export const starsGivenCalculateMetadata: CalculateMetadataFunction<
-  z.infer<typeof starsGivenSchema>
+  z.infer<typeof starsSceneSchema>
 > = ({ props }) => {
   return {
-    durationInFrames: starFlyDuration({ starsGiven: props.starsGiven }),
+    durationInFrames: getStarFlyDuration({ starsGiven: props.starsGiven }),
   };
 };
 
@@ -107,7 +113,7 @@ if (!Array.prototype.findLastIndex) {
 }
 
 export const StarsGiven: React.FC<
-  z.infer<typeof starsGivenSchema> & {
+  z.infer<typeof starsSceneSchema> & {
     style?: React.CSSProperties;
     totalPullRequests: number;
   }
@@ -121,6 +127,7 @@ export const StarsGiven: React.FC<
   accentColor,
   totalPullRequests,
   sampleStarredRepos,
+  timeUntilTabletIsHidden,
 }) => {
   const frame = useCurrentFrame();
 
@@ -183,7 +190,7 @@ export const StarsGiven: React.FC<
     return null;
   }, [frame, hits, sampleStarredRepos]);
 
-  const durationOfStars = starFlyDuration({ starsGiven });
+  const durationOfStars = getStarFlyDuration({ starsGiven });
 
   const starCount = useMemo(() => {
     if (hits.length === starsGiven) {
@@ -197,7 +204,7 @@ export const StarsGiven: React.FC<
     return Math.round(
       interpolate(
         frame,
-        [0, starFlyDuration({ starsGiven }) - 10],
+        [0, getStarFlyDuration({ starsGiven }) - 10],
         [0, starsGiven],
         {
           extrapolateLeft: "clamp",
@@ -266,6 +273,7 @@ export const StarsGiven: React.FC<
           starCount={starCount}
           totalStarCount={starsGiven}
           durationOfStars={durationOfStars}
+          timeUntilTabletIsHidden={timeUntilTabletIsHidden}
         />
       ) : null}
     </AbsoluteFill>

@@ -8,7 +8,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { AccentColor } from "../../src/config";
-import { PullRequests } from "../Paths/PullRequests";
 import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
 import CockpitSVG from "./CockpitSVG";
 import { CockpitRightScreen } from "./CustomScreen";
@@ -27,6 +26,7 @@ export const AnimatedCockpit: React.FC<{
   starCount: number;
   totalStarCount: number;
   durationOfStars: number;
+  timeUntilTabletIsHidden: number;
 }> = ({
   xShake,
   yShake,
@@ -37,6 +37,7 @@ export const AnimatedCockpit: React.FC<{
   starCount,
   totalStarCount,
   durationOfStars,
+  timeUntilTabletIsHidden,
 }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -120,24 +121,6 @@ export const AnimatedCockpit: React.FC<{
             }}
           >
             <ShinyStarOutline />
-          </AbsoluteFill>
-        </Sequence>
-        <Sequence from={271}>
-          <AbsoluteFill
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 400,
-              color: "white",
-              height: 1080,
-              width: 1080,
-              overflow: "hidden",
-            }}
-          >
-            <PullRequests
-              accentColor={accentColor}
-              totalPullRequests={totalPullRequests}
-            />
           </AbsoluteFill>
         </Sequence>
       </CockpitRightScreen>
