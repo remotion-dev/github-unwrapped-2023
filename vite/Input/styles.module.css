@@ -1,7 +1,7 @@
-.input,
-.input:focus {
+.input {
   padding: 0 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: none;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.1);
   display: flex;
@@ -16,7 +16,15 @@
 
   @media only screen and (min-width: 40em) {
     flex: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
+}
+
+.input:focus {
+  border: 1px solid var(--button-border-color);
+  border-right: none;
+  outline: none;
 }
 
 .input::placeholder {

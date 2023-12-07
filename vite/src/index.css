@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   --breakpoint: 900px;
+  --button-border-color: rgba(119, 122, 148, 1);
 }
 
 * {
