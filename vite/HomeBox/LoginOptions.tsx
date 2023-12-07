@@ -48,13 +48,17 @@ export const LoginOptions: React.FC<Props> = ({
           invalid={userNotFound}
           className={styles.input}
         />
-        <Button className={styles.desktopSubmitButton} type={"submit"}>
+        <Button
+          hoverEffect
+          className={styles.desktopSubmitButton}
+          type={"submit"}
+        >
           Unwrap
         </Button>
       </form>
       <div className={styles.divider} />
       <div className={styles.privateContributions}>
-        Want to include private contributions?
+        Want to include private activity?
         <SignInWithGitHub />
       </div>
     </div>
