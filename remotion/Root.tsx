@@ -695,7 +695,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={starsGivenSchema}
           defaultProps={{
-            starsGiven: 1200,
+            starsGiven: 9,
             showBackground: true,
             showHitWindow: false,
             showCockpit: true,

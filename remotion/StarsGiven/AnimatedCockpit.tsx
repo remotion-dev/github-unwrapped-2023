@@ -15,6 +15,7 @@ import { CockpitRightScreen } from "./CustomScreen";
 import type { RepoText } from "./HeadsUpDisplay";
 import { HeadsUpDisplay } from "./HeadsUpDisplay";
 import { CockpitLeftScreen } from "./LeftScreenCockpit";
+import { ShinyStarOutline } from "./ShinyStarOutline";
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -25,6 +26,7 @@ export const AnimatedCockpit: React.FC<{
   repoText: RepoText | null;
   starCount: number;
   totalStarCount: number;
+  durationOfStars: number;
 }> = ({
   xShake,
   yShake,
@@ -34,6 +36,7 @@ export const AnimatedCockpit: React.FC<{
   repoText,
   starCount,
   totalStarCount,
+  durationOfStars,
 }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -76,9 +79,13 @@ export const AnimatedCockpit: React.FC<{
     return 500;
   }, [totalStarCount]);
 
+  const durationOfStarsWithShake = durationOfStars + 17;
+
   return (
     <AbsoluteFill style={shake}>
-      <HeadsUpDisplay textToDisplay={repoText} />
+      <Sequence durationInFrames={durationOfStarsWithShake}>
+        <HeadsUpDisplay textToDisplay={repoText} />
+      </Sequence>
       <CockpitSVG />
       <CockpitLeftScreen>
         <AbsoluteFill
@@ -100,8 +107,22 @@ export const AnimatedCockpit: React.FC<{
           </div>
         </AbsoluteFill>
       </CockpitLeftScreen>
-      <Sequence from={271}>
-        <CockpitRightScreen>
+      <CockpitRightScreen>
+        <Sequence durationInFrames={durationOfStarsWithShake}>
+          <AbsoluteFill
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              height: 1080,
+              width: 1080,
+              overflow: "hidden",
+              backgroundColor: "#100714",
+            }}
+          >
+            <ShinyStarOutline />
+          </AbsoluteFill>
+        </Sequence>
+        <Sequence from={271}>
           <AbsoluteFill
             style={{
               justifyContent: "center",
@@ -118,8 +139,8 @@ export const AnimatedCockpit: React.FC<{
               totalPullRequests={totalPullRequests}
             />
           </AbsoluteFill>
-        </CockpitRightScreen>
-      </Sequence>
+        </Sequence>
+      </CockpitRightScreen>
     </AbsoluteFill>
   );
 };

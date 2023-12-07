@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import { StarSprite } from "../StarSprite";
 import { SHINES_ASSETS } from "./Shines";
+import { SHINY_STAR_OUTLINE_ASSET } from "./ShinyStarOutline";
 
 const MOVE_AIM = 100;
 export const HIT_RADIUS = 450;
@@ -24,7 +25,7 @@ const WINDSHIELD_HIT_SOUNDS = [
 ];
 
 export const starsAssetsToPreload = () => {
-  return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS];
+  return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS, SHINY_STAR_OUTLINE_ASSET];
 };
 
 export const getStarBurstFirstFrame = ({

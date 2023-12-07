@@ -164,6 +164,13 @@ export const StarsGiven: React.FC<
         frame - hits[lastItemWithFrameVisible + 1],
       );
 
+      if (hits[lastItemWithFrameVisible + 1] === undefined) {
+        return {
+          opacity: 1,
+          text: sampleStarredRepos[lastItemWithFrameVisible],
+        };
+      }
+
       const distanceToHit = Math.min(distanceToPreviousHit, distanceToNextHit);
       const opacity = interpolate(distanceToHit, [0, 3], [0, 1]);
 
@@ -175,6 +182,8 @@ export const StarsGiven: React.FC<
 
     return null;
   }, [frame, hits, sampleStarredRepos]);
+
+  const durationOfStars = starFlyDuration({ starsGiven });
 
   const starCount = useMemo(() => {
     if (hits.length === starsGiven) {
@@ -256,6 +265,7 @@ export const StarsGiven: React.FC<
           repoText={text}
           starCount={starCount}
           totalStarCount={starsGiven}
+          durationOfStars={durationOfStars}
         />
       ) : null}
     </AbsoluteFill>
