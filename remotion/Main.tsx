@@ -4,7 +4,11 @@ import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
 import { PlanetEnum, type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
-import { ContributionsScene } from "./Contributions";
+import {
+  CONTRIBUTIONS_SCENE_DURATION,
+  CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
+  ContributionsScene,
+} from "./Contributions";
 import { GoldenScene } from "./Golden";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import { LandingScene } from "./Landing";
@@ -45,7 +49,8 @@ export const calculateDuration = ({
     topLanguagesScene +
     getIssuesDuration({ issuesClosed, issuesOpened }) -
     ISSUES_EXIT_DURATION +
-    CONTRIBUTIONS_SCENE +
+    CONTRIBUTIONS_SCENE_DURATION -
+    CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION +
     LANDING_SCENE +
     getStarsAndProductivityDuration({ starsGiven }) +
     OPENING_SCENE_LENGTH -
@@ -155,7 +160,10 @@ export const Main: React.FC<Schema> = ({
             sampleStarredRepos={sampleStarredRepos}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={CONTRIBUTIONS_SCENE}>
+        <Series.Sequence
+          durationInFrames={CONTRIBUTIONS_SCENE}
+          offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
+        >
           <ContributionsScene
             contributionData={contributionData}
             accentColor={accentColor}
