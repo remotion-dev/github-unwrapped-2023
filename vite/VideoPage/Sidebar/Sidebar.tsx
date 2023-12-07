@@ -1,5 +1,5 @@
 import type { PlayerRef } from "@remotion/player";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import type { z } from "zod";
 import type { compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
@@ -16,80 +16,19 @@ export const Sidebar: React.FC<{
   rocket: RocketColor;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   playerRef: React.RefObject<PlayerRef>;
+  progress: number;
+  error: boolean;
+  url: string | null;
 }> = ({
   inputProps,
-  startPolling,
+  progress,
+  error,
+  url,
   setIsModalOpen,
   rocket,
   setIsPlaying,
   playerRef,
 }) => {
-  const [url, setUrl] = useState<string | null>(null);
-
-  const [progress, setProgress] = useState<number>(0);
-  const [error, setError] = useState<boolean>(false);
-
-  const pollProgress = useMemo(
-    () => () => {
-      fetch("/api/progress", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          theme: inputProps.accentColor,
-          username: window.__USER__.username,
-        }),
-      })
-        .then((v) => {
-          return v.json();
-        })
-        .then((v) => {
-          if (v.type === "done") {
-            setUrl(v.url);
-            return;
-          }
-
-          if (v.type === "error") {
-            setError(true);
-            console.error(v.message);
-            return;
-          }
-
-          if (v.type === "progress") {
-            setProgress(v.progress);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          setError(true);
-        });
-    },
-    [inputProps.accentColor],
-  );
-
-  useEffect(() => {
-    if (startPolling) {
-      pollProgress();
-    }
-  }, [pollProgress, startPolling]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timer | undefined;
-
-    if (!url && !error && startPolling) {
-      intervalId = setInterval(() => {
-        pollProgress();
-      }, 5000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [error, url, startPolling, pollProgress]);
-
   return (
     <div className={styles.sidebarWrapper}>
       <div>

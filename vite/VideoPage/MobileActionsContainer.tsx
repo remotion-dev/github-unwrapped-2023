@@ -6,7 +6,9 @@ import { Button } from "../Button/Button";
 import { FurtherActions } from "./Actions/FurtherActions";
 import styles from "./styles.module.css";
 
-export const MobileActionsContainer: React.FC = () => {
+export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
+  url,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -30,10 +32,8 @@ export const MobileActionsContainer: React.FC = () => {
           style={{ flex: 1, gap: 8, height: 48 }}
           onClick={() => {
             const sharable = Boolean(navigator.share);
-            if (sharable) {
-              fetch(
-                "https://s3.sa-east-1.amazonaws.com/remotionlambda-saeast1-a3924cs0d4/renders/4zfn2oeevq/out.mp4",
-              )
+            if (sharable && url) {
+              fetch(url)
                 .then((res) => res.blob())
                 .then((blob) => {
                   const file = new File([blob], "github_unwrapped.mp4", {
