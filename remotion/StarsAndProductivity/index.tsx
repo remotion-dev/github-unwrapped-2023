@@ -114,7 +114,7 @@ export const StarsAndProductivity: React.FC<
         totalPullRequests={totalPullRequests}
         login={login}
         sampleStarredRepos={sampleStarredRepos}
-        timeUntilTabletIsHidden={timeUntilTabletHides}
+        timeUntilTabletHides={timeUntilTabletHides}
         timeUntilTabletEnters={timeUntilTabletIsEntered}
       />
       <Sequence from={starFlyDuration}>

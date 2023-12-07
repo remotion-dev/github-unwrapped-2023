@@ -51,13 +51,19 @@ export const getStarFlyDuration = ({ starsGiven }: { starsGiven: number }) => {
 
 const starsSceneSchema = starsGivenSchema.merge(
   z.object({
-    timeUntilTabletIsHidden: z.number(),
+    timeUntilTabletHides: z.number(),
   }),
 );
 
-export const starsGivenCalculateMetadata: CalculateMetadataFunction<
-  z.infer<typeof starsSceneSchema>
-> = ({ props }) => {
+type Props = z.infer<typeof starsSceneSchema> & {
+  style?: React.CSSProperties;
+  totalPullRequests: number;
+  timeUntilTabletEnters: number;
+};
+
+export const starsGivenCalculateMetadata: CalculateMetadataFunction<Props> = ({
+  props,
+}) => {
   return {
     durationInFrames: getStarFlyDuration({ starsGiven: props.starsGiven }),
   };
@@ -74,13 +80,7 @@ if (!Array.prototype.findLastIndex) {
   };
 }
 
-export const StarsGiven: React.FC<
-  z.infer<typeof starsSceneSchema> & {
-    style?: React.CSSProperties;
-    totalPullRequests: number;
-    timeUntilTabletEnters: number;
-  }
-> = ({
+export const StarsGiven: React.FC<Props> = ({
   starsGiven,
   style,
   showBackground,
@@ -88,7 +88,7 @@ export const StarsGiven: React.FC<
   accentColor,
   totalPullRequests,
   sampleStarredRepos,
-  timeUntilTabletIsHidden,
+  timeUntilTabletHides,
   timeUntilTabletEnters,
 }) => {
   const frame = useCurrentFrame();
@@ -207,7 +207,7 @@ export const StarsGiven: React.FC<
           starCount={starCount}
           totalStarCount={starsGiven}
           durationOfStars={durationOfStars}
-          timeUntilTabletIsHidden={timeUntilTabletIsHidden}
+          timeUntilTabletHides={timeUntilTabletHides}
         />
       ) : null}
     </AbsoluteFill>

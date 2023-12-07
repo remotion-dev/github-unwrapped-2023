@@ -24,7 +24,7 @@ export const AnimatedCockpit: React.FC<{
   starCount: number;
   totalStarCount: number;
   durationOfStars: number;
-  timeUntilTabletIsHidden: number;
+  timeUntilTabletHides: number;
 }> = ({
   xShake,
   yShake,
@@ -35,7 +35,7 @@ export const AnimatedCockpit: React.FC<{
   starCount,
   totalStarCount,
   durationOfStars,
-  timeUntilTabletIsHidden,
+  timeUntilTabletHides,
 }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -55,7 +55,7 @@ export const AnimatedCockpit: React.FC<{
       damping: 200,
     },
     durationInFrames: TRANSITION_TO_PULL_REQUESTS,
-    delay: timeUntilTabletIsHidden + 10,
+    delay: timeUntilTabletHides + 10,
   });
 
   const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
@@ -77,7 +77,7 @@ export const AnimatedCockpit: React.FC<{
 
   return (
     <AbsoluteFill style={shake}>
-      <Sequence from={timeUntilTabletIsHidden}>
+      <Sequence from={timeUntilTabletHides}>
         <PullRequests
           accentColor={accentColor}
           totalPullRequests={totalPullRequests}

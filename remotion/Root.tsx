@@ -697,7 +697,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={starsGivenSchema}
           defaultProps={{
-            timeUntilTabletIsHidden: 200,
+            timeUntilTabletHides: 200,
             starsGiven: 9,
             showBackground: true,
             showCockpit: true,
@@ -744,6 +744,7 @@ export const RemotionRoot: React.FC = () => {
               "Shopify/argo-admin",
               "Shopify/argo-checkout",
             ],
+            timeUntilTabletEnters: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -755,7 +756,6 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={starsGivenSchema}
           defaultProps={{
-            timeUntilTabletIsHidden: 200,
             starsGiven: 504,
             showBackground: true,
             showCockpit: true,
@@ -802,6 +802,8 @@ export const RemotionRoot: React.FC = () => {
               "Shopify/argo-admin",
               "Shopify/argo-checkout",
             ],
+            timeUntilTabletEnters: 200,
+            timeUntilTabletHides: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -813,7 +815,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={starsGivenSchema}
           defaultProps={{
-            timeUntilTabletIsHidden: 200,
+            timeUntilTabletHides: 200,
             starsGiven: 50,
             showBackground: true,
             showCockpit: true,
@@ -824,6 +826,7 @@ export const RemotionRoot: React.FC = () => {
             totalPullRequests: 614,
             login: "JonnyBurger",
             sampleStarredRepos: SAMPLE_STARRED_REPOS,
+            timeUntilTabletEnters: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
