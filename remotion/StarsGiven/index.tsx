@@ -176,6 +176,28 @@ export const StarsGiven: React.FC<
     return null;
   }, [frame, hits, sampleStarredRepos]);
 
+  const starCount = useMemo(() => {
+    if (hits.length === starsGiven) {
+      const lastItemWithFrameVisible = hits.findLastIndex((i) => {
+        return i < frame;
+      });
+      return lastItemWithFrameVisible + 1;
+    }
+
+    // If more stars than hits, we need to interpolate between the last hit and the next hit
+    return Math.round(
+      interpolate(
+        frame,
+        [0, starFlyDuration({ starsGiven }) - 10],
+        [0, starsGiven],
+        {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        },
+      ),
+    );
+  }, [frame, hits, starsGiven]);
+
   return (
     <AbsoluteFill style={style}>
       {showBackground ? (
@@ -232,6 +254,8 @@ export const StarsGiven: React.FC<
           accentColor={accentColor}
           totalPullRequests={totalPullRequests}
           repoText={text}
+          starCount={starCount}
+          totalStarCount={starsGiven}
         />
       ) : null}
     </AbsoluteFill>

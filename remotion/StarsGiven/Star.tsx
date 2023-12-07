@@ -21,7 +21,6 @@ const WINDSHIELD_HIT_SOUNDS = [
   staticFile("impact-stone-2.mp3"),
   staticFile("impact-stone-3.mp3"),
   staticFile("impact-stone-4.mp3"),
-  staticFile("impact-stone-5.mp3"),
 ];
 
 export const starsAssetsToPreload = () => {

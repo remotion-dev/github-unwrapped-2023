@@ -9,6 +9,20 @@ export const sevenSegmentSchema = z.object({
   max: z.number().min(0).nullable(),
 });
 
+export const getSevenSegmentAssetsToPrefetch = () => [
+  "sevensegment/background.png",
+  "sevensegment/0.png",
+  "sevensegment/1.png",
+  "sevensegment/2.png",
+  "sevensegment/3.png",
+  "sevensegment/4.png",
+  "sevensegment/5.png",
+  "sevensegment/6.png",
+  "sevensegment/7.png",
+  "sevensegment/8.png",
+  "sevensegment/9.png",
+];
+
 export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
   num,
   fontSize,
@@ -66,6 +80,9 @@ export const SevenSegment: React.FC<z.infer<typeof sevenSegmentSchema>> = ({
                 style={{
                   height: fontSize,
                   opacity,
+                  right: 0,
+                  position: "absolute",
+                  aspectRatio: "119 / 172",
                 }}
                 src={staticFile(`sevensegment/${digit}.png`)}
               />

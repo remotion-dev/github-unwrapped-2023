@@ -1,12 +1,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import type { AccentColor } from "../../src/config";
-import { PullRequests } from "../Paths/PullRequests";
 
-export const CustomScreen: React.FC<{
-  accentColor: AccentColor;
-  totalPullRequests: number;
-}> = ({ accentColor, totalPullRequests }) => {
+export const CockpitRightScreen: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   return (
     <AbsoluteFill
       style={{
@@ -27,22 +24,7 @@ export const CustomScreen: React.FC<{
           height: 1080,
         }}
       >
-        <AbsoluteFill
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: 400,
-            color: "white",
-            height: 1080,
-            width: 1080,
-            overflow: "hidden",
-          }}
-        >
-          <PullRequests
-            accentColor={accentColor}
-            totalPullRequests={totalPullRequests}
-          />
-        </AbsoluteFill>
+        {children}
       </AbsoluteFill>
     </AbsoluteFill>
   );
