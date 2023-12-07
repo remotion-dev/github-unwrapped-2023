@@ -131,13 +131,17 @@ export const StarsGiven: React.FC<
   const yShake = noise2D("yshake", frame / 10, 0) * 10;
   const rotationShake = noise2D("rotateshake", frame / 10, 0) * 0.05;
 
-  const starsDisplayed = getActualStars(starsGiven);
+  const starsDisplayed = useMemo(() => {
+    return getActualStars(starsGiven);
+  }, [starsGiven]);
 
-  const hitIndices = getHitIndexes({
-    starsDisplayed,
-    seed: "starsGiven",
-    starsGiven,
-  });
+  const hitIndices = useMemo(() => {
+    return getHitIndexes({
+      starsDisplayed,
+      seed: "starsGiven",
+      starsGiven,
+    });
+  }, [starsDisplayed, starsGiven]);
 
   const hits = useMemo(() => {
     return hitIndices
