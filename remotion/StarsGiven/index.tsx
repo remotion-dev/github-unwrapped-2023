@@ -58,7 +58,7 @@ const starsSceneSchema = starsGivenSchema.merge(
 type Props = z.infer<typeof starsSceneSchema> & {
   style?: React.CSSProperties;
   totalPullRequests: number;
-  timeUntilTabletEnters: number;
+  timeUntilTabletHasEntered: number;
 };
 
 export const starsGivenCalculateMetadata: CalculateMetadataFunction<Props> = ({
@@ -89,13 +89,16 @@ export const StarsGiven: React.FC<Props> = ({
   totalPullRequests,
   sampleStarredRepos,
   timeUntilTabletHides,
-  timeUntilTabletEnters,
+  timeUntilTabletHasEntered,
 }) => {
   const frame = useCurrentFrame();
+  const tabletHasEntered = frame > timeUntilTabletHasEntered;
 
-  const xShake = noise2D("xshake", frame / 10, 0) * 10;
-  const yShake = noise2D("yshake", frame / 10, 0) * 10;
-  const rotationShake = noise2D("rotateshake", frame / 10, 0) * 0.05;
+  const xShake = tabletHasEntered ? 0 : noise2D("xshake", frame / 10, 0) * 10;
+  const yShake = tabletHasEntered ? 0 : noise2D("yshake", frame / 10, 0) * 10;
+  const rotationShake = tabletHasEntered
+    ? 0
+    : noise2D("rotateshake", frame / 10, 0) * 0.05;
 
   const starsDisplayed = useMemo(() => {
     return getActualStars(starsGiven);
@@ -182,7 +185,7 @@ export const StarsGiven: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={style}>
-      <Sequence durationInFrames={timeUntilTabletEnters}>
+      <Sequence durationInFrames={timeUntilTabletHasEntered}>
         {showBackground ? (
           <Gradient gradient={accentColorToGradient(accentColor)} />
         ) : null}

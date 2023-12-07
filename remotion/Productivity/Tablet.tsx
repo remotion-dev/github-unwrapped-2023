@@ -15,6 +15,7 @@ export const tableSchema = z.object({
 });
 
 export const TABLET_SCENE_LENGTH = 150;
+export const TABLET_SCENE_HIDE_ANIMATION = 45;
 
 export const Tablet: React.FC<
   ComponentProps<typeof Productivity> & z.infer<typeof tableSchema>

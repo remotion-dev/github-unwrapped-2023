@@ -8,11 +8,13 @@ import {
   useVideoConfig,
 } from "remotion";
 import { type AccentColor } from "../../src/config";
-import { PullRequests } from "../Paths/PullRequests";
+import { TABLET_SCENE_HIDE_ANIMATION } from "../Productivity/Tablet";
+import { PullRequests } from "../PullRequests/PullRequests";
 import { Cockpit } from "./Cockpit";
 import type { RepoText } from "./HeadsUpDisplay";
+import { getTransitionToPullRequest } from "./transition-to-pull-request";
 
-export const TRANSITION_TO_PULL_REQUESTS = 60;
+export const TRANSITION_TO_PULL_REQUESTS = 50;
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -48,14 +50,11 @@ export const AnimatedCockpit: React.FC<{
     },
   });
 
-  const transitionToPullRequest = spring({
-    fps,
+  const start = timeUntilTabletHides + TABLET_SCENE_HIDE_ANIMATION;
+  const transitionToPullRequest = getTransitionToPullRequest({
+    start,
     frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: TRANSITION_TO_PULL_REQUESTS,
-    delay: timeUntilTabletHides + 10,
+    fps,
   });
 
   const distance = interpolate(entryProgress, [0, 1], [0.000000005, 1], {});
@@ -73,8 +72,6 @@ export const AnimatedCockpit: React.FC<{
 
   const durationOfStarsWithShake = durationOfStars + 30;
 
-  const scale = interpolate(transitionToPullRequest, [0, 1], [1, 3], {});
-
   return (
     <AbsoluteFill style={shake}>
       <Sequence from={timeUntilTabletHides}>
@@ -83,7 +80,7 @@ export const AnimatedCockpit: React.FC<{
           totalPullRequests={totalPullRequests}
         />
       </Sequence>
-      <AbsoluteFill style={{ scale: String(scale) }}>
+      <AbsoluteFill style={{ scale: String(transitionToPullRequest) }}>
         <Cockpit
           durationOfStarsWithShake={durationOfStarsWithShake}
           repoText={repoText}

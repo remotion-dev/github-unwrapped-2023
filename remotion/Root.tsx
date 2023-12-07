@@ -25,19 +25,19 @@ import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
 import { openingTitleSchema } from "./Opening/TitleImage";
-import { PATHS_COMP_HEIGHT } from "./Paths/Path";
-import {
-  PULL_REQUESTS_DURATION,
-  PullRequests,
-  pullRequestsSchema,
-} from "./Paths/PullRequests";
-import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
 import { Tablet, tableSchema } from "./Productivity/Tablet";
 import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
+import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
+import {
+  PULL_REQUESTS_DURATION,
+  PullRequests,
+  pullRequestsSchema,
+} from "./PullRequests/PullRequests";
+import { WholePaths } from "./PullRequests/WholePaths";
 import {
   SevenSegment,
   sevenSegmentSchema,
@@ -744,7 +744,7 @@ export const RemotionRoot: React.FC = () => {
               "Shopify/argo-admin",
               "Shopify/argo-checkout",
             ],
-            timeUntilTabletEnters: 200,
+            timeUntilTabletHasEntered: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
@@ -802,7 +802,7 @@ export const RemotionRoot: React.FC = () => {
               "Shopify/argo-admin",
               "Shopify/argo-checkout",
             ],
-            timeUntilTabletEnters: 200,
+            timeUntilTabletHasEntered: 200,
             timeUntilTabletHides: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
@@ -826,7 +826,7 @@ export const RemotionRoot: React.FC = () => {
             totalPullRequests: 614,
             login: "JonnyBurger",
             sampleStarredRepos: SAMPLE_STARRED_REPOS,
-            timeUntilTabletEnters: 200,
+            timeUntilTabletHasEntered: 200,
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />

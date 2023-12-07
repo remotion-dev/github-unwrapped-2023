@@ -8,12 +8,15 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
-import { PULL_REQUESTS_DURATION } from "../Paths/PullRequests";
-import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
+import {
+  TABLET_SCENE_HIDE_ANIMATION,
+  TABLET_SCENE_LENGTH,
+  Tablet,
+} from "../Productivity/Tablet";
+import { PULL_REQUESTS_DURATION } from "../PullRequests/PullRequests";
 import type { starsGivenSchema } from "../StarsGiven";
 import { StarsGiven, getStarFlyDuration } from "../StarsGiven";
 
-const TABLET_SCENE_HIDE_ANIMATION = 45;
 const TABLET_ENTER_DURATION = 45;
 
 export const getTimeUntilTabletHides = ({
@@ -115,7 +118,7 @@ export const StarsAndProductivity: React.FC<
         login={login}
         sampleStarredRepos={sampleStarredRepos}
         timeUntilTabletHides={timeUntilTabletHides}
-        timeUntilTabletEnters={timeUntilTabletIsEntered}
+        timeUntilTabletHasEntered={timeUntilTabletIsEntered}
       />
       <Sequence from={starFlyDuration}>
         <Tablet
