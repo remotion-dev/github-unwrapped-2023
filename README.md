@@ -58,9 +58,9 @@ To allow thousands of people to render their video at the same time, we applied 
 
 We thank [GitHub](https://github.com/github) and [For One Red](https://github.com/foronered) for their support in realization and promoting of this project.
 
-## Music copyright disclaimer
+## Audio copyright disclaimer
 
-The music was licensed for GitHubUnwrapped.com specifically. If you create a derivative project, you may not use it. The license to the music can purchased [here](https://audiojungle.net/item/robots/35287595).
+The audio was licensed for GitHubUnwrapped.com from [SmartSound](https://www.smartsound.com/). If you create a derivative project, you may not use it.
 
 ## License
 
