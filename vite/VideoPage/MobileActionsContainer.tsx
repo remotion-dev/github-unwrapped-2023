@@ -1,6 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
 import React from "react";
-import { staticFile } from "remotion";
 import { DownloadIcon } from "../../icons/DownloadIcon";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
@@ -32,17 +31,15 @@ export const MobileActionsContainer: React.FC = () => {
           onClick={() => {
             const sharable = Boolean(navigator.share);
             if (sharable) {
-              fetch(staticFile("output.mp4"))
-                .then((v) => {
-                  return v.blob();
-                })
+              fetch(
+                "https://s3.sa-east-1.amazonaws.com/remotionlambda-saeast1-a3924cs0d4/renders/4zfn2oeevq/out.mp4",
+              )
+                .then((res) => res.blob())
                 .then((blob) => {
-                  const file = new File([blob], "output.mp4", {
+                  const file = new File([blob], "github_unwrapped.mp4", {
                     type: "video/mp4",
                   });
-
                   window.alert("Sharing video");
-
                   return navigator.share({
                     files: [file],
                     title: "Your GitHub Unwrapped 2023",
