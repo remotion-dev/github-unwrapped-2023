@@ -1,4 +1,4 @@
-import { interpolate, interpolateColors, spring } from "remotion";
+import { Easing, interpolate, interpolateColors } from "remotion";
 import type { ContributionDotType } from "./Dot";
 
 export const INITIAL_SIZE = 15;
@@ -1869,27 +1869,20 @@ export const computePositions = (params: {
 
     const { delay: appearDelay, noiseX, noiseY } = appearDelays[i];
 
-    const appear = spring({
-      fps: params.fps,
-      frame: params.frame,
-      delay: appearDelay,
-      config: {
-        damping: 200,
-      },
-      durationInFrames: 30,
-    });
+    const appear = 1;
 
     const moveDelay = START_SPREAD + appearDelay;
 
-    const moveProgress = spring({
-      fps: params.fps,
-      frame: params.frame,
-      delay: moveDelay,
-      config: {
-        damping: 200,
+    const moveProgress = interpolate(
+      params.frame,
+      [moveDelay, moveDelay + SPREAD_DURATION],
+      [1, 0],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+        easing: Easing.inOut(Easing.ease),
       },
-      durationInFrames: SPREAD_DURATION,
-    });
+    );
 
     const maxOpacity = interpolate(params.data[i], [0, 128], [0.2, 1], {
       extrapolateLeft: "clamp",
@@ -1898,10 +1891,11 @@ export const computePositions = (params: {
 
     const starColor = "#a3d3ff";
 
-    const activityColor =
-      params.data[i] === 0
-        ? "#202138"
-        : interpolateColors(params.data[i], [0, 128], ["#0c2945", "#2486ff"]);
+    const activityColor = interpolateColors(
+      params.data[i],
+      [0, 128],
+      ["#202138", "#2486ff"],
+    );
 
     const color = interpolateColors(
       appear + moveProgress,
