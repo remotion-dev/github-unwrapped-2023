@@ -53,11 +53,12 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   });
 
   const translateY = interpolate(entryProgress, [1, 2], [0, 500]);
+  const scale = interpolate(frame, [0, 60], [0, 0.05]);
 
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${scaleDivided}) translateY(${translateY}px)`,
+        transform: `scale(${scaleDivided + scale}) translateY(${translateY}px)`,
       }}
     >
       <AbsoluteFill style={style}>
