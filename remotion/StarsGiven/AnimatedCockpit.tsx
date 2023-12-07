@@ -14,8 +14,6 @@ import { Cockpit } from "./Cockpit";
 import type { RepoText } from "./HeadsUpDisplay";
 import { getTransitionToPullRequest } from "./transition-to-pull-request";
 
-export const TRANSITION_TO_PULL_REQUESTS = 50;
-
 export const AnimatedCockpit: React.FC<{
   xShake: number;
   yShake: number;

@@ -19,11 +19,7 @@ import { StarsGiven, getStarFlyDuration } from "../StarsGiven";
 
 const TABLET_ENTER_DURATION = 45;
 
-export const getTimeUntilTabletHides = ({
-  starsGiven,
-}: {
-  starsGiven: number;
-}) => {
+const getTimeUntilTabletHides = ({ starsGiven }: { starsGiven: number }) => {
   return getStarFlyDuration({ starsGiven }) + TABLET_SCENE_LENGTH;
 };
 

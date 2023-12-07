@@ -1,6 +1,6 @@
 import { interpolate, spring } from "remotion";
 
-export const TRANSITION_TO_PULL_REQUESTS = 70;
+const TRANSITION_TO_PULL_REQUESTS = 70;
 
 export const getTransitionToPullRequest = ({
   start,

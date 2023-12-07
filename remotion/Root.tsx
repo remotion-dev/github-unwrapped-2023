@@ -15,10 +15,6 @@ import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
-import {
-  JumpingNumberDemo,
-  jumpingNumberSchema,
-} from "./JumpingNumber/JumpingNumber";
 import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
@@ -362,23 +358,6 @@ export const RemotionRoot: React.FC = () => {
           hour: "0",
         }}
       />
-      <Composition
-        id={"JumpingNumber"}
-        schema={jumpingNumberSchema}
-        component={JumpingNumberDemo}
-        durationInFrames={60}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        calculateMetadata={({ props }) => {
-          return {
-            durationInFrames: props.duration + 30,
-            props,
-          };
-        }}
-        defaultProps={{ duration: 73, from: 41, to: 70 }}
-      />
-
       <Composition
         id={"SevenSegment"}
         component={SevenSegment}

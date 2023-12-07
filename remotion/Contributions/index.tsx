@@ -10,8 +10,6 @@ import React from "react";
 import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
-import { JumpingNumber } from "../JumpingNumber/JumpingNumber";
-import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
 import { Sparkle } from "./Sparkle";
@@ -52,6 +50,8 @@ export const ContributionsScene: React.FC<{
     },
   );
 
+  const fadeInGradient = interpolate(frame, [0, 10], [0, 1]);
+
   return (
     <AbsoluteFill
       style={{
@@ -60,11 +60,8 @@ export const ContributionsScene: React.FC<{
         fontSize: 60,
       }}
     >
-      <AbsoluteFill>
+      <AbsoluteFill style={{ opacity: fadeInGradient }}>
         <Gradient gradient={accentColorToGradient(accentColor)} />
-      </AbsoluteFill>
-      <AbsoluteFill>
-        <Noise translateX={0} translateY={0} />
       </AbsoluteFill>
       <div
         style={{
@@ -89,19 +86,6 @@ export const ContributionsScene: React.FC<{
         currentFrame={frame}
         startFrame={160}
       />
-      <AbsoluteFill
-        style={{
-          fontSize: 100,
-          color: "white",
-          fontFamily: "Mona Sans",
-          fontWeight: "800",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          padding: 40,
-        }}
-      >
-        <JumpingNumber duration={60} from={0} to={13239} />
-      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

@@ -12,7 +12,6 @@ import { SHINES_ASSETS } from "./Shines";
 import { SHINY_STAR_OUTLINE_ASSET } from "./ShinyStarOutline";
 
 const MOVE_AIM = 100;
-export const HIT_RADIUS = 450;
 
 export const ANIMATION_DURATION_PER_STAR = 20;
 
