@@ -40,10 +40,10 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill>
-        <Gradient gradient={accentColorToGradient(accentColor)} />
-      </AbsoluteFill>
       <AbsoluteFill style={style}>
+        <AbsoluteFill>
+          <Gradient gradient={accentColorToGradient(accentColor)} />
+        </AbsoluteFill>
         <WholePaths
           initialPullRequests={Math.max(0, totalPullRequests - MAX_PATHS)}
           extraPaths={Math.min(MAX_PATHS, totalPullRequests)}
