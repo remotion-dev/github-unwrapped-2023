@@ -9,13 +9,15 @@ import {
 } from "remotion";
 import type { AccentColor } from "../../src/config";
 import { PullRequests } from "../Paths/PullRequests";
-import { SevenSegment } from "../SevenSegment/SevenSegmentNumber";
+import { AmountOfStarsDisplay } from "./AmountOfStarsDisplay";
 import CockpitSVG from "./CockpitSVG";
 import { CockpitRightScreen } from "./CustomScreen";
 import type { RepoText } from "./HeadsUpDisplay";
 import { HeadsUpDisplay } from "./HeadsUpDisplay";
 import { CockpitLeftScreen } from "./LeftScreenCockpit";
 import { ShinyStarOutline } from "./ShinyStarOutline";
+
+export const TRANSITION_TO_PULL_REQUESTS = 20;
 
 export const AnimatedCockpit: React.FC<{
   xShake: number;
@@ -64,27 +66,13 @@ export const AnimatedCockpit: React.FC<{
     };
   }, [rotationShake, scaleDivided, xShake, yShake]);
 
-  const fontSizeOfSevenSegmentDisplay = useMemo(() => {
-    const digits = Number(totalStarCount).toString().length;
-    if (digits === 1) {
-      return 900;
-    }
-
-    if (digits === 2) {
-      return 800;
-    }
-
-    if (digits === 3) {
-      return 600;
-    }
-
-    return 500;
-  }, [totalStarCount]);
-
   const durationOfStarsWithShake = durationOfStars + 17;
 
   return (
     <AbsoluteFill style={shake}>
+      <Sequence from={timeUntilTabletIsHidden}>
+        <PullRequests accentColor="blue" totalPullRequests={20} />
+      </Sequence>
       <Sequence durationInFrames={durationOfStarsWithShake}>
         <HeadsUpDisplay textToDisplay={repoText} />
       </Sequence>
@@ -100,13 +88,10 @@ export const AnimatedCockpit: React.FC<{
             fontFamily: "Seven Segment",
           }}
         >
-          <div style={{ position: "absolute" }}>
-            <SevenSegment
-              fontSize={fontSizeOfSevenSegmentDisplay}
-              num={starCount}
-              max={totalStarCount}
-            />
-          </div>
+          <AmountOfStarsDisplay
+            starCount={starCount}
+            totalStarCount={totalStarCount}
+          />
         </AbsoluteFill>
       </CockpitLeftScreen>
       <CockpitRightScreen>
