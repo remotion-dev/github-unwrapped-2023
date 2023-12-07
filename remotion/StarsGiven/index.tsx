@@ -1,5 +1,4 @@
 import { noise2D } from "@remotion/noise";
-import { Pie } from "@remotion/shapes";
 import { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import {
@@ -25,7 +24,6 @@ import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
 import {
   ANIMATION_DURATION_PER_STAR,
-  HIT_RADIUS,
   Star,
   getStarBurstFirstFrame,
 } from "./Star";
@@ -38,7 +36,6 @@ const STAR_ANIMATION_DELAY = 20;
 export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
   showBackground: z.boolean(),
-  showHitWindow: z.boolean(),
   showCockpit: z.boolean(),
   showDots: z.boolean(),
   topWeekday: topWeekdaySchema,
@@ -121,7 +118,6 @@ export const StarsGiven: React.FC<
   starsGiven,
   style,
   showBackground,
-  showHitWindow,
   showCockpit,
   showDots,
   accentColor,
@@ -225,26 +221,7 @@ export const StarsGiven: React.FC<
       {isIosSafari() ? null : (
         <Shines rotationShake={rotationShake} xShake={xShake} yShake={yShake} />
       )}
-      {showHitWindow ? (
-        <AbsoluteFill
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Pie
-            radius={HIT_RADIUS}
-            progress={0.5}
-            fill="white"
-            rotation={-0.5 * Math.PI}
-            style={{
-              transform: `translateY(150px)`,
-              opacity: 0.5,
-            }}
-          />
-        </AbsoluteFill>
-      ) : null}
+
       {new Array(getActualStars(starsGiven)).fill(true).map((_, index) => (
         <Sequence // eslint-disable-next-line react/no-array-index-key
           key={index}

@@ -26,7 +26,11 @@ import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
 import { openingTitleSchema } from "./Opening/TitleImage";
 import { PATHS_COMP_HEIGHT } from "./Paths/Path";
-import { PullRequests, pullRequestsSchema } from "./Paths/PullRequests";
+import {
+  PULL_REQUESTS_DURATION,
+  PullRequests,
+  pullRequestsSchema,
+} from "./Paths/PullRequests";
 import { WholePaths } from "./Paths/WholePaths";
 import { Poof } from "./Poof";
 import { Productivity } from "./Productivity/Productivity";
@@ -277,7 +281,6 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           starsGiven: 10,
           showBackground: true,
-          showHitWindow: false,
           showCockpit: true,
           showDots: false,
           topWeekday: "3",
@@ -404,7 +407,7 @@ export const RemotionRoot: React.FC = () => {
           id="PullRequests"
           component={PullRequests}
           fps={30}
-          durationInFrames={240}
+          durationInFrames={PULL_REQUESTS_DURATION}
           height={1080}
           width={1080}
           schema={pullRequestsSchema}
@@ -698,7 +701,6 @@ export const RemotionRoot: React.FC = () => {
             timeUntilTabletIsHidden: 200,
             starsGiven: 9,
             showBackground: true,
-            showHitWindow: false,
             showCockpit: true,
             showDots: false,
             topWeekday: "1" as const,
@@ -758,7 +760,6 @@ export const RemotionRoot: React.FC = () => {
             timeUntilTabletIsHidden: 200,
             starsGiven: 504,
             showBackground: true,
-            showHitWindow: false,
             showCockpit: true,
             showDots: false,
             topWeekday: "1" as const,
@@ -818,7 +819,6 @@ export const RemotionRoot: React.FC = () => {
             timeUntilTabletIsHidden: 200,
             starsGiven: 50,
             showBackground: true,
-            showHitWindow: false,
             showCockpit: true,
             showDots: false,
             topWeekday: "1" as const,

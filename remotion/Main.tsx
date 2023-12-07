@@ -145,7 +145,6 @@ export const Main: React.FC<Schema> = ({
           <StarsAndProductivity
             starsGiven={starsGiven}
             showBackground={false}
-            showHitWindow={false}
             showCockpit
             showDots={false}
             topWeekday={topWeekday}

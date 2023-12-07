@@ -15,6 +15,7 @@ export const pullRequestsSchema = z.object({
 });
 
 const MAX_PATHS = 50;
+export const PULL_REQUESTS_DURATION = 240;
 
 export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   totalPullRequests,

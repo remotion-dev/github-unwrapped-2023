@@ -8,22 +8,19 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
+import { PULL_REQUESTS_DURATION } from "../Paths/PullRequests";
 import { TABLET_SCENE_LENGTH, Tablet } from "../Productivity/Tablet";
 import type { starsGivenSchema } from "../StarsGiven";
 import { StarsGiven, getStarFlyDuration } from "../StarsGiven";
 
 const TABLET_SCENE_HIDE_ANIMATION = 45;
 
-export const getTimeUntilTabletIsHidden = ({
+export const getTimeUntilTabletHides = ({
   starsGiven,
 }: {
   starsGiven: number;
 }) => {
-  return (
-    getStarFlyDuration({ starsGiven }) +
-    TABLET_SCENE_LENGTH +
-    TABLET_SCENE_HIDE_ANIMATION
-  );
+  return getStarFlyDuration({ starsGiven }) + TABLET_SCENE_LENGTH;
 };
 
 export const getStarsAndProductivityDuration = ({
@@ -31,7 +28,7 @@ export const getStarsAndProductivityDuration = ({
 }: {
   starsGiven: number;
 }) => {
-  return getTimeUntilTabletIsHidden({ starsGiven });
+  return getTimeUntilTabletHides({ starsGiven }) + PULL_REQUESTS_DURATION;
 };
 
 export const starsAndProductivityCalculateMetadata: CalculateMetadataFunction<
@@ -48,7 +45,6 @@ export const StarsAndProductivity: React.FC<
   z.infer<typeof starsGivenSchema>
 > = ({
   starsGiven,
-  showHitWindow,
   showBackground,
   showCockpit,
   showDots,
@@ -67,8 +63,8 @@ export const StarsAndProductivity: React.FC<
     return getStarFlyDuration({ starsGiven });
   }, [starsGiven]);
 
-  const timeUntilTabletIsHidden = useMemo(() => {
-    return getTimeUntilTabletIsHidden({ starsGiven });
+  const timeUntilTabletHides = useMemo(() => {
+    return getTimeUntilTabletHides({ starsGiven });
   }, [starsGiven]);
 
   const zoomTransition =
@@ -95,18 +91,21 @@ export const StarsAndProductivity: React.FC<
   const translateY = zoomTransition * -270;
   const scale = 1 + zoomTransition * 0.5;
 
+  const style: React.CSSProperties = useMemo(() => {
+    return {
+      transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
+      opacity: 1 - zoomTransition * 0.7,
+    };
+  }, [translateX, translateY, scale, zoomTransition]);
+
   return (
     <AbsoluteFill>
       <StarsGiven
         showBackground={showBackground}
-        showHitWindow={showHitWindow}
         starsGiven={starsGiven}
         showCockpit={showCockpit}
         showDots={showDots}
-        style={{
-          transform: `translate(${translateX}px, ${translateY}px) scale(${scale})`,
-          opacity: 1 - zoomTransition * 0.7,
-        }}
+        style={style}
         topWeekday={topWeekday}
         topHour={topHour}
         graphData={graphData}
@@ -114,7 +113,7 @@ export const StarsAndProductivity: React.FC<
         totalPullRequests={totalPullRequests}
         login={login}
         sampleStarredRepos={sampleStarredRepos}
-        timeUntilTabletIsHidden={timeUntilTabletIsHidden}
+        timeUntilTabletIsHidden={timeUntilTabletHides}
       />
       <Sequence from={starFlyDuration}>
         <Tablet
