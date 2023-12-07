@@ -1,19 +1,27 @@
 import {
   AbsoluteFill,
   interpolate,
+  random,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 
-import React from "react";
+import { noise2D } from "@remotion/noise";
+import React, { useMemo } from "react";
 import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
 import { Sparkle } from "./Sparkle";
-import { computePositions } from "./compute-positions";
+import {
+  INITIAL_SIZE,
+  OFFSET_X,
+  OFFSET_Y,
+  SPACING,
+  computePositions,
+} from "./compute-positions";
 
 const TIMELINE_OFFSET_Y = 420;
 export const CONTRIBUTIONS_SCENE_DURATION = 7 * FPS;
@@ -25,6 +33,23 @@ export const ContributionsScene: React.FC<{
 }> = ({ accentColor, contributionData }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+
+  const appearDelays = useMemo(() => {
+    return new Array(365).fill(true).map((_, i) => {
+      const col = Math.floor(i / 7);
+      const row: number = i % 7;
+
+      const x = col * (SPACING + INITIAL_SIZE) + OFFSET_X;
+      const y = row * (SPACING + INITIAL_SIZE) + OFFSET_Y;
+
+      return {
+        delay: Math.floor(random(i) * 30 + 15),
+        noiseX: Number(noise2D(`${i}x`, x * 10, y * 10).toFixed(2)),
+        noiseY: Number(noise2D(`${i}y`, x * 10, y * 10).toFixed(2)),
+      };
+    });
+  }, []);
+  console.log(appearDelays);
 
   const { positions, maxIndex } = computePositions({
     frame,
