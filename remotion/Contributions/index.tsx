@@ -8,14 +8,9 @@ import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
 import { computePositions } from "./compute-positions";
 
-export const CONTRIBUTIONS_SCENE_DURATION = 7 * FPS;
+export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
+export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 10;
-
-const container: React.CSSProperties = {
-  justifyContent: "center",
-  alignItems: "center",
-  fontSize: 60,
-};
 
 export const ContributionsScene: React.FC<{
   accentColor: AccentColor;
@@ -29,18 +24,39 @@ export const ContributionsScene: React.FC<{
     });
   }, [contributionData]);
 
-  const fadeInGradient = interpolate(frame, [5, 12], [0, 1]);
+  const fadeInGradient = interpolate(
+    frame,
+    [
+      5,
+      12,
+      CONTRIBUTIONS_SCENE_DURATION - CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
+      CONTRIBUTIONS_SCENE_DURATION,
+    ],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+
+  const container: React.CSSProperties = useMemo(() => {
+    return {
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 60,
+      opacity: fadeInGradient,
+    };
+  }, [fadeInGradient]);
 
   return (
     <AbsoluteFill style={container}>
-      <AbsoluteFill style={{ opacity: fadeInGradient }}>
+      <AbsoluteFill>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
       <div
         style={{
           width: "100%",
           position: "absolute",
-          opacity: fadeInGradient,
         }}
       >
         {positions.map((p, i) => (

@@ -14,6 +14,7 @@ import { VIDEO_FPS } from "../types/constants";
 import {
   CONTRIBUTIONS_SCENE_DURATION,
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
+  CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
 import { END_SCENE_DURATION, EndScene } from "./EndScene";
@@ -32,8 +33,6 @@ import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 import { injectFont } from "./font";
 
 type Schema = z.infer<typeof compositionSchema>;
-
-const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
 
 injectFont();
 
@@ -206,7 +205,7 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence
-          durationInFrames={CONTRIBUTIONS_SCENE}
+          durationInFrames={CONTRIBUTIONS_SCENE_DURATION}
           offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
         >
           <ContributionsScene
@@ -214,7 +213,10 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={END_SCENE_DURATION}>
+        <Series.Sequence
+          durationInFrames={END_SCENE_DURATION}
+          offset={-CONTRIBUTIONS_SCENE_EXIT_TRANSITION}
+        >
           <EndScene planet={planet} rocket={rocket} />
         </Series.Sequence>
       </Series>
