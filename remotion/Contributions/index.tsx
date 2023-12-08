@@ -29,7 +29,7 @@ export const ContributionsScene: React.FC<{
     });
   }, [contributionData]);
 
-  const fadeInGradient = interpolate(frame, [0, 10], [0, 1]);
+  const fadeInGradient = interpolate(frame, [5, 12], [0, 1]);
 
   return (
     <AbsoluteFill style={container}>
@@ -40,6 +40,7 @@ export const ContributionsScene: React.FC<{
         style={{
           width: "100%",
           position: "absolute",
+          opacity: fadeInGradient,
         }}
       >
         {positions.map((p, i) => (

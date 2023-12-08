@@ -23,7 +23,7 @@ export type ContributionDotType = {
   index: number;
 };
 
-const END_SPREAD = 150;
+const END_SPREAD = 210;
 
 const SPREAD_DURATION = END_SPREAD;
 
@@ -39,18 +39,17 @@ export const ContributionDot: React.FC<{
     ["#202138", "#2486ff"],
   );
 
-  const { noiseX, noiseY } = appearDelays[p.index];
+  const { noiseX, noiseY, delay } = appearDelays[p.index];
 
-  const moveDelay = 0;
+  const moveDelay = delay;
 
   const moveProgress = interpolate(
     frame,
-    [moveDelay, moveDelay + SPREAD_DURATION],
+    [0, moveDelay + SPREAD_DURATION],
     [1, 0],
     {
-      extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.inOut(Easing.ease),
+      easing: Easing.bezier(0.8, -0.02, 0.32, 1),
     },
   );
 
@@ -89,14 +88,21 @@ export const ContributionDot: React.FC<{
 
   const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);
 
+  const noiseAngle = Math.atan2(noiseY, noiseX);
+
+  const towardsCenter = moveProgress * 1200;
+
+  const pushFromCenter = Math.sin(noiseAngle + frame / 100) * towardsCenter;
+  const pushFromTop = Math.cos(noiseAngle + frame / 100) * towardsCenter;
+
   const xDelta = noiseX * 200;
-  const yDelta = noiseY * 800 + 50;
+  const yDelta = noiseY * 800;
 
   const style: React.CSSProperties = useMemo(() => {
     return {
       position: "absolute",
-      left: p.x + moveProgress * xDelta,
-      top: p.y + moveProgress * yDelta,
+      left: p.x + moveProgress * xDelta + pushFromCenter,
+      top: p.y + moveProgress * yDelta + pushFromTop,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

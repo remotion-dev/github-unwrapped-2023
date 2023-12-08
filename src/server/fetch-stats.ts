@@ -178,7 +178,7 @@ export const getStatsFromGitHub = async ({
     graphData,
     contributionData: allDays.map((d) => d.contributionCount),
     sampleStarredRepos: baseData.starredRepositories.edges.map(
-      (e) => `${e.node.owner.login}/${e.node.name}`,
+      (e) => `${e.node.name}`,
     ),
   };
 };

@@ -148,7 +148,7 @@ export const StarsGiven: React.FC<Props> = ({
       }
 
       const distanceToHit = Math.min(distanceToPreviousHit, distanceToNextHit);
-      const opacity = interpolate(distanceToHit, [0, 3], [0, 1]);
+      const opacity = interpolate(distanceToHit, [0, 2], [0, 1]);
 
       return {
         opacity,
