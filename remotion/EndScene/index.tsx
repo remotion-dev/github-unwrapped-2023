@@ -1,14 +1,23 @@
 import React from "react";
-import { AbsoluteFill, Audio, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 
 import { z } from "zod";
 import { PlanetEnum, rocketSchema } from "../../src/config";
+import { CallToAction } from "./CallToAction";
 import { PlanetAsset } from "./GoldPlanetAsset";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
 import Stars from "./SparkingStars";
 import { Threads } from "./Threads";
+import { getOrbEnter } from "./orb-enter";
 
 export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
@@ -31,21 +40,33 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
   rocket,
   planet,
 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const { progress } = getOrbEnter({ fps, frame });
+
   return (
-    <AbsoluteFill style={container}>
-      {planet === "Gold" ? (
-        <Audio
-          // TODO: License
-          // TODO: Mute other sound
-          src={GOLD_PLANET_SOUND}
-        />
-      ) : null}
-      {planet === "Gold" ? <Stars /> : null}
+    <AbsoluteFill>
       <PlanetBackground planet={planet} />
-      {planet === "Gold" ? <Threads /> : null}
-      {planet === "Gold" && <GoldPlanetShine />}
-      <PlanetAsset planet={planet} />
-      <LandingRocket rocket={rocket} />
+      <AbsoluteFill
+        style={{
+          ...container,
+          transform: `scale(${interpolate(frame, [0, 100], [1, 1.1])})`,
+        }}
+      >
+        {planet === "Gold" ? (
+          <Audio
+            // TODO: License
+            // TODO: Mute other sound
+            src={GOLD_PLANET_SOUND}
+          />
+        ) : null}
+        {planet === "Gold" ? <Stars /> : null}
+        {planet === "Gold" ? <Threads /> : null}
+        {planet === "Gold" && <GoldPlanetShine />}
+        <CallToAction progress={progress} />
+        <PlanetAsset planet={planet} />
+        <LandingRocket rocket={rocket} />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
