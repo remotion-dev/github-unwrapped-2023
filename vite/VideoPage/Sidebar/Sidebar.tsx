@@ -3,14 +3,13 @@ import React from "react";
 import type { z } from "zod";
 import type { Rocket, compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
-import { SharingActions } from "../Actions/SharingActions";
+import { SharingActions } from "../Actions/SharingActions.1";
 import { RocketPicker } from "../RocketSelection/RocketPicker";
 import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-  startPolling: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   rocket: Rocket;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;

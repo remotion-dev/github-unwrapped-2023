@@ -15,26 +15,18 @@ import { useVideo } from "./useVideo";
 
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-  startPolling: boolean;
   rocket: Rocket;
   setRocket: React.Dispatch<SetStateAction<Rocket>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
-}> = ({
-  inputProps,
-  startPolling,
-  rocket,
-  setRocket,
-  isModalOpen,
-  setIsModalOpen,
-}) => {
+}> = ({ inputProps, rocket, setRocket, isModalOpen, setIsModalOpen }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
 
   const { url, progress, error } = useVideo({
+    inputProps,
     accentColor: inputProps.accentColor,
     username: inputProps.login,
-    startPolling,
   });
 
   const modalElement = document.getElementById("rocketModal");
@@ -75,7 +67,6 @@ export const VideoBox: React.FC<{
         />
         <Sidebar
           inputProps={inputProps}
-          startPolling={startPolling}
           setIsModalOpen={setIsModalOpen}
           rocket={rocket}
           setIsPlaying={setIsPlaying}

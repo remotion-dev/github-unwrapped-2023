@@ -20,18 +20,23 @@ const indexRoute = new Route({
   component: Home,
 });
 
-const $usernamePath = "/$username";
+const $usernamePath = "$username";
 
 // Create an index route
-const userRoute = new Route({
+export const userRoute = new Route({
   getParentRoute: () => rootRoute,
   path: $usernamePath,
+});
+
+const userIndexRoute = new Route({
+  getParentRoute: () => userRoute,
+  path: "/",
   component: UserPageOrNotFound,
 });
 
 export const userShare = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/share",
+  getParentRoute: () => userRoute,
+  path: "share",
   component: SharePage,
   validateSearch: (search: Record<string, unknown>) => {
     // validate and parse the search params into a typed state
@@ -52,9 +57,14 @@ const aboutRoute = new Route({
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
-  userShare,
-  userRoute,
+  userRoute.addChildren([userIndexRoute, userShare]),
 ]);
 
 // Create the router using your route tree
 export const router = new Router({ routeTree });
+
+// declare module "@tanstack/react-router" {
+//   interface Register {
+//     router: typeof router;
+//   }
+// }
