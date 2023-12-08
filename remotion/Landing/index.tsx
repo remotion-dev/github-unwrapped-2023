@@ -12,7 +12,11 @@ import { z } from "zod";
 import type { Planet } from "../../src/config";
 import { PlanetEnum, accentColorSchema, rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
-import { GOLD_PLANET_ASSET, GOLD_PLANET_BG, GOLD_PLANET_SOUND } from "../End";
+import {
+  GOLD_PLANET_ASSET,
+  GOLD_PLANET_BG,
+  GOLD_PLANET_SOUND,
+} from "../EndScene";
 import { Gradient } from "../Gradients/NativeGradient";
 import { getFlame } from "../Opening/TakeOff";
 import { accentColorToGradient } from "../Opening/TitleImage";

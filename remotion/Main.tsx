@@ -9,7 +9,7 @@ import {
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
-import { EndScene } from "./End";
+import { EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import { LandingScene } from "./Landing";
 import {
