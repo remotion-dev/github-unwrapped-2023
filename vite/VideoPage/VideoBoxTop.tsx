@@ -27,10 +27,6 @@ export const VideoBoxTop: React.FC<{
             #GitHubUnwrapped
           </h2>
         </Link>
-
-        {/**
-      // TODO: Add proper link
-       */}
         <div className={boxStyles.linkContainer}>
           <HomeLink
             href="/about"
