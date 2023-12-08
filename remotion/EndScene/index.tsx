@@ -33,16 +33,18 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
 }) => {
   return (
     <AbsoluteFill style={container}>
-      <Audio
-        // TODO: License
-        // TODO: Mute other sound
-        src={GOLD_PLANET_SOUND}
-      />
+      {planet === "Gold" ? (
+        <Audio
+          // TODO: License
+          // TODO: Mute other sound
+          src={GOLD_PLANET_SOUND}
+        />
+      ) : null}
       <Stars />
       <PlanetBackground />
       <Threads />
       {planet === "Gold" && <GoldPlanetShine />}
-      <PlanetAsset />
+      <PlanetAsset planet={planet} />
       <LandingRocket rocket={rocket} />
     </AbsoluteFill>
   );
