@@ -16,7 +16,6 @@ import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
-import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
@@ -98,10 +97,6 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
-          defaultProps={{
-            exitProgress: 0.5,
-            enterProgress: 1,
-          }}
         />
       </Folder>
       <Composition

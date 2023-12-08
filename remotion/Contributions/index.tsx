@@ -11,7 +11,6 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
-import { Sparkle } from "./Sparkle";
 import { computePositions } from "./compute-positions";
 
 const TIMELINE_OFFSET_Y = 420;
@@ -60,13 +59,6 @@ export const ContributionsScene: React.FC<{
           />
         ))}
       </div>
-      <Sparkle
-        x={target.x}
-        y={target.y + TIMELINE_OFFSET_Y}
-        scale={1}
-        currentFrame={frame}
-        startFrame={160}
-      />
     </AbsoluteFill>
   );
 };

@@ -23,10 +23,9 @@ export type ContributionDotType = {
   index: number;
 };
 
-const START_SPREAD = 120;
 const END_SPREAD = 150;
 
-const SPREAD_DURATION = END_SPREAD - START_SPREAD;
+const SPREAD_DURATION = END_SPREAD;
 
 export const ContributionDot: React.FC<{
   dot: ContributionDotType;
@@ -40,9 +39,9 @@ export const ContributionDot: React.FC<{
     ["#202138", "#2486ff"],
   );
 
-  const { delay: appearDelay, noiseX, noiseY } = appearDelays[p.index];
+  const { noiseX, noiseY } = appearDelays[p.index];
 
-  const moveDelay = START_SPREAD + appearDelay;
+  const moveDelay = 0;
 
   const moveProgress = interpolate(
     frame,
