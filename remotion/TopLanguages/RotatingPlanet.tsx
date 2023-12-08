@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 import { Series, random } from "remotion";
+import { LanguagePlanet } from "./Language";
 import { mapLanguageToPlanet } from "./constants";
 
-const TypeScriptPlanet = mapLanguageToPlanet.TypeScript.PlanetSVG;
-const RustPlanet = mapLanguageToPlanet.Rust2.PlanetSVG;
-const CPlusPlusPlanet = mapLanguageToPlanet["C++"].PlanetSVG;
-const GoPlanet = mapLanguageToPlanet.Go.PlanetSVG;
-const PythonPlanet = mapLanguageToPlanet.Python.PlanetSVG;
-const RubyPlanet = mapLanguageToPlanet.Ruby.PlanetSVG;
+const TypeScriptPlanet = mapLanguageToPlanet.TypeScript;
+const RustPlanet = mapLanguageToPlanet.Rust;
+const CPlusPlusPlanet = mapLanguageToPlanet["C++"];
+const GoPlanet = mapLanguageToPlanet.Go;
+const PythonPlanet = mapLanguageToPlanet.Python;
+const RubyPlanet = mapLanguageToPlanet.Ruby;
 
 const planets = [
   TypeScriptPlanet,
@@ -38,7 +39,7 @@ export const RotatingPlanet: React.FC<{
         {sortedRandomly.map((Planet, i) => (
           // eslint-disable-next-line react/no-array-index-key
           <Series.Sequence key={i} durationInFrames={16} layout="none">
-            <Planet customColor={null} style={planetStyle} />
+            <LanguagePlanet planetInfo={Planet} style={planetStyle} />
           </Series.Sequence>
         ))}
       </Series>

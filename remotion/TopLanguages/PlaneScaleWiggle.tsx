@@ -12,6 +12,7 @@ import { languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
+import { LanguagePlanet } from "./Language";
 import { LanguageDescription } from "./LanguageDescription";
 import { computePlanetInfo } from "./constants";
 import { enterDirectionSchema } from "./corner";
@@ -35,8 +36,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
   enterDirection,
   rocket,
 }) => {
-  const { PlanetSVG, gradient, opacity, customPlanetColor } =
-    computePlanetInfo(language);
+  const planetInfo = computePlanetInfo(language);
 
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -83,8 +83,8 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
       }}
     >
-      <AbsoluteFill style={{ opacity }}>
-        <Gradient gradient={gradient} />
+      <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
+        <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>
       <AbsoluteFill
         style={{ opacity: interpolate(exitProgress, [0, 0.3], [1, 0]) }}
@@ -99,10 +99,10 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
           scale: "0.7",
         }}
       >
-        <PlanetSVG
-          customColor={customPlanetColor}
-          width={800}
+        <LanguagePlanet
+          planetInfo={planetInfo}
           style={{
+            width: 800,
             scale: String(planetScale),
             rotate: rotate + "deg",
           }}

@@ -17,11 +17,12 @@ export const LanguagesEnum = z.enum([
   "JavaScript",
   "TypeScript",
   "Go",
-  "Rust1",
-  "Rust2",
-  "Rust3",
+  "Rust",
   "C++",
   "Ruby",
+  "PHP",
+  "Nix",
+  "C#",
 ]);
 
 export const cornerTypeValues = [
