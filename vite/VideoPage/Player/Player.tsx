@@ -101,7 +101,6 @@ export const PlayerContainer: React.FC<{
     return calculateDuration(inputProps);
   }, [inputProps]);
 
-  console.log(durationInFrames);
   return (
     <div style={outer}>
       <Player

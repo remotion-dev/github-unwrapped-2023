@@ -1,1 +1,1 @@
-export const MAXIMUM_NUMBER_OF_AUDIO_TAGS = 10;
+export const MAXIMUM_NUMBER_OF_AUDIO_TAGS = 11;

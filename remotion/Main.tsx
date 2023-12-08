@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
@@ -77,7 +77,7 @@ const getMusicDuration = (durationInSeconds: number) => {
   let sec = 24;
   if (durationInSeconds < 24) return 24;
 
-  while (sec < 41) {
+  while (sec < 57) {
     if (Math.abs(sec - durationInSeconds) <= 1) {
       return sec;
     }
@@ -85,14 +85,14 @@ const getMusicDuration = (durationInSeconds: number) => {
     sec += 2;
   }
 
-  return 40;
+  return 56;
 };
 
 const getSoundtrack = (durationInFrames: number, rocket: Rocket) => {
   const FPS = 30;
   const blueThemeUrlPrefix = "/blue_theme_music/blue_theme_music_";
   const orangeThemeUrlPrefix = "/red_theme_music/red_theme_music_";
-  const yellowThemeUrlPrefix = "/yellow_theme_music/yellow_theme_music_";
+  const yellowThemeUrlPrefix = "/gold_theme_music/gold_theme_music_";
   const postfix = ".mp3";
 
   const prefix = {
@@ -105,6 +105,17 @@ const getSoundtrack = (durationInFrames: number, rocket: Rocket) => {
 
   const adjustedDuration = getMusicDuration(durationInSecond);
   const url = prefix[rocket] + adjustedDuration + postfix;
+
+  console.log(
+    "durationInFrame: ",
+    durationInFrames,
+    "durationInSeconds: ",
+    durationInSecond,
+    "adjustedDuration: ",
+    adjustedDuration,
+    "url: ",
+    url,
+  );
 
   return staticFile(url);
 };
@@ -136,13 +147,18 @@ export const Main: React.FC<Schema> = ({
   sampleStarredRepos,
 }) => {
   const { durationInFrames } = useVideoConfig();
+
+  const soundTrack = useMemo(() => {
+    return getSoundtrack(durationInFrames, rocket);
+  }, [durationInFrames, rocket]);
+
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      <Audio src={getSoundtrack(durationInFrames, rocket)} />
+      <Audio src={soundTrack} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene
