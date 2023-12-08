@@ -3,31 +3,24 @@ import {
   AbsoluteFill,
   OffthreadVideo,
   interpolate,
-  spring,
   useCurrentFrame,
 } from "remotion";
 import type { Rocket } from "../../src/config";
-import { VIDEO_FPS } from "../../types/constants";
-import { getFlame } from "../Opening/TakeOff";
+import { getFlame, takeOffSpeedFucntion } from "../Opening/TakeOff";
 import { RocketSide } from "../Spaceship";
+import { remapSpeed } from "../TopLanguages/remap-speed";
 
 export const LandingRocket: React.FC<{
   rocket: Rocket;
 }> = ({ rocket }) => {
   const frame = useCurrentFrame();
 
-  const starship = spring({
-    fps: VIDEO_FPS,
-    frame: frame / 12,
-    delay: 0,
-    config: {
-      damping: 200,
-    },
-  });
+  const reversedFrame = 50 - frame;
+  const acceleratedFrame = remapSpeed(reversedFrame, takeOffSpeedFucntion);
 
-  const offset = interpolate(starship, [0, 1], [0, 560]);
+  const rocketOffset = interpolate(acceleratedFrame, [0, 50], [550, 0]);
 
-  const height = interpolate(frame, [100, 180], [300, 30]);
+  const height = interpolate(frame, [30, 70], [300, 30]);
   const marginTop = height / 2;
 
   return (
@@ -36,7 +29,7 @@ export const LandingRocket: React.FC<{
         position: "absolute",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: offset,
+        marginTop: rocketOffset,
       }}
     >
       <AbsoluteFill
@@ -54,6 +47,7 @@ export const LandingRocket: React.FC<{
             marginTop: -500 + marginTop,
             marginLeft: 20,
           }}
+          startFrom={110}
           muted
           transparent
           src={getFlame(rocket)}

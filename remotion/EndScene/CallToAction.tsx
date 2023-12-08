@@ -6,13 +6,37 @@ const padding = 10;
 const iconHeight = 120;
 
 export const CallToAction: React.FC<{
-  progress: number;
-}> = ({ progress }) => {
+  exitProgress: number;
+  enterProgress: number;
+}> = ({ exitProgress, enterProgress }) => {
+  const startDistance = 10;
+  const stillDistance = 1;
+  const endDistance = 0.1;
+
+  const distance = interpolate(
+    enterProgress + exitProgress,
+    [0, 1, 2],
+    [startDistance, stillDistance, endDistance],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+
+  const scale = 1 / distance;
+
+  const enterOffset =
+    (Math.sin(enterProgress * Math.PI * 0.5 - Math.PI) + 1) * -600;
+  const onSinus = -exitProgress * Math.PI * 0.8 - Math.PI * 0.5;
+
+  const offset = (Math.sin(onSinus) + 1) * -200;
+
   return (
     <AbsoluteFill
       style={{
         justifyContent: "center",
         alignItems: "center",
+        transform: `translateY(${enterOffset}px) scale(${scale}) translateY(${offset}px)`,
       }}
     >
       <div
@@ -29,7 +53,6 @@ export const CallToAction: React.FC<{
           borderBottomRightRadius: 20,
           justifyContent: "center",
           alignItems: "center",
-          scale: String(interpolate(progress, [0, 1], [1, 0.5])),
         }}
       >
         <svg

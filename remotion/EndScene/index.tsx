@@ -2,7 +2,8 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
-  interpolate,
+  Sequence,
+  spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -17,7 +18,6 @@ import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
 import Stars from "./SparkingStars";
 import { Threads } from "./Threads";
-import { getOrbEnter } from "./orb-enter";
 
 export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
@@ -42,17 +42,32 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { progress } = getOrbEnter({ fps, frame });
+
+  const enterProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: 60,
+    durationRestThreshold: 0.00001,
+  });
+
+  const exitProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: 90,
+    durationRestThreshold: 0.00001,
+    delay: 45,
+  });
 
   return (
     <AbsoluteFill>
       <PlanetBackground planet={planet} />
-      <AbsoluteFill
-        style={{
-          ...container,
-          transform: `scale(${interpolate(frame, [0, 100], [1, 1.1])})`,
-        }}
-      >
+      <AbsoluteFill style={container}>
         {planet === "Gold" ? (
           <Audio
             // TODO: License
@@ -63,9 +78,14 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
         {planet === "Gold" ? <Stars /> : null}
         {planet === "Gold" ? <Threads /> : null}
         {planet === "Gold" && <GoldPlanetShine />}
-        <CallToAction progress={progress} />
-        <PlanetAsset planet={planet} />
-        <LandingRocket rocket={rocket} />
+        <PlanetAsset progress={exitProgress} planet={planet} />
+        <CallToAction
+          enterProgress={enterProgress}
+          exitProgress={exitProgress}
+        />
+        <Sequence from={70}>
+          <LandingRocket rocket={rocket} />
+        </Sequence>
       </AbsoluteFill>
     </AbsoluteFill>
   );
