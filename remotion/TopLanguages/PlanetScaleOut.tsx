@@ -14,6 +14,7 @@ import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { moveAlongLine } from "../move-along-line";
+import { LanguagePlanet } from "./Language";
 import { LanguageDescription } from "./LanguageDescription";
 import { computePlanetInfo } from "./constants";
 import { remapSpeed } from "./remap-speed";
@@ -127,8 +128,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   position,
   rocket,
 }) => {
-  const { PlanetSVG, gradient, opacity, customPlanetColor } =
-    computePlanetInfo(language);
+  const planetInfo = computePlanetInfo(language);
   const { width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -166,7 +166,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
   const left = interpolate(zoomOut, [0, 1], [initialLeft(corner), 0]);
   const top = interpolate(zoomOut, [0, 1], [initialTop(corner), 0]);
 
-  const gradientOpacity = interpolate(frame, [0, 15], [0, opacity], {
+  const gradientOpacity = interpolate(frame, [0, 15], [0, planetInfo.opacity], {
     extrapolateRight: "clamp",
   });
 
@@ -188,7 +188,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
             opacity: gradientOpacity,
           }}
         >
-          <Gradient gradient={gradient} />
+          <Gradient gradient={planetInfo.gradient} />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
@@ -203,7 +203,12 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
             alignItems: "center",
           }}
         >
-          <PlanetSVG customColor={customPlanetColor} width={360} />
+          <LanguagePlanet
+            planetInfo={planetInfo}
+            style={{
+              height: 360,
+            }}
+          />
         </AbsoluteFill>
       </AbsoluteFill>
       <Sequence durationInFrames={50} from={10}>

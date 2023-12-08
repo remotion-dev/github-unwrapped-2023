@@ -1,49 +1,10 @@
 import { getLength, scalePath, translatePath } from "@remotion/paths";
-import type { SVGProps } from "react";
+import { staticFile } from "remotion";
 import type { z } from "zod";
 import type { languageSchema } from "../../src/config";
 import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
-import type { PlanetBoundingBox } from "./planet-types";
-import {
-  CPlusPlusPlanet,
-  CPlusPlusPlanetBoundingBox,
-} from "./svgs/planets/CPlusPlusPlanetSVG";
-import { GoPlanetBoundingBox, GoPlanetSVG } from "./svgs/planets/GoPlanetSVG";
-import {
-  JavaPlanetBoundingBox,
-  JavaPlanetSVG,
-} from "./svgs/planets/JavaPlanetSVG";
-import {
-  JavaScriptPlanetBoundingBox,
-  JavaScriptPlanetSVG,
-} from "./svgs/planets/JavaScriptPlanetSVG";
-import {
-  PythonPlanetBoundingBox,
-  PythonPlanetSVG,
-} from "./svgs/planets/PythonPlanetSVG";
-import {
-  RubyPlanet,
-  RubyPlanetBoundingBox,
-} from "./svgs/planets/RubyPlanetSVG";
-import {
-  Rust1PlanetBoundingBox,
-  Rust1PlanetSVG,
-} from "./svgs/planets/Rust1PlanetSVG";
-import {
-  Rust2PlanetBoundingBox,
-  Rust2PlanetSVG,
-} from "./svgs/planets/Rust2PlanetSVG";
-import { Rust3BoundingBox, Rust3Planet } from "./svgs/planets/Rust3Planet";
-import {
-  StandardPlanet,
-  StandardPlanetBoundingBox,
-} from "./svgs/planets/StandardPlanet";
-import {
-  TypeScriptPlanetBoundingBox,
-  TypeScriptPlanetSVG,
-} from "./svgs/planets/TypeScriptPlanetSVG";
 
 const ACTION_DURATION = 60;
 
@@ -78,13 +39,8 @@ export const complexCurvePathLength = getLength(newPath);
 const LanguageOptions = LanguagesEnum.options;
 type LanguageEnumType = (typeof LanguageOptions)[number];
 
-type PlanetInfo = {
-  boundingBox: PlanetBoundingBox;
-  PlanetSVG: (
-    props: SVGProps<SVGSVGElement> & {
-      customColor: string | null;
-    },
-  ) => JSX.Element;
+export type PlanetInfo = {
+  source: string | null;
   gradient: GradientType;
   textColor: string;
   name: string;
@@ -94,8 +50,7 @@ type PlanetInfo = {
 
 export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   [LanguagesEnum.Enum.Java]: {
-    boundingBox: JavaPlanetBoundingBox,
-    PlanetSVG: JavaPlanetSVG,
+    source: staticFile("languages/java.png"),
     gradient: "orange",
     textColor: "rgb(201, 246, 253)",
     name: "Java",
@@ -103,8 +58,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Python]: {
-    boundingBox: PythonPlanetBoundingBox,
-    PlanetSVG: PythonPlanetSVG,
+    source: staticFile("languages/python.png"),
     gradient: "blue",
     textColor: "rgb(200,228,252)",
     name: "Python",
@@ -112,8 +66,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.JavaScript]: {
-    boundingBox: JavaScriptPlanetBoundingBox,
-    PlanetSVG: JavaScriptPlanetSVG,
+    source: staticFile("languages/javascript.png"),
     gradient: "yellow",
     textColor: "rgb(253,241,190)",
     name: "JavaScript",
@@ -121,8 +74,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.TypeScript]: {
-    boundingBox: TypeScriptPlanetBoundingBox,
-    PlanetSVG: TypeScriptPlanetSVG,
+    source: staticFile("languages/typescript.png"),
     gradient: "blue",
     textColor: "#71BBD8",
     name: "TypeScript",
@@ -130,17 +82,15 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Go]: {
-    boundingBox: GoPlanetBoundingBox,
-    PlanetSVG: GoPlanetSVG,
+    source: staticFile("languages/go.png"),
     gradient: "blue",
     textColor: "#71BBD8",
     name: "Go",
     opacity: 0.5,
     customPlanetColor: null,
   },
-  [LanguagesEnum.Enum.Rust1]: {
-    boundingBox: Rust1PlanetBoundingBox,
-    PlanetSVG: Rust1PlanetSVG,
+  [LanguagesEnum.Enum.Rust]: {
+    source: staticFile("languages/rust.png"),
     // TODO: WRONG COLOR
     gradient: "brown",
     textColor: "#5F523E",
@@ -148,28 +98,8 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     opacity: 0.3,
     customPlanetColor: null,
   },
-  [LanguagesEnum.Enum.Rust2]: {
-    boundingBox: Rust2PlanetBoundingBox,
-    PlanetSVG: Rust2PlanetSVG,
-    gradient: "brown",
-    textColor: "#5F523E",
-    name: "Rust",
-    opacity: 0.4,
-    customPlanetColor: null,
-  },
-  [LanguagesEnum.Enum.Rust3]: {
-    boundingBox: Rust3BoundingBox,
-    PlanetSVG: Rust3Planet,
-    // TODO: WRONG COLOR
-    gradient: "yellow",
-    textColor: "#E8A08A",
-    name: "Rust",
-    opacity: 0.2,
-    customPlanetColor: null,
-  },
   [LanguagesEnum.Enum["C++"]]: {
-    boundingBox: CPlusPlusPlanetBoundingBox,
-    PlanetSVG: CPlusPlusPlanet,
+    source: staticFile("languages/cplusplus.png"),
     gradient: "blue",
     textColor: "#4B8CC6",
     name: "C++",
@@ -177,11 +107,43 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.Ruby]: {
-    boundingBox: RubyPlanetBoundingBox,
-    PlanetSVG: RubyPlanet,
+    source: staticFile("languages/ruby.png"),
     gradient: "red",
     textColor: "#DDA89F",
     name: "Ruby",
+    opacity: 0.3,
+    customPlanetColor: null,
+  },
+  [LanguagesEnum.Enum.Nix]: {
+    source: staticFile("languages/nix.png"),
+    // TODO: WRONG COLOR
+    gradient: "red",
+    // TODO: WRONG COLOR
+    textColor: "#DDA89F",
+    name: "Nix",
+    // TODO: WRONG COLOR
+    opacity: 0.3,
+    customPlanetColor: null,
+  },
+  [LanguagesEnum.Enum.PHP]: {
+    source: staticFile("languages/nix.png"),
+    // TODO: WRONG COLOR
+    gradient: "red",
+    // TODO: WRONG COLOR
+    textColor: "#DDA89F",
+    name: "PHP",
+    // TODO: WRONG COLOR
+    opacity: 0.3,
+    customPlanetColor: null,
+  },
+  [LanguagesEnum.Enum["C#"]]: {
+    source: staticFile("languages/csharp.png"),
+    // TODO: WRONG COLOR
+    gradient: "red",
+    // TODO: WRONG COLOR
+    textColor: "#DDA89F",
+    name: "C#",
+    // TODO: WRONG COLOR
     opacity: 0.3,
     customPlanetColor: null,
   },
@@ -195,12 +157,11 @@ export const computePlanetInfo = (
   }
 
   return {
-    boundingBox: StandardPlanetBoundingBox,
-    PlanetSVG: StandardPlanet,
     gradient: "white",
     textColor: language.color,
     name: language.name,
     opacity: 0.3,
     customPlanetColor: language.color,
+    source: null,
   };
 };

@@ -11,6 +11,7 @@ import {
 import { z } from "zod";
 import { languageSchema, rocketSchema } from "../../src/config";
 import { moveAlongLine } from "../move-along-line";
+import { LanguagePlanet } from "./Language";
 import { computePlanetInfo } from "./constants";
 import type { ClockDirection } from "./corner";
 import { clockDirectionSchema } from "./corner";
@@ -34,6 +35,8 @@ const spiralWholeSchema = z.object({
   clockDirection: clockDirectionSchema,
   rocket: rocketSchema,
 });
+
+// TODO: Preload all planet images
 
 const progress = ({
   f,
@@ -85,7 +88,7 @@ export const PlanetScaleSpiralWhole: React.FC<
   clockDirection,
   rocket,
 }) => {
-  const { PlanetSVG, customPlanetColor } = computePlanetInfo(language);
+  const planetInfo = computePlanetInfo(language);
 
   const frame = useCurrentFrame();
   const spedUpFrame = remapSpeed(frame, speedRemapFn);
@@ -246,7 +249,7 @@ export const PlanetScaleSpiralWhole: React.FC<
           rotate: `${rotation}rad`,
         }}
       >
-        <PlanetSVG customColor={customPlanetColor} style={{ width: 400 }} />
+        <LanguagePlanet planetInfo={planetInfo} style={{ width: 400 }} />
       </AbsoluteFill>
       <RocketFront
         rocket={rocket}

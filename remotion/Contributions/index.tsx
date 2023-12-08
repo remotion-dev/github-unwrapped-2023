@@ -1,21 +1,15 @@
-import {
-  AbsoluteFill,
-  interpolate,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 
-import React from "react";
+import React, { useMemo } from "react";
 import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
-import { Sparkle } from "./Sparkle";
 import { computePositions } from "./compute-positions";
 
-const TIMELINE_OFFSET_Y = 420;
-export const CONTRIBUTIONS_SCENE_DURATION = 7 * FPS;
+export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
+export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 10;
 
 export const ContributionsScene: React.FC<{
@@ -23,27 +17,40 @@ export const ContributionsScene: React.FC<{
   contributionData: number[];
 }> = ({ accentColor, contributionData }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  const { positions, maxIndex } = computePositions({
+  const { positions } = useMemo(() => {
+    return computePositions({
+      data: contributionData,
+    });
+  }, [contributionData]);
+
+  const fadeInGradient = interpolate(
     frame,
-    data: contributionData,
-    fps,
-  });
+    [
+      5,
+      12,
+      CONTRIBUTIONS_SCENE_DURATION - CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
+      CONTRIBUTIONS_SCENE_DURATION,
+    ],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
 
-  const target = positions[maxIndex];
-
-  const fadeInGradient = interpolate(frame, [0, 10], [0, 1]);
+  const container: React.CSSProperties = useMemo(() => {
+    return {
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 60,
+      opacity: fadeInGradient,
+    };
+  }, [fadeInGradient]);
 
   return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 60,
-      }}
-    >
-      <AbsoluteFill style={{ opacity: fadeInGradient }}>
+    <AbsoluteFill style={container}>
+      <AbsoluteFill>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
       <div
@@ -60,13 +67,6 @@ export const ContributionsScene: React.FC<{
           />
         ))}
       </div>
-      <Sparkle
-        x={target.x}
-        y={target.y + TIMELINE_OFFSET_Y}
-        scale={1}
-        currentFrame={frame}
-        startFrame={160}
-      />
     </AbsoluteFill>
   );
 };

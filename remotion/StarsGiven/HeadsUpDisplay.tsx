@@ -1,6 +1,5 @@
-import { noise2D } from "@remotion/noise";
 import React from "react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill } from "remotion";
 
 export type RepoText = {
   text: string;
@@ -10,8 +9,6 @@ export type RepoText = {
 export const HeadsUpDisplay: React.FC<{
   textToDisplay: RepoText | null;
 }> = ({ textToDisplay }) => {
-  const frame = useCurrentFrame();
-
   return (
     <AbsoluteFill
       style={{
@@ -36,7 +33,7 @@ export const HeadsUpDisplay: React.FC<{
         {textToDisplay === null ? null : (
           <span
             style={{
-              opacity: 0.6 + noise2D("opacity", frame / 50, 0) * 0.3,
+              opacity: 0.8,
             }}
           >
             <span

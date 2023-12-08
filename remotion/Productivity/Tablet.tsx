@@ -16,6 +16,8 @@ export const tableSchema = z.object({
 
 export const TABLET_SCENE_LENGTH = 150;
 export const TABLET_SCENE_HIDE_ANIMATION = 45;
+export const TABLET_SCENE_ENTER_ANIMATION = 16;
+export const TABLET_SCENE_ENTER_ANIMATION_DELAY = 30;
 
 export const Tablet: React.FC<
   ComponentProps<typeof Productivity> & z.infer<typeof tableSchema>
@@ -31,7 +33,8 @@ export const Tablet: React.FC<
         damping: 200,
         mass: 0.5,
       },
-      delay: 30,
+      delay: TABLET_SCENE_ENTER_ANIMATION_DELAY,
+      durationInFrames: TABLET_SCENE_ENTER_ANIMATION,
     }) -
     spring({
       fps,

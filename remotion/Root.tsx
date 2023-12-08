@@ -9,13 +9,13 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { EndScene, endSceneSchema } from "./EndScene";
+import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
+import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
-import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
@@ -76,19 +76,34 @@ import {
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition
-        id={"EndScene"}
-        component={EndScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        schema={endSceneSchema}
-        defaultProps={{
-          rocket: "blue",
-          planet: "Gold",
-        }}
-      />
+      <Folder name="EndScene">
+        <Composition
+          id={"EndScene"}
+          component={EndScene}
+          durationInFrames={END_SCENE_DURATION}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          schema={endSceneSchema}
+          defaultProps={{
+            rocket: "blue",
+            planet: "Gold",
+          }}
+        />
+        <Composition
+          id="CallToAction"
+          component={CallToAction}
+          durationInFrames={12 * 30}
+          fps={VIDEO_FPS}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          defaultProps={{
+            enterProgress: 1,
+            exitProgress: 1,
+            planet: "Gold",
+          }}
+        />
+      </Folder>
       <Composition
         id={"Opening"}
         component={OpeningScene}
@@ -128,30 +143,6 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           accentColor: "blue",
-        }}
-      />
-      {/* <Composition
-        id={"Landing"}
-        component={LandingScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const }}
-      /> */}
-      <Composition
-        id={"LandingCut"}
-        component={LandingCut}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          planetType: "Silver" as const,
-          accentColor: "blue",
-          rocketType: "blue",
         }}
       />
       <Composition
@@ -554,11 +545,7 @@ export const RemotionRoot: React.FC = () => {
               type: "designed" as const,
               name: "TypeScript" as const,
             },
-            language3: {
-              type: "other" as const,
-              name: "Swift" as const,
-              color: "orange",
-            },
+            language3: { type: "designed" as const, name: "Nix" as const },
           },
           showHelperLine: false,
           login: "iampato",
@@ -597,13 +584,43 @@ export const RemotionRoot: React.FC = () => {
           ],
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
-          rocket: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) =>
-              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ),
-          sampleStarredRepos: SAMPLE_STARRED_REPOS,
+          rocket: "blue" as const,
+          contributionData: [
+            34, 0, 35, 57, 67, 57, 126, 0, 97, 39, 0, 0, 46, 0, 114, 0, 82, 72,
+            95, 63, 92, 32, 0, 57, 109, 0, 98, 69, 44, 58, 99, 0, 107, 75, 104,
+            97, 100, 125, 38, 122, 55, 102, 77, 70, 0, 47, 47, 56, 58, 49, 0,
+            86, 66, 75, 0, 36, 36, 71, 98, 93, 113, 0, 126, 51, 0, 0, 0, 0, 63,
+            36, 37, 55, 0, 69, 53, 0, 98, 56, 50, 0, 52, 75, 0, 65, 0, 37, 0, 0,
+            37, 98, 0, 60, 0, 34, 124, 119, 69, 70, 60, 0, 125, 0, 90, 99, 49,
+            36, 104, 43, 67, 0, 126, 112, 69, 113, 82, 106, 58, 74, 122, 0, 119,
+            111, 0, 35, 46, 40, 120, 0, 101, 125, 86, 56, 69, 100, 0, 94, 107,
+            108, 70, 56, 33, 0, 0, 87, 36, 68, 112, 39, 114, 122, 72, 45, 124,
+            46, 77, 0, 126, 0, 0, 0, 48, 75, 124, 74, 97, 105, 0, 77, 0, 54, 34,
+            72, 41, 74, 34, 81, 107, 104, 0, 47, 0, 42, 60, 0, 108, 59, 97, 124,
+            117, 78, 42, 0, 112, 108, 103, 117, 100, 0, 90, 35, 55, 96, 52, 0,
+            0, 57, 113, 100, 78, 0, 0, 0, 103, 71, 0, 116, 105, 61, 60, 111,
+            104, 0, 66, 75, 65, 76, 37, 42, 0, 0, 85, 76, 80, 99, 95, 0, 0, 59,
+            0, 108, 88, 74, 62, 109, 44, 0, 0, 104, 94, 108, 124, 70, 0, 88, 0,
+            102, 58, 73, 86, 0, 45, 98, 94, 84, 53, 0, 34, 76, 0, 122, 61, 80,
+            40, 105, 81, 88, 45, 108, 92, 90, 64, 56, 85, 70, 62, 45, 71, 33,
+            98, 0, 103, 68, 120, 38, 55, 0, 40, 0, 47, 0, 78, 94, 0, 42, 60, 57,
+            107, 46, 76, 80, 0, 119, 0, 121, 43, 0, 116, 47, 0, 87, 82, 105, 0,
+            126, 38, 102, 75, 89, 67, 109, 121, 70, 103, 116, 0, 33, 54, 66, 0,
+            36, 69, 124, 0, 0, 83, 0, 0, 127, 127, 0, 0, 54, 93, 91, 0, 38, 54,
+            72, 0, 39, 58, 82, 98, 127,
+          ],
+          sampleStarredRepos: [
+            "remotion",
+            "React-native-skia",
+            "argo",
+            "argo-checkout",
+            "argo-admin",
+            "argo-checkout",
+            "argo-admin",
+            "argo-checkout",
+            "argo-admin",
+            "argo-checkout",
+          ],
         }}
       />
       <Composition

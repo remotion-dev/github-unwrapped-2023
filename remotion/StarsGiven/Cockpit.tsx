@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence } from "remotion";
 import { AmountOfStarsDisplay } from "./AmountOfStarsDisplay";
-import CockpitSVG from "./CockpitSVG";
+import { Cockpit as CockpitImage } from "./CockpitSVG";
 import { CockpitRightScreen } from "./CustomScreen";
 import type { RepoText } from "./HeadsUpDisplay";
 import { HeadsUpDisplay } from "./HeadsUpDisplay";
@@ -19,7 +19,7 @@ export const Cockpit: React.FC<{
       <Sequence durationInFrames={durationOfStarsWithShake}>
         <HeadsUpDisplay textToDisplay={repoText} />
       </Sequence>
-      <CockpitSVG />
+      <CockpitImage />
       <CockpitLeftScreen>
         <AmountOfStarsDisplay
           starCount={starCount}

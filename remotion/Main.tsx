@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useMemo } from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Series,
+  staticFile,
+  useVideoConfig,
+} from "remotion";
 import type { z } from "zod";
+import type { Rocket } from "../src/config";
 import { type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import {
   CONTRIBUTIONS_SCENE_DURATION,
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
+  CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
-import { EndScene } from "./EndScene";
+import { END_SCENE_DURATION, EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import {
   OPENING_SCENE_LENGTH,
@@ -25,9 +33,6 @@ import { TOP_LANGUAGES_EXIT_DURATION } from "./TopLanguages/PlaneScaleWiggle";
 import { injectFont } from "./font";
 
 type Schema = z.infer<typeof compositionSchema>;
-
-const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
-const LANDING_SCENE = 7 * VIDEO_FPS;
 
 injectFont();
 
@@ -50,7 +55,7 @@ export const calculateDuration = ({
     ISSUES_EXIT_DURATION +
     CONTRIBUTIONS_SCENE_DURATION -
     CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION +
-    LANDING_SCENE +
+    END_SCENE_DURATION +
     getStarsAndProductivityDuration({ starsGiven }) +
     OPENING_SCENE_LENGTH -
     OPENING_SCENE_OUT_OVERLAP
@@ -66,13 +71,47 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
   };
 };
 
-const getSoundtrack = () => {
-  // TODO: License
-  return staticFile("smartsound-wired.mp3");
+const getMusicDuration = (durationInSeconds: number) => {
+  let sec = 24;
+  if (durationInSeconds < 24) return 24;
+
+  while (sec < 57) {
+    if (Math.abs(sec - durationInSeconds) <= 1) {
+      return sec;
+    }
+
+    sec += 2;
+  }
+
+  return 56;
 };
 
-export const getMainAssetsToPrefetch = () => {
-  return [getSoundtrack()];
+const getSoundtrack = (durationInFrames: number, rocket: Rocket) => {
+  const FPS = 30;
+  const blueThemeUrlPrefix = "/blue_theme_music/blue_theme_music_";
+  const orangeThemeUrlPrefix = "/red_theme_music/red_theme_music_";
+  const yellowThemeUrlPrefix = "/gold_theme_music/gold_theme_music_";
+  const postfix = ".mp3";
+
+  const prefix = {
+    blue: blueThemeUrlPrefix,
+    orange: orangeThemeUrlPrefix,
+    yellow: yellowThemeUrlPrefix,
+  };
+
+  const durationInSecond = durationInFrames / FPS;
+
+  const adjustedDuration = getMusicDuration(durationInSecond);
+  const url = prefix[rocket] + adjustedDuration + postfix;
+
+  return staticFile(url);
+};
+
+export const getMainAssetsToPrefetch = (
+  durationInFrames: number,
+  rocket: Rocket,
+) => {
+  return [getSoundtrack(durationInFrames, rocket)];
 };
 
 export const Main: React.FC<Schema> = ({
@@ -94,13 +133,19 @@ export const Main: React.FC<Schema> = ({
   contributionData,
   sampleStarredRepos,
 }) => {
+  const { durationInFrames } = useVideoConfig();
+
+  const soundTrack = useMemo(() => {
+    return getSoundtrack(durationInFrames, rocket);
+  }, [durationInFrames, rocket]);
+
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      <Audio src={getSoundtrack()} />
+      <Audio src={soundTrack} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene
@@ -160,7 +205,7 @@ export const Main: React.FC<Schema> = ({
           />
         </Series.Sequence>
         <Series.Sequence
-          durationInFrames={CONTRIBUTIONS_SCENE}
+          durationInFrames={CONTRIBUTIONS_SCENE_DURATION}
           offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
         >
           <ContributionsScene
@@ -168,7 +213,10 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={LANDING_SCENE}>
+        <Series.Sequence
+          durationInFrames={END_SCENE_DURATION}
+          offset={-CONTRIBUTIONS_SCENE_EXIT_TRANSITION}
+        >
           <EndScene planet={planet} rocket={rocket} />
         </Series.Sequence>
       </Series>

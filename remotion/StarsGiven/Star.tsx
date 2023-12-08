@@ -8,6 +8,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { StarSprite } from "../StarSprite";
+import { COCKPIT_IMAGE } from "./CockpitSVG";
 import { SHINES_ASSETS } from "./Shines";
 import { SHINY_STAR_OUTLINE_ASSET } from "./ShinyStarOutline";
 
@@ -23,7 +24,12 @@ const WINDSHIELD_HIT_SOUNDS = [
 ];
 
 export const starsAssetsToPreload = () => {
-  return [...WINDSHIELD_HIT_SOUNDS, SHINES_ASSETS, SHINY_STAR_OUTLINE_ASSET];
+  return [
+    ...WINDSHIELD_HIT_SOUNDS,
+    SHINES_ASSETS,
+    SHINY_STAR_OUTLINE_ASSET,
+    COCKPIT_IMAGE,
+  ];
 };
 
 export const getStarBurstFirstFrame = ({

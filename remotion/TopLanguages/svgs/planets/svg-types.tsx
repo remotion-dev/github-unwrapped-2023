@@ -1,5 +1,5 @@
-import type { SVGProps } from "react";
+import type { ImgProps } from "remotion";
 
-export type PlanetProps = SVGProps<SVGSVGElement> & {
+export type PlanetProps = ImgProps & {
   customColor: string | null;
 };
