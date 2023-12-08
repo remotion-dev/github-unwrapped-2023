@@ -10,7 +10,7 @@ import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Render } from "./db.js";
-import { findRender, saveRender, updateRender } from "./db.js";
+import { findRender, saveRender } from "./db.js";
 import { getProgress } from "./progress.js";
 
 const getRandomRegion = (): AwsRegion => {
@@ -62,8 +62,6 @@ export const renderEndPoint = async (request: Request, response: Response) => {
     finality: null,
   };
 
-  await saveRender(newRender, _id);
-
   const { renderId, bucketName } = await renderMediaOnLambda({
     codec: "h264",
     functionName,
@@ -84,7 +82,7 @@ export const renderEndPoint = async (request: Request, response: Response) => {
     renderId,
   };
 
-  await updateRender(updatedRender);
+  await saveRender(updatedRender, _id);
 
   return getProgress(updatedRender).then((progress) => {
     response.json(progress);
