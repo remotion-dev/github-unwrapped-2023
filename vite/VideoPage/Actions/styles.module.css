@@ -7,14 +7,13 @@
   height: 52px;
   display: flex;
   align-items: center;
-  font-weight: 500;
   gap: 8px;
   border-radius: 4px;
-  padding: 4px;
   cursor: pointer;
   user-select: none;
   font-weight: 500;
   background-color: rgba(42, 44, 61, 1);
+  text-wrap: nowrap;
 
   transition:
     opacity 0.2s ease-in-out,

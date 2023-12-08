@@ -3,7 +3,8 @@ import styles from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
 export type AboutItemContent = {
-  icon: string;
+  icon?: string;
+  step?: number;
   title: string;
   description?: string;
   node?: React.ReactNode;

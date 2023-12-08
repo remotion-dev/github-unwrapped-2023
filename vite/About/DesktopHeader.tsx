@@ -6,7 +6,7 @@ import {
 import { NavigateBack } from "./components";
 import styles from "./styles.module.css";
 
-export const DesktopHeader = () => {
+export const DesktopHeader: React.FC<{ title: string }> = ({ title }) => {
   return (
     <div className={styles.desktopHeaderWrapper}>
       <div
@@ -25,7 +25,7 @@ export const DesktopHeader = () => {
           className={commonStyles.aboutTitle}
           style={{ margin: "16px 0 24px 0" }}
         >
-          About
+          {title}
         </h1>
         <p className={commonStyles.aboutDescription} style={{ maxWidth: 400 }}>
           With this page we hope to answer all your questions for the GitHub

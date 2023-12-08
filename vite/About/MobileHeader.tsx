@@ -2,17 +2,19 @@ import { Navbar } from "../Home/Navbar";
 import { NavigateBack } from "./components";
 import styles from "./styles.module.css";
 
-export const MobileHeader: React.FC = () => {
+export const MobileHeader: React.FC<{ title: string; description: string }> = ({
+  title,
+  description,
+}) => {
   return (
     <div className={styles.mobileHeaderWrapper}>
       <Navbar>
         <NavigateBack />
       </Navbar>
       <div className={styles.mobileHeaderContent}>
-        <h1 className={styles.aboutTitle}>About</h1>
+        <h1 className={styles.aboutTitle}>{title}</h1>
         <p className={styles.aboutDescription} style={{ maxWidth: 400 }}>
-          With this page we hope to answer all your questions about GitHub
-          Unwrapped 2023.
+          {description}
         </p>
       </div>
     </div>

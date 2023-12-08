@@ -1,10 +1,11 @@
 import type { PlayerRef } from "@remotion/player";
 import type { SetStateAction } from "react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import type { z } from "zod";
 import type { Rocket, compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
+import { useUserVideo } from "../context";
 import { MobileActionsContainer } from "./MobileActionsContainer";
 import { PlayerContainer } from "./Player/Player";
 import { RocketPickerModal } from "./RocketSelection/RocketPickerModal";
@@ -14,84 +15,15 @@ import styles from "./styles.module.css";
 
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-  startPolling: boolean;
   rocket: Rocket;
   setRocket: React.Dispatch<SetStateAction<Rocket>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
-}> = ({
-  inputProps,
-  startPolling,
-  rocket,
-  setRocket,
-  isModalOpen,
-  setIsModalOpen,
-}) => {
+}> = ({ inputProps, rocket, setRocket, isModalOpen, setIsModalOpen }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
 
-  const [url, setUrl] = useState<string | null>(null);
-
-  const [progress, setProgress] = useState<number>(0);
-  const [error, setError] = useState<boolean>(false);
-
-  const pollProgress = useCallback(() => {
-    fetch("/api/progress", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        theme: inputProps.accentColor,
-        username: inputProps.login,
-      }),
-    })
-      .then((v) => {
-        return v.json();
-      })
-      .then((v) => {
-        if (v.type === "done") {
-          setUrl(v.url);
-          return;
-        }
-
-        if (v.type === "error") {
-          setError(true);
-          console.error(v.message);
-          return;
-        }
-
-        if (v.type === "progress") {
-          setProgress(v.progress);
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        setError(true);
-      });
-  }, [inputProps.accentColor, inputProps.login]);
-
-  useEffect(() => {
-    if (startPolling) {
-      pollProgress();
-    }
-  }, [pollProgress, startPolling]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timer | undefined;
-
-    if (!url && !error && startPolling) {
-      intervalId = setInterval(() => {
-        pollProgress();
-      }, 5000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [error, url, startPolling, pollProgress]);
+  const { url, progress, error } = useUserVideo();
 
   const modalElement = document.getElementById("rocketModal");
   if (!modalElement) {
@@ -131,7 +63,6 @@ export const VideoBox: React.FC<{
         />
         <Sidebar
           inputProps={inputProps}
-          startPolling={startPolling}
           setIsModalOpen={setIsModalOpen}
           rocket={rocket}
           setIsPlaying={setIsPlaying}

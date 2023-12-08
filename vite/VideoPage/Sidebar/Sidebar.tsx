@@ -10,7 +10,6 @@ import styles from "./styles.module.css";
 
 export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-  startPolling: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   rocket: Rocket;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,7 +56,7 @@ export const Sidebar: React.FC<{
         </p>
       )}
       {/* Sharing Actions */}
-      <SharingActions />
+      <SharingActions accentColor={inputProps.accentColor} />
 
       {/* Further Action */}
       <FurtherActions />
