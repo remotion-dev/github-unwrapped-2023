@@ -9,7 +9,7 @@ import {
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
-import { EndScene } from "./EndScene";
+import { END_SCENE_DURATION, EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import {
   OPENING_SCENE_LENGTH,
@@ -27,7 +27,6 @@ import { injectFont } from "./font";
 type Schema = z.infer<typeof compositionSchema>;
 
 const CONTRIBUTIONS_SCENE = 7 * VIDEO_FPS;
-const LANDING_SCENE = 7 * VIDEO_FPS;
 
 injectFont();
 
@@ -50,7 +49,7 @@ export const calculateDuration = ({
     ISSUES_EXIT_DURATION +
     CONTRIBUTIONS_SCENE_DURATION -
     CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION +
-    LANDING_SCENE +
+    END_SCENE_DURATION +
     getStarsAndProductivityDuration({ starsGiven }) +
     OPENING_SCENE_LENGTH -
     OPENING_SCENE_OUT_OVERLAP
@@ -168,7 +167,7 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
           />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={LANDING_SCENE}>
+        <Series.Sequence durationInFrames={END_SCENE_DURATION}>
           <EndScene planet={planet} rocket={rocket} />
         </Series.Sequence>
       </Series>

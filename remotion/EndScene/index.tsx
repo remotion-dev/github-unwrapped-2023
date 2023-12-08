@@ -10,6 +10,7 @@ import {
 
 import { z } from "zod";
 import { PlanetEnum, rocketSchema } from "../../src/config";
+import { FPS } from "../Issues/make-ufo-positions";
 import { CallToAction } from "./CallToAction";
 import { PlanetAsset } from "./GoldPlanetAsset";
 import { GoldPlanetShine } from "./GoldPlanetShine";
@@ -36,6 +37,8 @@ export const endSceneSchema = z.object({
   planet: PlanetEnum,
 });
 
+export const END_SCENE_DURATION = 6.5 * FPS;
+
 export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
   rocket,
   planet,
@@ -53,17 +56,17 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
     durationRestThreshold: 0.00001,
   });
 
-  const exitProgress = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: 90,
-    durationRestThreshold: 0.00001,
-    delay: 30,
-    reverse: true,
-  });
+  const exitProgress =
+    1 -
+    spring({
+      fps,
+      frame,
+      config: {
+        damping: 200,
+      },
+      durationInFrames: 150,
+      delay: 70,
+    });
 
   return (
     <AbsoluteFill>
@@ -79,8 +82,8 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
         {planet === "Gold" ? <Stars /> : null}
         {planet === "Gold" ? <Threads /> : null}
         {planet === "Gold" && <GoldPlanetShine />}
-        <HidePlanets progress={exitProgress} planet={planet}>
-          <PlanetAsset planet={planet} />
+        <HidePlanets exitProgress={exitProgress} planet={planet}>
+          <PlanetAsset enterProgress={enterProgress} planet={planet} />
           <LandingRocket planetType={planet} rocket={rocket} />
         </HidePlanets>
         <CallToAction

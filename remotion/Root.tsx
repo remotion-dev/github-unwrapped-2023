@@ -9,7 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { EndScene, endSceneSchema } from "./EndScene";
+import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
@@ -81,7 +81,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id={"EndScene"}
           component={EndScene}
-          durationInFrames={12 * 30}
+          durationInFrames={END_SCENE_DURATION}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
@@ -98,6 +98,10 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
+          defaultProps={{
+            exitProgress: 0.5,
+            enterProgress: 1,
+          }}
         />
       </Folder>
       <Composition
