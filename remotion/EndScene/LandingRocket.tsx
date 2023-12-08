@@ -25,16 +25,40 @@ export const LandingRocket: React.FC<{
     },
   });
 
-  const offset = interpolate(starship, [0, 1], [0, 1150]);
+  const offset = interpolate(starship, [0, 1], [0, 560]);
+
+  const height = interpolate(frame, [100, 150], [300, 30]);
+  const marginTop = height / 2;
 
   return (
     <AbsoluteFill
       style={{
         position: "absolute",
-        left: 330,
+        alignItems: "center",
+        justifyContent: "center",
         marginTop: offset,
       }}
     >
+      <AbsoluteFill
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <OffthreadVideo
+          style={{
+            width: height,
+            height: 100,
+            objectFit: "fill",
+            transform: `rotate(-90deg)`,
+            marginTop: -500 + marginTop,
+            marginLeft: 20,
+          }}
+          muted
+          transparent
+          src={getFlame(rocket)}
+        />
+      </AbsoluteFill>
       <div
         style={{
           width: 400,
@@ -43,14 +67,6 @@ export const LandingRocket: React.FC<{
         }}
       >
         <RocketSide rocket={rocket} />
-        <OffthreadVideo
-          style={{
-            width: 472,
-          }}
-          muted
-          transparent
-          src={getFlame(rocket)}
-        />
       </div>
     </AbsoluteFill>
   );
