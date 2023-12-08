@@ -206,7 +206,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
           <LanguagePlanet
             planetInfo={planetInfo}
             style={{
-              width: 500,
+              height: 360,
             }}
           />
         </AbsoluteFill>

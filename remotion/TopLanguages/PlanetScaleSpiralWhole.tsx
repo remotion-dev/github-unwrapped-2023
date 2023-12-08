@@ -36,6 +36,8 @@ const spiralWholeSchema = z.object({
   rocket: rocketSchema,
 });
 
+// TODO: Preload all planet images
+
 const progress = ({
   f,
   start,
