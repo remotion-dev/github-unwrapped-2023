@@ -41,11 +41,11 @@ export const getFlame = (rocket: Rocket) => {
   }
 
   if (rocket === "orange") {
-    return staticFile("exhaust-orange-hevc-safari.mp4");
+    return staticFile("exhaust-orange-vp9-chrome.webm");
   }
 
   if (rocket === "blue") {
-    return staticFile("exhaust-blue-hevc-safari.mp4");
+    return staticFile("exhaust-blue-vp9-chrome.webm");
   }
 
   throw new Error("Unknown rocket");
