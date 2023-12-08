@@ -35,7 +35,7 @@ export const userShare = new Route({
   validateSearch: (search: Record<string, unknown>) => {
     // validate and parse the search params into a typed state
     return {
-      platform: search?.platform ?? "twitter",
+      platform: search?.platform,
     };
   },
 });
