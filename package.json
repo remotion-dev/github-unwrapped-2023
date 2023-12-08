@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch src/server/index.ts",
-    "build": "bun build.mjs && npm run sentry:sourcemaps",
-    "start": "NODE_ENV=production bun dist/server/index.js",
+    "build": "node build.mjs && npm run sentry:sourcemaps",
+    "start": "NODE_ENV=production node dist/server/index.js",
     "lint": "eslint . --ext .ts,.tsx",
     "remotion": "remotion studio",
     "render": "remotion render",
