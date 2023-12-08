@@ -5,7 +5,7 @@ import { MobileHeader } from "../About/MobileHeader";
 import styles from "../About/styles.module.css";
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
-import { userShare } from "../routing";
+import { shareRoute } from "../routing";
 import { content } from "./content";
 
 const headerProps = {
@@ -15,7 +15,7 @@ const headerProps = {
 };
 
 export const SharePage = () => {
-  const { platform } = useSearch({ from: userShare.id });
+  const { platform } = useSearch({ from: shareRoute.id });
 
   return (
     <div className={styles.wrapper}>

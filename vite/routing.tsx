@@ -5,36 +5,52 @@ import Home from "./Home.jsx";
 import { SharePage } from "./Share/page.jsx";
 import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
 
-const Root = () => {
-  return <Outlet />;
-};
+// const TanStackRouterDevtools =
+//   process.env.NODE_ENV === "production"
+//     ? () => null // Render nothing in production
+//     : React.lazy(() =>
+//         // Lazy load in development
+//         import("@tanstack/router-devtools").then((res) => ({
+//           default: res.TanStackRouterDevtools,
+//           // For Embedded Mode
+//           // default: res.TanStackRouterDevtoolsPanel
+//         })),
+//       );
 
 const rootRoute = new RootRoute({
-  component: Root,
+  component: () => (
+    <>
+      <Outlet />
+      {/* <TanStackRouterDevtools /> */}
+    </>
+  ),
 });
 
-// Create an index route
+/**
+ * INDEX ROUTE
+ */
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
   component: Home,
 });
 
-const $usernamePath = "$username";
+/**
+ * USER ROUTES
+ */
 
-// Create an index route
 export const userRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: $usernamePath,
+  path: "$username",
 });
 
-const userIndexRoute = new Route({
+export const videoRoute = new Route({
   getParentRoute: () => userRoute,
   path: "/",
   component: UserPageOrNotFound,
 });
 
-export const userShare = new Route({
+export const shareRoute = new Route({
   getParentRoute: () => userRoute,
   path: "share",
   component: SharePage,
@@ -47,6 +63,10 @@ export const userShare = new Route({
   },
 });
 
+/**
+ * ABOUT ROUTE
+ */
+
 const aboutRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/about",
@@ -57,14 +77,14 @@ const aboutRoute = new Route({
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
-  userRoute.addChildren([userIndexRoute, userShare]),
+  userRoute.addChildren([videoRoute, shareRoute]),
 ]);
 
 // Create the router using your route tree
 export const router = new Router({ routeTree });
 
-// declare module "@tanstack/react-router" {
-//   interface Register {
-//     router: typeof router;
-//   }
-// }
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
