@@ -101,21 +101,23 @@ export const StarsAndProductivity: React.FC<
 
   return (
     <AbsoluteFill>
-      <StarsGiven
-        showBackground={showBackground}
-        starsGiven={starsGiven}
-        showCockpit={showCockpit}
-        style={style}
-        topWeekday={topWeekday}
-        topHour={topHour}
-        graphData={graphData}
-        accentColor={accentColor}
-        totalPullRequests={totalPullRequests}
-        login={login}
-        sampleStarredRepos={sampleStarredRepos}
-        timeUntilTabletHides={timeUntilTabletHides}
-        timeUntilTabletHasEntered={timeUntilTabletIsEntered}
-      />
+      {frame < timeUntilTabletIsEntered || frame > timeUntilTabletHides ? (
+        <StarsGiven
+          showBackground={showBackground}
+          starsGiven={starsGiven}
+          showCockpit={showCockpit}
+          style={style}
+          topWeekday={topWeekday}
+          topHour={topHour}
+          graphData={graphData}
+          accentColor={accentColor}
+          totalPullRequests={totalPullRequests}
+          login={login}
+          sampleStarredRepos={sampleStarredRepos}
+          timeUntilTabletHides={timeUntilTabletHides}
+          timeUntilTabletHasEntered={timeUntilTabletIsEntered}
+        />
+      ) : null}
       <Sequence from={starFlyDuration}>
         <Tablet
           weekday={topWeekday}
