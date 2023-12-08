@@ -81,6 +81,7 @@ export const startServer = async () => {
 
     app.get("/about", handleIndexHtmlDev(vite));
     app.get("/:username", handleIndexHtmlDev(vite));
+    app.get("/:username/share", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
     app.get("/", handleIndexHtmlProduction());

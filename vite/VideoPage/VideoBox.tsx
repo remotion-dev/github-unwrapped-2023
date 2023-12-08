@@ -5,13 +5,13 @@ import ReactDOM from "react-dom";
 import type { z } from "zod";
 import type { Rocket, compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
+import { useUserVideo } from "../context";
 import { MobileActionsContainer } from "./MobileActionsContainer";
 import { PlayerContainer } from "./Player/Player";
 import { RocketPickerModal } from "./RocketSelection/RocketPickerModal";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { VideoBoxTop } from "./VideoBoxTop";
 import styles from "./styles.module.css";
-import { useVideo } from "./useVideo";
 
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
@@ -23,11 +23,7 @@ export const VideoBox: React.FC<{
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
 
-  const { url, progress, error } = useVideo({
-    inputProps,
-    accentColor: inputProps.accentColor,
-    username: inputProps.login,
-  });
+  const { url, progress, error } = useUserVideo();
 
   const modalElement = document.getElementById("rocketModal");
   if (!modalElement) {

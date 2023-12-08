@@ -6,7 +6,7 @@ import styles from "../About/styles.module.css";
 import { Stars } from "../Home/Stars";
 import { RadialGradient } from "../RadialGradient";
 import { shareRoute } from "../routing";
-import { content } from "./content";
+import { useShareContent } from "./content";
 
 const headerProps = {
   description:
@@ -16,6 +16,7 @@ const headerProps = {
 
 export const SharePage = () => {
   const { platform } = useSearch({ from: shareRoute.id });
+  const content = useShareContent(platform as any);
 
   return (
     <div className={styles.wrapper}>
@@ -25,7 +26,7 @@ export const SharePage = () => {
         <MobileHeader {...headerProps} />
         <DesktopHeader {...headerProps} />
         <div className={styles.content}>
-          {content(platform).map((item) => (
+          {content.map((item) => (
             <AboutItem key={item.title} item={item} />
           ))}
         </div>

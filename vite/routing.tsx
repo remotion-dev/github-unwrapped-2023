@@ -4,6 +4,7 @@ import About from "./About/About.jsx";
 import Home from "./Home.jsx";
 import { SharePage } from "./Share/page.jsx";
 import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
+import { UserVideoContextProvider } from "./context.jsx";
 
 // const TanStackRouterDevtools =
 //   process.env.NODE_ENV === "production"
@@ -42,6 +43,11 @@ const indexRoute = new Route({
 export const userRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "$username",
+  component: () => (
+    <UserVideoContextProvider>
+      <Outlet />
+    </UserVideoContextProvider>
+  ),
 });
 
 export const videoRoute = new Route({

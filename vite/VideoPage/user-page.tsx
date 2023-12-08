@@ -3,6 +3,7 @@ import type { Rocket } from "../../src/config";
 import type { ProfileStats } from "../../src/server/db";
 import { Navbar } from "../Home/Navbar";
 import { NotFound } from "../NotFound/NotFound";
+import { useUserVideo } from "../context";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-const useCompositionParams = (user: ProfileStats) => {
+export const useCompositionParams = (user: ProfileStats) => {
   const compositionParams = useMemo(() => {
     return computeCompositionParameters(user);
   }, [user]);
@@ -30,11 +31,12 @@ const useCompositionParams = (user: ProfileStats) => {
     return compositionParams;
   }, [compositionParams, rocket]);
 
-  return { compositionParams: hydratedCompositionParams, rocket, setRocket };
+  return { compositionParams: hydratedCompositionParams, setRocket };
 };
 
-export const UserPage = ({ user }: { user: ProfileStats }) => {
-  const { compositionParams, rocket, setRocket } = useCompositionParams(user);
+export const UserPage = () => {
+  // const { compositionParams, setRocket } = useCompositionParams(user);
+  const { compositionParams, setRocket } = useUserVideo();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export const UserPage = ({ user }: { user: ProfileStats }) => {
       <Navbar />
       <VideoBox
         inputProps={compositionParams}
-        rocket={rocket}
+        rocket={compositionParams.rocket}
         setRocket={setRocket}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
