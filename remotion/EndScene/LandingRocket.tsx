@@ -21,17 +21,21 @@ export const LandingRocket: React.FC<{
 
   const finalOffset = useMemo(() => {
     if (planetType === "Ice") {
-      return 550;
+      return -120;
     }
 
     if (planetType === "Gold") {
       return 550;
     }
 
-    return 650;
+    return -80;
   }, [planetType]);
 
-  const rocketOffset = interpolate(acceleratedFrame, [0, 50], [finalOffset, 0]);
+  const rocketOffset = interpolate(
+    acceleratedFrame,
+    [0, 50],
+    [finalOffset, -500],
+  );
 
   const height = interpolate(frame, [30, 70], [300, 30]);
   const marginTop = height / 2;

@@ -2,7 +2,6 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
-  Sequence,
   spring,
   staticFile,
   useCurrentFrame,
@@ -14,6 +13,7 @@ import { PlanetEnum, rocketSchema } from "../../src/config";
 import { CallToAction } from "./CallToAction";
 import { PlanetAsset } from "./GoldPlanetAsset";
 import { GoldPlanetShine } from "./GoldPlanetShine";
+import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
 import Stars from "./SparkingStars";
@@ -61,7 +61,8 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
     },
     durationInFrames: 90,
     durationRestThreshold: 0.00001,
-    delay: 45,
+    delay: 30,
+    reverse: true,
   });
 
   return (
@@ -78,14 +79,14 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
         {planet === "Gold" ? <Stars /> : null}
         {planet === "Gold" ? <Threads /> : null}
         {planet === "Gold" && <GoldPlanetShine />}
-        <PlanetAsset progress={exitProgress} planet={planet} />
+        <HidePlanets progress={exitProgress} planet={planet}>
+          <PlanetAsset planet={planet} />
+          <LandingRocket planetType={planet} rocket={rocket} />
+        </HidePlanets>
         <CallToAction
           enterProgress={enterProgress}
           exitProgress={exitProgress}
         />
-        <Sequence from={70}>
-          <LandingRocket planetType={planet} rocket={rocket} />
-        </Sequence>
       </AbsoluteFill>
     </AbsoluteFill>
   );
