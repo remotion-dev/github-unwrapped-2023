@@ -1,4 +1,11 @@
 import React, { useMemo } from "react";
+import {
+  Easing,
+  interpolate,
+  interpolateColors,
+  useCurrentFrame,
+} from "remotion";
+import { appearDelays } from "./compute-positions";
 
 export type ContributionDotType = {
   col: number;
@@ -6,16 +13,52 @@ export type ContributionDotType = {
   x: number;
   y: number;
   opacity: number;
-  color: string;
   borderRadius: string | number;
   width: number;
   height: number;
   glow: number;
+  data: number;
+  index: number;
 };
+
+const START_SPREAD = 120;
+const END_SPREAD = 150;
+
+const SPREAD_DURATION = END_SPREAD - START_SPREAD;
 
 export const ContributionDot: React.FC<{
   dot: ContributionDotType;
 }> = ({ dot: p }) => {
+  const frame = useCurrentFrame();
+  const starColor = "#a3d3ff";
+
+  const activityColor = interpolateColors(
+    p.data,
+    [0, 128],
+    ["#202138", "#2486ff"],
+  );
+
+  const { delay: appearDelay } = appearDelays[p.index];
+
+  const moveDelay = START_SPREAD + appearDelay;
+
+  const moveProgress = interpolate(
+    frame,
+    [moveDelay, moveDelay + SPREAD_DURATION],
+    [1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.inOut(Easing.ease),
+    },
+  );
+
+  const color = interpolateColors(
+    1 + moveProgress,
+    [0, 1, 2],
+    ["#202138", activityColor, starColor],
+  );
+
   const style: React.CSSProperties = useMemo(() => {
     return {
       position: "absolute",
@@ -40,9 +83,9 @@ export const ContributionDot: React.FC<{
       height: p.height,
       width: p.width,
       borderRadius: p.borderRadius,
-      background: p.color,
+      background: color,
     };
-  }, [p.borderRadius, p.color, p.height, p.width]);
+  }, [p.borderRadius, color, p.height, p.width]);
 
   return (
     <div style={style}>

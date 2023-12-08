@@ -1,4 +1,4 @@
-import { Easing, interpolate, interpolateColors } from "remotion";
+import { Easing, interpolate } from "remotion";
 import type { ContributionDotType } from "./Dot";
 
 export const INITIAL_SIZE = 15;
@@ -1869,8 +1869,6 @@ export const computePositions = (params: {
 
     const { delay: appearDelay, noiseX, noiseY } = appearDelays[i];
 
-    const appear = 1;
-
     const moveDelay = START_SPREAD + appearDelay;
 
     const moveProgress = interpolate(
@@ -1888,20 +1886,6 @@ export const computePositions = (params: {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
-
-    const starColor = "#a3d3ff";
-
-    const activityColor = interpolateColors(
-      params.data[i],
-      [0, 128],
-      ["#202138", "#2486ff"],
-    );
-
-    const color = interpolateColors(
-      appear + moveProgress,
-      [0, 1, 2],
-      ["#202138", activityColor, starColor],
-    );
 
     const opacity = interpolate(
       moveProgress,
@@ -1937,11 +1921,12 @@ export const computePositions = (params: {
       x: x + moveProgress * xDelta,
       y: y + moveProgress * yDelta,
       opacity,
-      color,
       borderRadius,
       width: size,
       height: size,
       glow,
+      data: params.data[i],
+      index: i,
     };
   });
 
