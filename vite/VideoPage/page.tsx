@@ -26,7 +26,7 @@ declare global {
 type CompositionParameters = z.infer<typeof compositionSchema>;
 
 const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
-  if (userStats.totalContributions > 10000) {
+  if (userStats.totalContributions >= 5000) {
     return PlanetEnum.Enum.Gold;
   }
 
