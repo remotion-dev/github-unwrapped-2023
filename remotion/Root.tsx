@@ -140,30 +140,6 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
         }}
       />
-      {/* <Composition
-        id={"Landing"}
-        component={LandingScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const }}
-      /> */}
-      <Composition
-        id={"LandingCut"}
-        component={LandingCut}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          planetType: "Silver" as const,
-          accentColor: "blue",
-          rocketType: "blue",
-        }}
-      />
       <Composition
         id={"Contributions"}
         component={ContributionsScene}
