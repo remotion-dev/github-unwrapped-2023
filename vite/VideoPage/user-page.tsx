@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
-import type { RenderRequest } from "../../src/config";
+import type { RenderRequest, Rocket } from "../../src/config";
 import {
   LanguagesEnum,
   PlanetEnum,
@@ -19,14 +19,14 @@ import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
 declare global {
   interface Window {
-    __USER__: ProfileStats;
+    __USER__: ProfileStats | null;
   }
 }
 
 type CompositionParameters = z.infer<typeof compositionSchema>;
 
 const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
-  if (userStats.totalContributions > 10000) {
+  if (userStats.totalContributions >= 5000) {
     return PlanetEnum.Enum.Gold;
   }
 
@@ -81,12 +81,8 @@ const parseTopLanguage = (
 };
 
 const computeCompositionParameters = (
-  userStats: ProfileStats | null,
-): CompositionParameters | null => {
-  if (userStats === null) {
-    return null;
-  }
-
+  userStats: ProfileStats,
+): CompositionParameters => {
   const rustRandomizer = random(userStats.lowercasedUsername + "rust");
 
   const accentColor =
@@ -155,15 +151,13 @@ const background: React.CSSProperties = {
   position: "absolute",
 };
 
-export type RocketColor = "orange" | "blue" | "yellow" | null;
-
-export const UserPage = () => {
-  const inputProps: CompositionParameters | null = useMemo(() => {
-    return computeCompositionParameters(window.__USER__);
-  }, []);
+export const UserPage = ({ user }: { user: ProfileStats }) => {
+  const inputProps = useMemo(() => {
+    return computeCompositionParameters(user);
+  }, [user]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [rocket, setRocket] = useState<RocketColor>(inputProps?.rocket ?? null);
+  const [rocket, setRocket] = useState<Rocket>(inputProps.rocket);
   const [startPolling, setStartPolling] = useState(false);
 
   useEffect(() => {
@@ -190,7 +184,7 @@ export const UserPage = () => {
     if (derivedInputProps) {
       const renderRequest: z.infer<typeof RenderRequest> = {
         inputProps: derivedInputProps,
-        username: window.__USER__.username,
+        username: user.username,
       };
 
       fetch("/api/render", {
@@ -209,7 +203,7 @@ export const UserPage = () => {
           console.log(e);
         });
     }
-  }, [derivedInputProps]);
+  }, [derivedInputProps, user.username]);
 
   if (derivedInputProps === null) {
     return <NotFound />;

@@ -2,7 +2,7 @@ import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import About from "./About/About.jsx";
 import Home from "./Home.jsx";
 import { SharePage } from "./Share/page.jsx";
-import { UserPage } from "./VideoPage/page.jsx";
+import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
 
 const Root = () => {
   return <Outlet />;
@@ -25,7 +25,7 @@ const $usernamePath = "/$username";
 const userRoute = new Route({
   getParentRoute: () => rootRoute,
   path: $usernamePath,
-  component: UserPage,
+  component: UserPageOrNotFound,
 });
 
 export const userShare = new Route({

@@ -2,28 +2,31 @@ import { config } from "dotenv";
 import { z } from "zod";
 import { REDIRECT_URL_ENDPOINT } from "./redirect-url.js";
 
-export const awsCredentials = () => {
-  // TODO: Memoize
-  config();
-
-  return z
-    .object({
-      AWS_KEY_1: z.string(),
-      AWS_SECRET_1: z.string(),
-      AWS_KEY_2: z.string().optional(),
-      AWS_SECRET_2: z.string().optional(),
-      AWS_KEY_3: z.string().optional(),
-      AWS_SECRET_3: z.string().optional(),
-      AWS_KEY_4: z.string().optional(),
-      AWS_SECRET_4: z.string().optional(),
-    })
-    .parse(process.env);
+const parseAwsCredentials = () => {
+  z.object({
+    AWS_KEY_1: z.string(),
+    AWS_SECRET_1: z.string(),
+    AWS_KEY_2: z.string().optional(),
+    AWS_SECRET_2: z.string().optional(),
+    AWS_KEY_3: z.string().optional(),
+    AWS_SECRET_3: z.string().optional(),
+    AWS_KEY_4: z.string().optional(),
+    AWS_SECRET_4: z.string().optional(),
+  }).parse(process.env);
 };
 
-export const backendCredentials = () => {
-  // TODO: Memoize
-  config();
+let parsedAwsCredentials: ReturnType<typeof parseAwsCredentials> | null = null;
 
+export const awsCredentials = () => {
+  if (!parsedAwsCredentials) {
+    config();
+    parsedAwsCredentials = parseAwsCredentials();
+  }
+
+  return parsedAwsCredentials;
+};
+
+const parseBackendCredentials = () => {
   return z
     .object({
       VITE_CLIENT_ID: z.string(),
@@ -41,6 +44,19 @@ export const backendCredentials = () => {
       SENTRY_DSN: z.string(),
     })
     .parse(process.env);
+};
+
+let parsedBackendCredentials: ReturnType<
+  typeof parseBackendCredentials
+> | null = null;
+
+export const backendCredentials = () => {
+  if (!parsedBackendCredentials) {
+    config();
+    parsedBackendCredentials = parseBackendCredentials();
+  }
+
+  return parsedBackendCredentials;
 };
 
 export const makeRedirectUriBackend = () => {

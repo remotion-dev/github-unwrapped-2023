@@ -77,6 +77,7 @@ export const TakeOff: React.FC<{
             width: 472,
           }}
           muted
+          transparent
           src={getFlame(rocket)}
         />
       </AbsoluteFill>

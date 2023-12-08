@@ -2,16 +2,15 @@ import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
 import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
 import type { z } from "zod";
-import { PlanetEnum, type compositionSchema } from "../src/config";
+import { type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import {
   CONTRIBUTIONS_SCENE_DURATION,
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
-import { GoldenScene } from "./Golden";
+import { EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
-import { LandingScene } from "./Landing";
 import {
   OPENING_SCENE_LENGTH,
   OPENING_SCENE_OUT_OVERLAP,
@@ -169,19 +168,9 @@ export const Main: React.FC<Schema> = ({
             accentColor={accentColor}
           />
         </Series.Sequence>
-        {planet === PlanetEnum.Enum.Gold ? (
-          <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <GoldenScene rocket={rocket} />
-          </Series.Sequence>
-        ) : (
-          <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <LandingScene
-              rocketType={rocket}
-              accentColor={accentColor}
-              planetType={planet}
-            />
-          </Series.Sequence>
-        )}
+        <Series.Sequence durationInFrames={LANDING_SCENE}>
+          <EndScene planet={planet} rocket={rocket} />
+        </Series.Sequence>
       </Series>
     </AbsoluteFill>
   );

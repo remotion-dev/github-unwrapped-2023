@@ -1,7 +1,7 @@
 import type { SetStateAction } from "react";
 import { useEffect, useMemo, useRef } from "react";
+import type { Rocket } from "../../../src/config";
 import { Button } from "../../Button/Button";
-import type { RocketColor } from "../page";
 
 const DIAMETER = 32;
 const pickerStyle: React.CSSProperties = {
@@ -16,9 +16,9 @@ const pickerStyle: React.CSSProperties = {
 };
 
 export const ColorPicker: React.FC<{
-  color: RocketColor;
-  rocket: RocketColor;
-  setRocket: React.Dispatch<SetStateAction<RocketColor>>;
+  color: Rocket;
+  rocket: Rocket;
+  setRocket: React.Dispatch<SetStateAction<Rocket>>;
 }> = ({ color, rocket, setRocket }) => {
   const ref = useRef<HTMLButtonElement | null>(null);
 

@@ -5,6 +5,7 @@ import { getStatsFromGitHubOrCache } from "./fetch-stats.js";
 import { getRandomGithubToken } from "./github-token.js";
 import { backendCredentials } from "../helpers/domain.js";
 
+// TODO: Return a 404 response
 const makeAppHead = async (username: string | null) => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;

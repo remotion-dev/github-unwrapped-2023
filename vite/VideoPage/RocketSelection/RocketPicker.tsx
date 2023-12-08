@@ -1,21 +1,18 @@
 import type { PlayerRef } from "@remotion/player";
 import { useCallback, useMemo, type SetStateAction } from "react";
+import { getSideRocketSource } from "../../../remotion/Spaceship";
+import type { Rocket } from "../../../src/config";
 import { Button } from "../../Button/Button";
-import type { RocketColor } from "../page";
 import styles from "./styles.module.css";
 
 export const RocketPicker: React.FC<{
-  rocket: RocketColor;
+  rocket: Rocket;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   setIsPlaying: React.Dispatch<SetStateAction<boolean>>;
   playerRef: React.RefObject<PlayerRef>;
 }> = ({ rocket, setIsModalOpen, setIsPlaying, playerRef }) => {
   const source = useMemo(() => {
-    return rocket === "orange"
-      ? "/rocket-side-orange.png"
-      : rocket === "blue"
-        ? "/rocket-side-blue.png"
-        : "/rocket-side-yellow.png";
+    return getSideRocketSource(rocket);
   }, [rocket]);
 
   const handleClick = useCallback(() => {
