@@ -34,6 +34,7 @@ export const ModalRocket: React.FC<{
         src={fireSource}
         muted
         loop
+        playsInline
         autoPlay
         style={{
           height: 64,
