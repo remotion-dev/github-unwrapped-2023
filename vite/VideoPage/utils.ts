@@ -25,35 +25,11 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
   return PlanetEnum.Enum.Ice;
 };
 
-const parseTopLanguage = (
-  topLanguage: {
-    languageName: string;
-    color: string;
-  },
-  rustRandomizer: number,
-): z.infer<typeof languageSchema> => {
+const parseTopLanguage = (topLanguage: {
+  languageName: string;
+  color: string;
+}): z.infer<typeof languageSchema> => {
   try {
-    if (topLanguage.languageName === "Rust") {
-      if (rustRandomizer < 0.33) {
-        return {
-          type: "designed",
-          name: LanguagesEnum.Enum.Rust1,
-        };
-      }
-
-      if (rustRandomizer < 0.66) {
-        return {
-          type: "designed",
-          name: LanguagesEnum.Enum.Rust2,
-        };
-      }
-
-      return {
-        type: "designed",
-        name: LanguagesEnum.Enum.Rust3,
-      };
-    }
-
     const lang = LanguagesEnum.parse(topLanguage.languageName);
     return {
       type: "designed",
@@ -71,8 +47,6 @@ const parseTopLanguage = (
 export const computeCompositionParameters = (
   userStats: ProfileStats,
 ): CompositionParameters => {
-  const rustRandomizer = random(userStats.lowercasedUsername + "rust");
-
   const accentColor =
     accentColorValues[
       Math.floor(
@@ -95,17 +69,14 @@ export const computeCompositionParameters = (
     topLanguages:
       userStats.topLanguages.length > 0
         ? {
-            language1: parseTopLanguage(
-              userStats.topLanguages[0],
-              rustRandomizer,
-            ),
+            language1: parseTopLanguage(userStats.topLanguages[0]),
             language2:
               userStats.topLanguages.length > 1
-                ? parseTopLanguage(userStats.topLanguages[1], rustRandomizer)
+                ? parseTopLanguage(userStats.topLanguages[1])
                 : null,
             language3:
               userStats.topLanguages.length > 2
-                ? parseTopLanguage(userStats.topLanguages[2], rustRandomizer)
+                ? parseTopLanguage(userStats.topLanguages[2])
                 : null,
           }
         : null,

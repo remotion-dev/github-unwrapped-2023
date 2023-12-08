@@ -34,7 +34,11 @@ export const DownloadButton: React.FC<{
 
   if (url) {
     return (
-      <Button hoverEffect className={styles.downloadButton}>
+      <Button
+        hoverEffect
+        className={styles.downloadButton}
+        style={{ pointerEvents: "none", ...style }}
+      >
         <HoverEffect />
         Download Video <DownloadIcon width={20} color="white" />
       </Button>
