@@ -5,18 +5,20 @@ import {
   interpolateColors,
   useCurrentFrame,
 } from "remotion";
-import { appearDelays } from "./compute-positions";
+import {
+  INITIAL_SIZE,
+  MAX_STAR_GLOW,
+  MAX_STAR_SIZE,
+  MIN_OPACITY,
+  MIN_STAR_SIZE,
+  appearDelays,
+} from "./compute-positions";
 
 export type ContributionDotType = {
   col: number;
   row: number;
   x: number;
   y: number;
-  opacity: number;
-  borderRadius: string | number;
-  width: number;
-  height: number;
-  glow: number;
   data: number;
   index: number;
 };
@@ -38,7 +40,7 @@ export const ContributionDot: React.FC<{
     ["#202138", "#2486ff"],
   );
 
-  const { delay: appearDelay } = appearDelays[p.index];
+  const { delay: appearDelay, noiseX, noiseY } = appearDelays[p.index];
 
   const moveDelay = START_SPREAD + appearDelay;
 
@@ -53,39 +55,71 @@ export const ContributionDot: React.FC<{
     },
   );
 
+  const maxOpacity = interpolate(p.data, [0, 128], [0.2, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const opacity = interpolate(
+    moveProgress,
+    [0, 1],
+    [MIN_OPACITY, moveProgress * maxOpacity],
+  );
+
   const color = interpolateColors(
     1 + moveProgress,
     [0, 1, 2],
     ["#202138", activityColor, starColor],
   );
 
+  const finalSize = interpolate(
+    p.data,
+    [0, 128],
+    [MIN_STAR_SIZE, MAX_STAR_SIZE],
+  );
+  const sizeOffset = INITIAL_SIZE * (1 - moveProgress);
+
+  const size = interpolate(
+    moveProgress,
+    [0, 1],
+    [INITIAL_SIZE, finalSize + sizeOffset],
+  );
+
+  const maxGlow = interpolate(p.data, [0, 128], [0, MAX_STAR_GLOW]);
+  const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
+
+  const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);
+
+  const xDelta = noiseX * 200;
+  const yDelta = noiseY * 800 + 50;
+
   const style: React.CSSProperties = useMemo(() => {
     return {
       position: "absolute",
-      left: p.x,
-      top: p.y,
+      left: p.x + moveProgress * xDelta,
+      top: p.y + moveProgress * yDelta,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      height: p.height + p.glow,
-      width: p.width + p.glow,
-      opacity: p.opacity,
+      height: size + glow,
+      width: size + glow,
+      opacity,
       borderRadius: "50%",
       background:
-        p.glow > 0
+        glow > 0
           ? "radial-gradient(circle at center, #e0ff5e 0, #3b6dd1 30%, #0086d4 50%, #021d57 65%, #01194a 100%)"
           : undefined,
     };
-  }, [p.glow, p.height, p.opacity, p.width, p.x, p.y]);
+  }, [glow, moveProgress, opacity, p.x, p.y, size, xDelta, yDelta]);
 
   const inner: React.CSSProperties = useMemo(() => {
     return {
-      height: p.height,
-      width: p.width,
-      borderRadius: p.borderRadius,
+      height: size,
+      width: size,
+      borderRadius,
       background: color,
     };
-  }, [p.borderRadius, color, p.height, p.width]);
+  }, [size, borderRadius, color]);
 
   return (
     <div style={style}>

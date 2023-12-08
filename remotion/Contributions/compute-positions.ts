@@ -1,4 +1,3 @@
-import { Easing, interpolate } from "remotion";
 import type { ContributionDotType } from "./Dot";
 
 export const INITIAL_SIZE = 15;
@@ -7,17 +6,12 @@ export const OFFSET_X = 70;
 export const OFFSET_Y = 0;
 export const SPACING = 3;
 
-const START_SPREAD = 120;
-const END_SPREAD = 150;
+export const MAX_STAR_SIZE = 6;
+export const MIN_STAR_SIZE = 1;
 
-const SPREAD_DURATION = END_SPREAD - START_SPREAD;
+export const MAX_STAR_GLOW = 23;
 
-const MAX_STAR_SIZE = 6;
-const MIN_STAR_SIZE = 1;
-
-const MAX_STAR_GLOW = 23;
-
-const MIN_OPACITY = 1;
+export const MIN_OPACITY = 1;
 
 /**
  * new Array(365).fill(true).map((_, i) => {
@@ -1867,64 +1861,11 @@ export const computePositions = (params: {
     const x = col * (SPACING + INITIAL_SIZE) + OFFSET_X;
     const y = row * (SPACING + INITIAL_SIZE) + OFFSET_Y;
 
-    const { delay: appearDelay, noiseX, noiseY } = appearDelays[i];
-
-    const moveDelay = START_SPREAD + appearDelay;
-
-    const moveProgress = interpolate(
-      params.frame,
-      [moveDelay, moveDelay + SPREAD_DURATION],
-      [1, 0],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-        easing: Easing.inOut(Easing.ease),
-      },
-    );
-
-    const maxOpacity = interpolate(params.data[i], [0, 128], [0.2, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    });
-
-    const opacity = interpolate(
-      moveProgress,
-      [0, 1],
-      [MIN_OPACITY, moveProgress * maxOpacity],
-    );
-
-    const xDelta = noiseX * 200;
-    const yDelta = noiseY * 800 + 50;
-
-    const finalSize = interpolate(
-      params.data[i],
-      [0, 128],
-      [MIN_STAR_SIZE, MAX_STAR_SIZE],
-    );
-
-    const sizeOffset = INITIAL_SIZE * (1 - moveProgress);
-
-    const size = interpolate(
-      moveProgress,
-      [0, 1],
-      [INITIAL_SIZE, finalSize + sizeOffset],
-    );
-
-    const maxGlow = interpolate(params.data[i], [0, 128], [0, MAX_STAR_GLOW]);
-    const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
-
-    const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);
-
     return {
       col,
       row,
-      x: x + moveProgress * xDelta,
-      y: y + moveProgress * yDelta,
-      opacity,
-      borderRadius,
-      width: size,
-      height: size,
-      glow,
+      x,
+      y,
       data: params.data[i],
       index: i,
     };
