@@ -9,6 +9,8 @@ import {
 } from "remotion";
 import type { z } from "zod";
 import {
+  TABLET_SCENE_ENTER_ANIMATION,
+  TABLET_SCENE_ENTER_ANIMATION_DELAY,
   TABLET_SCENE_HIDE_ANIMATION,
   TABLET_SCENE_LENGTH,
   Tablet,
@@ -97,7 +99,10 @@ export const StarsAndProductivity: React.FC<
     };
   }, [translateX, translateY, scale, zoomTransition]);
 
-  const timeUntilTabletIsEntered = starFlyDuration + TABLET_SCENE_LENGTH;
+  const timeUntilTabletIsEntered =
+    starFlyDuration +
+    TABLET_SCENE_ENTER_ANIMATION_DELAY +
+    TABLET_SCENE_ENTER_ANIMATION;
 
   return (
     <AbsoluteFill>
