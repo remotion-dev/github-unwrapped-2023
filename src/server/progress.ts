@@ -3,6 +3,7 @@ import {
   getRenderProgress,
   speculateFunctionName,
 } from "@remotion/lambda/client";
+import * as Sentry from "@sentry/node";
 import type { Request, Response } from "express";
 import { DISK, ProgressRequest, RAM, TIMEOUT } from "../config.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
@@ -81,6 +82,7 @@ export const getProgress = async (render: Render) => {
       progress: Math.max(0.03, renderProgress.overallProgress),
     };
   } catch (error) {
+    Sentry.captureException(error);
     return {
       type: "error",
       message: "Something went wrong.",
