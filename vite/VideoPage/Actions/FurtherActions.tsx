@@ -16,7 +16,7 @@ export const FurtherActions: React.FC = () => {
             label="Unwrap another user"
           />
         </Link>
-        {window.__USER__.loggedInWithGitHub ? null : (
+        {window.__USER__!.loggedInWithGitHub ? null : (
           <a href={signInWithGitHubLink()}>
             <FurtherAction
               icon={(params) => (

@@ -1,11 +1,10 @@
 import type { PlayerRef } from "@remotion/player";
 import React from "react";
 import type { z } from "zod";
-import type { compositionSchema } from "../../../src/config";
+import type { Rocket, compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
 import { SharingActions } from "../Actions/SharingActions";
 import { RocketPicker } from "../RocketSelection/RocketPicker";
-import type { RocketColor } from "../page";
 import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
 
@@ -13,7 +12,7 @@ export const Sidebar: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   startPolling: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  rocket: RocketColor;
+  rocket: Rocket;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   playerRef: React.RefObject<PlayerRef>;
   progress: number;

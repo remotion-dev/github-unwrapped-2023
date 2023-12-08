@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, Audio, staticFile } from "remotion";
 
 import type { Rocket } from "../../src/config";
-import { GoldPlanetAsset } from "./GoldPlanetAsset";
+import { PlanetAsset } from "./GoldPlanetAsset";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
@@ -35,7 +35,7 @@ export const EndScene: React.FC<{
       <PlanetBackground />
       <Threads />
       <GoldPlanetShine />
-      <GoldPlanetAsset />
+      <PlanetAsset />
       <LandingRocket rocket={rocket} />
     </AbsoluteFill>
   );

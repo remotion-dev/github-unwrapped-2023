@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { getFlame } from "../../../remotion/Opening/TakeOff";
-import type { RocketColor } from "../page";
+import { getSideRocketSource } from "../../../remotion/Spaceship";
+import type { Rocket } from "../../../src/config";
 
 const rocketWrapper: React.CSSProperties = {
   display: "flex",
@@ -15,14 +16,10 @@ const rocketStyle: React.CSSProperties = {
 };
 
 export const ModalRocket: React.FC<{
-  rocket: RocketColor;
+  rocket: Rocket;
 }> = ({ rocket }) => {
   const source = useMemo(() => {
-    return rocket === "orange"
-      ? "/rocket-side-orange.png"
-      : rocket === "blue"
-        ? "/rocket-side-blue.png"
-        : "/rocket-side-yellow.png";
+    return getSideRocketSource(rocket);
   }, [rocket]);
 
   const fireSource = rocket ? getFlame(rocket) : undefined;

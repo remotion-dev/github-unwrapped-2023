@@ -2,17 +2,16 @@ import type { PlayerRef } from "@remotion/player";
 import { Link } from "@tanstack/react-router";
 import type { z } from "zod";
 import { RocketIcon } from "../../icons/RocketIcon";
-import type { compositionSchema } from "../../src/config";
+import type { Rocket, compositionSchema } from "../../src/config";
 import boxStyles from "../Box/styles.module.css";
 import { HomeLink } from "../HomeLink";
 import gradientStyles from "../styles.module.css";
 import { RocketPicker } from "./RocketSelection/RocketPicker";
-import type { RocketColor } from "./page";
 import styles from "./styles.module.css";
 
 export const VideoBoxTop: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
-  rocket: RocketColor;
+  rocket: Rocket;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   playerRef: React.RefObject<PlayerRef>;

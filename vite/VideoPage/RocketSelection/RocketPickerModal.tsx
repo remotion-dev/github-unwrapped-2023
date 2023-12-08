@@ -1,8 +1,8 @@
 import type { PlayerRef } from "@remotion/player";
 import { useEffect, useMemo, useRef, type SetStateAction } from "react";
 import { AbsoluteFill } from "remotion";
+import type { Rocket } from "../../../src/config";
 import { Button } from "../../Button/Button";
-import type { RocketColor } from "../page";
 import { ColorPicker } from "./ColorPicker";
 import { ModalRocket } from "./ModalRocket";
 import styles from "./styles.module.css";
@@ -19,8 +19,8 @@ const spacer: React.CSSProperties = {
 };
 
 export const RocketPickerModal: React.FC<{
-  rocket: RocketColor;
-  setRocket: React.Dispatch<SetStateAction<RocketColor>>;
+  rocket: Rocket;
+  setRocket: React.Dispatch<SetStateAction<Rocket>>;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   isModalOpen: boolean;
   playerRef: React.RefObject<PlayerRef>;

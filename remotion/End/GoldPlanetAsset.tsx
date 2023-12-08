@@ -1,10 +1,12 @@
 import React from "react";
-import { Img, spring, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, spring, useCurrentFrame } from "remotion";
 import { VIDEO_FPS } from "../../types/constants";
+import { GoldPlanet } from "./Planet";
 
-export const GoldPlanetAsset: React.FC = () => {
+export const PlanetAsset: React.FC = () => {
   const frame = useCurrentFrame();
-  const planet = spring({
+
+  const moveUp = spring({
     fps: VIDEO_FPS,
     frame: frame / 12,
     config: {
@@ -12,15 +14,11 @@ export const GoldPlanetAsset: React.FC = () => {
     },
   });
 
+  const marginTop = interpolate(moveUp, [0, 1], [200, 0]);
+
   return (
-    <Img
-      src={staticFile("golden-planet.png")}
-      style={{
-        width: 900,
-        position: "absolute",
-        bottom: -300 + 200 * planet,
-        left: 85,
-      }}
-    />
+    <AbsoluteFill style={{ marginTop }}>
+      <GoldPlanet />
+    </AbsoluteFill>
   );
 };

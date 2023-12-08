@@ -1,23 +1,22 @@
 import type { PlayerRef } from "@remotion/player";
 import type { SetStateAction } from "react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import type { z } from "zod";
-import type { compositionSchema } from "../../src/config";
+import type { Rocket, compositionSchema } from "../../src/config";
 import { Box } from "../Box/Box";
 import { MobileActionsContainer } from "./MobileActionsContainer";
 import { PlayerContainer } from "./Player/Player";
 import { RocketPickerModal } from "./RocketSelection/RocketPickerModal";
 import { Sidebar } from "./Sidebar/Sidebar";
 import { VideoBoxTop } from "./VideoBoxTop";
-import type { RocketColor } from "./page";
 import styles from "./styles.module.css";
 
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   startPolling: boolean;
-  rocket: RocketColor;
-  setRocket: React.Dispatch<SetStateAction<RocketColor>>;
+  rocket: Rocket;
+  setRocket: React.Dispatch<SetStateAction<Rocket>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
 }> = ({
@@ -36,44 +35,41 @@ export const VideoBox: React.FC<{
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
 
-  const pollProgress = useMemo(
-    () => () => {
-      fetch("/api/progress", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          theme: inputProps.accentColor,
-          username: window.__USER__.username,
-        }),
+  const pollProgress = useCallback(() => {
+    fetch("/api/progress", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        theme: inputProps.accentColor,
+        username: inputProps.login,
+      }),
+    })
+      .then((v) => {
+        return v.json();
       })
-        .then((v) => {
-          return v.json();
-        })
-        .then((v) => {
-          if (v.type === "done") {
-            setUrl(v.url);
-            return;
-          }
+      .then((v) => {
+        if (v.type === "done") {
+          setUrl(v.url);
+          return;
+        }
 
-          if (v.type === "error") {
-            setError(true);
-            console.error(v.message);
-            return;
-          }
-
-          if (v.type === "progress") {
-            setProgress(v.progress);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
+        if (v.type === "error") {
           setError(true);
-        });
-    },
-    [inputProps.accentColor],
-  );
+          console.error(v.message);
+          return;
+        }
+
+        if (v.type === "progress") {
+          setProgress(v.progress);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        setError(true);
+      });
+  }, [inputProps.accentColor, inputProps.login]);
 
   useEffect(() => {
     if (startPolling) {
