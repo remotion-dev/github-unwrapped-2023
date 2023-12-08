@@ -21,10 +21,16 @@ export const PlanetAsset: React.FC<{
   const offset = Math.sin(-Math.PI * 1.5 + progress * Math.PI * 0.8) * -850;
 
   const style: React.CSSProperties = useMemo(() => {
+    if (planet === "Gold") {
+      return {
+        transform: `translateY(${interpolate(progress, [0, 1], [500, 0])}px)`,
+      };
+    }
+
     return {
       transform: `translateY(${offset + 200}px) scale(${scale})`,
     };
-  }, [offset, scale]);
+  }, [offset, planet, progress, scale]);
 
   return (
     <AbsoluteFill style={style}>
