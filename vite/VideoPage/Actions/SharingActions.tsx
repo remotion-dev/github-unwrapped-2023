@@ -1,5 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { LinkedInIcon } from "../../../icons/LinkedInIcon";
 import { XIcon } from "../../../icons/XIcon";
+import type { accentColorValues } from "../../../src/config";
 import { SharingAction } from "./SharingAction";
 import styles from "./styles.module.css";
 
@@ -9,21 +11,28 @@ export const twitterSharingLink = `https://twitter.com/intent/tweet?text=${encod
 
 export const linkedInSharingLink = "https://www.linkedin.com/";
 
-export const SharingActions: React.FC = () => {
+export const SharingActions: React.FC<{
+  accentColor: (typeof accentColorValues)[number];
+}> = ({ accentColor }) => {
   return (
     <div className={styles.sharingActionsWrapper}>
-      <SharingAction
-        icon={(params) => <XIcon {...params} />}
-        label={"Post #GitHubUnwrapped"}
-        onClick={() => {
-          window.open(twitterSharingLink);
-        }}
-      />
-      <SharingAction
-        icon={(params) => <LinkedInIcon {...params} />}
-        label="Share on LinkedIn"
-        onClick={() => window.open(linkedInSharingLink)}
-      />
+      <Link to={"/share"} search={{ platform: "twitter", accentColor }}>
+        <SharingAction
+          icon={(params) => <XIcon {...params} />}
+          label={"Post #GitHubUnwrapped"}
+          // onClick={() => {
+          //   window.open(twitterSharingLink);
+          // }}
+        />
+      </Link>
+
+      <Link to={"/share"} search={{ platform: "linkedin", accentColor }}>
+        <SharingAction
+          icon={(params) => <LinkedInIcon {...params} />}
+          label="Share on LinkedIn"
+          // onClick={() => window.open(linkedInSharingLink)}
+        />
+      </Link>
     </div>
   );
 };

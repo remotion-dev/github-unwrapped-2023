@@ -57,7 +57,7 @@ export const Sidebar: React.FC<{
         </p>
       )}
       {/* Sharing Actions */}
-      <SharingActions />
+      <SharingActions accentColor={inputProps.accentColor} />
 
       {/* Further Action */}
       <FurtherActions />
