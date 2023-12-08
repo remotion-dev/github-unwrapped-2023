@@ -1,7 +1,8 @@
 import React from "react";
 import { AbsoluteFill, Audio, staticFile } from "remotion";
 
-import type { Rocket } from "../../src/config";
+import { z } from "zod";
+import { PlanetEnum, rocketSchema } from "../../src/config";
 import { PlanetAsset } from "./GoldPlanetAsset";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { LandingRocket } from "./LandingRocket";
@@ -21,9 +22,15 @@ const container: React.CSSProperties = {
   height: "100%",
 };
 
-export const EndScene: React.FC<{
-  rocket: Rocket;
-}> = ({ rocket }) => {
+export const endSceneSchema = z.object({
+  rocket: rocketSchema,
+  planet: PlanetEnum,
+});
+
+export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
+  rocket,
+  planet,
+}) => {
   return (
     <AbsoluteFill style={container}>
       <Audio
@@ -34,7 +41,7 @@ export const EndScene: React.FC<{
       <Stars />
       <PlanetBackground />
       <Threads />
-      <GoldPlanetShine />
+      {planet === "Gold" && <GoldPlanetShine />}
       <PlanetAsset />
       <LandingRocket rocket={rocket} />
     </AbsoluteFill>

@@ -9,7 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { EndScene } from "./End";
+import { EndScene, endSceneSchema } from "./End";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
@@ -77,14 +77,16 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
-        id={"Golden"}
+        id={"EndScene"}
         component={EndScene}
         durationInFrames={12 * 30}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        schema={endSceneSchema}
         defaultProps={{
           rocket: "blue",
+          planet: "Gold",
         }}
       />
       <Composition
