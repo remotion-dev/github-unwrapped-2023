@@ -9,6 +9,10 @@ export const availableGradients = {
     "radial-gradient(100% 100% at 47.08% 100%, #0F102E 0%, rgba(0, 0, 0, 0) 100%)",
   purpleRadial:
     "radial-gradient(100% 100% at 47.08% 100%, #381945 0%, rgba(0, 0, 0, 0) 100%)",
+  silverRadial:
+    "radial-gradient(170% 170% at 0% 0%, rgba(171, 169, 164, 0.2) 0%, rgba(0, 0, 0, 0) 100%)",
+  iceRadial:
+    "radial-gradient(170% 170% at 0% 0%, rgba(186, 204, 229, 0.15) 0%, rgba(0, 0, 0, 0) 100%)",
 };
 
 export type GradientType = keyof typeof availableGradients;

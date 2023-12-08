@@ -40,9 +40,9 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
           src={GOLD_PLANET_SOUND}
         />
       ) : null}
-      <Stars />
-      <PlanetBackground />
-      <Threads />
+      {planet === "Gold" ? <Stars /> : null}
+      <PlanetBackground planet={planet} />
+      {planet === "Gold" ? <Threads /> : null}
       {planet === "Gold" && <GoldPlanetShine />}
       <PlanetAsset planet={planet} />
       <LandingRocket rocket={rocket} />
