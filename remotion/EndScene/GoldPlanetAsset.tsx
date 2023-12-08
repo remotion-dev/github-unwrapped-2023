@@ -4,6 +4,7 @@ import type { Planet } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
 import { GoldPlanet } from "./Planet";
 import { IcePlanet } from "./orbs/IcePlanet";
+import { SilverPlanet } from "./orbs/SilverPlanet";
 
 export const PlanetAsset: React.FC<{
   planet: Planet;
@@ -18,7 +19,7 @@ export const PlanetAsset: React.FC<{
     },
   });
 
-  const marginTop = interpolate(moveUp, [0, 1], [200, 0]);
+  const marginTop = interpolate(moveUp, [0, 1], [400, 0]);
 
   const style: React.CSSProperties = useMemo(() => {
     return {
@@ -28,6 +29,7 @@ export const PlanetAsset: React.FC<{
 
   return (
     <AbsoluteFill style={style}>
+      {planet === "Silver" && <SilverPlanet />}
       {planet === "Ice" && <IcePlanet />}
       {planet === "Gold" && <GoldPlanet />}
     </AbsoluteFill>

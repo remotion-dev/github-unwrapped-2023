@@ -83,6 +83,7 @@ export const getProgress = async (render: Render) => {
     };
   } catch (error) {
     Sentry.captureException(error);
+    console.log(error);
     return {
       type: "error",
       message: "Something went wrong.",

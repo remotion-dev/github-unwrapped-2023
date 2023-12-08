@@ -1,25 +1,16 @@
 import React from "react";
-import { AbsoluteFill, Img, spring, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Img, interpolate, useCurrentFrame } from "remotion";
 import { GOLD_PLANET_BG } from ".";
-import { VIDEO_FPS } from "../../types/constants";
 
 export const PlanetBackground: React.FC = () => {
   const frame = useCurrentFrame();
-  const gradient = spring({
-    fps: VIDEO_FPS,
-    frame: frame / 6,
-    config: {
-      damping: 200,
-    },
+
+  const opacity = interpolate(frame, [0, 30], [0, 1], {
+    extrapolateRight: "clamp",
   });
 
   return (
-    <AbsoluteFill
-      style={{
-        top: gradient * 800 - 800,
-        left: gradient * 800 - 800,
-      }}
-    >
+    <AbsoluteFill style={{ opacity }}>
       <Img src={GOLD_PLANET_BG} />
     </AbsoluteFill>
   );
