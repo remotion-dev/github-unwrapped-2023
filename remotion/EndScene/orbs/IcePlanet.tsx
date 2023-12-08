@@ -11,7 +11,8 @@ export const IcePlanet: React.FC = () => {
     <AbsoluteFill style={container}>
       <Img
         style={{
-          width: 700,
+          width: 1100,
+          marginTop: 100,
         }}
         src={staticFile("planet-ice.png")}
       />

@@ -2,7 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
-  interpolate,
+  spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -10,14 +10,12 @@ import {
 
 import { z } from "zod";
 import { PlanetEnum, rocketSchema } from "../../src/config";
+import { FPS } from "../Issues/make-ufo-positions";
 import { CallToAction } from "./CallToAction";
 import { PlanetAsset } from "./GoldPlanetAsset";
-import { GoldPlanetShine } from "./GoldPlanetShine";
+import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
-import Stars from "./SparkingStars";
-import { Threads } from "./Threads";
-import { getOrbEnter } from "./orb-enter";
 
 export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
@@ -36,23 +34,40 @@ export const endSceneSchema = z.object({
   planet: PlanetEnum,
 });
 
+export const END_SCENE_DURATION = 6.5 * FPS;
+
 export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
   rocket,
   planet,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { progress } = getOrbEnter({ fps, frame });
+
+  const enterProgress = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
+    durationInFrames: 60,
+    durationRestThreshold: 0.00001,
+  });
+
+  const exitProgress =
+    1 -
+    spring({
+      fps,
+      frame,
+      config: {
+        damping: 200,
+      },
+      durationInFrames: 150,
+      delay: 70,
+    });
 
   return (
     <AbsoluteFill>
-      <PlanetBackground planet={planet} />
-      <AbsoluteFill
-        style={{
-          ...container,
-          transform: `scale(${interpolate(frame, [0, 100], [1, 1.1])})`,
-        }}
-      >
+      <AbsoluteFill style={container}>
         {planet === "Gold" ? (
           <Audio
             // TODO: License
@@ -60,12 +75,16 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
             src={GOLD_PLANET_SOUND}
           />
         ) : null}
-        {planet === "Gold" ? <Stars /> : null}
-        {planet === "Gold" ? <Threads /> : null}
-        {planet === "Gold" && <GoldPlanetShine />}
-        <CallToAction progress={progress} />
-        <PlanetAsset planet={planet} />
-        <LandingRocket rocket={rocket} />
+        <PlanetBackground planet={planet} />
+        <HidePlanets exitProgress={exitProgress} planet={planet}>
+          <PlanetAsset enterProgress={enterProgress} planet={planet} />
+          <LandingRocket planetType={planet} rocket={rocket} />
+        </HidePlanets>
+        <CallToAction
+          enterProgress={enterProgress}
+          exitProgress={exitProgress}
+          planet={planet}
+        />
       </AbsoluteFill>
     </AbsoluteFill>
   );

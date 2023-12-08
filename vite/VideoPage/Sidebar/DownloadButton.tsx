@@ -1,6 +1,7 @@
 import React from "react";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
 import { Button } from "../../Button/Button";
+import { HoverEffect } from "../../Button/HoverEffect";
 import styles from "./styles.module.css";
 
 export const DownloadButton: React.FC<{
@@ -32,10 +33,8 @@ export const DownloadButton: React.FC<{
 
   if (url) {
     return (
-      <Button
-        className={styles.downloadButton}
-        style={{ pointerEvents: "none" }}
-      >
+      <Button hoverEffect className={styles.downloadButton}>
+        <HoverEffect />
         Download Video <DownloadIcon width={20} color="white" />
       </Button>
     );

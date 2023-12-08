@@ -9,14 +9,13 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { EndScene, endSceneSchema } from "./EndScene";
+import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
 import type { GradientType } from "./Gradients/available-gradients";
 import { availableGradients } from "./Gradients/available-gradients";
 import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
-import { LandingCut, planetSchema } from "./Landing";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
@@ -81,7 +80,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id={"EndScene"}
           component={EndScene}
-          durationInFrames={12 * 30}
+          durationInFrames={END_SCENE_DURATION}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
@@ -142,30 +141,6 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           accentColor: "blue",
-        }}
-      />
-      {/* <Composition
-        id={"Landing"}
-        component={LandingScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{ planetType: "Silver" as const }}
-      /> */}
-      <Composition
-        id={"LandingCut"}
-        component={LandingCut}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        schema={planetSchema}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          planetType: "Silver" as const,
-          accentColor: "blue",
-          rocketType: "blue",
         }}
       />
       <Composition

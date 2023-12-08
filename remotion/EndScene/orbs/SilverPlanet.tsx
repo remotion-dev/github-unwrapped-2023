@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 
-const totalWidth = 700;
+const totalWidth = 1900;
 
 export const SilverPlanet: React.FC = () => {
   return (
@@ -9,6 +9,7 @@ export const SilverPlanet: React.FC = () => {
       style={{
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 310,
       }}
     >
       <Img

@@ -106,9 +106,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         >
           <Foreground />
         </AbsoluteFill>
-        <AbsoluteFill>
-          <TakeOff rocket={rocket} />
-        </AbsoluteFill>
+        <TakeOff rocket={rocket} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

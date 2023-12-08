@@ -12,7 +12,10 @@ import { remapSpeed } from "../TopLanguages/remap-speed";
 import Spaceship from "./RocketFront";
 import { isIosSafari } from "./devices";
 
-const speedFunction = (f: number) => 10 ** interpolate(f, [0, 120], [-1, 4]);
+export const takeOffSpeedFucntion = (f: number) =>
+  10 ** interpolate(f, [0, 120], [-1, 4]);
+export const landingSpeedFunction = (f: number) =>
+  10 ** interpolate(f, [0, 120], [-2, 10]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
@@ -56,7 +59,7 @@ export const TakeOff: React.FC<{
   rocket: Rocket;
 }> = ({ rocket }) => {
   const frame = useCurrentFrame();
-  const acceleratedFrame = remapSpeed(frame, speedFunction);
+  const acceleratedFrame = remapSpeed(frame, takeOffSpeedFucntion);
   const acceleratedShakeFrame = remapSpeed(frame, speedFunctionShake);
 
   const translateX = interpolate(acceleratedFrame, [0, 100], [0, -100]);

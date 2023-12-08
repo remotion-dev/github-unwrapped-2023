@@ -1,28 +1,22 @@
-import React, { useMemo } from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import React from "react";
+import { AbsoluteFill, interpolate } from "remotion";
 import type { Planet } from "../../src/config";
 import { GoldPlanet } from "./Planet";
-import { getOrbEnter } from "./orb-enter";
 import { IcePlanet } from "./orbs/IcePlanet";
 import { SilverPlanet } from "./orbs/SilverPlanet";
 
 export const PlanetAsset: React.FC<{
   planet: Planet;
-}> = ({ planet }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const { offset, scale } = getOrbEnter({ fps, frame });
-
-  const style: React.CSSProperties = useMemo(() => {
-    return {
-      scale: String(scale),
-      marginTop: offset,
-    };
-  }, [offset, scale]);
+  enterProgress: number;
+}> = ({ planet, enterProgress }) => {
+  const enterOffset = interpolate(enterProgress, [0, 1], [1000, 0]);
 
   return (
-    <AbsoluteFill style={style}>
+    <AbsoluteFill
+      style={{
+        transform: `translateY(${enterOffset}px)`,
+      }}
+    >
       {planet === "Silver" && <SilverPlanet />}
       {planet === "Ice" && <IcePlanet />}
       {planet === "Gold" && <GoldPlanet />}

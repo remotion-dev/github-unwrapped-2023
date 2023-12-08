@@ -11,10 +11,8 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot } from "./Dot";
-import { Sparkle } from "./Sparkle";
 import { computePositions } from "./compute-positions";
 
-const TIMELINE_OFFSET_Y = 420;
 export const CONTRIBUTIONS_SCENE_DURATION = 7 * FPS;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 10;
 
@@ -25,13 +23,11 @@ export const ContributionsScene: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const { positions, maxIndex } = computePositions({
+  const { positions } = computePositions({
     frame,
     data: contributionData,
     fps,
   });
-
-  const target = positions[maxIndex];
 
   const fadeInGradient = interpolate(frame, [0, 10], [0, 1]);
 
@@ -60,13 +56,6 @@ export const ContributionsScene: React.FC<{
           />
         ))}
       </div>
-      <Sparkle
-        x={target.x}
-        y={target.y + TIMELINE_OFFSET_Y}
-        scale={1}
-        currentFrame={frame}
-        startFrame={160}
-      />
     </AbsoluteFill>
   );
 };
