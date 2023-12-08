@@ -14,8 +14,6 @@ import { isIosSafari } from "./devices";
 
 export const takeOffSpeedFucntion = (f: number) =>
   10 ** interpolate(f, [0, 120], [-1, 4]);
-export const landingSpeedFunction = (f: number) =>
-  10 ** interpolate(f, [0, 120], [-2, 10]);
 const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 

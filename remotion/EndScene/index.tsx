@@ -16,7 +16,6 @@ import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
 
-export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
 
 const container: React.CSSProperties = {
