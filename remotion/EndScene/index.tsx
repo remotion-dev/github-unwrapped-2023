@@ -13,12 +13,9 @@ import { PlanetEnum, rocketSchema } from "../../src/config";
 import { FPS } from "../Issues/make-ufo-positions";
 import { CallToAction } from "./CallToAction";
 import { PlanetAsset } from "./GoldPlanetAsset";
-import { GoldPlanetShine } from "./GoldPlanetShine";
 import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
 import { PlanetBackground } from "./PlanetBackground";
-import Stars from "./SparkingStars";
-import { Threads } from "./Threads";
 
 export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
@@ -70,7 +67,6 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <PlanetBackground planet={planet} />
       <AbsoluteFill style={container}>
         {planet === "Gold" ? (
           <Audio
@@ -79,9 +75,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
             src={GOLD_PLANET_SOUND}
           />
         ) : null}
-        {planet === "Gold" ? <Stars /> : null}
-        {planet === "Gold" ? <Threads /> : null}
-        {planet === "Gold" && <GoldPlanetShine />}
+        <PlanetBackground planet={planet} />
         <HidePlanets exitProgress={exitProgress} planet={planet}>
           <PlanetAsset enterProgress={enterProgress} planet={planet} />
           <LandingRocket planetType={planet} rocket={rocket} />
