@@ -1846,11 +1846,7 @@ export const appearDelays = [
   },
 ];
 
-export const computePositions = (params: {
-  frame: number;
-  fps: number;
-  data: number[];
-}) => {
+export const computePositions = (params: { data: number[] }) => {
   const max = Math.max(...params.data);
   const maxIndex = params.data.findIndex((d) => d === max);
 
