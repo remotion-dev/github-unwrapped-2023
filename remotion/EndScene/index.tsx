@@ -83,6 +83,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
         <CallToAction
           enterProgress={enterProgress}
           exitProgress={exitProgress}
+          planet={planet}
         />
       </AbsoluteFill>
     </AbsoluteFill>
