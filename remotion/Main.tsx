@@ -1,7 +1,14 @@
 import React from "react";
 import type { CalculateMetadataFunction } from "remotion";
-import { AbsoluteFill, Audio, Series, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Series,
+  staticFile,
+  useVideoConfig,
+} from "remotion";
 import type { z } from "zod";
+import type { Rocket } from "../src/config";
 import { type compositionSchema } from "../src/config";
 import { VIDEO_FPS } from "../types/constants";
 import {
@@ -66,13 +73,47 @@ export const mainCalculateMetadataScene: CalculateMetadataFunction<
   };
 };
 
-const getSoundtrack = () => {
-  // TODO: License
-  return staticFile("smartsound-wired.mp3");
+const getMusicDuration = (durationInSeconds: number) => {
+  let sec = 24;
+  if (durationInSeconds < 24) return 24;
+
+  while (sec < 41) {
+    if (Math.abs(sec - durationInSeconds) <= 1) {
+      return sec;
+    }
+
+    sec += 2;
+  }
+
+  return 40;
 };
 
-export const getMainAssetsToPrefetch = () => {
-  return [getSoundtrack()];
+const getSoundtrack = (durationInFrames: number, rocket: Rocket) => {
+  const FPS = 30;
+  const blueThemeUrlPrefix = "/blue_theme_music/blue_theme_music_";
+  const orangeThemeUrlPrefix = "/red_theme_music/red_theme_music_";
+  const yellowThemeUrlPrefix = "/yellow_theme_music/yellow_theme_music_";
+  const postfix = ".mp3";
+
+  const prefix = {
+    blue: blueThemeUrlPrefix,
+    orange: orangeThemeUrlPrefix,
+    yellow: yellowThemeUrlPrefix,
+  };
+
+  const durationInSecond = durationInFrames / FPS;
+
+  const adjustedDuration = getMusicDuration(durationInSecond);
+  const url = prefix[rocket] + adjustedDuration + postfix;
+
+  return staticFile(url);
+};
+
+export const getMainAssetsToPrefetch = (
+  durationInFrames: number,
+  rocket: Rocket,
+) => {
+  return [getSoundtrack(durationInFrames, rocket)];
 };
 
 export const Main: React.FC<Schema> = ({
@@ -94,13 +135,14 @@ export const Main: React.FC<Schema> = ({
   contributionData,
   sampleStarredRepos,
 }) => {
+  const { durationInFrames } = useVideoConfig();
   return (
     <AbsoluteFill
       style={{
         backgroundColor: "black",
       }}
     >
-      <Audio src={getSoundtrack()} />
+      <Audio src={getSoundtrack(durationInFrames, rocket)} />
       <Series>
         <Series.Sequence durationInFrames={OPENING_SCENE_LENGTH}>
           <OpeningScene

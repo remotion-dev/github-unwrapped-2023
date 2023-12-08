@@ -11,6 +11,7 @@ export const PlayState: React.FC<{
   props: {
     rocket: Rocket;
     planetType: Planet;
+    durationInFrames: number;
   };
 }> = ({ isPlaying, onClickPauseButton, onClickPlayButton, props }) => {
   const [progress, setProgress] = useState(0);
@@ -25,8 +26,9 @@ export const PlayState: React.FC<{
         return setProgress(loadingProgress);
       },
       planetType: props.planetType,
+      durationInFrames: props.durationInFrames,
     });
-  }, [props.planetType, props.rocket]);
+  }, [props.durationInFrames, props.planetType, props.rocket]);
 
   if (isPlaying) {
     return <AbsoluteFill onClick={onClickPauseButton} />;

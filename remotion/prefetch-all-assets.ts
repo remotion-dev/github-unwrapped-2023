@@ -13,9 +13,11 @@ import { getFrontRocketSource } from "./TopLanguages/svgs/FrontRocketSource";
 const collectAllAssetsToPrefetch = ({
   rocket,
   planetType,
+  durationInFrames,
 }: {
   rocket: Rocket;
   planetType: Planet;
+  durationInFrames: number;
 }): string[] => {
   const sideRocket = getSideRocketSource(rocket);
   const frontRocket = getFrontRocketSource(rocket);
@@ -23,7 +25,7 @@ const collectAllAssetsToPrefetch = ({
   return [
     sideRocket,
     frontRocket,
-    ...getMainAssetsToPrefetch(),
+    ...getMainAssetsToPrefetch(durationInFrames, rocket),
     ...getOpeningAssetsToPrefetch(rocket),
     ...getIssuesSoundsToPrefetch(),
     ...starsAssetsToPreload(),
@@ -38,13 +40,19 @@ export const prefetchAllAssets = ({
   onProgress,
   onError,
   planetType,
+  durationInFrames,
 }: {
   rocket: Rocket;
   planetType: Planet;
+  durationInFrames: number;
   onProgress: (percentage: number) => void;
   onError: (error: Error) => void;
 }) => {
-  const assets = collectAllAssetsToPrefetch({ rocket, planetType });
+  const assets = collectAllAssetsToPrefetch({
+    rocket,
+    planetType,
+    durationInFrames,
+  });
 
   let assetsLoaded = 0;
 

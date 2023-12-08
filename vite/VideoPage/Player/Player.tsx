@@ -123,6 +123,7 @@ export const PlayerContainer: React.FC<{
         props={{
           rocket: inputProps.rocket,
           planetType: inputProps.planet,
+          durationInFrames,
         }}
         onClickPauseButton={onClickPauseButton}
         onClickPlayButton={onClickPlayButton}

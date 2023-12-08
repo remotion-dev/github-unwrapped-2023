@@ -98,6 +98,9 @@ export const RemotionRoot: React.FC = () => {
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
+          defaultProps={{
+            progress: 1,
+          }}
         />
       </Folder>
       <Composition
