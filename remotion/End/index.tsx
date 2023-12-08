@@ -21,7 +21,7 @@ const container: React.CSSProperties = {
   height: "100%",
 };
 
-export const GoldenScene: React.FC<{
+export const EndScene: React.FC<{
   rocket: Rocket;
 }> = ({ rocket }) => {
   return (

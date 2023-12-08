@@ -9,7 +9,7 @@ import {
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   ContributionsScene,
 } from "./Contributions";
-import { GoldenScene } from "./Golden";
+import { EndScene } from "./End";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import { LandingScene } from "./Landing";
 import {
@@ -171,7 +171,7 @@ export const Main: React.FC<Schema> = ({
         </Series.Sequence>
         {planet === PlanetEnum.Enum.Gold ? (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
-            <GoldenScene rocket={rocket} />
+            <EndScene rocket={rocket} />
           </Series.Sequence>
         ) : (
           <Series.Sequence durationInFrames={LANDING_SCENE}>
