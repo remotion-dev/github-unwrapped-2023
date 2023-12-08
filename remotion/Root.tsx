@@ -98,7 +98,9 @@ export const RemotionRoot: React.FC = () => {
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           defaultProps={{
-            progress: 1,
+            enterProgress: 1,
+            exitProgress: 1,
+            planet: "Gold",
           }}
         />
       </Folder>

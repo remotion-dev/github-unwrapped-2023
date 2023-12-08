@@ -1,7 +1,6 @@
 import { prefetch } from "remotion";
 import type { Planet, Rocket } from "../src/config";
 import { getIssuesSoundsToPrefetch } from "./Issues";
-import { getLandingAssetsToPrefetch } from "./Landing";
 import { getMainAssetsToPrefetch } from "./Main";
 import { getOpeningAssetsToPrefetch } from "./Opening";
 import { getProductivityAssetToPrefetch } from "./Productivity/Productivity";
@@ -30,7 +29,7 @@ const collectAllAssetsToPrefetch = ({
     ...getIssuesSoundsToPrefetch(),
     ...starsAssetsToPreload(),
     ...getProductivityAssetToPrefetch(),
-    ...getLandingAssetsToPrefetch({ planetType }),
+    // TODO: Landing assets
     ...getSevenSegmentAssetsToPrefetch(),
   ];
 };
