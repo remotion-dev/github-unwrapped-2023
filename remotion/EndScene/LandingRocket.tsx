@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AbsoluteFill,
   OffthreadVideo,
   interpolate,
   useCurrentFrame,
 } from "remotion";
-import type { Rocket } from "../../src/config";
+import type { Planet, Rocket } from "../../src/config";
 import { getFlame, takeOffSpeedFucntion } from "../Opening/TakeOff";
 import { RocketSide } from "../Spaceship";
 import { remapSpeed } from "../TopLanguages/remap-speed";
 
 export const LandingRocket: React.FC<{
   rocket: Rocket;
-}> = ({ rocket }) => {
+  planetType: Planet;
+}> = ({ rocket, planetType }) => {
   const frame = useCurrentFrame();
 
   const reversedFrame = 50 - frame;
   const acceleratedFrame = remapSpeed(reversedFrame, takeOffSpeedFucntion);
 
-  const rocketOffset = interpolate(acceleratedFrame, [0, 50], [550, 0]);
+  const finalOffset = useMemo(() => {
+    if (planetType === "Ice") {
+      return 550;
+    }
+
+    if (planetType === "Gold") {
+      return 550;
+    }
+
+    return 650;
+  }, [planetType]);
+
+  const rocketOffset = interpolate(acceleratedFrame, [0, 50], [finalOffset, 0]);
 
   const height = interpolate(frame, [30, 70], [300, 30]);
   const marginTop = height / 2;

@@ -84,7 +84,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
           exitProgress={exitProgress}
         />
         <Sequence from={70}>
-          <LandingRocket rocket={rocket} />
+          <LandingRocket planetType={planet} rocket={rocket} />
         </Sequence>
       </AbsoluteFill>
     </AbsoluteFill>
