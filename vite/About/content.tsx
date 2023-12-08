@@ -160,10 +160,9 @@ export const content: Array<AboutItemContent> = [
           For One Red{" "}
         </a>{" "}
         <br />
-        <p style={{ marginTop: 0 }}>
         Music -{" "}
         <a className={styles.aboutLink} href="https://www.smartsound.com/">
-          Soundsmart{" "}
+          Smartsound{" "}
         </a>{" "}
         <br />
         Font -{" "}
