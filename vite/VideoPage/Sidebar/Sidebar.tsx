@@ -3,7 +3,7 @@ import React from "react";
 import type { z } from "zod";
 import type { Rocket, compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
-import { SharingActions } from "../Actions/SharingActions.1";
+import { SharingActions } from "../Actions/SharingActions";
 import { RocketPicker } from "../RocketSelection/RocketPicker";
 import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
