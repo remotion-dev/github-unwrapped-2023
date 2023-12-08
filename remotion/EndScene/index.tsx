@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Audio,
   spring,
   staticFile,
   useCurrentFrame,
@@ -19,7 +18,6 @@ import { PlanetBackground } from "./PlanetBackground";
 
 export const GOLD_PLANET_ASSET = staticFile("gold-planet.svg");
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
-export const GOLD_PLANET_SOUND = staticFile("church_chior.mp3");
 
 const container: React.CSSProperties = {
   justifyContent: "center",
@@ -68,13 +66,6 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
   return (
     <AbsoluteFill>
       <AbsoluteFill style={container}>
-        {planet === "Gold" ? (
-          <Audio
-            // TODO: License
-            // TODO: Mute other sound
-            src={GOLD_PLANET_SOUND}
-          />
-        ) : null}
         <PlanetBackground planet={planet} />
         <HidePlanets exitProgress={exitProgress} planet={planet}>
           <PlanetAsset enterProgress={enterProgress} planet={planet} />
