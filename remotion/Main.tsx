@@ -105,17 +105,6 @@ const getSoundtrack = (durationInFrames: number, rocket: Rocket) => {
   const adjustedDuration = getMusicDuration(durationInSecond);
   const url = prefix[rocket] + adjustedDuration + postfix;
 
-  console.log(
-    "durationInFrame: ",
-    durationInFrames,
-    "durationInSeconds: ",
-    durationInSecond,
-    "adjustedDuration: ",
-    adjustedDuration,
-    "url: ",
-    url,
-  );
-
   return staticFile(url);
 };
 
