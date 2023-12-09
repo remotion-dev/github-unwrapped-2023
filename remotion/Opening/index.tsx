@@ -13,7 +13,7 @@ import type { z } from "zod";
 import type { Rocket } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
-import Background from "./Background";
+import { BACKGROUND_MOUNTAINS_IMAGE, BackgroundMountains } from "./Background";
 import { FOREGROUND_IMAGE, Foreground } from "./Foreground";
 import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
@@ -27,7 +27,12 @@ const LAUNCH_SOUND = staticFile(
 );
 
 export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
-  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket), FOREGROUND_IMAGE];
+  return [
+    LAUNCH_SOUND,
+    ...getTakeOffAssetToPrefetch(rocket),
+    FOREGROUND_IMAGE,
+    BACKGROUND_MOUNTAINS_IMAGE,
+  ];
 };
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
@@ -96,7 +101,7 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
             transform: `translateY(${bottomTranslateY}px)`,
           }}
         >
-          <Background />
+          <BackgroundMountains />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
