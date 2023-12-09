@@ -78,14 +78,17 @@ export const AnimatedCockpit: React.FC<{
           totalPullRequests={totalPullRequests}
         />
       </Sequence>
-      <AbsoluteFill style={{ scale: String(transitionToPullRequest) }}>
+      <Sequence
+        durationInFrames={471}
+        style={{ scale: String(transitionToPullRequest) }}
+      >
         <Cockpit
           durationOfStarsWithShake={durationOfStarsWithShake}
           repoText={repoText}
           starCount={starCount}
           totalStarCount={totalStarCount}
         />
-      </AbsoluteFill>
+      </Sequence>
     </AbsoluteFill>
   );
 };

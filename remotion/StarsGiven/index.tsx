@@ -101,6 +101,7 @@ export const StarsGiven: React.FC<Props> = ({
     ],
     [1, 0],
     {
+      extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
   );

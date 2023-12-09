@@ -10,7 +10,7 @@ import { computePositions } from "./compute-positions";
 
 export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
 export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
-export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 10;
+export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 3;
 
 export const contributionSceneAssets = (): string[] => {
   return [GLOW_PNG];
@@ -31,8 +31,8 @@ export const ContributionsScene: React.FC<{
   const fadeInGradient = interpolate(
     frame,
     [
-      5,
-      12,
+      0,
+      7,
       CONTRIBUTIONS_SCENE_DURATION - CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
       CONTRIBUTIONS_SCENE_DURATION,
     ],
