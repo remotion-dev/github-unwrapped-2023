@@ -39,7 +39,6 @@ export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
                   const file = new File([blob], "github_unwrapped.mp4", {
                     type: "video/mp4",
                   });
-                  window.alert("Sharing video");
                   return navigator.share({
                     files: [file],
                     title: "Your GitHub Unwrapped 2023",
@@ -50,6 +49,7 @@ export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
                   window.alert(Object.keys(navigator) + err.message);
                 });
             } else {
+              // @ts-expect-error
               navigate({ to: "./share" });
             }
           }}

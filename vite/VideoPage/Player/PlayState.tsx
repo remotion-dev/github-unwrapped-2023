@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AbsoluteFill } from "remotion";
 import { prefetchAllAssets } from "../../../remotion/prefetch-all-assets";
-import type { Planet, Rocket } from "../../../src/config";
+import type { Planet, Rocket, TopLanguage } from "../../../src/config";
 import { PlayButton } from "./PlayButton";
 
 export const PlayState: React.FC<{
@@ -12,6 +12,9 @@ export const PlayState: React.FC<{
     rocket: Rocket;
     planetType: Planet;
     durationInFrames: number;
+    language1: TopLanguage | null;
+    language2: TopLanguage | null;
+    language3: TopLanguage | null;
   };
 }> = ({ isPlaying, onClickPauseButton, onClickPlayButton, props }) => {
   const [progress, setProgress] = useState(0);
@@ -27,8 +30,18 @@ export const PlayState: React.FC<{
       },
       planetType: props.planetType,
       durationInFrames: props.durationInFrames,
+      language1: props.language1,
+      language2: props.language2,
+      language3: props.language3,
     });
-  }, [props.durationInFrames, props.planetType, props.rocket]);
+  }, [
+    props.durationInFrames,
+    props.language1,
+    props.language2,
+    props.language3,
+    props.planetType,
+    props.rocket,
+  ]);
 
   if (isPlaying) {
     return <AbsoluteFill onClick={onClickPauseButton} />;

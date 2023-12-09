@@ -6,8 +6,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import type { z } from "zod";
+import type { languageSchema } from "../../src/config";
 import { InnerLanguageDescription } from "./InnerLanguageDescription";
 
 export const LanguageDescription: React.FC<{

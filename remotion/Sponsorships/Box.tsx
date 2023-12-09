@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 
 const Sprite1 = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -587,14 +587,14 @@ export const Box: React.FC<{
           transform: `scale(${actualScale})`,
         }}
       >
-        {frame === 8 ? <Sprite1></Sprite1> : null}
-        {frame === 7 ? <Sprite2></Sprite2> : null}
-        {frame === 6 ? <Sprite3></Sprite3> : null}
-        {frame === 5 ? <Sprite4></Sprite4> : null}
-        {frame === 4 ? <Sprite5></Sprite5> : null}
-        {frame === 3 ? <Sprite6></Sprite6> : null}
-        {frame === 2 ? <Sprite7></Sprite7> : null}
-        {frame === 1 ? <Sprite8></Sprite8> : null}
+        {frame === 8 ? <Sprite1 /> : null}
+        {frame === 7 ? <Sprite2 /> : null}
+        {frame === 6 ? <Sprite3 /> : null}
+        {frame === 5 ? <Sprite4 /> : null}
+        {frame === 4 ? <Sprite5 /> : null}
+        {frame === 3 ? <Sprite6 /> : null}
+        {frame === 2 ? <Sprite7 /> : null}
+        {frame === 1 ? <Sprite8 /> : null}
       </div>
     </AbsoluteFill>
   );

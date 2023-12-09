@@ -61,7 +61,7 @@ export const PlayerContainer: React.FC<{
 
       current.play(e);
     },
-    [],
+    [playerRef],
   );
 
   const onClickPauseButton = useCallback(() => {
@@ -72,7 +72,7 @@ export const PlayerContainer: React.FC<{
     }
 
     current.pause();
-  }, []);
+  }, [playerRef]);
 
   useEffect(() => {
     const { current } = playerRef;
@@ -95,7 +95,7 @@ export const PlayerContainer: React.FC<{
       current.removeEventListener("play", onPlay);
       current.removeEventListener("pause", onPause);
     };
-  }, []);
+  }, [playerRef]);
 
   const durationInFrames = useMemo(() => {
     return calculateDuration(inputProps);
@@ -123,6 +123,9 @@ export const PlayerContainer: React.FC<{
           rocket: inputProps.rocket,
           planetType: inputProps.planet,
           durationInFrames,
+          language1: inputProps.topLanguages?.language1 ?? null,
+          language2: inputProps.topLanguages?.language2 ?? null,
+          language3: inputProps.topLanguages?.language3 ?? null,
         }}
         onClickPauseButton={onClickPauseButton}
         onClickPlayButton={onClickPlayButton}

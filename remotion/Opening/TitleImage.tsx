@@ -39,6 +39,10 @@ export const accentColorToGradient = (
   return "purpleRadial";
 };
 
+export const getAvatarImage = (login: string) => {
+  return `https://github.com/${login}.png`;
+};
+
 export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   accentColor,
@@ -67,7 +71,7 @@ export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
       }}
     >
       <Img
-        src={`https://github.com/${login}.png`}
+        src={getAvatarImage(login)}
         style={{
           width: 160,
           borderRadius: TITLE_IMAGE_INNER_BORDER_RADIUS,

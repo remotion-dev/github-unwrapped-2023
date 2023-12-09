@@ -17,7 +17,11 @@ import Background from "./Background";
 import Foreground from "./Foreground";
 import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
-import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
+import {
+  accentColorToGradient,
+  getAvatarImage,
+  type openingTitleSchema,
+} from "./TitleImage";
 
 export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_OVERLAP = 10;
@@ -26,8 +30,12 @@ const LAUNCH_SOUND = staticFile(
   "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
 );
 
-export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
-  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket)];
+export const getOpeningAssetsToPrefetch = (rocket: Rocket, login: string) => {
+  return [
+    LAUNCH_SOUND,
+    ...getTakeOffAssetToPrefetch(rocket),
+    getAvatarImage(login),
+  ];
 };
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({

@@ -1,6 +1,8 @@
 import { TransitionSeries, springTiming } from "@remotion/transitions";
 import { slide } from "@remotion/transitions/slide";
+import { Internals } from "remotion";
 import { z } from "zod";
+import type { TopLanguage } from "../../src/config";
 import {
   accentColorSchema,
   cornerType,
@@ -10,7 +12,9 @@ import {
 import { PlanetScaleWiggle } from "./PlaneScaleWiggle";
 import { PlanetScaleOut } from "./PlanetScaleOut";
 import { PlanetScaleSpiral } from "./PlanetScaleSpiral";
+import { getRotatingPlanetsToPrefetch } from "./RotatingPlanet";
 import { TITLE_CARD_DURATION, TopLanguagesTitleCard } from "./TitleCard";
+import { mapLanguageToPlanet } from "./constants";
 import {
   deriveEnterDirectionFromCorner,
   mapEnterDirectionIntoSlideDirection,
@@ -65,6 +69,29 @@ export const getDurationOfAllPlanets = ({
     transitionBetween2And3 -
     transitionDuration
   );
+};
+
+export const getTopLanguageAssetsToPrefetch = ({
+  language1,
+  language2,
+  language3,
+}: {
+  language1: TopLanguage | null;
+  language2: TopLanguage | null;
+  language3: TopLanguage | null;
+}) => {
+  return [
+    ...getRotatingPlanetsToPrefetch(),
+    language1 && language1.type === "designed"
+      ? mapLanguageToPlanet[language1.name].source
+      : null,
+    language2 && language2.type === "designed"
+      ? mapLanguageToPlanet[language2.name].source
+      : null,
+    language3 && language3.type === "designed"
+      ? mapLanguageToPlanet[language3.name].source
+      : null,
+  ].filter(Internals.truthy);
 };
 
 export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({

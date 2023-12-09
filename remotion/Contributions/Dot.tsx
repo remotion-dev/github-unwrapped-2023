@@ -115,7 +115,18 @@ export const ContributionDot: React.FC<{
           ? "radial-gradient(circle at center, #e0ff5e 0, #3b6dd1 30%, #0086d4 50%, #021d57 65%, #01194a 100%)"
           : undefined,
     };
-  }, [glow, moveProgress, opacity, p.x, p.y, size, xDelta, yDelta]);
+  }, [
+    glow,
+    moveProgress,
+    opacity,
+    p.x,
+    p.y,
+    pushFromCenter,
+    pushFromTop,
+    size,
+    xDelta,
+    yDelta,
+  ]);
 
   const inner: React.CSSProperties = useMemo(() => {
     return {

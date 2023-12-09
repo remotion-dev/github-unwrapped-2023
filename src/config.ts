@@ -47,6 +47,8 @@ export const languageSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
+export type TopLanguage = z.infer<typeof languageSchema>;
+
 const days = ["0", "1", "2", "3", "4", "5", "6"] as const;
 export const topWeekdaySchema = z.enum(days);
 

@@ -20,7 +20,7 @@ export const BurgerMenu = () => {
           item && (
             <animated.div style={style} className={styles.navWrapper}>
               <Link
-                to={"https://github.com/remotion-dev/github-unwrapped-2023"}
+                href={"https://github.com/remotion-dev/github-unwrapped-2023"}
               >
                 <div className={styles.navLink}>
                   <GithubIcon width={24} height={24} />

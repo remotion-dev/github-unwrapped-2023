@@ -19,6 +19,10 @@ const planets = [
   RubyPlanet,
 ];
 
+export const getRotatingPlanetsToPrefetch = (): string[] => {
+  return planets.map((p) => p.source) as string[];
+};
+
 const planetStyle: React.CSSProperties = {
   width: 110,
   height: 110,

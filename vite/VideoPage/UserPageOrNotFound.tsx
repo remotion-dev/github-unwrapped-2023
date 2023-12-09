@@ -6,5 +6,5 @@ export const UserPageOrNotFound: React.FC = () => {
     return <NotFound />;
   }
 
-  return <UserPage user={window.__USER__} />;
+  return <UserPage />;
 };
