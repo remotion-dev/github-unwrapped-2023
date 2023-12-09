@@ -13,6 +13,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { isLessPowerfulDevice } from "../Opening/devices";
+import { TABLET_SCENE_ENTER_ANIMATION } from "../Productivity/Tablet";
 import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
 import { Shines } from "./Shines";
@@ -92,13 +93,26 @@ export const StarsGiven: React.FC<Props> = ({
   timeUntilTabletHasEntered,
 }) => {
   const frame = useCurrentFrame();
-  const tabletHasEntered = frame > timeUntilTabletHasEntered;
+  const shakeFactor = interpolate(
+    frame,
+    [
+      timeUntilTabletHasEntered - 40,
+      timeUntilTabletHasEntered - TABLET_SCENE_ENTER_ANIMATION - 15,
+    ],
+    [1, 0],
+    {
+      extrapolateRight: "clamp",
+    },
+  );
 
-  const xShake = tabletHasEntered ? 0 : noise2D("xshake", frame / 10, 0) * 10;
-  const yShake = tabletHasEntered ? 0 : noise2D("yshake", frame / 10, 0) * 10;
-  const rotationShake = tabletHasEntered
-    ? 0
-    : noise2D("rotateshake", frame / 10, 0) * 0.05;
+  const xShake =
+    shakeFactor === 0 ? 0 : noise2D("xshake", frame / 10, 0) * 10 * shakeFactor;
+  const yShake =
+    shakeFactor === 0 ? 0 : noise2D("yshake", frame / 10, 0) * 10 * shakeFactor;
+  const rotationShake =
+    shakeFactor === 0
+      ? 0
+      : noise2D("rotateshake", frame / 10, 0) * 0.05 * shakeFactor;
 
   const starsDisplayed = useMemo(() => {
     return getActualStars(starsGiven);
