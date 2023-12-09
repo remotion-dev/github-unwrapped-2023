@@ -46,11 +46,11 @@ export type Finality =
     };
 
 export type Render = {
-  renderId: string | null;
+  renderId: string;
   region: AwsRegion;
   username: string;
   theme: string;
-  bucketName: string | null;
+  bucketName: string;
   finality: Finality | null;
   functionName: string;
   account: number;

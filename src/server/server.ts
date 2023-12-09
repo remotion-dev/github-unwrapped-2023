@@ -18,7 +18,6 @@ import {
   viteDistDir,
 } from "./index-html.js";
 import { loginEndPoint } from "./login.js";
-import { progressEndPoint } from "./progress.js";
 import { renderEndPoint } from "./render.js";
 import { errorEndpoint } from "./sentry-test.js";
 
@@ -67,8 +66,6 @@ export const startServer = async () => {
   app.use(bodyParser.json());
 
   app.post("/api/render", apiEndpointWrapper(renderEndPoint));
-
-  app.post("/api/progress", apiEndpointWrapper(progressEndPoint));
 
   app.post("/api/stats", apiEndpointWrapper(statsEndPoint));
 

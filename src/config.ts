@@ -134,6 +134,21 @@ export const RenderRequest = z.object({
   inputProps: compositionSchema,
 });
 
+export type RenderResponse =
+  | {
+      type: "video-available";
+      url: string;
+    }
+  | {
+      type: "render-running";
+      renderId: string;
+      progress: number;
+    }
+  | {
+      type: "render-error";
+      error: string;
+    };
+
 export const ProgressRequest = z.object({
   username: z.string(),
   theme: z.string(),

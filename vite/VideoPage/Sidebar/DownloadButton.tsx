@@ -8,9 +8,20 @@ import styles from "./styles.module.css";
 export const DownloadButton: React.FC<{
   style?: React.CSSProperties;
 }> = ({ style }) => {
-  const { url, progress, error } = useUserVideo();
+  const { status } = useUserVideo();
 
-  if (error) {
+  if (status.type === "querying") {
+    return (
+      <Button
+        className={styles.downloadButton}
+        style={{ pointerEvents: "none", ...style }}
+      >
+        Generating video
+      </Button>
+    );
+  }
+
+  if (status.type === "render-error") {
     return (
       <Button
         className={styles.downloadButton}
@@ -21,9 +32,9 @@ export const DownloadButton: React.FC<{
     );
   }
 
-  if (url) {
+  if (status.type === "video-available") {
     return (
-      <a href={url} target="_blank" rel="noreferrer">
+      <a href={status.url} target="_blank" rel="noreferrer">
         <Button
           hoverEffect
           className={styles.downloadButton}
@@ -43,9 +54,9 @@ export const DownloadButton: React.FC<{
     >
       <div
         className={styles.loadingButtonBar}
-        style={{ width: `${progress * 100}%`, zIndex: -1 }}
+        style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
       />
-      <div>Generating... ({Math.floor(progress * 100)}%)</div>
+      <div>Generating... ({Math.floor(status.progress * 100)}%)</div>
     </Button>
   );
 };

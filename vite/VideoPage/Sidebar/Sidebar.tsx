@@ -5,6 +5,7 @@ import type { Rocket, compositionSchema } from "../../../src/config";
 import { FurtherActions } from "../Actions/FurtherActions";
 import { SharingActions } from "../Actions/SharingActions";
 import { RocketPicker } from "../RocketSelection/RocketPicker";
+import type { RenderStatus } from "../useVideo";
 import { DownloadButton } from "./DownloadButton";
 import styles from "./styles.module.css";
 
@@ -14,14 +15,10 @@ export const Sidebar: React.FC<{
   rocket: Rocket;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   playerRef: React.RefObject<PlayerRef>;
-  progress: number;
-  error: boolean;
-  url: string | null;
+  status: RenderStatus;
 }> = ({
   inputProps,
-  progress,
-  error,
-  url,
+  status,
   setIsModalOpen,
   rocket,
   setIsPlaying,
@@ -41,15 +38,15 @@ export const Sidebar: React.FC<{
           <h2>{inputProps.login}</h2>
         </div>
 
-        {url ? (
-          <a href={url} target="_blank" rel="noreferrer">
-            <DownloadButton error={error} progress={progress} url={url} />
+        {status.type === "video-available" ? (
+          <a href={status.url} target="_blank" rel="noreferrer">
+            <DownloadButton />
           </a>
         ) : (
-          <DownloadButton error={error} progress={progress} url={url} />
+          <DownloadButton />
         )}
       </div>
-      {error && (
+      {status.type === "render-error" && (
         <p style={{ marginTop: -12, fontSize: 14 }}>
           We{"'"}ve been notified of the error and are looking into it. Please
           try again later.

@@ -1,17 +1,9 @@
 import type { RenderProgress } from "@remotion/lambda/client";
-import {
-  getRenderProgress,
-  speculateFunctionName,
-} from "@remotion/lambda/client";
-import * as Sentry from "@sentry/node";
-import type { Request, Response } from "express";
-import { DISK, ProgressRequest, RAM, TIMEOUT } from "../config.js";
-import { setEnvForKey } from "../helpers/set-env-for-key.js";
-import type { Finality, Render } from "./db.js";
-import { findRender, updateRender } from "./db.js";
-import { sendDiscordMessage } from "./discord.js";
+import type { Finality } from "./db.js";
 
-const getFinality = (renderProgress: RenderProgress): Finality | null => {
+export const getFinality = (
+  renderProgress: RenderProgress,
+): Finality | null => {
   if (renderProgress.outputFile) {
     return {
       type: "success",
@@ -28,82 +20,4 @@ const getFinality = (renderProgress: RenderProgress): Finality | null => {
   }
 
   return null;
-};
-
-export const getProgress = async (render: Render) => {
-  try {
-    if (!render.bucketName) {
-      throw new Error("Bucket name is not set.");
-    }
-
-    if (!render.renderId) {
-      throw new Error("Render ID is not set.");
-    }
-
-    setEnvForKey(render.account);
-    const renderProgress = await getRenderProgress({
-      bucketName: render.bucketName,
-      functionName: speculateFunctionName({
-        diskSizeInMb: DISK,
-        memorySizeInMb: RAM,
-        timeoutInSeconds: TIMEOUT,
-      }),
-      region: render.region,
-      renderId: render.renderId,
-    });
-
-    const finality = getFinality(renderProgress);
-
-    await updateRender({
-      ...render,
-      finality,
-    });
-
-    if (renderProgress.fatalErrorEncountered) {
-      const { stack } = renderProgress.errors[0];
-      sendDiscordMessage(`Error for renderId: ${render.renderId}\n${stack}`);
-
-      return {
-        type: "error",
-        message: renderProgress.errors[0].message,
-      };
-    }
-
-    if (renderProgress.done) {
-      return {
-        type: "done",
-        url: renderProgress.outputFile as string,
-        size: renderProgress.outputSizeInBytes as number,
-      };
-    }
-
-    return {
-      type: "progress",
-      progress: Math.max(0.03, renderProgress.overallProgress),
-    };
-  } catch (error) {
-    Sentry.captureException(error);
-    console.log(error);
-    return {
-      type: "error",
-      message: "Something went wrong.",
-    };
-  }
-};
-
-export const progressEndPoint = async (
-  request: Request,
-  response: Response,
-) => {
-  if (request.method === "OPTIONS") return response.end();
-
-  const { username, theme } = ProgressRequest.parse(request.body);
-
-  const render = await findRender({ username, theme });
-
-  if (!render) {
-    throw new Error("Render not found.");
-  }
-
-  return response.json(await getProgress(render));
 };
