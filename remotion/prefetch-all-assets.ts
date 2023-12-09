@@ -70,7 +70,6 @@ export const prefetchAllAssets = ({
     language2,
     language3,
   });
-  console.log(assets);
 
   let assetsLoaded = 0;
 

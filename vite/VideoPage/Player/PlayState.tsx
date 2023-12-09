@@ -15,6 +15,7 @@ export const PlayState: React.FC<{
     language1: TopLanguage | null;
     language2: TopLanguage | null;
     language3: TopLanguage | null;
+    login: string;
   };
 }> = ({ isPlaying, onClickPauseButton, onClickPlayButton, props }) => {
   const [progress, setProgress] = useState(0);

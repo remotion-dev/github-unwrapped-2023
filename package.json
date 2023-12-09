@@ -21,6 +21,7 @@
     "@remotion/noise": "4.0.77",
     "@remotion/paths": "4.0.77",
     "@remotion/player": "4.0.77",
+    "@remotion/preload": "4.0.77",
     "@remotion/shapes": "4.0.77",
     "@remotion/transitions": "4.0.77",
     "@remotion/zod-types": "4.0.77",

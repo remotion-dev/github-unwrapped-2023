@@ -126,6 +126,7 @@ export const PlayerContainer: React.FC<{
           language1: inputProps.topLanguages?.language1 ?? null,
           language2: inputProps.topLanguages?.language2 ?? null,
           language3: inputProps.topLanguages?.language3 ?? null,
+          login: inputProps.login,
         }}
         onClickPauseButton={onClickPauseButton}
         onClickPlayButton={onClickPlayButton}
