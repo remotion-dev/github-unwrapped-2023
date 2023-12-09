@@ -34,13 +34,15 @@ export const GLOW_PNG = staticFile("glow.png");
 
 export const ContributionDot: React.FC<{
   dot: ContributionDotType;
-}> = ({ dot: p }) => {
+  maxContributions: number;
+}> = ({ dot: p, maxContributions }) => {
   const frame = useCurrentFrame();
   const starColor = "#a3d3ff";
+  const highestPoint = Math.max(maxContributions, 5);
 
   const activityColor = interpolateColors(
     p.data,
-    [0, 128],
+    [0, highestPoint],
     ["#202138", "#2486ff"],
   );
 
@@ -58,7 +60,7 @@ export const ContributionDot: React.FC<{
     },
   );
 
-  const maxOpacity = interpolate(p.data, [0, 128], [0.2, 1], {
+  const maxOpacity = interpolate(p.data, [0, highestPoint], [0.2, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -77,7 +79,7 @@ export const ContributionDot: React.FC<{
 
   const finalSize = interpolate(
     p.data,
-    [0, 128],
+    [0, highestPoint],
     [MIN_STAR_SIZE, MAX_STAR_SIZE],
   );
   const sizeOffset = INITIAL_SIZE * (1 - moveProgress);
@@ -88,7 +90,7 @@ export const ContributionDot: React.FC<{
     [INITIAL_SIZE, finalSize + sizeOffset],
   );
 
-  const maxGlow = interpolate(p.data, [0, 128], [0, MAX_STAR_GLOW]);
+  const maxGlow = interpolate(p.data, [0, highestPoint], [0, MAX_STAR_GLOW]);
   const glow = interpolate(moveProgress, [0, 1], [0, maxGlow]);
 
   const borderRadius = interpolate(moveProgress, [0, 1], [3, size / 2]);

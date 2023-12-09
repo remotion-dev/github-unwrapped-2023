@@ -75,6 +75,7 @@ export const ContributionsScene: React.FC<{
               // eslint-disable-next-line react/no-array-index-key
               key={i}
               dot={p}
+              maxContributions={Math.max(...contributionData)}
             />
           ))}
         </div>
