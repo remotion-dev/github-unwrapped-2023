@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import {
+  AbsoluteFill,
   Easing,
+  Img,
   interpolate,
   interpolateColors,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 import {
@@ -26,6 +29,8 @@ export type ContributionDotType = {
 const END_SPREAD = 210;
 
 const SPREAD_DURATION = END_SPREAD;
+
+export const GLOW_PNG = staticFile("glow.png");
 
 export const ContributionDot: React.FC<{
   dot: ContributionDotType;
@@ -97,6 +102,9 @@ export const ContributionDot: React.FC<{
 
   const xDelta = noiseX * 200;
   const yDelta = noiseY * 800;
+  if (glow > 0) {
+    console.log("glow");
+  }
 
   const style: React.CSSProperties = useMemo(() => {
     return {
@@ -110,10 +118,6 @@ export const ContributionDot: React.FC<{
       width: size + glow,
       opacity,
       borderRadius: "50%",
-      background:
-        glow > 0
-          ? "radial-gradient(circle at center, #e0ff5e 0, #3b6dd1 30%, #0086d4 50%, #021d57 65%, #01194a 100%)"
-          : undefined,
     };
   }, [
     glow,
@@ -139,6 +143,9 @@ export const ContributionDot: React.FC<{
 
   return (
     <div style={style}>
+      <AbsoluteFill>
+        <Img src={GLOW_PNG} />
+      </AbsoluteFill>
       <div style={inner} />
     </div>
   );

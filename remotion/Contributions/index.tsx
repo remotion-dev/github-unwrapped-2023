@@ -5,12 +5,16 @@ import type { AccentColor } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
-import { ContributionDot } from "./Dot";
+import { ContributionDot, GLOW_PNG } from "./Dot";
 import { computePositions } from "./compute-positions";
 
 export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
 export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 10;
+
+export const contributionSceneAssets = (): string[] => {
+  return [GLOW_PNG];
+};
 
 export const ContributionsScene: React.FC<{
   accentColor: AccentColor;

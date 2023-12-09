@@ -1,5 +1,6 @@
 import { prefetch } from "remotion";
 import type { Planet, Rocket, TopLanguage } from "../src/config";
+import { contributionSceneAssets } from "./Contributions";
 import { prefetchLandingAssets } from "./EndScene";
 import { getIssuesAssetsToPrefetch } from "./Issues";
 import { getMainAssetsToPrefetch } from "./Main";
@@ -40,6 +41,7 @@ const collectAllAssetsToPrefetch = ({
     ...getProductivityAssetToPrefetch(),
     ...getSevenSegmentAssetsToPrefetch(),
     ...prefetchLandingAssets(planetType),
+    ...contributionSceneAssets(),
   ];
 };
 
