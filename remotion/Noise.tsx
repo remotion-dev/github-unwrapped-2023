@@ -33,13 +33,12 @@ export const Noise: React.FC<z.infer<typeof noiseSchema>> = ({
 }) => {
   const { width, height } = useVideoConfig();
 
-  const unitsHorizontal = width / unitSize;
-  const unitsVertical = height / unitSize;
-
-  const unitOffsetX = Math.floor(translateX / unitSize);
-  const unitOffsetY = Math.floor(translateY / unitSize);
-
   const samples = useMemo(() => {
+    const unitsHorizontal = width / unitSize;
+    const unitsVertical = height / unitSize;
+
+    const unitOffsetX = Math.floor(translateX / unitSize);
+    const unitOffsetY = Math.floor(translateY / unitSize);
     return Array.from({ length: unitsHorizontal }, (_, column) => {
       return Array.from({ length: unitsVertical }, (__, row) => {
         const x = column - unitOffsetY;
@@ -47,7 +46,7 @@ export const Noise: React.FC<z.infer<typeof noiseSchema>> = ({
         return { x: noise2D("seedx", y * 6, x * 6) };
       });
     });
-  }, [unitOffsetX, unitOffsetY, unitsHorizontal, unitsVertical]);
+  }, [height, translateX, translateY, width]);
 
   const memoizedSamples = useMemo(() => {
     return samples.map((sample, i) => {

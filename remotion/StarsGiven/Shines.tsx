@@ -138,7 +138,7 @@ export const Shines: React.FC<{
   rotationShake: number;
 }> = ({ xShake, yShake, rotationShake }) => {
   const sequences = useMemo(() => {
-    return new Array(200).fill(true).map((a, i) => {
+    return new Array(150).fill(true).map((a, i) => {
       return (
         <Sequence
           // eslint-disable-next-line react/no-array-index-key
