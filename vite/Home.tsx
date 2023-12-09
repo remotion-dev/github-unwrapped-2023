@@ -23,7 +23,19 @@ const Home = () => {
       <div className={styles.container}>
         <RadialGradient />
         <Stars />
-        <div>
+        <div
+          style={{
+            height: "100vh",
+            width: "100vw",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <img
             style={{
               width: 144,
