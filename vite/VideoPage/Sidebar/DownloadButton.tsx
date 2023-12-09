@@ -21,17 +21,6 @@ export const DownloadButton: React.FC<{
     );
   }
 
-  if (progress === undefined) {
-    return (
-      <Button
-        className={styles.downloadButton}
-        style={{ pointerEvents: "none", ...style }}
-      >
-        Generating...
-      </Button>
-    );
-  }
-
   if (url) {
     return (
       <a href={url} target="_blank" rel="noreferrer">
