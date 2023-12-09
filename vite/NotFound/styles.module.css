@@ -37,5 +37,6 @@
   @media only screen and (min-width: 40em) {
     font-size: 25px;
     font-weight: 400;
+    text-align: left;
   }
 }

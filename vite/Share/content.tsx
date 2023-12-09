@@ -112,7 +112,7 @@ export const useShareContent = (
           step: 3,
           title: "Upload your video",
           description:
-            "Select your unwrapped or drag and drop your video from your downloads folder.",
+            "Select your video or drag and drop your video from your Downloads folder.",
         },
       ];
     }
@@ -146,7 +146,7 @@ export const useShareContent = (
           step: 3,
           title: "Upload your video and add a caption",
           description:
-            "Select your unwrapped or drag and drop your video from your downloads folder",
+            "Select your video or drag and drop your video from your Downloads folder",
         },
       ];
     }

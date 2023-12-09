@@ -3,7 +3,7 @@ import { accentColorValues } from "../src/config.js";
 import About from "./About/About.jsx";
 import Home from "./Home.jsx";
 import { SharePage } from "./Share/page.jsx";
-import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
+import { UserPage } from "./VideoPage/user-page.jsx";
 import { UserVideoContextProvider } from "./context.jsx";
 
 // const TanStackRouterDevtools =
@@ -53,7 +53,7 @@ export const userRoute = new Route({
 export const videoRoute = new Route({
   getParentRoute: () => userRoute,
   path: "/",
-  component: UserPageOrNotFound,
+  component: UserPage,
 });
 
 export const shareRoute = new Route({

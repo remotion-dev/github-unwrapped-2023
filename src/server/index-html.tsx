@@ -1,11 +1,9 @@
-import * as Sentry from "@sentry/node";
 import type { Request, Response } from "express";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
 import { backendCredentials } from "../helpers/domain.js";
-import { sendDiscordMessage } from "./discord.js";
 import { replaceAppHead } from "./seo.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -26,18 +24,16 @@ export const handleIndexHtmlDev = (vite: ViteDevServer) => {
 
   return async (req: Request, response: Response) => {
     const template = readFileSync(index, "utf-8");
-    try {
-      const transformed = await vite.transformIndexHtml(req.url, template);
+    const transformed = await vite.transformIndexHtml(req.url, template);
 
-      response.status(200);
-      response.send(
-        await replaceAppHead(req.params.username ?? null, transformed),
-      );
-    } catch (err) {
-      vite.ssrFixStacktrace(err as Error);
-      console.error(err);
-      response.status(500).end((err as Error).message);
-    }
+    const { html, status } = await replaceAppHead(
+      req.params.username ?? null,
+      transformed,
+    );
+
+    response.status(status);
+    response.send(html);
+    response.end();
   };
 };
 
@@ -45,16 +41,13 @@ export const handleIndexHtmlProduction = () => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
   return async (req: Request, response: Response) => {
-    try {
-      response.status(200);
-      const head = await replaceAppHead(req.params.username ?? null, template);
-      response.send(head);
-      response.end();
-    } catch (err) {
-      Sentry.captureException(err);
-      sendDiscordMessage(`Error occurred:\n> ${(err as Error).stack}`);
-      // TODO: Improve this
-      response.status(500).end((err as Error).message);
-    }
+    const { html, status } = await replaceAppHead(
+      req.params.username ?? null,
+      template,
+    );
+
+    response.status(status);
+    response.send(html);
+    response.end();
   };
 };

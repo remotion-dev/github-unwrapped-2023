@@ -1,6 +1,6 @@
 import { sendDiscordMessage } from "./discord.js";
 
-export const fetchFromGitHub = async ({
+export const executeGitHubGraphQlQuery = async ({
   username,
   token,
   query,

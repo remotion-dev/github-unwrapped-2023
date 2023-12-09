@@ -3,7 +3,7 @@ import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
 import type { ProfileStats } from "./db.js";
-import { fetchFromGitHub } from "./fetch-stats.js";
+import { executeGitHubGraphQlQuery } from "./fetch-stats.js";
 import { getMorePullRequests } from "./get-more-pull-requests.js";
 import { getMoreStars } from "./get-more-stars.js";
 import type { BaseQueryResponse } from "./queries/base.query.js";
@@ -34,7 +34,7 @@ export const getStatsFromGitHub = async ({
 }): Promise<ProfileStats> => {
   const fetchedAt = Date.now();
 
-  const baseData = (await fetchFromGitHub({
+  const baseData = (await executeGitHubGraphQlQuery({
     username,
     token,
     query: getQuery(username, baseQuery),

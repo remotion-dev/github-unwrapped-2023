@@ -1,4 +1,4 @@
-import { fetchFromGitHub } from "./fetch-stats.js";
+import { executeGitHubGraphQlQuery } from "./fetch-stats.js";
 import { getQuery } from "./queries/query.js";
 import {
   getStarredReposQuery,
@@ -19,7 +19,7 @@ export const getMoreStars = async ({
   const pullRequestData: Array<{ name: string }> = [];
 
   while (!done && safety < 10) {
-    const data = (await fetchFromGitHub({
+    const data = (await executeGitHubGraphQlQuery({
       username,
       token,
       query: getQuery(username, getStarredReposQuery(cursor)),

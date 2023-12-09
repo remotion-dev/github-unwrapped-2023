@@ -1,4 +1,4 @@
-import { fetchFromGitHub } from "./fetch-stats.js";
+import { executeGitHubGraphQlQuery } from "./fetch-stats.js";
 import type { PullRequestQueryResponse } from "./queries/pull-request.query.js";
 import { pullRequestQuery } from "./queries/pull-request.query.js";
 import { getQuery } from "./queries/query.js";
@@ -17,7 +17,7 @@ export const getMorePullRequests = async ({
   const pullRequestData: Array<{ createdAt: string }> = [];
 
   while (!done && safety < 10) {
-    const data = (await fetchFromGitHub({
+    const data = (await executeGitHubGraphQlQuery({
       username,
       token,
       query: getQuery(username, pullRequestQuery(cursor)),

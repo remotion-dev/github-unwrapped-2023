@@ -11,6 +11,7 @@ import { computeCompositionParameters } from "./utils";
 declare global {
   interface Window {
     __USER__: ProfileStats | null;
+    __INTERNAL_ERROR__?: string;
   }
 }
 
@@ -50,7 +51,7 @@ export const UserPage = () => {
   }, [isModalOpen]);
 
   if (compositionParams === null) {
-    return <NotFound />;
+    return <NotFound code="404" />;
   }
 
   return (
