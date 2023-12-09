@@ -21,7 +21,7 @@ export const pullRequestsSchema = z.object({
   accentColor: accentColorSchema,
 });
 
-const MAX_PATHS = 50;
+const MAX_PATHS = 30;
 export const PULL_REQUESTS_DURATION = 260;
 
 export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
