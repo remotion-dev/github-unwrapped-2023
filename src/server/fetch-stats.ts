@@ -1,4 +1,5 @@
-import type { Hour } from "../config.js";
+import type { Request, Response } from "express";
+import { StatsRequest, type Hour } from "../config.js";
 import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
@@ -8,6 +9,7 @@ import {
   type ProfileStats,
 } from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
+import { getRandomGithubToken } from "./github-token.js";
 import type { BaseQueryResponse } from "./queries/base.query.js";
 import { baseQuery } from "./queries/base.query.js";
 import type { PullRequestQueryResponse } from "./queries/pull-request.query.js";
@@ -207,4 +209,17 @@ export const getStatsFromGitHubOrCache = async ({
   } catch (e) {
     return null;
   }
+};
+
+export const statsEndPoint = async (request: Request, response: Response) => {
+  if (request.method === "OPTIONS") return response.end();
+
+  const { username } = StatsRequest.parse(request.body);
+
+  await getStatsFromGitHubOrCache({
+    username,
+    token: getRandomGithubToken(),
+  });
+
+  return response.json({});
 };

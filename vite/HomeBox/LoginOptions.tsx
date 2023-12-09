@@ -7,27 +7,22 @@ import styles from "./styles.module.css";
 type Props = {
   userNotFound: boolean;
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
-
-  setLoading: (v: boolean) => void;
 };
 
 export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
-  setLoading,
 }) => {
   const [username, setUsername] = useState<string>("");
 
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
-      setLoading(true);
       e.preventDefault();
       fetch(`https://api.github.com/users/${username}`)
         .then((response) => response.json())
         .then((result) => {
           if (result.message === "Not Found") {
             setUserNotFound(true);
-            setLoading(false);
           } else {
             setUserNotFound(false);
             window.location.href = `/${username}`;
@@ -35,7 +30,7 @@ export const LoginOptions: React.FC<Props> = ({
         })
         .catch((error) => console.log("error", error));
     },
-    [setLoading, setUserNotFound, username],
+    [setUserNotFound, username],
   );
 
   return (

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
 import { backendCredentials } from "../helpers/domain.js";
+import { getProfileStatsFromCache } from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { replaceAppHead } from "./seo.js";
 
@@ -21,13 +22,35 @@ const viteIndexHtml =
     ? path.join(viteDir, "index.html")
     : path.join(viteDistDir, "index.html");
 
-export const handleIndexHtmlDev = (vite: ViteDevServer) => {
+export const handleIndexHtmlDev = (
+  vite: ViteDevServer,
+  handleUsername = false,
+) => {
   const index = viteIndexHtml;
 
   return async (req: Request, response: Response) => {
     const template = readFileSync(index, "utf-8");
     try {
       const transformed = await vite.transformIndexHtml(req.url, template);
+
+      if (handleUsername) {
+        const username = req.params.username || null;
+
+        console.log("username: ", username);
+
+        if (username === null) {
+          return response.redirect("/");
+        }
+
+        const cachedStats = await getProfileStatsFromCache(username);
+
+        // console.log(JSON.stringify(cachedStats));
+
+        if (!cachedStats) {
+          response.redirect("/loading?username=" + username);
+          return;
+        }
+      }
 
       response.status(200);
       response.send(

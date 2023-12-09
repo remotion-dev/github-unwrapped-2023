@@ -2,6 +2,7 @@ import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import { accentColorValues } from "../src/config.js";
 import About from "./About/About.jsx";
 import Home from "./Home.jsx";
+import { Loading } from "./Loading.jsx";
 import { SharePage } from "./Share/page.jsx";
 import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
 import { UserVideoContextProvider } from "./context.jsx";
@@ -79,10 +80,21 @@ const aboutRoute = new Route({
   component: About,
 });
 
+/**
+ * LOADING ROUTE
+ */
+
+const loadingRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/loading",
+  component: Loading,
+});
+
 // Create the route tree using your routes
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
+  loadingRoute,
   userRoute.addChildren([videoRoute, shareRoute]),
 ]);
 

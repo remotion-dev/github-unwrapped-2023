@@ -16,39 +16,6 @@ import styles from "./styles.module.css";
 const Home = () => {
   const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return (
-      <div className={styles.container}>
-        <RadialGradient />
-        <Stars />
-        <div
-          style={{
-            height: "100vh",
-            width: "100vw",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          <img
-            style={{
-              width: 144,
-            }}
-            src="/walking-octocat.gif"
-            alt="loading"
-          />
-          <p style={{ width: 144, textAlign: "center" }}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <RadialGradient />
@@ -58,11 +25,7 @@ const Home = () => {
       <HomeForeground />
       <Octocat userNotFound={userNotFound} />
       <Navbar />
-      <HomeBox
-        userNotFound={userNotFound}
-        setUserNotFound={setUserNotFound}
-        setLoading={setLoading}
-      />
+      <HomeBox userNotFound={userNotFound} setUserNotFound={setUserNotFound} />
     </div>
   );
 };
