@@ -70,7 +70,7 @@ const shouldBendInwards = ({
 };
 
 export const makeRandomPath = (seed: string | number) => {
-  const numberOfItems = 140;
+  const numberOfItems = 50;
   const itemsToOffset = Math.round(numberOfItems / 7);
 
   const bendInwards = shouldBendInwards({ itemsToOffset, numberOfItems, seed });
