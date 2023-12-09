@@ -161,6 +161,11 @@ export const content: Array<AboutItemContent> = [
           For One Red{" "}
         </a>{" "}
         <br />
+        Music -{" "}
+        <a className={styles.aboutLink} href="https://www.smartsound.com/">
+          Smartsound{" "}
+        </a>{" "}
+        <br />
         Font -{" "}
         <a
           className={styles.aboutLink}
