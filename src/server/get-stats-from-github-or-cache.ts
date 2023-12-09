@@ -13,16 +13,12 @@ export const getStatsFromGitHubOrCache = async ({
     return fromCache;
   }
 
-  try {
-    const stats = await getStatsFromGitHub({
-      loggedInWithGitHub: false,
-      token,
-      username,
-    });
+  const stats = await getStatsFromGitHub({
+    loggedInWithGitHub: false,
+    token,
+    username,
+  });
 
-    await insertProfileStats(stats);
-    return stats;
-  } catch (e) {
-    return null;
-  }
+  await insertProfileStats(stats);
+  return stats;
 };
