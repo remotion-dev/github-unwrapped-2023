@@ -5,7 +5,7 @@ import {
   makeRedirectUriBackend,
 } from "../helpers/domain.js";
 import { clearRendersForUsername, insertProfileStats } from "./db.js";
-import { getStatsFromGitHub } from "./fetch-stats.js";
+import { getStatsFromGitHub } from "./get-stats-from-github.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();

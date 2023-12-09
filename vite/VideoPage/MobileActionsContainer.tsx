@@ -47,6 +47,7 @@ export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
                 })
                 .catch((err) => {
                   console.log(err);
+                  // @ts-expect-error
                   navigate({ to: "./share" });
                 });
             } else {
