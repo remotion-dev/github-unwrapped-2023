@@ -17,12 +17,8 @@ const getRandomRegion = (): AwsRegion => {
   return getRegions()[Math.floor(Math.random() * getRegions().length)];
 };
 
-export const renderEndPoint = async (request: Request, response: Response) => {
-  if (request.method === "OPTIONS") {
-    return response.end();
-  }
-
-  const { username, inputProps } = RenderRequest.parse(request.body);
+export const renderOrGetProgress = async (requestBody: unknown) => {
+  const { username, inputProps } = RenderRequest.parse(requestBody);
 
   const existingRender = await findRender({
     username,
@@ -30,9 +26,7 @@ export const renderEndPoint = async (request: Request, response: Response) => {
   });
 
   if (existingRender) {
-    return getProgress(existingRender).then((progress) => {
-      response.json(progress);
-    });
+    return getProgress(existingRender);
   }
 
   const account = getRandomAwsAccount();
@@ -84,7 +78,15 @@ export const renderEndPoint = async (request: Request, response: Response) => {
 
   await saveRender(updatedRender, _id);
 
-  return getProgress(updatedRender).then((progress) => {
-    response.json(progress);
-  });
+  return getProgress(updatedRender);
+};
+
+export const renderEndPoint = async (request: Request, response: Response) => {
+  if (request.method === "OPTIONS") {
+    return response.end();
+  }
+
+  const res = await renderOrGetProgress(request.body);
+
+  return response.json(res);
 };

@@ -1,4 +1,8 @@
+import { Request, Response } from "express";
+import { StatsRequest } from "../config.js";
 import { sendDiscordMessage } from "./discord.js";
+import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
+import { getRandomGithubToken } from "./github-token.js";
 
 export const executeGitHubGraphQlQuery = async ({
   username,
@@ -37,4 +41,17 @@ export const executeGitHubGraphQlQuery = async ({
   }
 
   return response.data.user;
+};
+
+export const statsEndPoint = async (request: Request, response: Response) => {
+  if (request.method === "OPTIONS") return response.end();
+
+  const { username } = StatsRequest.parse(request.body);
+
+  await getStatsFromGitHubOrCache({
+    username,
+    token: getRandomGithubToken(),
+  });
+
+  return response.json({});
 };

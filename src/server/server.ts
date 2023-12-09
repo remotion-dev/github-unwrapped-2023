@@ -8,6 +8,7 @@ import { createServer } from "vite";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
 import { emailEndpoint } from "./email.js";
 import { faviconEndPoint } from "./favicon.js";
+import { statsEndPoint } from "./fetch-stats.js";
 import {
   handleIndexHtmlDev,
   handleIndexHtmlProduction,
@@ -69,6 +70,8 @@ export const startServer = async () => {
 
   app.post("/api/progress", apiEndpointWrapper(progressEndPoint));
 
+  app.post("/api/stats", apiEndpointWrapper(statsEndPoint));
+
   app.post("/api/error", apiEndpointWrapper(errorEndpoint));
 
   app.post("/api/email", apiEndpointWrapper(emailEndpoint));
@@ -80,7 +83,8 @@ export const startServer = async () => {
     const vite = await startViteDevelopmentServer(app);
 
     app.get("/about", handleIndexHtmlDev(vite));
-    app.get("/:username", handleIndexHtmlDev(vite));
+    app.get("/loading/:username", handleIndexHtmlDev(vite));
+    app.get("/:username", handleIndexHtmlDev(vite, true));
     app.get("/:username/share", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
