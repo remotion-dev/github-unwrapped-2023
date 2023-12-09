@@ -1,11 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import React, { useCallback, useEffect } from "react";
-import { DownloadIcon } from "../../icons/DownloadIcon";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
 import { useUserVideo } from "../context";
 import { shareRoute, videoRoute } from "../routing";
 import { FurtherActions } from "./Actions/FurtherActions";
+import { DownloadButton } from "./Sidebar/DownloadButton";
 import styles from "./styles.module.css";
 
 export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
@@ -37,20 +37,21 @@ export const MobileActionsContainer: React.FC<{ url: string | null }> = ({
       <FurtherActions />
 
       <div style={{ display: "flex", gap: 16 }}>
-        <Button
+        <DownloadButton style={{ flex: 1 }} />
+        {/* <Button
+          primary
+          hoverEffect
           style={{
             flex: 1,
             gap: 8,
-            height: 48,
-            backgroundColor: "rgba(80, 126, 255, 1)",
-            border: "none",
           }}
         >
           <DownloadIcon width={20} color="white" />
           Download
-        </Button>
+        </Button> */}
         <Button
-          style={{ flex: 1, gap: 8, height: 48 }}
+          hoverEffect
+          style={{ flex: 1, gap: 8 }}
           onClick={() => {
             const sharable = Boolean(navigator.share);
             if (sharable && file) {

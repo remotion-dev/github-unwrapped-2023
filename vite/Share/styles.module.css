@@ -1,0 +1,18 @@
+.sharePageButton {
+  width: 100%;
+
+  @media only screen and (min-width: 40em) {
+    width: 240px;
+  }
+}
+
+.sharePageSocialsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  @media only screen and (min-width: 40em) {
+    flex-direction: row;
+  }
+}
