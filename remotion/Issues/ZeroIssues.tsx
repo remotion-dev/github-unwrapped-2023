@@ -47,7 +47,11 @@ const UfoPosition: React.FC<{
       }}
     >
       <Sequence layout="none" durationInFrames={92}>
-        <UfoSvg />
+        <UfoSvg
+          style={{
+            width: 70,
+          }}
+        />
       </Sequence>
       <Sequence from={90}>
         <Poof ufoScale={0.25} x={30} y={23} />

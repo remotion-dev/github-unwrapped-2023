@@ -549,11 +549,11 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Silver" as const,
+          planet: "Gold" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
-          totalPullRequests: 50,
+          totalPullRequests: 8,
           topWeekday: "2" as const,
           topHour: "4" as const,
           graphData: [
