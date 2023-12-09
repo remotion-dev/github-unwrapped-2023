@@ -14,7 +14,7 @@ import type { Rocket } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import Background from "./Background";
-import Foreground from "./Foreground";
+import { FOREGROUND_IMAGE, Foreground } from "./Foreground";
 import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
 import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
@@ -27,7 +27,7 @@ const LAUNCH_SOUND = staticFile(
 );
 
 export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
-  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket)];
+  return [LAUNCH_SOUND, ...getTakeOffAssetToPrefetch(rocket), FOREGROUND_IMAGE];
 };
 
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
