@@ -7,12 +7,19 @@ import {
 } from "@remotion/lambda/client";
 import type { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import type { RenderResponse } from "../config.js";
+import type { z } from "zod";
+import { computeCompositionParameters } from "../../vite/VideoPage/utils.js";
+import type { RenderResponse, compositionSchema } from "../config.js";
 import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Render } from "./db.js";
-import { findRender, saveRender, updateRender } from "./db.js";
+import {
+  findRender,
+  getProfileStatsFromCache,
+  saveRender,
+  updateRender,
+} from "./db.js";
 import { getFinality } from "./progress.js";
 
 const getRandomRegion = (): AwsRegion => {
@@ -22,11 +29,11 @@ const getRandomRegion = (): AwsRegion => {
 export const renderOrGetProgress = async (
   requestBody: unknown,
 ): Promise<RenderResponse> => {
-  const { username, inputProps } = RenderRequest.parse(requestBody);
+  const { username, theme } = RenderRequest.parse(requestBody);
 
   const existingRender = await findRender({
     username,
-    theme: inputProps.accentColor,
+    theme,
   });
 
   if (existingRender) {
@@ -93,8 +100,18 @@ export const renderOrGetProgress = async (
     timeoutInSeconds: TIMEOUT,
   });
 
-  const theme = inputProps.accentColor;
   const _id = new ObjectId();
+
+  const userStat = await getProfileStatsFromCache(username);
+  if (!userStat) {
+    return {
+      type: "render-error",
+      error: "User not found",
+    };
+  }
+
+  const inputProps: z.infer<typeof compositionSchema> =
+    computeCompositionParameters(userStat, theme);
 
   const { renderId, bucketName } = await renderMediaOnLambda({
     codec: "h264",

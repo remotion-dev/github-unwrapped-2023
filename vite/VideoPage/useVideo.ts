@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { z } from "zod";
-import type {
-  RenderRequest,
-  RenderResponse,
-  compositionSchema,
-} from "../../src/config";
+import type { RenderRequest, RenderResponse, Rocket } from "../../src/config";
 
 const renderVideo = async (
   renderRequest: z.infer<typeof RenderRequest>,
@@ -32,9 +28,9 @@ export type RenderStatus =
 
 export const useVideo = ({
   username,
-  inputProps,
+  theme,
 }: {
-  inputProps: z.infer<typeof compositionSchema>;
+  theme: Rocket;
   username: string;
 }) => {
   const [status, setStatus] = useState<RenderStatus>({ type: "querying" });
@@ -43,7 +39,7 @@ export const useVideo = ({
     // TODO: Abort mechanism
     try {
       const res = await renderVideo({
-        inputProps,
+        theme,
         username,
       });
       setStatus(res);
@@ -53,12 +49,12 @@ export const useVideo = ({
     } catch (err) {
       setStatus({ type: "error-querying", err: err as Error });
     }
-  }, [inputProps, username]);
+  }, [theme, username]);
 
   useEffect(() => {
     setStatus({ type: "querying" });
     queryState();
-  }, [inputProps, queryState, username]);
+  }, [theme, queryState, username]);
 
   return status;
 };

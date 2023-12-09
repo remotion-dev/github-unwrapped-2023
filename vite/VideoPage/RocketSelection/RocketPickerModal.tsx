@@ -20,7 +20,7 @@ const spacer: React.CSSProperties = {
 
 export const RocketPickerModal: React.FC<{
   rocket: Rocket;
-  setRocket: React.Dispatch<SetStateAction<Rocket>>;
+  setRocket: React.Dispatch<SetStateAction<Rocket | null>>;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
   isModalOpen: boolean;
   playerRef: React.RefObject<PlayerRef>;

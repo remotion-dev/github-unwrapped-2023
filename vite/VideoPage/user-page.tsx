@@ -16,23 +16,12 @@ declare global {
 }
 
 export const useCompositionParams = (user: ProfileStats) => {
+  const [rocketPreference, setRocket] = useState<Rocket | null>(null);
   const compositionParams = useMemo(() => {
-    return computeCompositionParameters(user);
-  }, [user]);
-  const [rocket, setRocket] = useState<Rocket>(compositionParams.rocket);
+    return computeCompositionParameters(user, rocketPreference);
+  }, [rocketPreference, user]);
 
-  const hydratedCompositionParams = useMemo(() => {
-    if (compositionParams && rocket) {
-      return {
-        ...compositionParams,
-        rocket,
-      };
-    }
-
-    return compositionParams;
-  }, [compositionParams, rocket]);
-
-  return { compositionParams: hydratedCompositionParams, setRocket };
+  return { compositionParams, setRocket };
 };
 
 export const UserPage = () => {

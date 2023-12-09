@@ -18,7 +18,7 @@ const pickerStyle: React.CSSProperties = {
 export const ColorPicker: React.FC<{
   color: Rocket;
   rocket: Rocket;
-  setRocket: React.Dispatch<SetStateAction<Rocket>>;
+  setRocket: React.Dispatch<SetStateAction<Rocket | null>>;
 }> = ({ color, rocket, setRocket }) => {
   const ref = useRef<HTMLButtonElement | null>(null);
 

@@ -10,7 +10,7 @@ import type { CompositionParameters } from "./VideoPage/utils";
 const UserVideoContext = React.createContext<{
   compositionParams: CompositionParameters;
   setRocket: React.Dispatch<
-    React.SetStateAction<CompositionParameters["rocket"]>
+    React.SetStateAction<CompositionParameters["rocket"] | null>
   >;
   status: RenderStatus;
 } | null>(null);
@@ -21,7 +21,7 @@ const UserVideoProvider: React.FC<{
 }> = ({ children, user }) => {
   const { compositionParams, setRocket } = useCompositionParams(user);
   const status = useVideo({
-    inputProps: compositionParams,
+    theme: compositionParams.rocket,
     username: compositionParams.login,
   });
 
