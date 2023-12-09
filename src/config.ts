@@ -131,7 +131,7 @@ export const compositionSchema = z.object({
 
 export const RenderRequest = z.object({
   username: z.string(),
-  inputProps: compositionSchema,
+  theme: rocketSchema,
 });
 
 export type RenderResponse =

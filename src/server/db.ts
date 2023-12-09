@@ -1,7 +1,7 @@
 import type { AwsRegion } from "@remotion/lambda";
 import type { ObjectId, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import type { Hour, ProductivityPerHour, Weekday } from "../config.js";
+import type { Hour, ProductivityPerHour, Rocket, Weekday } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
 
 export type ProfileStats = {
@@ -49,7 +49,7 @@ export type Render = {
   renderId: string;
   region: AwsRegion;
   username: string;
-  theme: string;
+  theme: Rocket;
   bucketName: string;
   finality: Finality | null;
   functionName: string;
@@ -133,7 +133,7 @@ export const clearFailedRendersForUsername = async (params: {
 
 export const findRender = async (params: {
   username: string;
-  theme: string;
+  theme: Rocket;
 }): Promise<WithId<Render> | null> => {
   const collection = await getRendersCollection();
   const value = await collection.findOne({

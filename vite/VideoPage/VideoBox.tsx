@@ -16,7 +16,7 @@ import styles from "./styles.module.css";
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   rocket: Rocket;
-  setRocket: React.Dispatch<SetStateAction<Rocket>>;
+  setRocket: React.Dispatch<SetStateAction<Rocket | null>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
 }> = ({ inputProps, rocket, setRocket, isModalOpen, setIsModalOpen }) => {
