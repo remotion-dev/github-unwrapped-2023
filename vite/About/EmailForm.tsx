@@ -29,7 +29,7 @@ export const EmailForm: React.FC<{}> = () => {
       setError(null);
       if (isValidEmail(email)) {
         setLoading(true);
-        const res = await fetch("http://localhost:8080/api/email", {
+        const res = await fetch("/api/email", {
           method: "post",
           body: JSON.stringify({ email }),
           headers: { "content-type": "application/json" },

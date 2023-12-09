@@ -138,3 +138,7 @@ export const ProgressRequest = z.object({
   username: z.string(),
   theme: z.string(),
 });
+
+export const StatsRequest = z.object({
+  username: z.string(),
+});
