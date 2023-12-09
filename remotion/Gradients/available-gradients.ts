@@ -14,6 +14,7 @@ export const availableGradients = {
   iceRadial:
     "radial-gradient(170% 170% at 0% 0%, rgba(186, 204, 229, 0.15) 0%, rgba(0, 0, 0, 0) 100%)",
   glow: "radial-gradient(circle at center, #e0ff5e 0, #3b6dd1 30%, #0086d4 50%, #021d57 65%, #01194a 100%)",
+  whiteToTransparent: "linear-gradient(90deg, #ffffff00 0%, #ffffff20 100%)",
 };
 
 export type GradientType = keyof typeof availableGradients;

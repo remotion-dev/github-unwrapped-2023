@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { z } from "zod";
+import { Gradient } from "../Gradients/NativeGradient";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 import { Wheel } from "./Wheel";
 
@@ -51,12 +52,13 @@ export const TopDay: React.FC<
         style={{
           position: "absolute",
           right: 0,
-          backgroundImage:
-            "linear-gradient(90deg, #ffffff00 0%, #ffffff20 100%)",
           height: "100%",
           width: 400,
         }}
       >
+        <AbsoluteFill>
+          <Gradient gradient="whiteToTransparent" />
+        </AbsoluteFill>
         <AbsoluteFill
           style={{
             maskImage,
