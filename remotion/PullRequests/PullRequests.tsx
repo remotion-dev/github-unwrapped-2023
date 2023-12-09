@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
+  Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -61,6 +64,10 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
         transform: `scale(${scaleDivided + scale}) translateY(${translateY}px)`,
       }}
     >
+      <Audio startFrom={40} src={staticFile("reverb.mp3")} />
+      <Sequence from={175}>
+        <Audio src={staticFile("weigh.mp3")} volume={0.6} />
+      </Sequence>
       <AbsoluteFill style={style}>
         <AbsoluteFill>
           <Gradient gradient={accentColorToGradient(accentColor)} />

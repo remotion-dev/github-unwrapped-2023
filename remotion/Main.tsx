@@ -3,6 +3,7 @@ import type { CalculateMetadataFunction } from "remotion";
 import {
   AbsoluteFill,
   Audio,
+  Sequence,
   Series,
   staticFile,
   useVideoConfig,
@@ -221,6 +222,9 @@ export const Main: React.FC<Schema> = ({
           <EndScene planet={planet} rocket={rocket} />
         </Series.Sequence>
       </Series>
+      <Sequence from={durationInFrames - 230}>
+        <Audio startFrom={170} src={staticFile("landing.mp3")} />
+      </Sequence>
     </AbsoluteFill>
   );
 };

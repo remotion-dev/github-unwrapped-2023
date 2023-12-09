@@ -1,8 +1,11 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -41,7 +44,8 @@ export const Wheel: React.FC<{
   radius: number;
   renderLabel: (value: string) => React.ReactNode;
   delay: number;
-}> = ({ value, values, radius, renderLabel, delay }) => {
+  soundDelay: number;
+}> = ({ value, values, radius, renderLabel, delay, soundDelay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -59,6 +63,9 @@ export const Wheel: React.FC<{
         perspective: 10000,
       }}
     >
+      <Sequence from={soundDelay}>
+        <Audio src={staticFile("stop.mp3")} volume={0.3} />
+      </Sequence>
       {values.map((f, i) => {
         const index = i / values.length + rotation;
 

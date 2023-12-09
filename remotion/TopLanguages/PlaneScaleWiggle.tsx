@@ -86,7 +86,7 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
       }}
     >
-      <Sequence from={5}>
+      <Sequence from={10}>
         <Audio src={staticFile("wham.mp3")} />
       </Sequence>
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>

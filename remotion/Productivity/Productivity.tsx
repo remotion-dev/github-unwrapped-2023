@@ -148,6 +148,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         radius={130}
         renderLabel={(value) => value}
         delay={60}
+        soundDelay={95}
       />
       <TopDay
         values={[
@@ -191,6 +192,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
 
           return `${value} am`;
         }}
+        soundDelay={140}
       />
 
       <div

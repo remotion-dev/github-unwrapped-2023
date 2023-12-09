@@ -136,7 +136,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   const withShootDurations = addShootDelays(shots);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
-  const audioHits = getAudioHits(withShootDurations, explosions);
+  const audioHits = getAudioHits(withShootDurations);
 
   const yOffset = interpolate(
     frame,

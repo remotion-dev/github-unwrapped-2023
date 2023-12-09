@@ -16,12 +16,7 @@ const MOVE_AIM = 100;
 
 export const ANIMATION_DURATION_PER_STAR = 20;
 
-const WINDSHIELD_HIT_SOUNDS = [
-  staticFile("impact-stone-1.mp3"),
-  staticFile("impact-stone-2.mp3"),
-  staticFile("impact-stone-3.mp3"),
-  staticFile("impact-stone-4.mp3"),
-];
+const WINDSHIELD_HIT_SOUNDS = [staticFile("glockenspiel-3.mp3")];
 
 export const starsAssetsToPreload = () => {
   return [
@@ -103,14 +98,14 @@ export const Star: React.FC<{
         >
           <StarSprite burstFrame={hitSpaceship ? stop : undefined} />
           {hitSpaceship ? (
-            <Sequence>
+            <Sequence from={stop}>
               <Audio
+                startFrom={3}
                 src={
                   WINDSHIELD_HIT_SOUNDS[
                     hitSpaceship.index % WINDSHIELD_HIT_SOUNDS.length
                   ]
                 }
-                volume={0.4}
               />
             </Sequence>
           ) : null}
