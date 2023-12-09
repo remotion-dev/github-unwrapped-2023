@@ -25,7 +25,7 @@ export const LoginOptions: React.FC<Props> = ({
             setUserNotFound(true);
           } else {
             setUserNotFound(false);
-            window.location.href = `/${username}`;
+            window.location.href = `/loading/${username}`;
           }
         })
         .catch((error) => console.log("error", error));

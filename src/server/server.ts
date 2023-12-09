@@ -83,7 +83,7 @@ export const startServer = async () => {
     const vite = await startViteDevelopmentServer(app);
 
     app.get("/about", handleIndexHtmlDev(vite));
-    app.get("/loading", handleIndexHtmlDev(vite));
+    app.get("/loading/:username", handleIndexHtmlDev(vite));
     app.get("/:username", handleIndexHtmlDev(vite, true));
     app.get("/:username/share", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));

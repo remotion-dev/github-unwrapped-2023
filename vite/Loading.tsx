@@ -8,9 +8,7 @@ import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
 
 export const Loading = () => {
-  const params = new URLSearchParams(window.location.search);
-
-  const username = params.get("username");
+  const username = window.location.pathname.split("/")[2];
 
   useEffect(() => {
     fetch("/api/stats", {
@@ -23,7 +21,7 @@ export const Loading = () => {
       }),
     })
       .then((res) => {
-        window.location.href = `${username}`;
+        window.location.href = `/${username}`;
       })
       .catch((err) => {
         // TODO

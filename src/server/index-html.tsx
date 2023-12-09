@@ -36,18 +36,14 @@ export const handleIndexHtmlDev = (
       if (handleUsername) {
         const username = req.params.username || null;
 
-        console.log("username: ", username);
-
         if (username === null) {
           return response.redirect("/");
         }
 
         const cachedStats = await getProfileStatsFromCache(username);
 
-        // console.log(JSON.stringify(cachedStats));
-
         if (!cachedStats) {
-          response.redirect("/loading?username=" + username);
+          response.redirect(`/loading/${username}`);
           return;
         }
       }

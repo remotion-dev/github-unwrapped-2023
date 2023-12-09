@@ -86,7 +86,7 @@ const aboutRoute = new Route({
 
 const loadingRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/loading",
+  path: "/loading/$username",
   component: Loading,
 });
 
