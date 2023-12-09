@@ -140,9 +140,11 @@ export const ContributionDot: React.FC<{
 
   return (
     <div style={style}>
-      <AbsoluteFill>
-        <Img src={GLOW_PNG} />
-      </AbsoluteFill>
+      {glow > 5 ? (
+        <AbsoluteFill>
+          <Img src={GLOW_PNG} />
+        </AbsoluteFill>
+      ) : null}
       <div style={inner} />
     </div>
   );

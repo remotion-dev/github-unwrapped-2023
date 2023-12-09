@@ -123,7 +123,10 @@ export const StarsAndProductivity: React.FC<
           timeUntilTabletHasEntered={timeUntilTabletIsEntered}
         />
       ) : null}
-      <Sequence from={starFlyDuration}>
+      <Sequence
+        from={starFlyDuration}
+        durationInFrames={TABLET_SCENE_LENGTH + TABLET_SCENE_HIDE_ANIMATION}
+      >
         <Tablet
           weekday={topWeekday}
           enterProgress={zoomTransition}

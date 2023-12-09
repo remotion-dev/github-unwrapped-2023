@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
+import { isIosSafari } from "../Opening/devices";
 import { Productivity } from "./Productivity";
 import { TabletSVG } from "./TabletSVG";
 
@@ -97,7 +98,7 @@ export const Tablet: React.FC<
   return (
     <AbsoluteFill
       style={{
-        transform: `translateY(${710 - enterProgress * 710}px)`,
+        transform: `translateY(${800 - enterProgress * 800}px)`,
       }}
     >
       <AbsoluteFill>
@@ -121,7 +122,7 @@ export const Tablet: React.FC<
       </AbsoluteFill>
       <AbsoluteFill
         style={{
-          transform: `translateZ(200px)`,
+          transform: isIosSafari() ? `translateZ(200px)` : undefined,
         }}
       >
         <div
