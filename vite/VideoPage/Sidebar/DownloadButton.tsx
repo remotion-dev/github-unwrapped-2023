@@ -51,16 +51,18 @@ export const DownloadButton: React.FC<{
 
   if (status.type === "video-available") {
     return (
-      <a href={status.url} target="_blank" rel="noreferrer">
-        <Button
-          hoverEffect
-          className={styles.downloadButton}
-          style={{ pointerEvents: "none", ...style }}
-        >
-          <HoverEffect />
-          Download Video <DownloadIcon width={20} color="white" />
-        </Button>
-      </a>
+      <Button
+        hoverEffect
+        className={styles.downloadButton}
+        style={{ ...style }}
+        onClick={() => {
+          window.open(status.url, "_blank", "noopener noreferrer");
+        }}
+      >
+        <HoverEffect />
+        <DownloadIcon width={20} />
+        Download Video
+      </Button>
     );
   }
 

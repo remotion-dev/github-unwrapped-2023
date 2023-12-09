@@ -1,6 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
 import React, { forwardRef } from "react";
-import { AbsoluteFill } from "remotion";
 import { Spacing } from "../Spacing";
 import { Spinner } from "../Spinner/Spinner";
 import { HoverEffect } from "./HoverEffect";
@@ -13,7 +12,7 @@ const ButtonForward: React.ForwardRefRenderFunction<
     disabled?: boolean;
     children: React.ReactNode;
     loading?: boolean;
-    secondary?: boolean;
+    primary?: boolean;
     style?: React.CSSProperties;
     className?: string;
     type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
@@ -25,7 +24,7 @@ const ButtonForward: React.ForwardRefRenderFunction<
     disabled,
     children,
     loading,
-    secondary,
+    primary,
     style,
     className,
     type,
@@ -40,7 +39,7 @@ const ButtonForward: React.ForwardRefRenderFunction<
       type={type ?? "button"}
       className={[
         styles.button,
-        secondary ? styles.secondarybutton : undefined,
+        primary ? styles.primaryButton : styles.secondaryButton,
         className ? className : undefined,
       ].join(" ")}
       onClick={onClick}
@@ -54,16 +53,7 @@ const ButtonForward: React.ForwardRefRenderFunction<
           <Spacing />
         </>
       )}
-      <AbsoluteFill
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          pointerEvents: "none",
-          flexDirection: "row",
-        }}
-      >
-        {children}
-      </AbsoluteFill>
+      {children}
     </button>
   );
 };

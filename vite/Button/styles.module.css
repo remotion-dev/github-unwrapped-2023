@@ -1,15 +1,15 @@
+/* COMMON BUTTON STYLES */
+
 .button {
-  background-color: rgba(72, 74, 91, 1);
   color: white;
-  height: 52px;
-  /* padding: 0 50px; */
+  height: 48px;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   appearance: none;
   font-size: 16px;
-  border: 1px solid var(--button-border-color);
   border-radius: 5px;
   text-wrap: nowrap;
   cursor: pointer;
@@ -17,23 +17,20 @@
   font-weight: 700;
   position: relative;
   overflow: hidden;
+  padding: 0 24px;
 }
 
-.secondarybutton {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  border-radius: 5px;
-  height: 48px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  appearance: none;
-  font-size: 16px;
-  text-wrap: nowrap;
-  cursor: pointer;
-  font-weight: 17px;
-  font-weight: 500;
+/* SECODARY BUTTON STYLES */
+
+.secondaryButton {
+  background-color: #484a5b;
+  border: 1px solid var(--button-border-color);
+}
+
+/* PRIMARY BUTTON STYLES */
+
+.primaryButton {
+  background-color: rgba(80, 126, 255, 1);
 }
 
 .loginwithgithub {
