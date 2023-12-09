@@ -2,14 +2,14 @@ import React from "react";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
 import { Button } from "../../Button/Button";
 import { HoverEffect } from "../../Button/HoverEffect";
+import { useUserVideo } from "../../context";
 import styles from "./styles.module.css";
 
 export const DownloadButton: React.FC<{
-  url: string | null;
-  error: boolean;
-  progress: number;
   style?: React.CSSProperties;
-}> = ({ url, error, progress, style }) => {
+}> = ({ style }) => {
+  const { url, progress, error } = useUserVideo();
+
   if (error) {
     return (
       <Button
@@ -27,21 +27,23 @@ export const DownloadButton: React.FC<{
         className={styles.downloadButton}
         style={{ pointerEvents: "none", ...style }}
       >
-        Generating .mp4 file...
+        Generating...
       </Button>
     );
   }
 
   if (url) {
     return (
-      <Button
-        hoverEffect
-        className={styles.downloadButton}
-        style={{ pointerEvents: "none", ...style }}
-      >
-        <HoverEffect />
-        Download Video <DownloadIcon width={20} color="white" />
-      </Button>
+      <a href={url} target="_blank" rel="noreferrer">
+        <Button
+          hoverEffect
+          className={styles.downloadButton}
+          style={{ pointerEvents: "none", ...style }}
+        >
+          <HoverEffect />
+          Download Video <DownloadIcon width={20} color="white" />
+        </Button>
+      </a>
     );
   }
 
@@ -50,7 +52,7 @@ export const DownloadButton: React.FC<{
       className={styles.downloadButton}
       style={{ pointerEvents: "none", ...style }}
     >
-      Generating .mp4 file... ({Math.floor(progress * 100)}%)
+      Generating... ({Math.floor(progress * 100)}%)
     </Button>
   );
 };

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { CheckmarkIcon } from "../../icons/CheckmarkIcon";
 import { CopyIcon } from "../../icons/CopyIcon";
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
@@ -10,7 +10,13 @@ import {
   twitterSharingLink,
 } from "../VideoPage/Actions/SharingActions";
 import { DownloadButton } from "../VideoPage/Sidebar/DownloadButton";
-import { useUserVideo } from "../context";
+
+const step1Content = {
+  step: 1,
+  title: "Download your video",
+  description: "If you haven't already, download your video.",
+  node: <DownloadButton style={{ width: 240 }} />,
+};
 
 const exampleDescription =
   "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com";
@@ -39,34 +45,6 @@ const CopyDescriptionButton = () => {
 export const useShareContent = (
   platform: "linkedin" | "twitter" | undefined,
 ): AboutItemContent[] => {
-  const { url, progress, error } = useUserVideo();
-
-  const step1Content = useMemo(
-    () => ({
-      step: 1,
-      title: "Download your video",
-      description: "If you haven't already, download your video.",
-      node: url ? (
-        <a href={url} target="_blank" rel="noreferrer">
-          <DownloadButton
-            error={error}
-            progress={progress}
-            url={url}
-            style={{ width: 240 }}
-          />
-        </a>
-      ) : (
-        <DownloadButton
-          error={error}
-          progress={progress}
-          url={url}
-          style={{ width: 240 }}
-        />
-      ),
-    }),
-    [error, progress, url],
-  );
-
   switch (platform) {
     case "linkedin": {
       return [
