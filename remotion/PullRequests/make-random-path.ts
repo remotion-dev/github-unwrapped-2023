@@ -69,8 +69,8 @@ const shouldBendInwards = ({
   return Math.abs(x) < 150;
 };
 
-export const makeRandomPath = (seed: string | number) => {
-  const numberOfItems = 50;
+export const makeRandomPath = (seed: string | number, shouldCut: boolean) => {
+  const numberOfItems = 140;
   const itemsToOffset = Math.round(numberOfItems / 7);
 
   const bendInwards = shouldBendInwards({ itemsToOffset, numberOfItems, seed });
@@ -130,10 +130,11 @@ export const makeRandomPath = (seed: string | number) => {
     return { x, y };
   });
 
-  const p = [...points, ...drawArcToMiddle, PATH_TARGET]
+  const slicedPoints = shouldCut ? points.slice(115) : points;
+  const p = [...slicedPoints, ...drawArcToMiddle, PATH_TARGET]
     .filter(Internals.truthy)
     .map((point) => {
-      if (point === points[0]) {
+      if (point === slicedPoints[0]) {
         return `M${point.x} ${point.y}`;
       }
 

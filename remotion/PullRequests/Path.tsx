@@ -22,7 +22,8 @@ export const Path: React.FC<{
   d: string;
   stroke: string;
   delay: number;
-}> = ({ d, stroke, delay }) => {
+  hideDot: boolean;
+}> = ({ d, stroke, delay, hideDot }) => {
   const frame = useCurrentFrame();
 
   const progress = interpolate(
@@ -71,18 +72,20 @@ export const Path: React.FC<{
           strokeMiterlimit="10"
         />
       </svg>
-      <Img
-        style={{
-          height: 100,
-          width: 100,
-          marginLeft: -50,
-          marginTop: -50,
-          position: "absolute",
-          top: pointAtLength.y,
-          left: pointAtLength.x,
-        }}
-        src={BLURRED_DOT}
-      />
+      {hideDot ? null : (
+        <Img
+          style={{
+            height: 100,
+            width: 100,
+            marginLeft: -50,
+            marginTop: -50,
+            position: "absolute",
+            top: pointAtLength.y,
+            left: pointAtLength.x,
+          }}
+          src={BLURRED_DOT}
+        />
+      )}
     </AbsoluteFill>
   );
 };

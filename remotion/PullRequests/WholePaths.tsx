@@ -28,6 +28,7 @@ export const WholePaths: React.FC<{
       },
     ),
   );
+  const animationIsFinished = frame > 202;
 
   const paths = useMemo(() => {
     return Array.from({ length: extraPaths }).map((_, i) => {
@@ -35,7 +36,7 @@ export const WholePaths: React.FC<{
 
       return {
         id: seed,
-        d: makeRandomPath(`seed${random(i)}`),
+        d: makeRandomPath(`seed${random(i)}`, animationIsFinished),
         delay: random(seed + "delay") * 25,
         stroke: interpolateColors(
           random(seed + "x"),
@@ -51,7 +52,7 @@ export const WholePaths: React.FC<{
         ),
       };
     });
-  }, [extraPaths]);
+  }, [animationIsFinished, extraPaths]);
 
   const merged = paths.filter((p) => {
     return frame >= p.delay + PATH_ANIMATION_DURATION - 30 ? p : null;
@@ -66,6 +67,7 @@ export const WholePaths: React.FC<{
             d={path.d}
             delay={path.delay}
             stroke={path.stroke}
+            hideDot={animationIsFinished}
           />
         );
       })}
