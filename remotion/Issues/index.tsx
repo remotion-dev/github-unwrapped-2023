@@ -12,6 +12,7 @@ import {
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import { isMobileDevice } from "../Opening/devices";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
   WIGGLE_EXIT_DURATION,
@@ -247,7 +248,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           return (
             // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit.delay}>
-              <Audio src={audioHit.source} />
+              {isMobileDevice() ? <Audio src={audioHit.source} /> : null}
             </Sequence>
           );
         })}

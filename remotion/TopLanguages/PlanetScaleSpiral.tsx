@@ -11,6 +11,7 @@ import {
 import { z } from "zod";
 import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { isMobileDevice } from "../Opening/devices";
 import { LanguageDescription } from "./LanguageDescription";
 import { PlanetScaleSpiralWhole } from "./PlanetScaleSpiralWhole";
 import { computePlanetInfo } from "./constants";
@@ -59,10 +60,14 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
 
   return (
     <AbsoluteFill>
-      <Audio startFrom={30} src={staticFile("fly-in-circles.mp3")} />
-      <Sequence from={35}>
-        <Audio src={staticFile("third-whoosh.mp3")} />
-      </Sequence>
+      {isMobileDevice() ? (
+        <Audio startFrom={30} src={staticFile("fly-in-circles.mp3")} />
+      ) : null}
+      {isMobileDevice() ? (
+        <Sequence from={35}>
+          <Audio src={staticFile("third-whoosh.mp3")} />
+        </Sequence>
+      ) : null}
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
         <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>

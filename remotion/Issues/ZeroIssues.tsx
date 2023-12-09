@@ -9,6 +9,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { isMobileDevice } from "../Opening/devices";
 import { Poof } from "../Poof";
 import { UfoSvg } from "./UfoSvg";
 
@@ -98,9 +99,11 @@ export const ZeroIssues: React.FC = () => {
       >
         I take no issue with that.
       </div>
-      <Sequence from={90 - 5}>
-        <Audio volume={0.5} src={staticFile("ufo-explode-1.mp3")} />
-      </Sequence>
+      {isMobileDevice() ? null : (
+        <Sequence from={90 - 5}>
+          <Audio volume={0.5} src={staticFile("ufo-explode-1.mp3")} />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };

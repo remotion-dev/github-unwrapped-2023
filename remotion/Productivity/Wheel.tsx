@@ -10,6 +10,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { FPS } from "../Issues/make-ufo-positions";
+import { isMobileDevice } from "../Opening/devices";
 
 const wheelSpring = ({
   fps,
@@ -63,9 +64,11 @@ export const Wheel: React.FC<{
         perspective: 10000,
       }}
     >
-      <Sequence from={soundDelay}>
-        <Audio src={staticFile("stop.mp3")} volume={0.3} />
-      </Sequence>
+      {isMobileDevice() ? null : (
+        <Sequence from={soundDelay}>
+          <Audio src={staticFile("stop.mp3")} volume={0.3} />
+        </Sequence>
+      )}
       {values.map((f, i) => {
         const index = i / values.length + rotation;
 

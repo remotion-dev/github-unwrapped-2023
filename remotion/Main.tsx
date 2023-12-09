@@ -25,6 +25,7 @@ import {
   OPENING_SCENE_OUT_OVERLAP,
   OpeningScene,
 } from "./Opening";
+import { isMobileDevice } from "./Opening/devices";
 import {
   StarsAndProductivity,
   getStarsAndProductivityDuration,
@@ -222,9 +223,11 @@ export const Main: React.FC<Schema> = ({
           <EndScene planet={planet} rocket={rocket} />
         </Series.Sequence>
       </Series>
-      <Sequence from={durationInFrames - 230}>
-        <Audio startFrom={170} src={staticFile("landing.mp3")} />
-      </Sequence>
+      {isMobileDevice() ? null : (
+        <Sequence from={durationInFrames - 230}>
+          <Audio startFrom={170} src={staticFile("landing.mp3")} />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };

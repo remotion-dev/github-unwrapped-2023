@@ -12,7 +12,7 @@ import {
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
-import { isLessPowerfulDevice } from "../Opening/devices";
+import { isMobileDevice } from "../Opening/devices";
 import { TABLET_SCENE_ENTER_ANIMATION } from "../Productivity/Tablet";
 import { STAR_EXPLODE_DURATION } from "../StarSprite";
 import { AnimatedCockpit } from "./AnimatedCockpit";
@@ -205,7 +205,7 @@ export const StarsGiven: React.FC<Props> = ({
           <Gradient gradient={accentColorToGradient(accentColor)} />
         ) : null}
         <Noise translateX={0} translateY={0} />
-        {isLessPowerfulDevice() ? null : (
+        {isMobileDevice() ? null : (
           <Shines
             rotationShake={rotationShake}
             xShake={xShake}

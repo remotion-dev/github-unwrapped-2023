@@ -7,6 +7,7 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
+import { isMobileDevice } from "../Opening/devices";
 import { StarSprite } from "../StarSprite";
 import { COCKPIT_IMAGE } from "./CockpitSVG";
 import { SHINES_ASSETS } from "./Shines";
@@ -97,7 +98,7 @@ export const Star: React.FC<{
           }}
         >
           <StarSprite burstFrame={hitSpaceship ? stop : undefined} />
-          {hitSpaceship ? (
+          {hitSpaceship && !isMobileDevice() ? (
             <Sequence from={stop}>
               <Audio
                 startFrom={3}
