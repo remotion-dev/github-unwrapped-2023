@@ -21,8 +21,7 @@ export const SharingActions: React.FC<{
       <Link
         from={userRoute.id}
         to={"share"}
-        params={(params) => {
-          console.log("params username", params);
+        params={() => {
           return { username };
         }}
         search={{ platform: "twitter", accentColor }}

@@ -1,9 +1,9 @@
 // organize-imports-ignore
 import React from "react";
 import { renderToString } from "react-dom/server";
-import { getStatsFromGitHubOrCache } from "./fetch-stats.js";
 import { getRandomGithubToken } from "./github-token.js";
 import { backendCredentials } from "../helpers/domain.js";
+import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
 
 // TODO: Return a 404 response
 const makeAppHead = async (username: string | null) => {
