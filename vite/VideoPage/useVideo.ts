@@ -40,12 +40,16 @@ export const useVideo = ({
   const [status, setStatus] = useState<RenderStatus>({ type: "querying" });
 
   const queryState = useCallback(async () => {
+    // TODO: Abort mechanism
     try {
       const res = await renderVideo({
         inputProps,
         username,
       });
       setStatus(res);
+      if (res.type === "render-running") {
+        setTimeout(queryState, 1000);
+      }
     } catch (err) {
       setStatus({ type: "error-querying", err: err as Error });
     }
@@ -53,7 +57,6 @@ export const useVideo = ({
 
   useEffect(() => {
     setStatus({ type: "querying" });
-
     queryState();
   }, [inputProps, queryState, username]);
 

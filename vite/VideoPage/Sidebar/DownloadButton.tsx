@@ -16,7 +16,13 @@ export const DownloadButton: React.FC<{
         className={styles.downloadButton}
         style={{ pointerEvents: "none", ...style }}
       >
-        Generating video
+        <div
+          style={{
+            width: 100,
+            height: 16,
+            backgroundColor: "rgba(255, 255,255, 0.2)",
+          }}
+        />{" "}
       </Button>
     );
   }
@@ -27,7 +33,18 @@ export const DownloadButton: React.FC<{
         className={styles.downloadButton}
         style={{ pointerEvents: "none", ...style }}
       >
-        Download unavailable due to error
+        Download unavailable
+      </Button>
+    );
+  }
+
+  if (status.type === "error-querying") {
+    return (
+      <Button
+        className={styles.downloadButton}
+        style={{ pointerEvents: "none", ...style }}
+      >
+        Could not get video status
       </Button>
     );
   }
@@ -56,7 +73,7 @@ export const DownloadButton: React.FC<{
         className={styles.loadingButtonBar}
         style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
       />
-      <div>Generating... ({Math.floor(status.progress * 100)}%)</div>
+      <div>Generating video ({Math.round(status.progress * 100)}%)</div>
     </Button>
   );
 };

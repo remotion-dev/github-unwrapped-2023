@@ -47,10 +47,10 @@ export const Sidebar: React.FC<{
         )}
       </div>
       {status.type === "render-error" && (
-        <p style={{ marginTop: -12, fontSize: 14 }}>
+        <div style={{ fontSize: 14 }}>
           We{"'"}ve been notified of the error and are looking into it. Please
           try again later.
-        </p>
+        </div>
       )}
       {/* Sharing Actions */}
       <SharingActions accentColor={inputProps.accentColor} />
