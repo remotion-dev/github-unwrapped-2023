@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { ComponentProps } from "react";
 import {
   default as commonStyles,
   default as gradientStyles,
@@ -9,7 +10,8 @@ import styles from "./styles.module.css";
 export const DesktopHeader: React.FC<{
   title: string;
   description: string;
-}> = ({ title, description }) => {
+  backLink?: ComponentProps<typeof NavigateBack>["backLink"];
+}> = ({ title, backLink, description }) => {
   return (
     <div className={styles.desktopHeaderWrapper}>
       <div
@@ -20,7 +22,7 @@ export const DesktopHeader: React.FC<{
           justifyContent: "flex-end",
         }}
       >
-        <NavigateBack />
+        <NavigateBack backLink={backLink} />
         <Link to={"/"}>
           <h2 className={gradientStyles.gradientText2}>#GitHubUnwrapped</h2>
         </Link>

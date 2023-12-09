@@ -61,7 +61,10 @@ export const shareRoute = new Route({
   getParentRoute: () => userRoute,
   path: "share",
   component: SharePage,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: {
+    accentColor?: (typeof accentColorValues)[number];
+    platform?: "twitter" | "linkedin";
+  }) => {
     // validate and parse the search params into a typed state
     return {
       accentColor: search?.accentColor ?? accentColorValues[0],
