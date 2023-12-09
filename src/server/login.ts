@@ -4,7 +4,11 @@ import {
   backendCredentials,
   makeRedirectUriBackend,
 } from "../helpers/domain.js";
-import { clearRendersForUsername, insertProfileStats } from "./db.js";
+import {
+  clearFailedRendersForUsername,
+  clearRendersForUsername,
+  insertProfileStats,
+} from "./db.js";
 import { getStatsFromGitHub } from "./fetch-stats.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
@@ -49,6 +53,8 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     token: access_token,
     username: null,
   });
+
+  await clearFailedRendersForUsername({ username: stats.username });
 
   if (query.reset === "true") {
     await clearRendersForUsername({ username: stats.username });
