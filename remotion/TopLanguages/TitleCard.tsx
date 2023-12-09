@@ -40,13 +40,13 @@ export const TopLanguagesTitleCard: React.FC<
         transform: `scale(${scale})`,
       }}
     >
-      {isMobileDevice() ? (
+      {isMobileDevice() ? null : (
         <Audio
           startFrom={20}
           src={staticFile("second-whoosh.mp3")}
           volume={0.5}
         />
-      ) : null}
+      )}
       <AbsoluteFill
         style={{
           transform: `rotate(180deg)`,

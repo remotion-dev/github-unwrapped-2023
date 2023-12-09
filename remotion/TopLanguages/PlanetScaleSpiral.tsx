@@ -60,14 +60,14 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
 
   return (
     <AbsoluteFill>
-      {isMobileDevice() ? (
+      {isMobileDevice() ? null : (
         <Audio startFrom={30} src={staticFile("fly-in-circles.mp3")} />
-      ) : null}
-      {isMobileDevice() ? (
+      )}
+      {isMobileDevice() ? null : (
         <Sequence from={35}>
           <Audio src={staticFile("third-whoosh.mp3")} />
         </Sequence>
-      ) : null}
+      )}
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
         <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>

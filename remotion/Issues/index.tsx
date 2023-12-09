@@ -248,7 +248,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           return (
             // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit.delay}>
-              {isMobileDevice() ? <Audio src={audioHit.source} /> : null}
+              {isMobileDevice() ? null : <Audio src={audioHit.source} />}
             </Sequence>
           );
         })}
