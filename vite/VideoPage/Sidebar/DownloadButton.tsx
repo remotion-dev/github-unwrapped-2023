@@ -38,10 +38,14 @@ export const DownloadButton: React.FC<{
 
   return (
     <Button
-      className={styles.downloadButton}
+      className={[styles.downloadButton, styles.loadingButton].join(" ")}
       style={{ pointerEvents: "none", ...style }}
     >
-      Generating... ({Math.floor(progress * 100)}%)
+      <div
+        className={styles.loadingButtonBar}
+        style={{ width: `${progress * 100}%`, zIndex: -1 }}
+      />
+      <div>Generating... ({Math.floor(progress * 100)}%)</div>
     </Button>
   );
 };
