@@ -42,9 +42,6 @@ export const Ufo = ({
   return (
     <div>
       <UfoSvg
-        width="322"
-        height="208"
-        xmlSpace="preserve"
         style={{
           width: actualUfoWidth,
           height: actualUfoHeight,
@@ -52,7 +49,6 @@ export const Ufo = ({
           left: x - actualUfoWidth / 2 + exitOffset,
           top: y - actualUfoHeight / 2 + yOffset,
         }}
-        viewBox="0 0 322 208"
         fill="none"
         {...props}
       />

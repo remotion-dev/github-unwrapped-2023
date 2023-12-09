@@ -12,6 +12,7 @@ import {
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import { isMobileDevice } from "../Opening/devices";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
   WIGGLE_EXIT_DURATION,
@@ -136,7 +137,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
 
   const withShootDurations = addShootDelays(shots);
   const explosions = getExplosions({ shots: withShootDurations, ufos });
-  const audioHits = getAudioHits(withShootDurations, explosions);
+  const audioHits = getAudioHits(withShootDurations);
 
   const yOffset = interpolate(
     frame,
@@ -247,7 +248,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           return (
             // eslint-disable-next-line react/no-array-index-key
             <Sequence key={i} from={audioHit.delay}>
-              <Audio src={audioHit.source} />
+              {isMobileDevice() ? <Audio src={audioHit.source} /> : null}
             </Sequence>
           );
         })}

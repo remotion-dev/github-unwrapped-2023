@@ -34,6 +34,7 @@
   background-color: rgba(80, 126, 255, 1);
   height: 100%;
   transition: width 1ss ease-in-out;
+  width: 0;
 }
 
 .sidebarTitleContainer {

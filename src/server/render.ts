@@ -12,7 +12,8 @@ import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Render } from "./db.js";
-import { findRender, saveRender } from "./db.js";
+import { findRender, saveRender, updateRender } from "./db.js";
+import { getFinality } from "./progress.js";
 
 const getRandomRegion = (): AwsRegion => {
   return getRegions()[Math.floor(Math.random() * getRegions().length)];
@@ -51,16 +52,24 @@ export const renderOrGetProgress = async (
       renderId: existingRender.renderId,
     });
 
-    // TODO: Save to DB
     if (progress.fatalErrorEncountered) {
+      await updateRender({
+        ...existingRender,
+        finality: getFinality(progress),
+      });
+
       return {
         type: "render-error",
         error: progress.errors[0].stack,
       };
     }
 
-    // TODO: Save to DB
     if (progress.done && progress.outputFile) {
+      await updateRender({
+        ...existingRender,
+        finality: getFinality(progress),
+      });
+
       return {
         type: "video-available",
         url: progress.outputFile,
@@ -116,7 +125,6 @@ export const renderOrGetProgress = async (
   return {
     type: "render-running",
     renderId,
-    // TODO: Get progress from lambda
     progress: 0,
   };
 };

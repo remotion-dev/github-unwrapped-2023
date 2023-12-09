@@ -2,9 +2,11 @@ import { scalePath, translatePath } from "@remotion/paths";
 import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -13,6 +15,7 @@ import type { Corner } from "../../src/config";
 import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
+import { isMobileDevice } from "../Opening/devices";
 import { moveAlongLine } from "../move-along-line";
 import { LanguagePlanet } from "./Language";
 import { LanguageDescription } from "./LanguageDescription";
@@ -176,6 +179,13 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
 
   return (
     <AbsoluteFill>
+      {isMobileDevice() ? null : (
+        <Audio
+          startFrom={10}
+          src={staticFile("first-flyby.mp3")}
+          volume={0.5}
+        />
+      )}
       <AbsoluteFill
         style={{
           scale: String(scale),

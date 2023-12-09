@@ -25,8 +25,9 @@ export const TopDay: React.FC<
     radius: number;
     renderLabel: (value: string) => React.ReactNode;
     delay: number;
+    soundDelay: number;
   }
-> = ({ value, label, values, radius, renderLabel, delay }) => {
+> = ({ value, label, values, radius, renderLabel, delay, soundDelay }) => {
   const maskImage = `linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 70%, transparent 100%)`;
 
   return (
@@ -71,6 +72,7 @@ export const TopDay: React.FC<
             values={values}
             value={value}
             delay={delay}
+            soundDelay={soundDelay}
           />
         </AbsoluteFill>
       </div>

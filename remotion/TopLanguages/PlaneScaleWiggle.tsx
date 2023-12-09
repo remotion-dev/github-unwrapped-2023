@@ -2,8 +2,11 @@ import { noise2D } from "@remotion/noise";
 import type { SpringConfig } from "remotion";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -11,6 +14,7 @@ import { z } from "zod";
 import { languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
+import { isMobileDevice } from "../Opening/devices";
 import { FlyRocketIntoPlanet } from "./FlyRocketIntoPlanet";
 import { LanguagePlanet } from "./Language";
 import { LanguageDescription } from "./LanguageDescription";
@@ -83,6 +87,11 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
       }}
     >
+      {isMobileDevice() ? null : (
+        <Sequence from={10}>
+          <Audio src={staticFile("wham.mp3")} />
+        </Sequence>
+      )}
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
         <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>

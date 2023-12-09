@@ -1,30 +1,75 @@
 import React, { useMemo } from "react";
-import { AbsoluteFill, random, useCurrentFrame } from "remotion";
-import Orb1 from "./orbs/orb1";
-import Orb10 from "./orbs/orb10";
-import Orb11 from "./orbs/orb11";
-import Orb2 from "./orbs/orb2";
-import Orb3 from "./orbs/orb3";
-import Orb4 from "./orbs/orb4";
-import Orb5 from "./orbs/orb5";
-import Orb6 from "./orbs/orb6";
-import Orb7 from "./orbs/orb7";
-import Orb8 from "./orbs/orb8";
-import Orb9 from "./orbs/orb9";
+import {
+  AbsoluteFill,
+  Img,
+  random,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 const THREAD_SPEED = 300;
 
-const Orbs = [
-  Orb1,
-  Orb2,
-  Orb3,
-  Orb4,
-  Orb5,
-  Orb6,
-  Orb7,
-  Orb8,
-  Orb9,
-  Orb10,
-  Orb11,
+type Orb = {
+  source: string;
+  width: number;
+  height: number;
+};
+
+export const Orbs: Orb[] = [
+  {
+    source: staticFile("orb1.png"),
+    width: 15,
+    height: 15,
+  },
+  {
+    source: staticFile("orb2.png"),
+    width: 92 / 2,
+    height: 542 / 2,
+  },
+  {
+    source: staticFile("orb3.png"),
+    width: 66 / 2,
+    height: 298 / 2,
+  },
+  {
+    source: staticFile("orb4.png"),
+    width: 64 / 2,
+    height: 304 / 2,
+  },
+  {
+    source: staticFile("orb5.png"),
+    width: 66 / 2,
+    height: 472 / 2,
+  },
+  {
+    source: staticFile("orb6.png"),
+    width: 60 / 2,
+    height: 130 / 2,
+  },
+  {
+    source: staticFile("orb7.png"),
+    width: 34 / 2,
+    height: 192 / 2,
+  },
+  {
+    source: staticFile("orb8.png"),
+    width: 74 / 2,
+    height: 402 / 2,
+  },
+  {
+    source: staticFile("orb9.png"),
+    width: 74 / 2,
+    height: 402 / 2,
+  },
+  {
+    source: staticFile("orb10.png"),
+    width: 60 / 2,
+    height: 58 / 2,
+  },
+  {
+    source: staticFile("orb11.png"),
+    width: 44 / 2,
+    height: 90 / 2,
+  },
 ];
 
 type ThreadT = {
@@ -47,13 +92,20 @@ const Thread = (props: { thread: ThreadT }) => {
       }}
     >
       {props.thread.orbs.map((orb, j) => {
+        console.log(orb);
         return (
           <AbsoluteFill
             // eslint-disable-next-line react/no-array-index-key
             key={j}
             style={{ top: orb.top, transform: `scale(${props.thread.size})` }}
           >
-            {Orbs[orb.type - 1]({})}
+            <Img
+              src={Orbs[orb.type - 1].source}
+              style={{
+                width: Orbs[orb.type - 1].width,
+                height: Orbs[orb.type - 1].height,
+              }}
+            />
           </AbsoluteFill>
         );
       })}

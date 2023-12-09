@@ -75,7 +75,11 @@ export const DownloadButton: React.FC<{
         className={styles.loadingButtonBar}
         style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
       />
-      <div>Generating video ({Math.round(status.progress * 100)}%)</div>
+      {status.progress > 0 ? (
+        <div>Generating video ({Math.round(status.progress * 100)}%)</div>
+      ) : (
+        <div>Generating video</div>
+      )}
     </Button>
   );
 };
