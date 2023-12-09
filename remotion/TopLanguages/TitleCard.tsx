@@ -1,5 +1,12 @@
 import React from "react";
-import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Sequence,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
 import { accentColorSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
@@ -32,6 +39,11 @@ export const TopLanguagesTitleCard: React.FC<
         transform: `scale(${scale})`,
       }}
     >
+      <Audio
+        startFrom={20}
+        src={staticFile("second-whoosh.mp3")}
+        volume={0.5}
+      />
       <AbsoluteFill
         style={{
           transform: `rotate(180deg)`,

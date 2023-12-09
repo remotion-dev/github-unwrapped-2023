@@ -2,9 +2,11 @@ import { scalePath, translatePath } from "@remotion/paths";
 import { makePie } from "@remotion/shapes";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -176,6 +178,7 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
 
   return (
     <AbsoluteFill>
+      <Audio startFrom={10} src={staticFile("first-flyby.mp3")} volume={0.5} />
       <AbsoluteFill
         style={{
           scale: String(scale),

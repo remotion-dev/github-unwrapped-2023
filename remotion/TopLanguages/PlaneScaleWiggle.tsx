@@ -2,8 +2,11 @@ import { noise2D } from "@remotion/noise";
 import type { SpringConfig } from "remotion";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -83,6 +86,9 @@ export const PlanetScaleWiggle: React.FC<z.infer<typeof wiggleSchema>> = ({
         transform: `scale(${scaleDivided}) translateY(${translateX}px)`,
       }}
     >
+      <Sequence from={5}>
+        <Audio src={staticFile("wham.mp3")} />
+      </Sequence>
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
         <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>

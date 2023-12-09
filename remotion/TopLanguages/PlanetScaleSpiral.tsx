@@ -1,5 +1,13 @@
 import React, { useMemo } from "react";
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Easing,
+  Sequence,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
 import { cornerType, languageSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
@@ -51,6 +59,10 @@ export const PlanetScaleSpiral: React.FC<z.infer<typeof spiralSchema>> = ({
 
   return (
     <AbsoluteFill>
+      <Audio startFrom={30} src={staticFile("fly-in-circles.mp3")} />
+      <Sequence from={35}>
+        <Audio src={staticFile("third-whoosh.mp3")} />
+      </Sequence>
       <AbsoluteFill style={{ opacity: planetInfo.opacity }}>
         <Gradient gradient={planetInfo.gradient} />
       </AbsoluteFill>
