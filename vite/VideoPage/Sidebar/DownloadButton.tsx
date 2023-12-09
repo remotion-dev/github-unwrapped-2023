@@ -7,13 +7,20 @@ import styles from "./styles.module.css";
 
 export const DownloadButton: React.FC<{
   style?: React.CSSProperties;
-}> = ({ style }) => {
+  className?: string;
+}> = ({ style, ...props }) => {
   const { status } = useUserVideo();
+
+  const classNames = [styles.downloadButton];
+
+  if (props.className) {
+    classNames.push(props.className);
+  }
 
   if (status.type === "querying") {
     return (
       <Button
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ pointerEvents: "none", ...style }}
       >
         <div
@@ -30,7 +37,7 @@ export const DownloadButton: React.FC<{
   if (status.type === "render-error") {
     return (
       <Button
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ pointerEvents: "none", ...style }}
       >
         Download unavailable
@@ -41,7 +48,7 @@ export const DownloadButton: React.FC<{
   if (status.type === "error-querying") {
     return (
       <Button
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ pointerEvents: "none", ...style }}
       >
         Could not get video status
@@ -53,7 +60,7 @@ export const DownloadButton: React.FC<{
     return (
       <Button
         hoverEffect
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ ...style }}
         onClick={() => {
           window.open(status.url, "_blank", "noopener noreferrer");
@@ -68,7 +75,7 @@ export const DownloadButton: React.FC<{
 
   return (
     <Button
-      className={[styles.downloadButton, styles.loadingButton].join(" ")}
+      className={[...classNames, styles.loadingButton].join(" ")}
       style={{ pointerEvents: "none", ...style }}
     >
       <div

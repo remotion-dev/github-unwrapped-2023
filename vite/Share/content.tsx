@@ -10,12 +10,13 @@ import {
   twitterSharingLink,
 } from "../VideoPage/Actions/SharingActions";
 import { DownloadButton } from "../VideoPage/Sidebar/DownloadButton";
+import styles from "./styles.module.css";
 
 const step1Content = {
   step: 1,
   title: "Download your video",
   description: "If you haven't already, download your video.",
-  node: <DownloadButton style={{ width: 240 }} />,
+  node: <DownloadButton className={styles.sharePageButton} />,
 };
 
 const exampleDescription =
@@ -42,6 +43,32 @@ const CopyDescriptionButton = () => {
   );
 };
 
+const ShareToXButton = () => {
+  return (
+    <SharingAction
+      icon={(params) => <XIcon {...params} />}
+      label={"Open X.com"}
+      className={styles.sharePageButton}
+      onClick={() => {
+        window.open(twitterSharingLink);
+      }}
+    />
+  );
+};
+
+const ShareToLinkedinButton = () => {
+  return (
+    <SharingAction
+      icon={(params) => <LinkedInIcon {...params} />}
+      label={"Open LinkedIn"}
+      className={styles.sharePageButton}
+      onClick={() => {
+        window.open(linkedInSharingLink);
+      }}
+    />
+  );
+};
+
 export const useShareContent = (
   platform: "linkedin" | "twitter" | undefined,
 ): AboutItemContent[] => {
@@ -52,15 +79,7 @@ export const useShareContent = (
         {
           step: 2,
           title: "Navigate to your LinkedIn profile and start a new post",
-          node: (
-            <SharingAction
-              icon={(params) => <LinkedInIcon {...params} />}
-              label={"Open LinkedIn"}
-              onClick={() => {
-                window.open(linkedInSharingLink);
-              }}
-            />
-          ),
+          node: <ShareToLinkedinButton />,
         },
         {
           step: 3,
@@ -76,15 +95,7 @@ export const useShareContent = (
         {
           step: 2,
           title: "Navigate to your X.com profile and start a new post",
-          node: (
-            <SharingAction
-              icon={(params) => <XIcon {...params} />}
-              label={"Open X.com"}
-              onClick={() => {
-                window.open(twitterSharingLink);
-              }}
-            />
-          ),
+          node: <ShareToXButton />,
         },
         {
           step: 3,
@@ -102,21 +113,9 @@ export const useShareContent = (
           step: 2,
           title: "Navigate to your social profile and start a new post",
           node: (
-            <div style={{ display: "flex", gap: 16 }}>
-              <SharingAction
-                icon={(params) => <LinkedInIcon {...params} />}
-                label={"Open LinkedIn"}
-                onClick={() => {
-                  window.open(linkedInSharingLink);
-                }}
-              />
-              <SharingAction
-                icon={(params) => <XIcon {...params} />}
-                label={"Open X.com"}
-                onClick={() => {
-                  window.open(twitterSharingLink);
-                }}
-              />
+            <div className={styles.sharePageSocialsContainer}>
+              <ShareToLinkedinButton />
+              <ShareToXButton />
             </div>
           ),
         },
