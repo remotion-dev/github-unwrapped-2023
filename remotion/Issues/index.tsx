@@ -40,6 +40,7 @@ import {
   RocketComponent,
 } from "./Rocket";
 import { Ufo } from "./Ufo";
+import { UFO_ASSET } from "./UfoSvg";
 import { ZERO_ISSUES_DURATION, ZeroIssues } from "./ZeroIssues";
 
 export const issuesSchema = z.object({
@@ -77,8 +78,8 @@ export const calculateIssueDuration: CalculateMetadataFunction<
   };
 };
 
-export const getIssuesSoundsToPrefetch = () => {
-  return [...getIssueSounds()];
+export const getIssuesAssetsToPrefetch = () => {
+  return [...getIssueSounds(), UFO_ASSET];
 };
 
 export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({

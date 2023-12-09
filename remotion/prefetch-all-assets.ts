@@ -1,7 +1,7 @@
 import { prefetch } from "remotion";
 import type { Planet, Rocket, TopLanguage } from "../src/config";
 import { prefetchLandingAssets } from "./EndScene";
-import { getIssuesSoundsToPrefetch } from "./Issues";
+import { getIssuesAssetsToPrefetch } from "./Issues";
 import { getMainAssetsToPrefetch } from "./Main";
 import { getOpeningAssetsToPrefetch } from "./Opening";
 import { getProductivityAssetToPrefetch } from "./Productivity/Productivity";
@@ -35,7 +35,7 @@ const collectAllAssetsToPrefetch = ({
     ...getMainAssetsToPrefetch(durationInFrames, rocket),
     ...getTopLanguageAssetsToPrefetch({ language1, language2, language3 }),
     ...getOpeningAssetsToPrefetch(rocket),
-    ...getIssuesSoundsToPrefetch(),
+    ...getIssuesAssetsToPrefetch(),
     ...starsAssetsToPreload(),
     ...getProductivityAssetToPrefetch(),
     ...getSevenSegmentAssetsToPrefetch(),
