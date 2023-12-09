@@ -7,6 +7,14 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { Threads } from "./Threads";
 
+export const prefetchPlanetLandingBackground = (planet: Planet): string[] => {
+  if (planet === "Gold") {
+    return [GOLD_PLANET_BG];
+  }
+
+  return [];
+};
+
 export const PlanetBackground: React.FC<{
   planet: Planet;
 }> = ({ planet }) => {

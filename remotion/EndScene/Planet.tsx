@@ -1,6 +1,8 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 
+export const GOLD_PLANET = staticFile("golden-planet.png");
+
 export const GoldPlanet: React.FC = () => {
   return (
     <AbsoluteFill

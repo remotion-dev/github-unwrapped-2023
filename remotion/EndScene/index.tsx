@@ -8,13 +8,17 @@ import {
 } from "remotion";
 
 import { z } from "zod";
+import type { Planet } from "../../src/config";
 import { PlanetEnum, rocketSchema } from "../../src/config";
 import { FPS } from "../Issues/make-ufo-positions";
 import { CallToAction } from "./CallToAction";
-import { PlanetAsset } from "./GoldPlanetAsset";
+import { PlanetAsset, prefetchPlanetImage } from "./GoldPlanetAsset";
 import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
-import { PlanetBackground } from "./PlanetBackground";
+import {
+  PlanetBackground,
+  prefetchPlanetLandingBackground,
+} from "./PlanetBackground";
 
 export const GOLD_PLANET_BG = staticFile("gold-gradient-bg.png");
 
@@ -32,6 +36,13 @@ export const endSceneSchema = z.object({
 });
 
 export const END_SCENE_DURATION = 6.5 * FPS;
+
+export const prefetchLandingAssets = (planet: Planet): string[] => {
+  return [
+    ...prefetchPlanetLandingBackground(planet),
+    prefetchPlanetImage(planet),
+  ];
+};
 
 export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
   rocket,

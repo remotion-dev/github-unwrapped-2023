@@ -6,6 +6,8 @@ const container: React.CSSProperties = {
   alignItems: "center",
 };
 
+export const ICE_PLANET = staticFile("planet-ice.png");
+
 export const IcePlanet: React.FC = () => {
   return (
     <AbsoluteFill style={container}>
@@ -14,7 +16,7 @@ export const IcePlanet: React.FC = () => {
           width: 1100,
           marginTop: 100,
         }}
-        src={staticFile("planet-ice.png")}
+        src={ICE_PLANET}
       />
     </AbsoluteFill>
   );

@@ -1,9 +1,20 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
 import type { Planet } from "../../src/config";
-import { GoldPlanet } from "./Planet";
-import { IcePlanet } from "./orbs/IcePlanet";
-import { SilverPlanet } from "./orbs/SilverPlanet";
+import { GOLD_PLANET, GoldPlanet } from "./Planet";
+import { ICE_PLANET, IcePlanet } from "./orbs/IcePlanet";
+import { SILVER_PLANET, SilverPlanet } from "./orbs/SilverPlanet";
+
+export const prefetchPlanetImage = (planet: Planet) => {
+  switch (planet) {
+    case "Silver":
+      return SILVER_PLANET;
+    case "Ice":
+      return ICE_PLANET;
+    default:
+      return GOLD_PLANET;
+  }
+};
 
 export const PlanetAsset: React.FC<{
   planet: Planet;

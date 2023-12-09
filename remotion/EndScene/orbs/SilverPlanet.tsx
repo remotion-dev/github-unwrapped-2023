@@ -3,6 +3,8 @@ import { AbsoluteFill, Img, staticFile } from "remotion";
 
 const totalWidth = 1900;
 
+export const SILVER_PLANET = staticFile("planet-silver.png");
+
 export const SilverPlanet: React.FC = () => {
   return (
     <AbsoluteFill
@@ -17,7 +19,7 @@ export const SilverPlanet: React.FC = () => {
           width: totalWidth,
           transform: `rotate(-100deg)`,
         }}
-        src={staticFile("planet-silver.png")}
+        src={SILVER_PLANET}
       />
     </AbsoluteFill>
   );
