@@ -553,9 +553,9 @@ export const RemotionRoot: React.FC = () => {
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
-          totalPullRequests: 10,
+          totalPullRequests: 50,
           topWeekday: "2" as const,
-          topHour: "0" as const,
+          topHour: "4" as const,
           graphData: [
             { productivity: 0, time: 0 },
             { productivity: 0, time: 1 },

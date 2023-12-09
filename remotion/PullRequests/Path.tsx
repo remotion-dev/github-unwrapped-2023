@@ -1,4 +1,5 @@
 import { evolvePath, getLength, getPointAtLength } from "@remotion/paths";
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -10,6 +11,12 @@ import {
 
 export const PATHS_COMP_HEIGHT = 4275;
 export const PATH_ANIMATION_DURATION = 200;
+
+const BLURRED_DOT = staticFile("blurred-dot.png");
+
+export const getPullRequestsAssets = () => {
+  return [BLURRED_DOT];
+};
 
 export const Path: React.FC<{
   d: string;
@@ -26,11 +33,22 @@ export const Path: React.FC<{
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
       easing: Easing.out(Easing.ease),
-    }
+    },
   );
-  const { strokeDasharray, strokeDashoffset } = evolvePath(progress, d);
-  const length = getLength(d);
-  const pointAtLength = getPointAtLength(d, progress * length);
+
+  const { pointAtLength, strokeDasharray, strokeDashoffset } = useMemo(() => {
+    const {
+      strokeDasharray: _strokeDasharray,
+      strokeDashoffset: _strokeDashoffset,
+    } = evolvePath(progress, d);
+    const length = getLength(d);
+    const _pointAtLength = getPointAtLength(d, progress * length);
+    return {
+      strokeDasharray: _strokeDasharray,
+      strokeDashoffset: _strokeDashoffset,
+      pointAtLength: _pointAtLength,
+    };
+  }, [d, progress]);
 
   return (
     <AbsoluteFill>
@@ -63,7 +81,7 @@ export const Path: React.FC<{
           top: pointAtLength.y,
           left: pointAtLength.x,
         }}
-        src={staticFile("blurred-dot.png")}
+        src={BLURRED_DOT}
       />
     </AbsoluteFill>
   );

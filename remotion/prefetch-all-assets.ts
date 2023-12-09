@@ -6,6 +6,7 @@ import { getIssuesAssetsToPrefetch } from "./Issues";
 import { getMainAssetsToPrefetch } from "./Main";
 import { getOpeningAssetsToPrefetch } from "./Opening";
 import { getProductivityAssetToPrefetch } from "./Productivity/Productivity";
+import { getPullRequestsAssets } from "./PullRequests/Path";
 import { getSevenSegmentAssetsToPrefetch } from "./SevenSegment/SevenSegmentNumber";
 import { getSideRocketSource } from "./Spaceship";
 import { starsAssetsToPreload } from "./StarsGiven/Star";
@@ -42,6 +43,7 @@ const collectAllAssetsToPrefetch = ({
     ...getSevenSegmentAssetsToPrefetch(),
     ...prefetchLandingAssets(planetType),
     ...contributionSceneAssets(),
+    ...getPullRequestsAssets(),
   ];
 };
 
