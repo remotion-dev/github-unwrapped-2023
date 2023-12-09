@@ -6,7 +6,10 @@ import {
 import { NavigateBack } from "./components";
 import styles from "./styles.module.css";
 
-export const DesktopHeader: React.FC<{ title: string }> = ({ title }) => {
+export const DesktopHeader: React.FC<{
+  title: string;
+  description: string;
+}> = ({ title, description }) => {
   return (
     <div className={styles.desktopHeaderWrapper}>
       <div
@@ -28,8 +31,7 @@ export const DesktopHeader: React.FC<{ title: string }> = ({ title }) => {
           {title}
         </h1>
         <p className={commonStyles.aboutDescription} style={{ maxWidth: 400 }}>
-          With this page we hope to answer all your questions for the GitHub
-          Unwrapped 2023.
+          {description}
         </p>
       </div>
       <div
