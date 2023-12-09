@@ -2,8 +2,6 @@ import type { ContributionDotType } from "./Dot";
 
 export const INITIAL_SIZE = 15;
 
-export const OFFSET_X = 70;
-export const OFFSET_Y = 0;
 export const SPACING = 3;
 
 export const MAX_STAR_SIZE = 6;
@@ -1846,6 +1844,9 @@ export const appearDelays = [
   },
 ];
 
+export const GRID_WIDTH = 52 * INITIAL_SIZE + 51 * SPACING;
+export const GRID_HEIGHT = 7 * INITIAL_SIZE + 6 * SPACING;
+
 export const computePositions = (params: { data: number[] }) => {
   const max = Math.max(...params.data);
   const maxIndex = params.data.findIndex((d) => d === max);
@@ -1854,8 +1855,8 @@ export const computePositions = (params: { data: number[] }) => {
     const col = Math.floor(i / 7);
     const row: number = i % 7;
 
-    const x = col * (SPACING + INITIAL_SIZE) + OFFSET_X;
-    const y = row * (SPACING + INITIAL_SIZE) + OFFSET_Y;
+    const x = col * (SPACING + INITIAL_SIZE);
+    const y = row * (SPACING + INITIAL_SIZE);
 
     return {
       col,

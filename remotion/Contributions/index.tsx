@@ -6,7 +6,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot, GLOW_PNG } from "./Dot";
-import { computePositions } from "./compute-positions";
+import { GRID_HEIGHT, GRID_WIDTH, computePositions } from "./compute-positions";
 
 export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
 export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
@@ -57,20 +57,28 @@ export const ContributionsScene: React.FC<{
       <AbsoluteFill>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
-      <div
+      <AbsoluteFill
         style={{
-          width: "100%",
-          position: "absolute",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        {positions.map((p, i) => (
-          <ContributionDot
-            // eslint-disable-next-line react/no-array-index-key
-            key={i}
-            dot={p}
-          />
-        ))}
-      </div>
+        <div
+          style={{
+            position: "relative",
+            width: GRID_WIDTH,
+            height: GRID_HEIGHT,
+          }}
+        >
+          {positions.map((p, i) => (
+            <ContributionDot
+              // eslint-disable-next-line react/no-array-index-key
+              key={i}
+              dot={p}
+            />
+          ))}
+        </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
