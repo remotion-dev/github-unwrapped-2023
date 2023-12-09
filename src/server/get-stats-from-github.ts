@@ -5,6 +5,7 @@ import { getALotOfGithubCommits } from "./commits/github-commits.js";
 import type { ProfileStats } from "./db.js";
 import { fetchFromGitHub } from "./fetch-stats.js";
 import { getMorePullRequests } from "./get-more-pull-requests.js";
+import { getMoreStars } from "./get-more-stars.js";
 import type { BaseQueryResponse } from "./queries/base.query.js";
 import { baseQuery } from "./queries/base.query.js";
 import { getQuery } from "./queries/query.js";
@@ -39,11 +40,13 @@ export const getStatsFromGitHub = async ({
     query: getQuery(username, baseQuery),
   })) as BaseQueryResponse;
 
-  const commits = username
-    ? await getALotOfGithubCommits(username, token)
-    : await getALotOfGithubCommits(baseData.login, token);
-
-  const morePullRequests = await getMorePullRequests(username, token);
+  const [commits, morePullRequests, stars] = await Promise.all([
+    username
+      ? getALotOfGithubCommits(username, token)
+      : getALotOfGithubCommits(baseData.login, token),
+    getMorePullRequests({ username, token }),
+    getMoreStars({ token, username }),
+  ]);
 
   const acc: Record<string, { color: string; value: number }> = {};
 
@@ -97,7 +100,7 @@ export const getStatsFromGitHub = async ({
   return {
     totalPullRequests: morePullRequests.length,
     topLanguages,
-    totalStars: baseData.starredRepositories.edges.length,
+    totalStars: stars.length,
     totalContributions:
       baseData.contributionsCollection.contributionCalendar.totalContributions,
     closedIssues: baseData.closedIssues.totalCount,
@@ -111,8 +114,6 @@ export const getStatsFromGitHub = async ({
     topHour: String(mostHour[0]) as Hour,
     graphData,
     contributionData: allDays.map((d) => d.contributionCount),
-    sampleStarredRepos: baseData.starredRepositories.edges.map(
-      (e) => e.node.name,
-    ),
+    sampleStarredRepos: stars.map((s) => s.name),
   };
 };

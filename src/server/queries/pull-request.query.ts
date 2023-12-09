@@ -1,4 +1,4 @@
-export const pullRequestQuery = (cursor?: string) => `
+export const pullRequestQuery = (cursor: string | null) => `
   pullRequests(first: 100, orderBy: { field: CREATED_AT, direction: DESC } ${
     cursor ? `, after: "${cursor}"` : ""
   }) {

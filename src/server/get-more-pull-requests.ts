@@ -3,12 +3,15 @@ import type { PullRequestQueryResponse } from "./queries/pull-request.query.js";
 import { pullRequestQuery } from "./queries/pull-request.query.js";
 import { getQuery } from "./queries/query.js";
 
-export const getMorePullRequests = async (
-  username: string | null,
-  token: string,
-) => {
+export const getMorePullRequests = async ({
+  username,
+  token,
+}: {
+  username: string | null;
+  token: string;
+}) => {
   let done = false;
-  let cursor;
+  let cursor: string | null = null;
   let safety = 0;
 
   const pullRequestData: Array<{ createdAt: string }> = [];

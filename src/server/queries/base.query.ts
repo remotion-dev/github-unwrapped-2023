@@ -48,7 +48,7 @@ contributionsCollection(
 			owner {
 				login
 			}
-			languages(first: 3, orderBy: {field: SIZE, direction: DESC}) {
+			languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
 				edges {
 					size
 					node {
@@ -57,18 +57,6 @@ contributionsCollection(
 						id
 					}
 				}
-			}
-		}
-	}
-}
-starredRepositories(first:100, orderBy: {field: STARRED_AT, direction: DESC}) {
-	edges {
-		starredAt
-		cursor
-		node {
-			name
-			owner {
-				login
 			}
 		}
 	}
@@ -101,18 +89,6 @@ export type BaseQueryResponse = {
               id: string;
             };
           }>;
-        };
-      };
-    }>;
-  };
-
-  starredRepositories: {
-    edges: Array<{
-      starredAt: string;
-      node: {
-        name: string;
-        owner: {
-          login: string;
         };
       };
     }>;
