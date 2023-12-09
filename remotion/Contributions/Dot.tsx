@@ -102,9 +102,6 @@ export const ContributionDot: React.FC<{
 
   const xDelta = noiseX * 200;
   const yDelta = noiseY * 800;
-  if (glow > 0) {
-    console.log("glow");
-  }
 
   const style: React.CSSProperties = useMemo(() => {
     return {
