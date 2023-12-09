@@ -18,6 +18,7 @@ import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
+import { OgImage } from "./OgImage";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
 import { openingTitleSchema } from "./Opening/TitleImage";
@@ -830,6 +831,9 @@ export const RemotionRoot: React.FC = () => {
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
+      </Folder>
+      <Folder name="Stills">
+        <Still width={1200} height={630} component={OgImage} id="og-image" />
       </Folder>
     </>
   );
