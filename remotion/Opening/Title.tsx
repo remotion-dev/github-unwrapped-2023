@@ -7,7 +7,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { z } from "zod";
-import type { AccentColor } from "../../src/config";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 import { TitleImage, type openingTitleSchema } from "./TitleImage";
 
@@ -28,9 +27,8 @@ const PADDING = 20;
 export const OpeningTitle: React.FC<
   z.infer<typeof openingTitleSchema> & {
     exitProgress: number;
-    accentColor: AccentColor;
   }
-> = ({ login, exitProgress, startAngle, accentColor, rocket }) => {
+> = ({ login, exitProgress, startAngle, rocket, accentColor }) => {
   const { fps, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -44,17 +42,7 @@ export const OpeningTitle: React.FC<
     durationInFrames: 50,
   });
 
-  const rotate = spring({
-    fps,
-    frame,
-    config: {
-      damping: 20,
-      mass: 1.6,
-      stiffness: 100,
-    },
-    delay: 40,
-    durationInFrames: 65,
-  });
+  const rotate = 1;
 
   const startRotation = -10;
   const endRotation = 10;
@@ -102,7 +90,6 @@ export const OpeningTitle: React.FC<
           transform: `scale(${scaleDivided}) rotateY(${x}deg) rotateX(${
             rotation + rotateX
           }rad) translateY(${translateY}px)`,
-          backfaceVisibility: "hidden",
         }}
       >
         <TitleImage

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  AbsoluteFill,
   Img,
   interpolate,
   spring,
@@ -14,16 +13,14 @@ import {
   openingSceneStartAngle,
   rocketSchema,
 } from "../../src/config";
-import { Gradient } from "../Gradients/NativeGradient";
 import type { GradientType } from "../Gradients/available-gradients";
-import { UfoSvg } from "../Issues/UfoSvg";
 import { PANE_BORDER } from "../TopLanguages/Pane";
 
 export const openingTitleSchema = z.object({
   login: z.string(),
   startAngle: openingSceneStartAngle,
-  accentColor: accentColorSchema,
   rocket: rocketSchema,
+  accentColor: accentColorSchema,
 });
 
 const TITLE_IMAGE_INNER_BORDER_RADIUS = 30;
@@ -45,7 +42,6 @@ export const getAvatarImage = (login: string) => {
 
 export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
-  accentColor,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -58,7 +54,6 @@ export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
   });
 
   const flipRad = interpolate(flip, [0, 1], [Math.PI, 0]);
-  const flipOpposite = flipRad + Math.PI;
 
   return (
     <div
@@ -82,35 +77,6 @@ export const TitleImage: React.FC<z.infer<typeof openingTitleSchema>> = ({
           position: "absolute",
         }}
       />
-      <div
-        style={{
-          width: 160,
-          borderRadius: TITLE_IMAGE_INNER_BORDER_RADIUS,
-          height: 160,
-          border: PANE_BORDER,
-          transform: `rotateY(${flipOpposite}rad)`,
-          backfaceVisibility: "hidden",
-          position: "absolute",
-          backgroundColor: "#111",
-          overflow: "hidden",
-        }}
-      >
-        <AbsoluteFill>
-          <Gradient gradient={accentColorToGradient(accentColor)} />
-        </AbsoluteFill>
-        <AbsoluteFill
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <UfoSvg
-            style={{
-              height: 80,
-            }}
-          />
-        </AbsoluteFill>
-      </div>
     </div>
   );
 };

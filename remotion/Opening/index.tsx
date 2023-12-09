@@ -33,8 +33,8 @@ export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
 const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
-  accentColor,
   rocket,
+  accentColor,
 }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
@@ -87,8 +87,8 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
             startAngle={startAngle}
             exitProgress={exitProgress}
             login={login}
-            accentColor={accentColor}
             rocket={rocket}
+            accentColor={accentColor}
           />
         </AbsoluteFill>
         <AbsoluteFill
@@ -115,8 +115,8 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
 export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   login,
   startAngle,
-  accentColor,
   rocket,
+  accentColor,
 }) => {
   const { width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
