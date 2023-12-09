@@ -27,7 +27,7 @@ export const HeadsUpDisplay: React.FC<{
           justifyContent: "center",
           alignItems: "center",
           color: "white",
-          fontSize: 30,
+          fontSize: 40,
         }}
       >
         {textToDisplay === null ? null : (
