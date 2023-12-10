@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import type { ProfileStats } from "../../src/config";
 import { type Rocket } from "../../src/config";
-import type { ProfileStats } from "../../src/server/db";
 import { Navbar } from "../Home/Navbar";
 import { NotFound } from "../NotFound/NotFound";
 import { useUserVideo } from "../context";

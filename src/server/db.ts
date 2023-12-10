@@ -1,27 +1,8 @@
 import type { AwsRegion } from "@remotion/lambda";
 import type { ObjectId, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import type { Hour, ProductivityPerHour, Rocket, Weekday } from "../config.js";
+import type { ProfileStats, Rocket } from "../config.js";
 import { backendCredentials } from "../helpers/domain.js";
-
-export type ProfileStats = {
-  totalPullRequests: number;
-  username: string;
-  lowercasedUsername: string;
-  openIssues: number;
-  closedIssues: number;
-  fetchedAt: number;
-  loggedInWithGitHub: boolean;
-  totalStars: number;
-  sampleStarredRepos: string[];
-  totalContributions: number;
-  topLanguages: Array<{ languageName: string; color: string }>;
-  bestHours: Record<string, number>;
-  topWeekday: Weekday;
-  topHour: Hour;
-  graphData: ProductivityPerHour[];
-  contributionData: number[];
-};
 
 type EmailCollection = {
   email: string;

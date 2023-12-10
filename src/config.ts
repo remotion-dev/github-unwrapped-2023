@@ -1,4 +1,5 @@
 import { zColor } from "@remotion/zod-types";
+import { random } from "remotion/no-react";
 import { z } from "zod";
 
 export const SITE_NAME = "unwrapped2023";
@@ -157,3 +158,125 @@ export const ProgressRequest = z.object({
 export const StatsRequest = z.object({
   username: z.string(),
 });
+
+export const generateRandomCorner = ({
+  lowercasedUsername,
+}: {
+  lowercasedUsername: string;
+}): Corner => {
+  const randomSeed = random(lowercasedUsername);
+
+  const index = Math.floor(randomSeed * cornerTypeValues.length);
+
+  return cornerTypeValues[index];
+};
+
+export type ProfileStats = {
+  totalPullRequests: number;
+  username: string;
+  lowercasedUsername: string;
+  openIssues: number;
+  closedIssues: number;
+  fetchedAt: number;
+  loggedInWithGitHub: boolean;
+  totalStars: number;
+  sampleStarredRepos: string[];
+  totalContributions: number;
+  topLanguages: Array<{ languageName: string; color: string }>;
+  bestHours: Record<string, number>;
+  topWeekday: Weekday;
+  topHour: Hour;
+  graphData: ProductivityPerHour[];
+  contributionData: number[];
+};
+
+export type CompositionParameters = z.infer<typeof compositionSchema>;
+
+const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
+  if (userStats.totalContributions >= 5000) {
+    return PlanetEnum.Enum.Gold;
+  }
+
+  if (userStats.totalContributions > 1000) {
+    return PlanetEnum.Enum.Silver;
+  }
+
+  return PlanetEnum.Enum.Ice;
+};
+
+const parseTopLanguage = (topLanguage: {
+  languageName: string;
+  color: string;
+}): z.infer<typeof languageSchema> => {
+  try {
+    const lang = LanguagesEnum.parse(topLanguage.languageName);
+    return {
+      type: "designed",
+      name: lang,
+    };
+  } catch (e) {
+    return {
+      type: "other",
+      color: topLanguage.color,
+      name: topLanguage.languageName,
+    };
+  }
+};
+
+export const computeCompositionParameters = (
+  userStats: ProfileStats,
+  rocketPreference: Rocket | null,
+): CompositionParameters => {
+  const accentColor =
+    accentColorValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "accent") *
+          accentColorValues.length,
+      )
+    ];
+
+  const defaultRocket =
+    rocketValues[
+      Math.floor(
+        random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
+      )
+    ];
+
+  return {
+    login: userStats.username,
+    corner: generateRandomCorner({
+      lowercasedUsername: userStats.lowercasedUsername,
+    }),
+    topLanguages:
+      userStats.topLanguages.length > 0
+        ? {
+            language1: parseTopLanguage(userStats.topLanguages[0]),
+            language2:
+              userStats.topLanguages.length > 1
+                ? parseTopLanguage(userStats.topLanguages[1])
+                : null,
+            language3:
+              userStats.topLanguages.length > 2
+                ? parseTopLanguage(userStats.topLanguages[2])
+                : null,
+          }
+        : null,
+    showHelperLine: false,
+    planet: computePlanet(userStats),
+    starsGiven: userStats.totalStars,
+    issuesClosed: userStats.closedIssues,
+    issuesOpened: userStats.openIssues,
+    totalPullRequests: userStats.totalPullRequests,
+    topWeekday: userStats.topWeekday,
+    topHour: userStats.topHour,
+    graphData: userStats.graphData,
+    openingSceneStartAngle:
+      random(userStats.lowercasedUsername + "startAngle") > 0.5
+        ? "left"
+        : "right",
+    accentColor,
+    rocket: rocketPreference ? rocketPreference : defaultRocket,
+    contributionData: userStats.contributionData,
+    sampleStarredRepos: userStats.sampleStarredRepos,
+  };
+};

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React from "react";
-import type { ProfileStats } from "../src/server/db";
+import type { ProfileStats } from "../src/config";
 import { NotFound } from "./NotFound/NotFound";
 import type { RenderStatus } from "./VideoPage/useVideo";
 import { useVideo } from "./VideoPage/useVideo";

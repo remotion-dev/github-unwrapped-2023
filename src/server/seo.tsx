@@ -45,12 +45,10 @@ const makeAppHead = async (
   }
 
   if (params.disableStats) {
-    const head = renderToString(
-      <>
-        <title>{`${username}'s #GitHubUnwrapped`}</title>
-      </>,
+    const newHead = renderToString(
+      <title>{`${username}'s #GitHubUnwrapped`}</title>,
     );
-    return { head, status: 200 };
+    return { head: newHead, status: 200 };
   }
 
   const stats = await getStatsFromGitHubOrCache({

@@ -3,7 +3,7 @@ import React from "react";
 const Dot: React.FC<{
   index: number;
   value: number;
-}> = ({ index, value }) => {
+}> = ({ index }) => {
   const row = index % 7;
   const column = Math.floor(index / 7);
 
