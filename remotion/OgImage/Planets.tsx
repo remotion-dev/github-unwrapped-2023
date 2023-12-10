@@ -19,16 +19,37 @@ export const Planets: React.FC<{
         alignItems: "center",
         justifyContent: "center",
         paddingRight: 20,
-        flexDirection: "row",
-        gap: 25,
+        flexDirection: "column",
       }}
     >
       <LanguagePlanet
         planetInfo={planetInfo}
         style={{
-          height: 80,
+          height: 100,
+          marginBottom: 10,
         }}
       />
+      <div
+        style={{
+          color: "white",
+          fontFamily: "Mona Sans",
+          fontSize: 18,
+          marginBottom: 6,
+          fontWeight: 500,
+        }}
+      >
+        Top Language
+      </div>
+      <div
+        style={{
+          fontFamily: "Mona Sans",
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
+        }}
+      >
+        {planetInfo.name}
+      </div>
     </div>
   );
 };
