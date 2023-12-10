@@ -71,6 +71,7 @@ export const MobileActionsContainer: React.FC = () => {
       <div style={{ display: "flex", gap: 16 }}>
         <DownloadButton style={{ flex: 1 }} />
         <Button
+          disabled={status.type !== "video-available"}
           hoverEffect
           style={{ flex: 1, gap: 8 }}
           onClick={() => {

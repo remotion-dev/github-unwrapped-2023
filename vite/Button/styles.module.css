@@ -50,4 +50,5 @@
   color: var(--disabled-text-color);
   border-color: var(--unfocused-border-color);
   cursor: not-allowed;
+  opacity: 0.5;
 }
