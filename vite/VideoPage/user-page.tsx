@@ -24,7 +24,6 @@ export const useCompositionParams = (user: ProfileStats) => {
 };
 
 export const UserPage = () => {
-  // const { compositionParams, setRocket } = useCompositionParams(user);
   const { compositionParams, setRocket } = useUserVideo();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
