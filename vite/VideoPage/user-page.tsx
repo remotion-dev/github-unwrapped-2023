@@ -44,12 +44,7 @@ export const UserPage = () => {
   }
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{
-        backgroundColor: "#000",
-      }}
-    >
+    <div className={styles.wrapper}>
       <div className={styles.background} id="videobackground">
         <VideoPageBackground />
       </div>
