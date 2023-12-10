@@ -1,20 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
 import { Button } from "../../Button/Button";
 import { HoverEffect } from "../../Button/HoverEffect";
 import { useUserVideo } from "../../context";
 import styles from "./styles.module.css";
 
+const getWindowSize = () => {
+  const { innerWidth, innerHeight } = window;
+  return { innerWidth, innerHeight };
+};
+
+const useWindowDimensions = () => {
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
+  return windowSize;
+};
+
+const WINDOW_WIDTH_THRESHOLD = 640;
+
+const downloadVideo = (url: string) => {
+  window.open(url, "_blank", "noopener noreferrer");
+};
+
 export const DownloadButton: React.FC<{
   style?: React.CSSProperties;
   className?: string;
 }> = ({ style, ...props }) => {
   const { status } = useUserVideo();
+  // const status: {
+  //   type: "render-running";
+  //   renderId: string;
+  //   progress: number;
+  // } = {
+  //   type: "render-running",
+  //   renderId: "",
+  //   progress: 0.47,
+  // };
+
+  const { innerWidth } = useWindowDimensions();
 
   const classNames = [styles.downloadButton];
 
   if (props.className) {
     classNames.push(props.className);
+  }
+
+  if (innerWidth < WINDOW_WIDTH_THRESHOLD) {
+    return (
+      <Button
+        className={[
+          ...classNames,
+          status.type === "video-available" ? undefined : styles.loadingButton,
+        ].join(" ")}
+        style={{
+          pointerEvents: status.type === "video-available" ? "auto" : "none",
+          ...style,
+        }}
+        onClick={() => {
+          if (status.type === "video-available") {
+            downloadVideo(status.url);
+          }
+        }}
+      >
+        {"progress" in status && (
+          <div
+            className={styles.loadingButtonBar}
+            style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
+          />
+        )}
+        <DownloadIcon width={20} />
+        Download
+      </Button>
+    );
   }
 
   if (status.type === "querying") {

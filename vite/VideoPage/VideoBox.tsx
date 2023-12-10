@@ -69,9 +69,7 @@ export const VideoBox: React.FC<{
           playerRef={playerRef}
           status={status}
         />
-        {status.type === "video-available" ? (
-          <MobileActionsContainer url={status.url} />
-        ) : null}
+        <MobileActionsContainer />
       </div>
     </Box>
   );
