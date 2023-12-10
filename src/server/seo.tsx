@@ -6,7 +6,10 @@ import { backendCredentials } from "../helpers/domain.js";
 import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
 
 // TODO: Return a 404 response
-const makeAppHead = async (username: string | null) => {
+const makeAppHead = async (
+  username: string | null,
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+) => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;
 
@@ -32,6 +35,15 @@ const makeAppHead = async (username: string | null) => {
     );
   }
 
+  if (params.disableStats) {
+    const head = renderToString(
+      <>
+        <title>{`${username}'s #GitHubUnwrapped`}</title>
+      </>,
+    );
+    return head;
+  }
+
   const stats = await getStatsFromGitHubOrCache({
     username,
     token: getRandomGithubToken(),
@@ -52,6 +64,10 @@ const makeAppHead = async (username: string | null) => {
   return head;
 };
 
-export const replaceAppHead = async (username: string | null, html: string) => {
-  return html.replace("<!--app-head-->", await makeAppHead(username));
+export const replaceAppHead = async (
+  username: string | null,
+  html: string,
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+) => {
+  return html.replace("<!--app-head-->", await makeAppHead(username, params));
 };

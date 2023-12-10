@@ -24,7 +24,7 @@ const viteIndexHtml =
 
 export const handleIndexHtmlDev = (
   vite: ViteDevServer,
-  handleUsername = false,
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
 ) => {
   const index = viteIndexHtml;
 
@@ -33,7 +33,7 @@ export const handleIndexHtmlDev = (
     try {
       const transformed = await vite.transformIndexHtml(req.url, template);
 
-      if (handleUsername) {
+      if (params.handleUsername) {
         const username = req.params.username || null;
 
         if (username === null) {
@@ -50,7 +50,7 @@ export const handleIndexHtmlDev = (
 
       response.status(200);
       response.send(
-        await replaceAppHead(req.params.username ?? null, transformed),
+        await replaceAppHead(req.params.username ?? null, transformed, params),
       );
     } catch (err) {
       vite.ssrFixStacktrace(err as Error);
@@ -60,13 +60,19 @@ export const handleIndexHtmlDev = (
   };
 };
 
-export const handleIndexHtmlProduction = () => {
+export const handleIndexHtmlProduction = (
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+) => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
   return async (req: Request, response: Response) => {
     try {
       response.status(200);
-      const head = await replaceAppHead(req.params.username ?? null, template);
+      const head = await replaceAppHead(
+        req.params.username ?? null,
+        template,
+        params,
+      );
       response.send(head);
       response.end();
     } catch (err) {
