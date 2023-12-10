@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 import React from "react";
-import type { ProfileStats } from "../src/config";
+import type { CompositionParameters, ProfileStats } from "../src/config";
 import { NotFound } from "./NotFound/NotFound";
 import type { RenderStatus } from "./VideoPage/useVideo";
 import { useVideo } from "./VideoPage/useVideo";
 import { useCompositionParams } from "./VideoPage/user-page";
-import type { CompositionParameters } from "./VideoPage/utils";
 
 const UserVideoContext = React.createContext<{
   compositionParams: CompositionParameters;

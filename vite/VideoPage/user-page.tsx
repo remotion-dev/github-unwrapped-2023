@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ProfileStats } from "../../src/config";
-import { type Rocket } from "../../src/config";
+import { computeCompositionParameters, type Rocket } from "../../src/config";
 import { Navbar } from "../Home/Navbar";
 import { NotFound } from "../NotFound/NotFound";
 import { useUserVideo } from "../context";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
-import { computeCompositionParameters } from "./utils";
 declare global {
   interface Window {
     __USER__: ProfileStats | null;
