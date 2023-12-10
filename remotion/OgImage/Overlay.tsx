@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { BarChart } from "./BarChart";
+import { GraphData } from "./GraphData";
 import { Planets } from "./Planets";
 import { PullRequests } from "./PullRequests";
 import { Stars } from "./Stars";
@@ -14,6 +15,7 @@ export const Overlay: React.FC = () => {
       <PullRequests />
       <Planets />
       <BarChart />
+      <GraphData />
     </AbsoluteFill>
   );
 };
