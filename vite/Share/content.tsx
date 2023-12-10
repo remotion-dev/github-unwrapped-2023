@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { CheckmarkIcon } from "../../icons/CheckmarkIcon";
 import { CopyIcon } from "../../icons/CopyIcon";
 import { LinkedInIcon } from "../../icons/LinkedInIcon";
@@ -10,7 +10,14 @@ import {
   twitterSharingLink,
 } from "../VideoPage/Actions/SharingActions";
 import { DownloadButton } from "../VideoPage/Sidebar/DownloadButton";
-import { useUserVideo } from "../context";
+import styles from "./styles.module.css";
+
+const step1Content = {
+  step: 1,
+  title: "Download your video",
+  description: "If you haven't already, download your video.",
+  node: <DownloadButton className={styles.sharePageButton} />,
+};
 
 const exampleDescription =
   "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com";
@@ -36,37 +43,35 @@ const CopyDescriptionButton = () => {
   );
 };
 
+const ShareToXButton = () => {
+  return (
+    <SharingAction
+      icon={(params) => <XIcon {...params} />}
+      label={"Open X.com"}
+      className={styles.sharePageButton}
+      onClick={() => {
+        window.open(twitterSharingLink);
+      }}
+    />
+  );
+};
+
+const ShareToLinkedinButton = () => {
+  return (
+    <SharingAction
+      icon={(params) => <LinkedInIcon {...params} />}
+      label={"Open LinkedIn"}
+      className={styles.sharePageButton}
+      onClick={() => {
+        window.open(linkedInSharingLink);
+      }}
+    />
+  );
+};
+
 export const useShareContent = (
   platform: "linkedin" | "twitter" | undefined,
 ): AboutItemContent[] => {
-  const { url, progress, error } = useUserVideo();
-
-  const step1Content = useMemo(
-    () => ({
-      step: 1,
-      title: "Download your video",
-      description: "If you haven't already, download your video.",
-      node: url ? (
-        <a href={url} target="_blank" rel="noreferrer">
-          <DownloadButton
-            error={error}
-            progress={progress}
-            url={url}
-            style={{ width: 240 }}
-          />
-        </a>
-      ) : (
-        <DownloadButton
-          error={error}
-          progress={progress}
-          url={url}
-          style={{ width: 240 }}
-        />
-      ),
-    }),
-    [error, progress, url],
-  );
-
   switch (platform) {
     case "linkedin": {
       return [
@@ -74,15 +79,7 @@ export const useShareContent = (
         {
           step: 2,
           title: "Navigate to your LinkedIn profile and start a new post",
-          node: (
-            <SharingAction
-              icon={(params) => <LinkedInIcon {...params} />}
-              label={"Open LinkedIn"}
-              onClick={() => {
-                window.open(linkedInSharingLink);
-              }}
-            />
-          ),
+          node: <ShareToLinkedinButton />,
         },
         {
           step: 3,
@@ -98,21 +95,13 @@ export const useShareContent = (
         {
           step: 2,
           title: "Navigate to your X.com profile and start a new post",
-          node: (
-            <SharingAction
-              icon={(params) => <XIcon {...params} />}
-              label={"Open X.com"}
-              onClick={() => {
-                window.open(twitterSharingLink);
-              }}
-            />
-          ),
+          node: <ShareToXButton />,
         },
         {
           step: 3,
           title: "Upload your video",
           description:
-            "Select your unwrapped or drag and drop your video from your downloads folder.",
+            "Select your video or drag and drop your video from your Downloads folder.",
         },
       ];
     }
@@ -124,21 +113,9 @@ export const useShareContent = (
           step: 2,
           title: "Navigate to your social profile and start a new post",
           node: (
-            <div style={{ display: "flex", gap: 16 }}>
-              <SharingAction
-                icon={(params) => <LinkedInIcon {...params} />}
-                label={"Open LinkedIn"}
-                onClick={() => {
-                  window.open(linkedInSharingLink);
-                }}
-              />
-              <SharingAction
-                icon={(params) => <XIcon {...params} />}
-                label={"Open X.com"}
-                onClick={() => {
-                  window.open(twitterSharingLink);
-                }}
-              />
+            <div className={styles.sharePageSocialsContainer}>
+              <ShareToLinkedinButton />
+              <ShareToXButton />
             </div>
           ),
         },
@@ -146,7 +123,7 @@ export const useShareContent = (
           step: 3,
           title: "Upload your video and add a caption",
           description:
-            "Select your unwrapped or drag and drop your video from your downloads folder",
+            "Select your video or drag and drop your video from your Downloads folder",
         },
       ];
     }

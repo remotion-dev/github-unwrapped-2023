@@ -29,6 +29,7 @@ export const SharingActions: React.FC<{
         <SharingAction
           icon={(params) => <XIcon {...params} />}
           label={"Post #GitHubUnwrapped"}
+          style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
         />
       </Link>
 
@@ -41,6 +42,7 @@ export const SharingActions: React.FC<{
         <SharingAction
           icon={(params) => <LinkedInIcon {...params} />}
           label="Share on LinkedIn"
+          style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
         />
       </Link>
     </div>

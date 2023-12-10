@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
+  Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -10,6 +13,7 @@ import { z } from "zod";
 import { accentColorSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { isMobileDevice } from "../Opening/devices";
 import { PATHS_COMP_HEIGHT } from "./Path";
 import { WholePaths } from "./WholePaths";
 import { ANIMATE_OUT_DURATION_PR, animateOutPullRequest } from "./animate-out";
@@ -61,6 +65,14 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
         transform: `scale(${scaleDivided + scale}) translateY(${translateY}px)`,
       }}
     >
+      {isMobileDevice() ? null : (
+        <Audio startFrom={40} src={staticFile("reverb.mp3")} />
+      )}
+      {isMobileDevice() ? null : (
+        <Sequence from={175}>
+          <Audio src={staticFile("weigh.mp3")} volume={0.6} />
+        </Sequence>
+      )}
       <AbsoluteFill style={style}>
         <AbsoluteFill>
           <Gradient gradient={accentColorToGradient(accentColor)} />

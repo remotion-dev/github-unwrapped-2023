@@ -16,14 +16,14 @@ import styles from "./styles.module.css";
 export const VideoBox: React.FC<{
   inputProps: z.infer<typeof compositionSchema>;
   rocket: Rocket;
-  setRocket: React.Dispatch<SetStateAction<Rocket>>;
+  setRocket: React.Dispatch<SetStateAction<Rocket | null>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
 }> = ({ inputProps, rocket, setRocket, isModalOpen, setIsModalOpen }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
 
-  const { url, progress, error } = useUserVideo();
+  const { status } = useUserVideo();
 
   const modalElement = document.getElementById("rocketModal");
   if (!modalElement) {
@@ -67,11 +67,11 @@ export const VideoBox: React.FC<{
           rocket={rocket}
           setIsPlaying={setIsPlaying}
           playerRef={playerRef}
-          url={url}
-          progress={progress}
-          error={error}
+          status={status}
         />
-        <MobileActionsContainer url={url} />
+        {status.type === "video-available" ? (
+          <MobileActionsContainer url={status.url} />
+        ) : null}
       </div>
     </Box>
   );

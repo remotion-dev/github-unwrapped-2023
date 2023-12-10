@@ -1,7 +1,7 @@
 import { random } from "remotion";
 import type { z } from "zod";
 import { generateRandomCorner } from "../../remotion/TopLanguages/corner";
-import type { compositionSchema } from "../../src/config";
+import type { Rocket, compositionSchema } from "../../src/config";
 import {
   LanguagesEnum,
   PlanetEnum,
@@ -46,6 +46,7 @@ const parseTopLanguage = (topLanguage: {
 
 export const computeCompositionParameters = (
   userStats: ProfileStats,
+  rocketPreference: Rocket | null,
 ): CompositionParameters => {
   const accentColor =
     accentColorValues[
@@ -55,12 +56,13 @@ export const computeCompositionParameters = (
       )
     ];
 
-  const rocket =
+  const defaultRocket =
     rocketValues[
       Math.floor(
         random(userStats.lowercasedUsername + "rocket") * rocketValues.length,
       )
     ];
+
   return {
     login: userStats.username,
     corner: generateRandomCorner({
@@ -94,7 +96,7 @@ export const computeCompositionParameters = (
         ? "left"
         : "right",
     accentColor,
-    rocket,
+    rocket: rocketPreference ? rocketPreference : defaultRocket,
     contributionData: userStats.contributionData,
     sampleStarredRepos: userStats.sampleStarredRepos,
   };

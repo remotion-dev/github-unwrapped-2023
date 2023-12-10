@@ -16,10 +16,25 @@
   display: flex;
   gap: 8px;
   border: none;
+  position: relative;
 
   &:hover {
     background-color: rgba(84, 128, 247, 1);
   }
+}
+
+.loadingButton {
+  background-color: rgba(80, 126, 255, 0.5);
+}
+
+.loadingButtonBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(80, 126, 255, 1);
+  height: 100%;
+  transition: width 1ss ease-in-out;
+  width: 0;
 }
 
 .sidebarTitleContainer {

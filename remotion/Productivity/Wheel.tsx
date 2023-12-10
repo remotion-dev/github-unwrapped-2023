@@ -1,12 +1,16 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
+  Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import { FPS } from "../Issues/make-ufo-positions";
+import { isMobileDevice } from "../Opening/devices";
 
 const wheelSpring = ({
   fps,
@@ -41,7 +45,8 @@ export const Wheel: React.FC<{
   radius: number;
   renderLabel: (value: string) => React.ReactNode;
   delay: number;
-}> = ({ value, values, radius, renderLabel, delay }) => {
+  soundDelay: number;
+}> = ({ value, values, radius, renderLabel, delay, soundDelay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -59,6 +64,11 @@ export const Wheel: React.FC<{
         perspective: 10000,
       }}
     >
+      {isMobileDevice() ? null : (
+        <Sequence from={soundDelay}>
+          <Audio src={staticFile("stop.mp3")} volume={0.3} />
+        </Sequence>
+      )}
       {values.map((f, i) => {
         const index = i / values.length + rotation;
 

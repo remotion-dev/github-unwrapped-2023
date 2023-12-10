@@ -2,9 +2,9 @@ import { zColor } from "@remotion/zod-types";
 import { z } from "zod";
 
 export const SITE_NAME = "unwrapped2023";
-export const RAM = 2048;
+export const RAM = 1200;
 export const DISK = 2048;
-export const TIMEOUT = 240;
+export const TIMEOUT = 120;
 
 const availablePlanets = ["Ice", "Silver", "Gold"] as const;
 export type Planet = (typeof availablePlanets)[number];
@@ -131,8 +131,23 @@ export const compositionSchema = z.object({
 
 export const RenderRequest = z.object({
   username: z.string(),
-  inputProps: compositionSchema,
+  theme: rocketSchema,
 });
+
+export type RenderResponse =
+  | {
+      type: "video-available";
+      url: string;
+    }
+  | {
+      type: "render-running";
+      renderId: string;
+      progress: number;
+    }
+  | {
+      type: "render-error";
+      error: string;
+    };
 
 export const ProgressRequest = z.object({
   username: z.string(),

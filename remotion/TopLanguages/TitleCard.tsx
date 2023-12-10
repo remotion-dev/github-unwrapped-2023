@@ -1,10 +1,18 @@
 import React from "react";
-import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Sequence,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { z } from "zod";
 import { accentColorSchema, rocketSchema } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { isMobileDevice } from "../Opening/devices";
 import { TopLanguagesRocket } from "./Rocket";
 import { TitleCardOctocat } from "./TitleCardOctocat";
 import { TopLanguagesTitle } from "./TopLanguagesTitle";
@@ -32,6 +40,13 @@ export const TopLanguagesTitleCard: React.FC<
         transform: `scale(${scale})`,
       }}
     >
+      {isMobileDevice() ? null : (
+        <Audio
+          startFrom={20}
+          src={staticFile("second-whoosh.mp3")}
+          volume={0.5}
+        />
+      )}
       <AbsoluteFill
         style={{
           transform: `rotate(180deg)`,

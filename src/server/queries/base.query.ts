@@ -1,15 +1,17 @@
+import { YEAR_TO_REVIEW } from "../../helpers/year.js";
+
 export const baseQuery = `
-openIssues: issues(filterBy: {since: "2023-01-01T00:00:00.000Z"}, states: OPEN) {
+openIssues: issues(filterBy: {since: "${YEAR_TO_REVIEW}-01-01T00:00:00.000Z"}, states: OPEN) {
 	totalCount
 }
-closedIssues: issues(filterBy: {since: "2023-01-01T00:00:00.000Z"}, states: CLOSED) {
+closedIssues: issues(filterBy: {since: "${YEAR_TO_REVIEW}-01-01T00:00:00.000Z"}, states: CLOSED) {
 	totalCount
 }
 avatarUrl
 login
 contributionsCollection(
-	from: "2023-01-01T00:00:00.000Z"
-	to: "2024-01-01T00:00:00.000Z"
+	from: "${YEAR_TO_REVIEW}-01-01T00:00:00.000Z"
+	to: "${YEAR_TO_REVIEW + 1}-01-01T00:00:00.000Z"
 ) {
 	totalCommitContributions
 	restrictedContributionsCount

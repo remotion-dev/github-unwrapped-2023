@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import React from "react";
 import type { ProfileStats } from "../src/server/db";
 import { NotFound } from "./NotFound/NotFound";
+import type { RenderStatus } from "./VideoPage/useVideo";
 import { useVideo } from "./VideoPage/useVideo";
 import { useCompositionParams } from "./VideoPage/user-page";
 import type { CompositionParameters } from "./VideoPage/utils";
@@ -9,11 +10,9 @@ import type { CompositionParameters } from "./VideoPage/utils";
 const UserVideoContext = React.createContext<{
   compositionParams: CompositionParameters;
   setRocket: React.Dispatch<
-    React.SetStateAction<CompositionParameters["rocket"]>
+    React.SetStateAction<CompositionParameters["rocket"] | null>
   >;
-  url: string | null;
-  progress: number;
-  error: boolean;
+  status: RenderStatus;
 } | null>(null);
 
 const UserVideoProvider: React.FC<{
@@ -21,9 +20,8 @@ const UserVideoProvider: React.FC<{
   user: ProfileStats;
 }> = ({ children, user }) => {
   const { compositionParams, setRocket } = useCompositionParams(user);
-  const { url, progress, error } = useVideo({
-    inputProps: compositionParams,
-    accentColor: compositionParams.accentColor,
+  const status = useVideo({
+    theme: compositionParams.rocket,
     username: compositionParams.login,
   });
 
@@ -31,11 +29,9 @@ const UserVideoProvider: React.FC<{
     return {
       compositionParams,
       setRocket,
-      url,
-      progress,
-      error,
+      status,
     };
-  }, [compositionParams, setRocket, url, progress, error]);
+  }, [compositionParams, setRocket, status]);
 
   return (
     <UserVideoContext.Provider value={value}>
@@ -50,7 +46,7 @@ export const UserVideoContextProvider: React.FC<{ children: ReactNode }> = ({
   const user = window.__USER__;
 
   if (user === null) {
-    return <NotFound />;
+    return <NotFound code="404" />;
   }
 
   return <UserVideoProvider user={user}>{children}</UserVideoProvider>;

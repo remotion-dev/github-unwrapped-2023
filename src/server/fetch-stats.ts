@@ -4,7 +4,7 @@ import { sendDiscordMessage } from "./discord.js";
 import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
 import { getRandomGithubToken } from "./github-token.js";
 
-export const fetchFromGitHub = async ({
+export const executeGitHubGraphQlQuery = async ({
   username,
   token,
   query,

@@ -2,55 +2,91 @@ import React from "react";
 import { DownloadIcon } from "../../../icons/DownloadIcon";
 import { Button } from "../../Button/Button";
 import { HoverEffect } from "../../Button/HoverEffect";
+import { useUserVideo } from "../../context";
 import styles from "./styles.module.css";
 
 export const DownloadButton: React.FC<{
-  url: string | null;
-  error: boolean;
-  progress: number;
   style?: React.CSSProperties;
-}> = ({ url, error, progress, style }) => {
-  if (error) {
+  className?: string;
+}> = ({ style, ...props }) => {
+  const { status } = useUserVideo();
+
+  const classNames = [styles.downloadButton];
+
+  if (props.className) {
+    classNames.push(props.className);
+  }
+
+  if (status.type === "querying") {
     return (
       <Button
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ pointerEvents: "none", ...style }}
       >
-        Download unavailable due to error
+        <div
+          style={{
+            width: 100,
+            height: 16,
+            backgroundColor: "rgba(255, 255,255, 0.2)",
+          }}
+        />{" "}
       </Button>
     );
   }
 
-  if (progress === undefined) {
+  if (status.type === "render-error") {
     return (
       <Button
-        className={styles.downloadButton}
+        className={classNames.join(" ")}
         style={{ pointerEvents: "none", ...style }}
       >
-        Generating .mp4 file...
+        Download unavailable
       </Button>
     );
   }
 
-  if (url) {
+  if (status.type === "error-querying") {
+    return (
+      <Button
+        className={classNames.join(" ")}
+        style={{ pointerEvents: "none", ...style }}
+      >
+        Could not get video status
+      </Button>
+    );
+  }
+
+  if (status.type === "video-available") {
     return (
       <Button
         hoverEffect
-        className={styles.downloadButton}
-        style={{ pointerEvents: "none", ...style }}
+        className={classNames.join(" ")}
+        style={{ ...style }}
+        onClick={() => {
+          window.open(status.url, "_blank", "noopener noreferrer");
+        }}
       >
         <HoverEffect />
-        Download Video <DownloadIcon width={20} color="white" />
+        <DownloadIcon width={20} />
+        Download Video
       </Button>
     );
   }
 
   return (
     <Button
-      className={styles.downloadButton}
+      className={[...classNames, styles.loadingButton].join(" ")}
       style={{ pointerEvents: "none", ...style }}
     >
-      Generating .mp4 file... ({Math.floor(progress * 100)}%)
+      <div
+        className={styles.loadingButtonBar}
+        style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
+      />
+      {status.progress > 0 ? (
+        <div>Generating video ({Math.round(status.progress * 100)}%)</div>
+      ) : (
+        <div>Generating video</div>
+      )}
     </Button>
   );
 };

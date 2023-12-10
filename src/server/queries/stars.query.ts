@@ -1,7 +1,7 @@
 export const getStarredReposQuery = (after: string | null) => {
   return `
 starredRepositories(first:100,${
-    after ? `after:"${after},"` : ""
+    after ? `after:"${after}",` : ""
   } orderBy: {field: STARRED_AT, direction: DESC}) {
     totalCount
     pageInfo {

@@ -18,6 +18,7 @@ import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
+import { OgImage } from "./OgImage";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
 import { openingTitleSchema } from "./Opening/TitleImage";
@@ -317,6 +318,7 @@ export const RemotionRoot: React.FC = () => {
           label: "Most productive day",
           renderLabel: (value) => value,
           delay: 30,
+          soundDelay: 60,
         }}
       />
       <Composition
@@ -334,6 +336,7 @@ export const RemotionRoot: React.FC = () => {
           radius: 90,
           renderLabel: (value) => value,
           delay: 30,
+          soundDelay: 60,
         }}
       />
       <Composition
@@ -549,11 +552,11 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Silver" as const,
+          planet: "Gold" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
-          totalPullRequests: 50,
+          totalPullRequests: 8,
           topWeekday: "2" as const,
           topHour: "4" as const,
           graphData: [
@@ -828,6 +831,9 @@ export const RemotionRoot: React.FC = () => {
           }}
           calculateMetadata={starsGivenCalculateMetadata}
         />
+      </Folder>
+      <Folder name="Stills">
+        <Still width={1200} height={630} component={OgImage} id="og-image" />
       </Folder>
     </>
   );

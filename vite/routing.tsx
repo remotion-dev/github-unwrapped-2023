@@ -4,7 +4,7 @@ import About from "./About/About.jsx";
 import Home from "./Home.jsx";
 import { Loading } from "./Loading.jsx";
 import { SharePage } from "./Share/page.jsx";
-import { UserPageOrNotFound } from "./VideoPage/UserPageOrNotFound.jsx";
+import { UserPage } from "./VideoPage/user-page.jsx";
 import { UserVideoContextProvider } from "./context.jsx";
 
 // const TanStackRouterDevtools =
@@ -54,14 +54,17 @@ export const userRoute = new Route({
 export const videoRoute = new Route({
   getParentRoute: () => userRoute,
   path: "/",
-  component: UserPageOrNotFound,
+  component: UserPage,
 });
 
 export const shareRoute = new Route({
   getParentRoute: () => userRoute,
   path: "share",
   component: SharePage,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: {
+    accentColor?: (typeof accentColorValues)[number];
+    platform?: "twitter" | "linkedin";
+  }) => {
     // validate and parse the search params into a typed state
     return {
       accentColor: search?.accentColor ?? accentColorValues[0],

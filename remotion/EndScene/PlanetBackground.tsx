@@ -5,11 +5,11 @@ import type { Planet } from "../../src/config";
 import { Stars } from "../../vite/Home/Stars";
 import { Gradient } from "../Gradients/NativeGradient";
 import { GoldPlanetShine } from "./GoldPlanetShine";
-import { Threads } from "./Threads";
+import { Orbs, Threads } from "./Threads";
 
 export const prefetchPlanetLandingBackground = (planet: Planet): string[] => {
   if (planet === "Gold") {
-    return [GOLD_PLANET_BG];
+    return [GOLD_PLANET_BG, ...Orbs.map((o) => o.source)];
   }
 
   return [];

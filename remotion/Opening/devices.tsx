@@ -10,6 +10,6 @@ export const isIosSafari = () => {
   return isSafari || isChrome;
 };
 
-export const isLessPowerfulDevice = () => {
+export const isMobileDevice = () => {
   return isIosSafari() || window.navigator.userAgent.includes("Android");
 };

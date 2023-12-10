@@ -1,3 +1,4 @@
+import { YEAR_TO_REVIEW } from "../../helpers/year.js";
 import { sendDiscordMessage } from "../discord.js";
 import type { Commit, commits } from "./commits.js";
 import { mapApiResponseToCommits } from "./map-api-response-to-commits.js";
@@ -20,19 +21,23 @@ const getGithubCommits = async (
     },
   );
 
-  const rateLimit = response.headers.get("x-ratelimit-remaining");
+  const rateLimit = parseInt(
+    response.headers.get("x-ratelimit-remaining") as string,
+    10,
+  );
 
-  if (Math.random() < 0.1) {
+  if (rateLimit < 10) {
     sendDiscordMessage(`Rate limit remaining: ${rateLimit}`);
   }
 
-  if (response.status !== 200) {
-    // TODO: Distinguish between 404 and rate limit
-    const { message } = await response.json();
-    if (message.includes("API rate limit")) {
-      throw new TypeError(RATE_LIMIT_TOKEN);
-    }
+  // https://docs.github.com/en/rest/overview/rate-limits-for-the-rest-api?apiVersion=2022-11-28#exceeding-the-rate-limit
+  const rateLimitHit = response.status === 403 || response.status === 429;
+  sendDiscordMessage("Rate limit hit");
+  if (rateLimitHit) {
+    throw new TypeError(RATE_LIMIT_TOKEN);
+  }
 
+  if (response.status !== 200) {
     throw new TypeError((await response.json()).message);
   }
 
@@ -41,7 +46,7 @@ const getGithubCommits = async (
   const isDone =
     listOfCommits.length === 0 ||
     listOfCommits[listOfCommits.length - 1].date <
-      new Date("2023-01-01").getTime();
+      new Date(`${YEAR_TO_REVIEW}-01-01`).getTime();
   return {
     commits: listOfCommits,
     isDone,

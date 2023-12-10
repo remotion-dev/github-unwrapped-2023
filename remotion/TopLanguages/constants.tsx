@@ -91,11 +91,10 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   },
   [LanguagesEnum.Enum.Rust]: {
     source: staticFile("languages/rust.png"),
-    // TODO: WRONG COLOR
     gradient: "brown",
     textColor: "#5F523E",
     name: "Rust",
-    opacity: 0.3,
+    opacity: 0.7,
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum["C++"]]: {
@@ -116,35 +115,26 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
   },
   [LanguagesEnum.Enum.Nix]: {
     source: staticFile("languages/nix.png"),
-    // TODO: WRONG COLOR
-    gradient: "red",
-    // TODO: WRONG COLOR
-    textColor: "#DDA89F",
+    gradient: "blue",
+    textColor: "#88BCEA",
     name: "Nix",
-    // TODO: WRONG COLOR
     opacity: 0.3,
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum.PHP]: {
-    source: staticFile("languages/nix.png"),
-    // TODO: WRONG COLOR
-    gradient: "red",
-    // TODO: WRONG COLOR
-    textColor: "#DDA89F",
+    source: staticFile("languages/php.png"),
+    gradient: "pink",
+    textColor: "#878BC1",
     name: "PHP",
-    // TODO: WRONG COLOR
-    opacity: 0.3,
+    opacity: 0.45,
     customPlanetColor: null,
   },
   [LanguagesEnum.Enum["C#"]]: {
     source: staticFile("languages/csharp.png"),
-    // TODO: WRONG COLOR
-    gradient: "red",
-    // TODO: WRONG COLOR
-    textColor: "#DDA89F",
+    gradient: "purple",
+    textColor: "#A869B8",
     name: "C#",
-    // TODO: WRONG COLOR
-    opacity: 0.3,
+    opacity: 0.6,
     customPlanetColor: null,
   },
 };

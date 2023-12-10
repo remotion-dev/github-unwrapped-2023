@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { Hour, ProductivityPerHour, Weekday } from "../../src/config";
+import { isMobileDevice } from "../Opening/devices";
 import { TABLET_BG } from "./TabletSVG";
 import { TopDay } from "./TopDay";
 
@@ -130,7 +131,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         display: "flex",
       }}
     >
-      <Audio src={DECELERATE_SOUND} volume={0.8} />
+      {isMobileDevice() ? null : <Audio src={DECELERATE_SOUND} volume={0.8} />}
       <TopDay
         values={[
           "Monday",
@@ -148,6 +149,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         radius={130}
         renderLabel={(value) => value}
         delay={60}
+        soundDelay={95}
       />
       <TopDay
         values={[
@@ -191,6 +193,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
 
           return `${value} am`;
         }}
+        soundDelay={140}
       />
 
       <div

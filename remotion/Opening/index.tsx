@@ -18,13 +18,12 @@ import { FOREGROUND_IMAGE, Foreground } from "./Foreground";
 import { TakeOff, getTakeOffAssetToPrefetch } from "./TakeOff";
 import { OpeningTitle } from "./Title";
 import { accentColorToGradient, type openingTitleSchema } from "./TitleImage";
+import { isMobileDevice } from "./devices";
 
 export const OPENING_SCENE_LENGTH = 130;
 export const OPENING_SCENE_OUT_OVERLAP = 10;
 
-const LAUNCH_SOUND = staticFile(
-  "SCI FI SPACESHIP Medium 03 Exterior Start Departure Fast 01.mp3",
-);
+const LAUNCH_SOUND = staticFile("rocket-launch.mp3");
 
 export const getOpeningAssetsToPrefetch = (rocket: Rocket) => {
   return [
@@ -67,9 +66,11 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
         alignItems: "center",
       }}
     >
-      <Sequence from={-20}>
-        <Audio startFrom={0} src={LAUNCH_SOUND} />
-      </Sequence>
+      {isMobileDevice() ? null : (
+        <Sequence from={-20}>
+          <Audio startFrom={0} src={LAUNCH_SOUND} />
+        </Sequence>
+      )}
       <AbsoluteFill
         style={{
           justifyContent: "center",
@@ -123,7 +124,7 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
   rocket,
   accentColor,
 }) => {
-  const { width, fps } = useVideoConfig();
+  const { width, fps, durationInFrames: actualDuration } = useVideoConfig();
   const frame = useCurrentFrame();
   const delay = 10;
   const durationInFrames = 60;
@@ -163,6 +164,11 @@ export const OpeningScene: React.FC<z.infer<typeof openingTitleSchema>> = ({
         login={login}
         rocket={rocket}
       />
+      {isMobileDevice() ? null : (
+        <Sequence from={actualDuration - 60}>
+          <Audio src={staticFile("first-whoosh.mp3")} volume={0.5} />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };
