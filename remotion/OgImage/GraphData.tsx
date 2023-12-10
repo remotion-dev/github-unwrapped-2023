@@ -2,7 +2,8 @@ import React from "react";
 
 const Dot: React.FC<{
   index: number;
-}> = ({ index }) => {
+  value: number;
+}> = ({ index, value }) => {
   const row = index % 7;
   const column = Math.floor(index / 7);
 
@@ -21,7 +22,9 @@ const Dot: React.FC<{
   );
 };
 
-export const GraphData: React.FC = () => {
+export const ContributionGraphic: React.FC<{
+  graphData: number[];
+}> = ({ graphData }) => {
   return (
     <div
       style={{
@@ -30,9 +33,9 @@ export const GraphData: React.FC = () => {
         rotate: "0.5deg",
       }}
     >
-      {new Array(364).fill(true).map((g, i) => {
+      {graphData.map((g, i) => {
         // eslint-disable-next-line react/no-array-index-key
-        return <Dot key={i} index={i} />;
+        return <Dot key={i} value={g} index={i} />;
       })}
     </div>
   );

@@ -1,7 +1,12 @@
+import type { TopLanguage } from "../../src/config";
 import { LanguagePlanet } from "../TopLanguages/Language";
-import { mapLanguageToPlanet } from "../TopLanguages/constants";
+import { computePlanetInfo } from "../TopLanguages/constants";
 
-export const Planets: React.FC = () => {
+export const Planets: React.FC<{
+  topLanguage: TopLanguage;
+}> = ({ topLanguage }) => {
+  const planetInfo = computePlanetInfo(topLanguage);
+
   return (
     <div
       style={{
@@ -19,19 +24,7 @@ export const Planets: React.FC = () => {
       }}
     >
       <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.Java}
-        style={{
-          height: 80,
-        }}
-      />
-      <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.PHP}
-        style={{
-          height: 80,
-        }}
-      />
-      <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.Go}
+        planetInfo={planetInfo}
         style={{
           height: 80,
         }}

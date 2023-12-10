@@ -1,8 +1,28 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
+import { z } from "zod";
+import { languageSchema } from "../../src/config";
 import { Overlay } from "./Overlay";
 
-export const OgImage: React.FC = () => {
+export const ogImageSchema = z.object({
+  issues: z.number(),
+  stars: z.number(),
+  graphData: z.array(z.number()),
+  pullRequests: z.number(),
+  weekdays: z.array(z.number()),
+  login: z.string(),
+  topLanguage: languageSchema,
+});
+
+export const OgImage: React.FC<z.infer<typeof ogImageSchema>> = ({
+  issues,
+  graphData,
+  stars,
+  pullRequests,
+  weekdays,
+  login,
+  topLanguage,
+}) => {
   return (
     <AbsoluteFill>
       <AbsoluteFill>
@@ -20,7 +40,15 @@ export const OgImage: React.FC = () => {
             transformOrigin: "0px 0px 0px",
           }}
         >
-          <Overlay />
+          <Overlay
+            contributionData={graphData}
+            issues={issues}
+            login={login}
+            weekdays={weekdays}
+            pullRequests={pullRequests}
+            stars={stars}
+            topLanguage={topLanguage}
+          />
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
