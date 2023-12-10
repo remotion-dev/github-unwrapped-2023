@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
 import { useUserVideo } from "../context";
@@ -62,6 +62,43 @@ export const MobileActionsContainer: React.FC = () => {
     fetchFile();
   }, [fetchFile]);
 
+  const sharableContent = useMemo(
+    () =>
+      file
+        ? {
+            files: [file],
+            title: "Your GitHub Unwrapped 2023",
+            text: "Check out my GitHub Unwrapped 2023! Get yours now on https://githubunwrapped.com",
+          }
+        : null,
+    [file],
+  );
+
+  const handleClick = useCallback(() => {
+    const sharable =
+      sharableContent &&
+      navigator.canShare &&
+      navigator.canShare(sharableContent);
+    if (sharable && file) {
+      navigator.share();
+    } else {
+      navigate({
+        to: shareRoute.id,
+        params: { username },
+        search: {
+          platform: undefined,
+          accentColor: compositionParams.accentColor,
+        },
+      });
+    }
+  }, [
+    compositionParams.accentColor,
+    file,
+    navigate,
+    sharableContent,
+    username,
+  ]);
+
   return (
     <div className={styles.mobileActionsContainer}>
       {status.type === "video-available" && <FurtherActions />}
@@ -71,27 +108,10 @@ export const MobileActionsContainer: React.FC = () => {
       <div style={{ display: "flex", gap: 16 }}>
         <DownloadButton style={{ flex: 1 }} />
         <Button
+          disabled={status.type !== "video-available"}
           hoverEffect
           style={{ flex: 1, gap: 8 }}
-          onClick={() => {
-            const sharable = Boolean(navigator.share);
-            if (sharable && file) {
-              navigator.share({
-                files: [file],
-                title: "Your GitHub Unwrapped 2023",
-                text: "Check out my GitHub Unwrapped 2023! Get yours now on https://githubunwrapped.com",
-              });
-            } else {
-              navigate({
-                to: shareRoute.id,
-                params: { username },
-                search: {
-                  platform: undefined,
-                  accentColor: compositionParams.accentColor,
-                },
-              });
-            }
-          }}
+          onClick={handleClick}
         >
           <ShareIcon width={20} color="white" />
           Share
