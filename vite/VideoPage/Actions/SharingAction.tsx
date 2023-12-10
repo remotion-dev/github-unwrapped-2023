@@ -43,8 +43,12 @@ export const SharingAction: React.FC<{
   className?: string;
 }> = (props) => {
   return (
-    <Button style={props.style} className={props.className}>
-      <HoverEffect />
+    <Button
+      style={props.style}
+      className={props.className}
+      hoverEffect
+      onClick={props.onClick}
+    >
       <div
         style={{
           display: "flex",
