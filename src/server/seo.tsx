@@ -12,7 +12,10 @@ type AppHead = {
   head: string;
 };
 
-const makeAppHead = async (username: string | null): Promise<AppHead> => {
+const makeAppHead = async (
+  username: string | null,
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+): Promise<AppHead> => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;
 
@@ -39,6 +42,15 @@ const makeAppHead = async (username: string | null): Promise<AppHead> => {
         </>,
       ),
     };
+  }
+
+  if (params.disableStats) {
+    const head = renderToString(
+      <>
+        <title>{`${username}'s #GitHubUnwrapped`}</title>
+      </>,
+    );
+    return { head, status: 200 };
   }
 
   const stats = await getStatsFromGitHubOrCache({
@@ -69,9 +81,10 @@ type AppHtml = {
 export const replaceAppHead = async (
   username: string | null,
   html: string,
+  params: { handleUsername?: boolean; disableStats?: boolean } = {},
 ): Promise<AppHtml> => {
   try {
-    const { head, status } = await makeAppHead(username);
+    const { head, status } = await makeAppHead(username, params);
     return { html: html.replace("<!--app-head-->", head), status };
   } catch (err) {
     console.log(err);
