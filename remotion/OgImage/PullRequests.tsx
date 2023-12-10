@@ -1,4 +1,6 @@
-export const PullRequests: React.FC = () => {
+export const PullRequests: React.FC<{
+  pullRequests: number;
+}> = ({ pullRequests }) => {
   return (
     <div
       style={{
@@ -43,7 +45,7 @@ export const PullRequests: React.FC = () => {
             lineHeight: 1,
           }}
         >
-          12
+          {pullRequests}
         </div>
       </div>
       <div

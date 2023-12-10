@@ -1,10 +1,19 @@
 import React from "react";
+import { interpolateColors } from "remotion";
 
 const Dot: React.FC<{
   index: number;
-}> = ({ index }) => {
+  value: number;
+  max: number;
+}> = ({ index, max, value }) => {
   const row = index % 7;
   const column = Math.floor(index / 7);
+
+  const activityColor = interpolateColors(
+    value,
+    [0, max],
+    ["#202138", "#2486ff"],
+  );
 
   return (
     <div
@@ -12,7 +21,7 @@ const Dot: React.FC<{
         height: 6,
         width: 6,
         borderRadius: 2,
-        backgroundColor: "white",
+        backgroundColor: activityColor,
         position: "absolute",
         left: 331 + column * 9,
         top: 290 + row * 11,
@@ -21,7 +30,9 @@ const Dot: React.FC<{
   );
 };
 
-export const GraphData: React.FC = () => {
+export const ContributionGraphic: React.FC<{
+  graphData: number[];
+}> = ({ graphData }) => {
   return (
     <div
       style={{
@@ -30,9 +41,9 @@ export const GraphData: React.FC = () => {
         rotate: "0.5deg",
       }}
     >
-      {new Array(364).fill(true).map((g, i) => {
+      {graphData.map((g, i) => {
         // eslint-disable-next-line react/no-array-index-key
-        return <Dot key={i} index={i} />;
+        return <Dot key={i} max={Math.max(...graphData)} value={g} index={i} />;
       })}
     </div>
   );

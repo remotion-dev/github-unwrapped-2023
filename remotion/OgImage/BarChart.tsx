@@ -1,4 +1,5 @@
 import React from "react";
+import { z } from "zod";
 import { PANE_BACKGROUND, PANE_BORDER } from "../TopLanguages/Pane";
 
 const Bar: React.FC<{
@@ -40,7 +41,13 @@ const Bar: React.FC<{
   );
 };
 
-export const BarChart: React.FC = () => {
+const schema = z.array(z.number());
+
+export const BarChart: React.FC<{
+  graphData: z.infer<typeof schema>;
+}> = ({ graphData }) => {
+  const highest = Math.max(...graphData.map((g) => g));
+
   return (
     <div
       style={{
@@ -57,12 +64,12 @@ export const BarChart: React.FC = () => {
         gap: 20,
       }}
     >
-      {new Array(7).fill(true).map((_, i) => {
+      {graphData.map((_, i) => {
         return (
           <Bar
             // eslint-disable-next-line react/no-array-index-key
             key={i}
-            progress={0.5}
+            progress={_ / highest}
             letter={["M", "T", "W", "T", "F", "S", "S"][i]}
             most={i === 0}
           />

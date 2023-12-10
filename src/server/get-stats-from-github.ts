@@ -1,8 +1,7 @@
-import type { Hour } from "../config.js";
+import type { Hour, ProfileStats } from "../config.js";
 import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
 import { getALotOfGithubCommits } from "./commits/github-commits.js";
-import type { ProfileStats } from "./db.js";
 import { executeGitHubGraphQlQuery } from "./fetch-stats.js";
 import { getMorePullRequests } from "./get-more-pull-requests.js";
 import { getMoreStars } from "./get-more-stars.js";

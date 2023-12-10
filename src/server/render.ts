@@ -8,9 +8,15 @@ import {
 import type { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import type { z } from "zod";
-import { computeCompositionParameters } from "../../vite/VideoPage/utils.js";
 import type { RenderResponse, compositionSchema } from "../config.js";
-import { DISK, RAM, RenderRequest, SITE_NAME, TIMEOUT } from "../config.js";
+import {
+  DISK,
+  RAM,
+  RenderRequest,
+  SITE_NAME,
+  TIMEOUT,
+  computeCompositionParameters,
+} from "../config.js";
 import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
 import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import type { Render } from "./db.js";

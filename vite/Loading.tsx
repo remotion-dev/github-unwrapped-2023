@@ -20,9 +20,12 @@ export const Loading = () => {
         username,
       }),
     })
+      // TODO
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((res) => {
         window.location.href = `/${username}`;
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((err) => {
         // TODO
       });

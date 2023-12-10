@@ -72,9 +72,9 @@ export const ContributionDot: React.FC<{
   );
 
   const color = interpolateColors(
-    1 + moveProgress,
-    [0, 1, 2],
-    ["#202138", activityColor, starColor],
+    moveProgress,
+    [0, 1],
+    [activityColor, starColor],
   );
 
   const finalSize = interpolate(

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { StatsRequest } from "../config.js";
 import { sendDiscordMessage } from "./discord.js";
 import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";

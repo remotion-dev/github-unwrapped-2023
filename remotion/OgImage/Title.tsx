@@ -1,4 +1,6 @@
-export const Title: React.FC = () => {
+export const Title: React.FC<{
+  login: string;
+}> = ({ login }) => {
   return (
     <div
       style={{
@@ -11,7 +13,7 @@ export const Title: React.FC = () => {
         left: 20,
       }}
     >
-      @username
+      @{login}
     </div>
   );
 };

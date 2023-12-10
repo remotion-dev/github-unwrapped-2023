@@ -1,4 +1,6 @@
-export const Stars: React.FC = () => {
+export const Stars: React.FC<{
+  stars: number;
+}> = ({ stars }) => {
   return (
     <div
       style={{
@@ -42,7 +44,7 @@ export const Stars: React.FC = () => {
             lineHeight: 1,
           }}
         >
-          65
+          {stars}
         </div>
       </div>
       <div

@@ -1,7 +1,12 @@
+import type { TopLanguage } from "../../src/config";
 import { LanguagePlanet } from "../TopLanguages/Language";
-import { mapLanguageToPlanet } from "../TopLanguages/constants";
+import { computePlanetInfo } from "../TopLanguages/constants";
 
-export const Planets: React.FC = () => {
+export const Planets: React.FC<{
+  topLanguage: TopLanguage;
+}> = ({ topLanguage }) => {
+  const planetInfo = computePlanetInfo(topLanguage);
+
   return (
     <div
       style={{
@@ -14,28 +19,37 @@ export const Planets: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         paddingRight: 20,
-        flexDirection: "row",
-        gap: 25,
+        flexDirection: "column",
       }}
     >
       <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.Java}
+        planetInfo={planetInfo}
         style={{
-          height: 80,
+          height: 100,
+          marginBottom: 10,
         }}
       />
-      <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.PHP}
+      <div
         style={{
-          height: 80,
+          color: "white",
+          fontFamily: "Mona Sans",
+          fontSize: 18,
+          marginBottom: 6,
+          fontWeight: 500,
         }}
-      />
-      <LanguagePlanet
-        planetInfo={mapLanguageToPlanet.Go}
+      >
+        Top Language
+      </div>
+      <div
         style={{
-          height: 80,
+          fontFamily: "Mona Sans",
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
         }}
-      />
+      >
+        {planetInfo.name}
+      </div>
     </div>
   );
 };
