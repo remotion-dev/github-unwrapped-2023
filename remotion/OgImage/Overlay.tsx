@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
+import { BarChart } from "./BarChart";
 import { Planets } from "./Planets";
 import { PullRequests } from "./PullRequests";
 import { Stars } from "./Stars";
@@ -12,6 +13,7 @@ export const Overlay: React.FC = () => {
       <Stars />
       <PullRequests />
       <Planets />
+      <BarChart />
     </AbsoluteFill>
   );
 };

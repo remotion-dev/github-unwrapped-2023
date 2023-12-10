@@ -15,24 +15,25 @@ export const Planets: React.FC = () => {
         justifyContent: "center",
         paddingRight: 20,
         flexDirection: "row",
+        gap: 25,
       }}
     >
       <LanguagePlanet
         planetInfo={mapLanguageToPlanet.Java}
         style={{
-          height: 100,
+          height: 80,
         }}
       />
       <LanguagePlanet
         planetInfo={mapLanguageToPlanet.PHP}
         style={{
-          height: 100,
+          height: 80,
         }}
       />
       <LanguagePlanet
         planetInfo={mapLanguageToPlanet.Go}
         style={{
-          height: 100,
+          height: 80,
         }}
       />
     </div>
