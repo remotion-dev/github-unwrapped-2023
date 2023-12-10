@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ProfileStats } from "../../src/config";
 import { computeCompositionParameters, type Rocket } from "../../src/config";
-import { Navbar } from "../Home/Navbar";
+import { MobileHeader } from "../About/MobileHeader";
 import { NotFound } from "../NotFound/NotFound";
 import { useUserVideo } from "../context";
+import { userRoute } from "../routing";
 import { VideoPageBackground } from "./Background";
 import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
@@ -24,8 +25,8 @@ export const useCompositionParams = (user: ProfileStats) => {
 };
 
 export const UserPage = () => {
-  // const { compositionParams, setRocket } = useCompositionParams(user);
   const { compositionParams, setRocket } = useUserVideo();
+  const { username } = userRoute.useParams();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,16 +44,19 @@ export const UserPage = () => {
   }
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{
-        backgroundColor: "#000",
-      }}
-    >
+    <div className={styles.wrapper}>
       <div className={styles.background} id="videobackground">
         <VideoPageBackground />
       </div>
-      <Navbar />
+      <MobileHeader
+        backLink={{
+          from: userRoute.id,
+          to: "/",
+          params: { username } as any,
+        }}
+        title={""}
+        description={""}
+      />
       <VideoBox
         inputProps={compositionParams}
         rocket={compositionParams.rocket}

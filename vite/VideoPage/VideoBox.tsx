@@ -31,7 +31,7 @@ export const VideoBox: React.FC<{
   }
 
   return (
-    <Box style={{ overflow: "hidden", zIndex: 1 }}>
+    <>
       {ReactDOM.createPortal(
         isModalOpen ? (
           <RocketPickerModal
@@ -46,31 +46,32 @@ export const VideoBox: React.FC<{
         ) : null,
         modalElement,
       )}
-
-      <VideoBoxTop
-        inputProps={inputProps}
-        rocket={rocket}
-        setIsModalOpen={setIsModalOpen}
-        setIsPlaying={setIsPlaying}
-        playerRef={playerRef}
-      />
-      <div className={styles.roworcolumn}>
-        <PlayerContainer
-          playerRef={playerRef}
+      <Box style={{ overflow: "hidden" }}>
+        <VideoBoxTop
           inputProps={inputProps}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-        />
-        <Sidebar
-          inputProps={inputProps}
-          setIsModalOpen={setIsModalOpen}
           rocket={rocket}
+          setIsModalOpen={setIsModalOpen}
           setIsPlaying={setIsPlaying}
           playerRef={playerRef}
-          status={status}
         />
-        <MobileActionsContainer />
-      </div>
-    </Box>
+        <div className={styles.roworcolumn}>
+          <PlayerContainer
+            playerRef={playerRef}
+            inputProps={inputProps}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
+          <Sidebar
+            inputProps={inputProps}
+            setIsModalOpen={setIsModalOpen}
+            rocket={rocket}
+            setIsPlaying={setIsPlaying}
+            playerRef={playerRef}
+            status={status}
+          />
+          <MobileActionsContainer />
+        </div>
+      </Box>
+    </>
   );
 };
