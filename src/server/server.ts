@@ -80,15 +80,23 @@ export const startServer = async () => {
     const vite = await startViteDevelopmentServer(app);
 
     app.get("/about", handleIndexHtmlDev(vite));
-    app.get("/loading/:username", handleIndexHtmlDev(vite));
-    app.get("/:username", handleIndexHtmlDev(vite, true));
+    app.get(
+      "/loading/:username",
+      handleIndexHtmlDev(vite, { disableStats: true }),
+    );
+    app.get("/:username", handleIndexHtmlDev(vite, { handleUsername: true }));
     app.get("/:username/share", handleIndexHtmlDev(vite));
     app.get("*", handleIndexHtmlDev(vite));
   } else {
     app.get("/", handleIndexHtmlProduction());
     app.use(serveStatic(viteDistDir));
     app.get("/about", handleIndexHtmlProduction());
-    app.get("/:username", handleIndexHtmlProduction());
+    app.get(
+      "/loading/:username",
+      handleIndexHtmlProduction({ disableStats: true }),
+    );
+    app.get("/:username", handleIndexHtmlProduction({ handleUsername: true }));
+    app.get("/:username/share", handleIndexHtmlProduction());
     app.get("*", handleIndexHtmlProduction());
   }
 
