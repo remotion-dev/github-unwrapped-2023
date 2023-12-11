@@ -1,9 +1,8 @@
 // import { HomeForeground } from "./Home/HomeForeground";
 // import { Navbar } from "./Home/Navbar";
 // import { Planet } from "./Home/Planet";
-import { useEffect } from "react";
-import { Stars } from "./Home/Stars";
 // import { HomeBox } from "./HomeBox/HomeBox";
+import { useEffect } from "react";
 import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
 
@@ -34,7 +33,7 @@ export const Loading = () => {
   return (
     <div className={styles.container}>
       <RadialGradient />
-      <Stars />
+      {/* <Stars /> */}
       <div
         style={{
           height: "100vh",
@@ -55,7 +54,22 @@ export const Loading = () => {
           src="/walking-octocat.gif"
           alt="loading"
         />
-        <p style={{ width: 144, textAlign: "center" }}>Unwrapping...</p>
+        <div
+          style={{
+            width: 144,
+            height: 6,
+            borderRadius: 6,
+            overflow: "hidden",
+            background: "rgba(255,255,255,0.1)",
+            marginTop: 48,
+          }}
+        >
+          <div
+            className={styles.animateProgress}
+            style={{ height: 12, background: "white" }}
+          ></div>
+        </div>
+        {/* <p style={{ width: 144, textAlign: "center" }}>Unwrapping...</p> */}
       </div>
     </div>
   );
