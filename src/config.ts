@@ -127,6 +127,7 @@ export const compositionSchema = z.object({
   accentColor: accentColorSchema,
   rocket: rocketSchema,
   contributionData: z.array(z.number()),
+  totalContributions: z.number(),
   sampleStarredRepos: z.array(z.string()),
 });
 
@@ -268,6 +269,7 @@ export const computeCompositionParameters = (
     issuesOpened: userStats.openIssues,
     totalPullRequests: userStats.totalPullRequests,
     topWeekday: userStats.topWeekday,
+    totalContributions: userStats.totalContributions,
     topHour: userStats.topHour,
     graphData: userStats.graphData,
     openingSceneStartAngle:

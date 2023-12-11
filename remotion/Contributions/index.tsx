@@ -8,8 +8,8 @@ import { accentColorToGradient } from "../Opening/TitleImage";
 import { ContributionDot, GLOW_PNG } from "./Dot";
 import { GRID_HEIGHT, GRID_WIDTH, computePositions } from "./compute-positions";
 
-export const CONTRIBUTIONS_SCENE_DURATION = 9 * FPS;
-export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 10;
+export const CONTRIBUTIONS_SCENE_DURATION = 6 * FPS;
+export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 20;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 3;
 
 export const contributionSceneAssets = (): string[] => {
