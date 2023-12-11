@@ -8,6 +8,11 @@ type EmailCollection = {
   email: string;
 };
 
+type OgImageCollection = {
+  lowercasedUsername: string;
+  url: string;
+};
+
 const mongoUrl = () => {
   const { DB_NAME, DB_PASSWORD, DB_HOST, DB_USER } = backendCredentials();
   return `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
@@ -20,6 +25,7 @@ export type Finality =
       type: "success";
       url: string;
       outputSize: number;
+      reportedCost: number;
     }
   | {
       type: "error";
@@ -56,6 +62,13 @@ const dbEmailCollection = async () => {
     .collection<EmailCollection>("email");
 };
 
+const getOgImageCollection = async () => {
+  const client = await clientPromise;
+  return client
+    .db(backendCredentials().DB_NAME)
+    .collection<OgImageCollection>("ogimage");
+};
+
 export const saveEmailAdress = async (email: string) => {
   const collection = await dbEmailCollection();
   await collection.updateOne(
@@ -65,6 +78,41 @@ export const saveEmailAdress = async (email: string) => {
     {
       $set: {
         email: email.toLowerCase(),
+      },
+    },
+    {
+      upsert: true,
+    },
+  );
+};
+
+export const getOgImage = async (username: string) => {
+  const collection = await getOgImageCollection();
+  const lowercasedUsername = username.toLowerCase();
+
+  const image = await collection.findOne({
+    lowercasedUsername,
+  });
+  return image;
+};
+
+export const saveOgImage = async ({
+  username,
+  url,
+}: {
+  username: string;
+  url: string;
+}) => {
+  const lowercasedUsername = username.toLowerCase();
+  const collection = await getOgImageCollection();
+  await collection.updateOne(
+    {
+      lowercasedUsername,
+    },
+    {
+      $set: {
+        lowercasedUsername,
+        url,
       },
     },
     {
@@ -99,6 +147,16 @@ export const clearRendersForUsername = async (params: { username: string }) => {
   const collection = await getRendersCollection();
   await collection.deleteMany({
     username: params.username.toLowerCase(),
+  });
+};
+
+export const clearOgImagesForUsername = async (params: {
+  username: string;
+}) => {
+  const lowercasedUsername = params.username.toLowerCase();
+  const collection = await getOgImageCollection();
+  await collection.deleteMany({
+    lowercasedUsername,
   });
 };
 

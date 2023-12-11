@@ -59,6 +59,8 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
   const translateY = interpolate(entryProgress, [1, 2], [0, 500]);
   const scale = interpolate(frame, [0, 60], [0, 0.05]);
 
+  const extraPaths = Math.min(MAX_PATHS, totalPullRequests);
+
   return (
     <AbsoluteFill
       style={{
@@ -68,7 +70,7 @@ export const PullRequests: React.FC<z.infer<typeof pullRequestsSchema>> = ({
       {isMobileDevice() ? null : (
         <Audio startFrom={40} src={staticFile("reverb.mp3")} />
       )}
-      {isMobileDevice() ? null : (
+      {isMobileDevice() && extraPaths > 0 ? null : (
         <Sequence from={175}>
           <Audio src={staticFile("weigh.mp3")} volume={0.6} />
         </Sequence>

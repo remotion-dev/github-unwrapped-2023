@@ -50,7 +50,6 @@ const ShareToXButton = () => {
       label={"Open X.com"}
       className={styles.sharePageButton}
       onClick={() => {
-        console.log("clicked");
         window.open(twitterSharingLink);
       }}
     />

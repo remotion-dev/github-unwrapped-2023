@@ -26,9 +26,10 @@ import {
   saveRender,
   updateRender,
 } from "./db.js";
+import { makeOrGetOgImage } from "./make-og-image.js";
 import { getFinality } from "./progress.js";
 
-const getRandomRegion = (): AwsRegion => {
+export const getRandomRegion = (): AwsRegion => {
   return getRegions()[Math.floor(Math.random() * getRegions().length)];
 };
 
@@ -98,7 +99,6 @@ export const renderOrGetProgress = async (
 
   const account = getRandomAwsAccount();
   const region = getRandomRegion();
-  setEnvForKey(account);
 
   const functionName = speculateFunctionName({
     diskSizeInMb: DISK,
@@ -119,18 +119,22 @@ export const renderOrGetProgress = async (
   const inputProps: z.infer<typeof compositionSchema> =
     computeCompositionParameters(userStat, theme);
 
-  const { renderId, bucketName } = await renderMediaOnLambda({
-    codec: "h264",
-    functionName,
-    region,
-    serveUrl: SITE_NAME,
-    composition: "Main",
-    inputProps,
-    downloadBehavior: {
-      type: "download",
-      fileName: `unwrapped-${username}.mp4`,
-    },
-  });
+  setEnvForKey(account);
+  const [{ renderId, bucketName }] = await Promise.all([
+    renderMediaOnLambda({
+      codec: "h264",
+      functionName,
+      region,
+      serveUrl: SITE_NAME,
+      composition: "Main",
+      inputProps,
+      downloadBehavior: {
+        type: "download",
+        fileName: `unwrapped-${username}.mp4`,
+      },
+    }),
+    makeOrGetOgImage(userStat),
+  ]);
 
   const newRender: Render = {
     region,

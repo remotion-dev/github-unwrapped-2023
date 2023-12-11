@@ -55,7 +55,7 @@ export const Loading = () => {
           src="/walking-octocat.gif"
           alt="loading"
         />
-        <p style={{ width: 144, textAlign: "center" }}>Loading...</p>
+        <p style={{ width: 144, textAlign: "center" }}>Unwrapping...</p>
       </div>
     </div>
   );

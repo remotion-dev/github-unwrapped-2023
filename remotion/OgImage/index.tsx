@@ -1,22 +1,12 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
-import { z } from "zod";
-import { languageSchema } from "../../src/config";
+import type { z } from "zod";
+import type { ogImageSchema } from "../../src/config";
 import { Overlay } from "./Overlay";
-
-export const ogImageSchema = z.object({
-  issues: z.number(),
-  stars: z.number(),
-  graphData: z.array(z.number()),
-  pullRequests: z.number(),
-  weekdays: z.array(z.number()),
-  login: z.string(),
-  topLanguage: languageSchema,
-});
 
 export const OgImage: React.FC<z.infer<typeof ogImageSchema>> = ({
   issues,
-  graphData,
+  contributionData: graphData,
   stars,
   pullRequests,
   weekdays,

@@ -32,8 +32,9 @@ const getGithubCommits = async (
 
   // https://docs.github.com/en/rest/overview/rate-limits-for-the-rest-api?apiVersion=2022-11-28#exceeding-the-rate-limit
   const rateLimitHit = response.status === 403 || response.status === 429;
-  sendDiscordMessage("Rate limit hit");
+
   if (rateLimitHit) {
+    sendDiscordMessage("Rate limit hit");
     throw new TypeError(RATE_LIMIT_TOKEN);
   }
 

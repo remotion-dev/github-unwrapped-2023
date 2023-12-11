@@ -68,7 +68,7 @@ export const MobileActionsContainer: React.FC = () => {
         ? {
             files: [file],
             title: "Your GitHub Unwrapped 2023",
-            text: "Check out my GitHub Unwrapped 2023! Get yours now on https://githubunwrapped.com",
+            text: "Check out my #GitHubUnwrapped 2023! Get yours now on https://githubunwrapped.com",
           }
         : null,
     [file],
@@ -80,7 +80,7 @@ export const MobileActionsContainer: React.FC = () => {
       navigator.canShare &&
       navigator.canShare(sharableContent);
     if (sharable && file) {
-      navigator.share();
+      navigator.share(sharableContent);
     } else {
       navigate({
         to: shareRoute.id,

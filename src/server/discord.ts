@@ -1,9 +1,14 @@
 import { backendCredentials } from "../helpers/domain.js";
+import { nodeEnv } from "./index-html.js";
 
 export const sendDiscordMessage = async (message: string) => {
   const channel = backendCredentials().DISCORD_CHANNEL;
   const token = backendCredentials().DISCORD_TOKEN;
-  console.log(message);
+  if (nodeEnv === "development") {
+    console.log(message);
+  } else {
+    console.log("sending discord message");
+  }
 
   try {
     await fetch(`https://discord.com/api/channels/${channel}/messages`, {

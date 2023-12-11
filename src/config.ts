@@ -189,6 +189,7 @@ export type ProfileStats = {
   topHour: Hour;
   graphData: ProductivityPerHour[];
   contributionData: number[];
+  allWeekdays: number[];
 };
 
 export type CompositionParameters = z.infer<typeof compositionSchema>;
@@ -205,7 +206,7 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
   return PlanetEnum.Enum.Ice;
 };
 
-const parseTopLanguage = (topLanguage: {
+export const parseTopLanguage = (topLanguage: {
   languageName: string;
   color: string;
 }): z.infer<typeof languageSchema> => {
@@ -282,3 +283,13 @@ export const computeCompositionParameters = (
     sampleStarredRepos: userStats.sampleStarredRepos,
   };
 };
+
+export const ogImageSchema = z.object({
+  issues: z.number(),
+  stars: z.number(),
+  contributionData: z.array(z.number()),
+  pullRequests: z.number(),
+  weekdays: z.array(z.number()),
+  login: z.string(),
+  topLanguage: languageSchema.or(z.null()),
+});

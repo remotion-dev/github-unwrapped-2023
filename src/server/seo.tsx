@@ -10,33 +10,35 @@ import { sendDiscordMessage } from "./discord.js";
 type AppHead = {
   status: number;
   head: string;
+  cache: boolean;
 };
 
 const makeAppHead = async (
   username: string | null,
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+  params: { handleUsername: boolean; stats: boolean },
 ): Promise<AppHead> => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;
 
-    const socialPreview = `${backendCredentials().VITE_HOST}/og_image.jpg`;
-    const canonical = `${backendCredentials().VITE_HOST}`;
-    const description =
+    const mainSocialPreview = `${backendCredentials().VITE_HOST}/og_image.jpg`;
+    const mainCanonical = `${backendCredentials().VITE_HOST}`;
+    const mainDescription =
       "Get your personalized video of your GitHub activity in 2023.";
 
     return {
       status: 200,
+      cache: true,
       head: renderToString(
         <>
           <title>{title}</title>
-          <meta property="og:url" content={canonical} />
-          <meta property="og:image" content={socialPreview} />
+          <meta property="og:url" content={mainCanonical} />
+          <meta property="og:image" content={mainSocialPreview} />
           <meta property="og:title" content={title} />
-          <meta property="og:description" content={description} />
+          <meta property="og:description" content={mainDescription} />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:image" content={socialPreview} />
-          <meta name="description" content={description} />
-          <link rel="canonical" href={canonical} />
+          <meta name="twitter:image" content={mainSocialPreview} />
+          <meta name="description" content={mainDescription} />
+          <link rel="canonical" href={mainCanonical} />
           <meta name="twitter:creator" content="@remotion" />
           <meta name="twitter:site" content="@remotion" />
         </>,
@@ -44,11 +46,11 @@ const makeAppHead = async (
     };
   }
 
-  if (params.disableStats) {
+  if (!params.stats) {
     const newHead = renderToString(
       <title>{`${username}'s #GitHubUnwrapped`}</title>,
     );
-    return { head: newHead, status: 200 };
+    return { head: newHead, status: 200, cache: true };
   }
 
   const stats = await getStatsFromGitHubOrCache({
@@ -57,9 +59,24 @@ const makeAppHead = async (
   });
 
   const usernameTitle = stats ? `${stats.username}'s #GitHubUnwrapped` : "404";
+  const canonical = `${backendCredentials().VITE_HOST}/${username}`;
+  const socialPreview = `${backendCredentials().VITE_HOST}/${username}.jpg`;
+  const description = `See ${username}'s year in review and get your own.`;
+
   const head = renderToString(
     <>
       <title>{usernameTitle}</title>
+      <meta property="og:url" content={canonical} />
+      <meta property="og:image" content={socialPreview} />
+      <meta property="og:title" content={usernameTitle} />
+      <meta property="og:description" content={description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={socialPreview} />
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonical} />
+      <meta name="twitter:creator" content="@remotion" />
+      <meta name="twitter:site" content="@remotion" />
+
       <script
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
@@ -68,22 +85,23 @@ const makeAppHead = async (
       />
     </>,
   );
-  return { head, status: stats ? 200 : 404 };
+  return { head, status: stats ? 200 : 404, cache: false };
 };
 
 type AppHtml = {
   html: string;
   status: number;
+  cache: boolean;
 };
 
 export const replaceAppHead = async (
   username: string | null,
   html: string,
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+  params: { handleUsername: boolean; stats: boolean },
 ): Promise<AppHtml> => {
   try {
-    const { head, status } = await makeAppHead(username, params);
-    return { html: html.replace("<!--app-head-->", head), status };
+    const { head, status, cache } = await makeAppHead(username, params);
+    return { html: html.replace("<!--app-head-->", head), status, cache };
   } catch (err) {
     console.log(err);
     sendDiscordMessage(`Error rendering HTML: ${(err as Error).stack}`);
@@ -109,6 +127,7 @@ export const replaceAppHead = async (
           </>,
         ),
       ),
+      cache: false,
       status: 500,
     };
   }

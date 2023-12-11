@@ -13,6 +13,7 @@ export const executeGitHubGraphQlQuery = async ({
   token: string;
   query: string;
 }) => {
+  console.log(`Executing query: ${token}`);
   const res = await fetch(`https://api.github.com/graphql`, {
     method: "post",
     body: JSON.stringify({ query }),
