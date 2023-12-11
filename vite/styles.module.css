@@ -104,3 +104,17 @@
   color: #507eff;
   border-bottom: 1px solid #507eff;
 }
+
+@keyframes grow2 {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 95%;
+  }
+}
+
+.animateProgress {
+  width: 95%;
+  animation: grow2 4s linear;
+}
