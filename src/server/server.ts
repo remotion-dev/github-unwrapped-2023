@@ -6,6 +6,7 @@ import express from "express";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
+import { sendDiscordMessage } from "./discord.js";
 import { emailEndpoint } from "./email.js";
 import { faviconEndPoint } from "./favicon.js";
 import { statsEndPoint } from "./fetch-stats.js";
@@ -32,11 +33,15 @@ const apiEndpointWrapper = (
     try {
       await endpoint(req, res, next);
     } catch (error) {
+      const err = error as Error;
       if (nodeEnv !== "development") {
-        Sentry.captureException(error);
+        Sentry.captureException(err);
+        sendDiscordMessage(`Error: ${err.stack}`);
       }
 
-      res.status(500).end((error as Error).message);
+      console.log(err);
+
+      res.status(500).end(err.message);
     }
   };
 };

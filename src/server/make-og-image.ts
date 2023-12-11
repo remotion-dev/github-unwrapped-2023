@@ -5,8 +5,6 @@ import {
 import type { z } from "zod";
 import type { ProfileStats, ogImageSchema } from "../config.js";
 import { DISK, RAM, SITE_NAME, TIMEOUT, parseTopLanguage } from "../config.js";
-import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
-import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import { saveOgImage } from "./db.js";
 import { getRandomRegion } from "./render.js";
 
@@ -29,10 +27,7 @@ export const makeOgImage = async (profileStats: ProfileStats) => {
     weekdays: profileStats.allWeekdays,
   };
 
-  const account = getRandomAwsAccount();
   const region = getRandomRegion();
-
-  setEnvForKey(account);
 
   const { url } = await renderStillOnLambda({
     composition: "og-image",
