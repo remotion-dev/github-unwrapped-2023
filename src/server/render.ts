@@ -99,7 +99,6 @@ export const renderOrGetProgress = async (
 
   const account = getRandomAwsAccount();
   const region = getRandomRegion();
-  setEnvForKey(account);
 
   const functionName = speculateFunctionName({
     diskSizeInMb: DISK,
@@ -119,6 +118,8 @@ export const renderOrGetProgress = async (
 
   const inputProps: z.infer<typeof compositionSchema> =
     computeCompositionParameters(userStat, theme);
+
+  setEnvForKey(account);
 
   const [{ renderId, bucketName }] = await Promise.all([
     renderMediaOnLambda({
