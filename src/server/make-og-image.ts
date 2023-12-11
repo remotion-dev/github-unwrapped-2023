@@ -44,7 +44,6 @@ export const makeOrGetOgImage = async (profileStats: ProfileStats) => {
     region,
   });
   await saveOgImage({ url, username: profileStats.username });
-  console.log("Created og:image for " + profileStats.username);
 
   return url;
 };
