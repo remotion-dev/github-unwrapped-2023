@@ -12,7 +12,7 @@ import type { RenderStatus } from "./useVideo";
 const getRenderDescription = (status: RenderStatus) => {
   switch (status.type) {
     case "querying":
-      return <div>Querying user data from GitHub...</div>;
+      return <div>Initializing Render...</div>;
     case "render-running":
       return (
         <div>{`Generating Video... (${Math.floor(
