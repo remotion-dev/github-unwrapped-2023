@@ -26,7 +26,7 @@ import {
   saveRender,
   updateRender,
 } from "./db.js";
-import { makeOgImage } from "./make-og-image.js";
+import { makeOrGetOgImage } from "./make-og-image.js";
 import { getFinality } from "./progress.js";
 
 export const getRandomRegion = (): AwsRegion => {
@@ -133,7 +133,7 @@ export const renderOrGetProgress = async (
         fileName: `unwrapped-${username}.mp4`,
       },
     }),
-    makeOgImage(userStat),
+    makeOrGetOgImage(userStat),
   ]);
 
   const newRender: Render = {

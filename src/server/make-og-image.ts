@@ -5,13 +5,15 @@ import {
 import type { z } from "zod";
 import type { ProfileStats, ogImageSchema } from "../config.js";
 import { DISK, RAM, SITE_NAME, TIMEOUT, parseTopLanguage } from "../config.js";
+import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
+import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import { getOgImage, saveOgImage } from "./db.js";
 import { getRandomRegion } from "./render.js";
 
-export const makeOgImage = async (profileStats: ProfileStats) => {
+export const makeOrGetOgImage = async (profileStats: ProfileStats) => {
   const ogImage = await getOgImage(profileStats.username);
   if (ogImage) {
-    return;
+    return ogImage.url;
   }
 
   const functionName = speculateFunctionName({
@@ -33,6 +35,8 @@ export const makeOgImage = async (profileStats: ProfileStats) => {
   };
 
   const region = getRandomRegion();
+  const account = getRandomAwsAccount();
+  setEnvForKey(account);
 
   const { url } = await renderStillOnLambda({
     composition: "og-image",

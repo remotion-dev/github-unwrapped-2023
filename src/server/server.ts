@@ -21,6 +21,7 @@ import {
 import { loginEndPoint } from "./login.js";
 import { renderEndPoint } from "./render.js";
 import { errorEndpoint } from "./sentry-test.js";
+import { socialMediaPreview } from "./social-preview.js";
 
 const apiEndpointWrapper = (
   endpoint: (
@@ -77,6 +78,8 @@ export const startServer = async () => {
   app.post("/api/error", apiEndpointWrapper(errorEndpoint));
 
   app.post("/api/email", apiEndpointWrapper(emailEndpoint));
+  app.get("/:username.jpg", apiEndpointWrapper(socialMediaPreview));
+  app.get("/:username.jpeg", apiEndpointWrapper(socialMediaPreview));
 
   app.get("/favicon.ico", apiEndpointWrapper(faviconEndPoint));
   app.get(REDIRECT_URL_ENDPOINT, apiEndpointWrapper(loginEndPoint));
