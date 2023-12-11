@@ -148,7 +148,10 @@ export const DownloadButton: React.FC<{
         className={classNames.join(" ")}
         style={{ ...style }}
         onClick={() => {
-          window.open(status.url, "_blank", "noopener noreferrer");
+          const a = document.createElement("a");
+          a.href = status.url;
+          a.setAttribute("download", "github-unwrapped-2023.mp4");
+          a.click();
         }}
       >
         <HoverEffect />
