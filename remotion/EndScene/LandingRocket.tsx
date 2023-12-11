@@ -25,7 +25,7 @@ export const LandingRocket: React.FC<{
     }
 
     if (planetType === "Gold") {
-      return 550;
+      return 500;
     }
 
     return 450;
