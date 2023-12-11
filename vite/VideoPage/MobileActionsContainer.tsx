@@ -28,9 +28,22 @@ const getRenderDescription = (status: RenderStatus) => {
   }
 };
 
+type LoadingState =
+  | {
+      type: "no-file";
+    }
+  | {
+      type: "downloading";
+      progress: number;
+    }
+  | {
+      type: "downloaded";
+      file: File;
+    };
+
 export const MobileActionsContainer: React.FC = () => {
   const navigate = useNavigate({ from: videoRoute.id });
-  const [file, setFile] = React.useState<File | null>(null);
+  const [file, setFile] = React.useState<LoadingState>({ type: "no-file" });
   const { username } = videoRoute.useParams();
   const { compositionParams } = useUserVideo();
   const { status } = useUserVideo();
@@ -46,16 +59,55 @@ export const MobileActionsContainer: React.FC = () => {
   // };
 
   const fetchFile = useCallback(async () => {
-    if (status.type === "video-available") {
-      const f = await fetch(status.url)
-        .then((res) => res.blob())
-        .then(
-          (blob) =>
-            new File([blob], "github_unwrapped.mp4", { type: "video/mp4" }),
-        );
-
-      setFile(f);
+    if (status.type !== "video-available") {
+      setFile({ type: "no-file" });
+      return;
     }
+
+    const response = await fetch(status.url);
+    const contentLength = Number(
+      response.headers.get("Content-Length") as string,
+    );
+
+    if (!response.body) {
+      throw new Error("No response body");
+    }
+
+    const reader = response.body.getReader();
+
+    let receivedLength = 0;
+    const chunks = [];
+
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      chunks.push(value);
+      receivedLength += value.length;
+
+      setFile({
+        type: "downloading",
+        progress: receivedLength / contentLength,
+      });
+      console.log(`Received ${receivedLength} of ${contentLength}`);
+    }
+
+    const chunksAll = new Uint8Array(receivedLength);
+    let position = 0;
+    for (const chunk of chunks) {
+      chunksAll.set(chunk, position);
+      position += chunk.length;
+    }
+
+    const downloadedFile = new File([chunksAll], "github_unwrapped.mp4", {
+      type: "video/mp4",
+    });
+
+    setFile({ type: "downloaded", file: downloadedFile });
   }, [status]);
 
   useEffect(() => {
@@ -74,13 +126,13 @@ export const MobileActionsContainer: React.FC = () => {
   }, [compositionParams.accentColor, navigate, username]);
 
   const handleClick = useCallback(() => {
-    if (!file) {
+    if (file.type !== "downloaded") {
       goToFallbackSharePage();
       return;
     }
 
     const sharableContent = {
-      files: [file],
+      files: [file.file],
       title: "Your GitHub Unwrapped 2023",
       text: "Check out my #GitHubUnwrapped 2023! Get yours now on https://githubunwrapped.com",
     };
