@@ -10,6 +10,7 @@ const getGithubCommits = async (
   page: number,
   token: string,
 ) => {
+  console.log("get github commits");
   const response = await fetch(
     `https://api.github.com/search/commits?q=author:${username}%20merge:false&sort=author-date&order=desc&page=${page}&per_page=100`,
     {
@@ -32,8 +33,9 @@ const getGithubCommits = async (
 
   // https://docs.github.com/en/rest/overview/rate-limits-for-the-rest-api?apiVersion=2022-11-28#exceeding-the-rate-limit
   const rateLimitHit = response.status === 403 || response.status === 429;
-  sendDiscordMessage("Rate limit hit");
+
   if (rateLimitHit) {
+    sendDiscordMessage("Rate limit hit");
     throw new TypeError(RATE_LIMIT_TOKEN);
   }
 
