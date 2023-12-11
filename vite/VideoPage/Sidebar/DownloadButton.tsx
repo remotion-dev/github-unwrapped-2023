@@ -83,11 +83,10 @@ export const DownloadButton: React.FC<{
             throw new Error("cannot click on not downloaded");
           }
 
-          window.open(
-            URL.createObjectURL(loadingState.file),
-            "_blank",
-            "noopener noreferrer",
-          );
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(loadingState.file);
+          a.setAttribute("download", "github-unwrapped-2023.mp4");
+          a.click();
         }}
       >
         {"progress" in status && (
