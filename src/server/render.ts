@@ -120,7 +120,6 @@ export const renderOrGetProgress = async (
     computeCompositionParameters(userStat, theme);
 
   setEnvForKey(account);
-
   const [{ renderId, bucketName }] = await Promise.all([
     renderMediaOnLambda({
       codec: "h264",
