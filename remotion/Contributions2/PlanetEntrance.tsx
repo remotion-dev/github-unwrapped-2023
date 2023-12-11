@@ -11,6 +11,7 @@ import { PlanetEnum, type Planet } from "../../src/config";
 const SILVER_PLANET = staticFile("planet-silver.png");
 const ICE_PLANET = staticFile("planet-ice.png");
 const GOLD_PLANET = staticFile("planet-gold.png");
+// const TEST = staticFile("planet-leafy.png");
 
 export const prefetchPlanetImage = (planet: Planet) => {
   switch (planet) {
@@ -40,7 +41,7 @@ export const PlanetEntrance: React.FC<{
 }> = ({ planet, startingFrame }) => {
   const frame = useCurrentFrame();
 
-  let planetSize = interpolate(
+  const planetSize = interpolate(
     frame + (startingFrame || 0),
     [80, 180],
     [0, 1000],
@@ -50,17 +51,22 @@ export const PlanetEntrance: React.FC<{
     },
   );
 
-  let planetY = interpolate(frame + (startingFrame || 0), [80, 180], [0, 700], {
-    extrapolateRight: "clamp",
-    easing: Easing.inOut((t) => t),
-  });
+  const planetY = interpolate(
+    frame + (startingFrame || 0),
+    [80, 180],
+    [0, 700],
+    {
+      extrapolateRight: "clamp",
+      easing: Easing.inOut((t) => t),
+    },
+  );
 
   return (
     <Img
       src={getPlanetFile(planet)}
       style={{
         transform:
-          planet === PlanetEnum.Enum.Silver ? "rotate(40deg)" : "rotate(0deg)",
+          planet === PlanetEnum.Enum.Silver ? "rotate(40deg)" : "rotate(20deg)",
         width: planetSize,
         position: "absolute",
         top: 500 + planetY - planetSize / 2,

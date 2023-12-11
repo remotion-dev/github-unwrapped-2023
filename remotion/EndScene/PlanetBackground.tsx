@@ -2,7 +2,6 @@ import React from "react";
 import { AbsoluteFill, Img, interpolate, useCurrentFrame } from "remotion";
 import { GOLD_PLANET_BG } from ".";
 import type { Planet } from "../../src/config";
-import { Stars } from "../../vite/Home/Stars";
 import { Gradient } from "../Gradients/NativeGradient";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { Orbs, Threads } from "./Threads";
@@ -29,7 +28,6 @@ export const PlanetBackground: React.FC<{
       {planet === "Ice" ? <Gradient gradient="iceRadial" /> : null}
       {planet === "Silver" ? <Gradient gradient="silverRadial" /> : null}
       {planet === "Gold" ? <Img src={GOLD_PLANET_BG} /> : null}
-      {planet === "Gold" ? <Stars /> : null}
       {planet === "Gold" ? <Threads /> : null}
       {planet === "Gold" && <GoldPlanetShine />}
     </AbsoluteFill>

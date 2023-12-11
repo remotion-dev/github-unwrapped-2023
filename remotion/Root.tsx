@@ -161,9 +161,7 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
           contributionData: new Array(364)
             .fill(0)
-            .map((_, i) =>
-              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ),
+            .map((_, i) => (random(i) < 0.25 ? 0 : Math.floor(random(i) * 16))),
         }}
       />
 
@@ -574,7 +572,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Gold" as const,
+          planet: "Ice" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,

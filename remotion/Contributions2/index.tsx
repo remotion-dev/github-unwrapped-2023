@@ -1,18 +1,21 @@
+/* eslint-disable react/no-array-index-key */
 import {
   AbsoluteFill,
   Easing,
   Img,
   interpolate,
+  staticFile,
   useCurrentFrame,
 } from "remotion";
 
 import React, { useMemo } from "react";
-import { Planet, Rocket, type AccentColor } from "../../src/config";
+import type { Planet, Rocket } from "../../src/config";
+import { type AccentColor } from "../../src/config";
 import { appearDelays } from "../Contributions/compute-positions";
 import { Gradient } from "../Gradients/NativeGradient";
 import { IssueNumber } from "../Issues/IssueNumber";
 import { accentColorToGradient } from "../Opening/TitleImage";
-import { getFrontRocketSource } from "../TopLanguages/svgs/FrontRocketSource";
+import * as FrontRocketSource from "../TopLanguages/svgs/FrontRocketSource";
 import { PlanetEntrance } from "./PlanetEntrance";
 
 const COUNT = 364;
@@ -33,7 +36,7 @@ const FADE_OUT_DURATION = 20;
 const mapRowToMove: any = {
   0: SIZE * 3,
   1: SIZE * 2,
-  2: SIZE * 1,
+  2: Number(SIZE),
   3: 0,
   4: SIZE * -1,
   5: SIZE * -2,
@@ -62,7 +65,6 @@ const Dot: React.FC<{
     let f = (targetColumn - col) / (COLUMNS / 3);
 
     f = f < 0 ? 0 : f > 1 ? 1 : f;
-    f = Math.pow(f, 1);
 
     top = col >= targetColumn ? mapRowToMove[row] : (1 - f) * mapRowToMove[row];
     opacity = col >= targetColumn ? 0 : opacity;
@@ -83,7 +85,7 @@ const Dot: React.FC<{
 
     const noiseAngle = Math.atan2(noise.noiseY, noise.noiseX);
 
-    const maxGlow = interpolate(data, [0, highestPoint], [0, 1.6], {
+    const maxGlow = interpolate(data, [0, highestPoint], [0, 2.4], {
       extrapolateRight: "clamp",
     });
     glow = interpolate(moveProgress, [0, 1], [1, maxGlow]);
@@ -110,7 +112,7 @@ const Dot: React.FC<{
   }
 
   if (data === 0 && frame > START_SPREAD + 5) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -137,20 +139,20 @@ const Dot: React.FC<{
           overflow: "hidden",
         }}
       >
-        {/* {glow > 1 ? (
+        {glow > 1 ? (
           <AbsoluteFill>
-            <Img src={GLOW_PNG} />
+            <Img src={staticFile("blurred-dot-blue.png")} />
           </AbsoluteFill>
-        ) : ( */}
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: `rgba(0, 166, 255, 1)`,
-            borderRadius: "50%",
-          }}
-        ></div>
-        {/* )} */}
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: `rgba(0, 166, 255, 1)`,
+              borderRadius: "50%",
+            }}
+          ></div>
+        )}
       </div>
     </div>
   );
@@ -181,7 +183,7 @@ export const ContributionsScene2: React.FC<{
 
   return (
     <AbsoluteFill style={{}}>
-      <AbsoluteFill style={{ backgroundColor: "black" }}>
+      <AbsoluteFill>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
 
@@ -203,8 +205,8 @@ export const ContributionsScene2: React.FC<{
         >
           {new Array(COUNT).fill(0).map((_, i) => (
             <Dot
-              i={i}
               key={i}
+              i={i}
               data={contributionData[i]}
               targetColumn={targetColumn}
               maxContributions={maxContributions}
@@ -240,7 +242,7 @@ export const ContributionsScene2: React.FC<{
           }}
         >
           <Img
-            src={getFrontRocketSource(rocket)}
+            src={FrontRocketSource.getFrontRocketSource(rocket)}
             style={{
               width: 732 / 8,
               height: 1574 / 8,
