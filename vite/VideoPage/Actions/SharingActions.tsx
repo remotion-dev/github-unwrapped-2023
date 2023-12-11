@@ -7,7 +7,7 @@ import { SharingAction } from "./SharingAction";
 import styles from "./styles.module.css";
 
 export const twitterSharingLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-  "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com\n\n[DELETE THIS PLACEHOLDER, DOWNLOAD AND DRAG YOUR MP4 VIDEO IN HERE]",
+  "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com",
 )}`;
 
 export const linkedInSharingLink = "https://www.linkedin.com/";
