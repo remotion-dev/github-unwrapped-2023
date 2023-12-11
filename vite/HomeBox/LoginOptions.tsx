@@ -38,7 +38,7 @@ export const LoginOptions: React.FC<Props> = ({
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
-          placeHolder="GitHub Username"
+          placeHolder="Your GitHub Username (e.g. ashtom)"
           setText={setUsername}
           invalid={userNotFound}
           className={styles.input}
