@@ -10,9 +10,12 @@ import {
 import { z } from "zod";
 import type { Planet } from "../../src/config";
 import { PlanetEnum, rocketSchema } from "../../src/config";
+import {
+  PlanetEntrance,
+  prefetchPlanetImage,
+} from "../Contributions2/PlanetEntrance";
 import { FPS } from "../Issues/make-ufo-positions";
 import { CallToAction } from "./CallToAction";
-import { PlanetAsset, prefetchPlanetImage } from "./GoldPlanetAsset";
 import { HidePlanets } from "./HidePlanet";
 import { LandingRocket } from "./LandingRocket";
 import {
@@ -78,7 +81,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
       <AbsoluteFill style={container}>
         <PlanetBackground planet={planet} />
         <HidePlanets exitProgress={exitProgress} planet={planet}>
-          <PlanetAsset enterProgress={enterProgress} planet={planet} />
+          <PlanetEntrance planet={planet} startingFrame={160} />
           <LandingRocket planetType={planet} rocket={rocket} />
         </HidePlanets>
         <CallToAction

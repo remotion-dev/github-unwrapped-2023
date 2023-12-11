@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { AbsoluteFill, interpolate } from "remotion";
+import React from "react";
+import { AbsoluteFill } from "remotion";
 import type { Planet } from "../../src/config";
 
 export const HidePlanets: React.FC<{
@@ -7,38 +7,16 @@ export const HidePlanets: React.FC<{
   planet: Planet;
   exitProgress: number;
 }> = ({ children, planet, exitProgress }) => {
-  const startDistance = 10;
-  const endDistance = 1;
-
-  const distance = interpolate(
-    exitProgress,
-    [0, 1],
-    [startDistance, endDistance],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    },
+  return (
+    <AbsoluteFill
+      style={{
+        transform: `scale(${exitProgress < 0.1 ? 0.1 : exitProgress}) rotate(${
+          (1 - exitProgress) * 0
+        }deg)`,
+        top: Math.pow(1 - exitProgress, 4) * -1200,
+      }}
+    >
+      {children}
+    </AbsoluteFill>
   );
-
-  const scale = 1 / distance;
-
-  const offset = Math.sin(-Math.PI * 1.5 + exitProgress * Math.PI * 0.8) * -850;
-
-  const style: React.CSSProperties = useMemo(() => {
-    if (planet === "Gold") {
-      return {
-        transform: `translateY(${interpolate(
-          exitProgress,
-          [0, 1],
-          [2000, 0],
-        )}px)`,
-      };
-    }
-
-    return {
-      transform: `translateY(${offset}px) scale(${scale})`,
-    };
-  }, [planet, offset, scale, exitProgress]);
-
-  return <AbsoluteFill style={style}>{children}</AbsoluteFill>;
 };

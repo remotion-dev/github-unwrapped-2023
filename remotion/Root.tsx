@@ -9,6 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
+import { ContributionsScene2 } from "./Contributions2";
 import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
@@ -88,7 +89,7 @@ export const RemotionRoot: React.FC = () => {
           schema={endSceneSchema}
           defaultProps={{
             rocket: "blue",
-            planet: "Gold",
+            planet: "Ice",
           }}
         />
         <Composition
@@ -101,7 +102,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             enterProgress: 1,
             exitProgress: 1,
-            planet: "Gold",
+            planet: "Ice",
           }}
         />
       </Folder>
@@ -146,6 +147,26 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue",
         }}
       />
+      <Composition
+        id={"ContributionsScene2"}
+        component={ContributionsScene2}
+        durationInFrames={END_SCENE_DURATION}
+        fps={VIDEO_FPS}
+        width={VIDEO_WIDTH}
+        height={VIDEO_HEIGHT}
+        defaultProps={{
+          total: 5000,
+          rocket: "blue",
+          planet: "Ice",
+          accentColor: "blue",
+          contributionData: new Array(364)
+            .fill(0)
+            .map((_, i) =>
+              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
+            ),
+        }}
+      />
+
       <Composition
         id={"Contributions"}
         component={ContributionsScene}
@@ -538,6 +559,7 @@ export const RemotionRoot: React.FC = () => {
         schema={compositionSchema}
         calculateMetadata={mainCalculateMetadataScene}
         defaultProps={{
+          totalContributions: 4000,
           corner: "bottom-left" as const,
           topLanguages: {
             language1: {
@@ -552,7 +574,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Gold" as const,
+          planet: "Ice" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,

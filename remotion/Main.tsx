@@ -16,8 +16,8 @@ import {
   CONTRIBUTIONS_SCENE_DURATION,
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
-  ContributionsScene,
 } from "./Contributions";
+import { ContributionsScene2 } from "./Contributions2";
 import { END_SCENE_DURATION, EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import {
@@ -135,6 +135,7 @@ export const Main: React.FC<Schema> = ({
   rocket,
   contributionData,
   sampleStarredRepos,
+  totalContributions,
 }) => {
   const { durationInFrames } = useVideoConfig();
 
@@ -207,13 +208,17 @@ export const Main: React.FC<Schema> = ({
             sampleStarredRepos={sampleStarredRepos}
           />
         </Series.Sequence>
+
         <Series.Sequence
           durationInFrames={CONTRIBUTIONS_SCENE_DURATION}
           offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
         >
-          <ContributionsScene
+          <ContributionsScene2
+            total={5000}
+            rocket={rocket}
             contributionData={contributionData}
             accentColor={accentColor}
+            planet={planet}
           />
         </Series.Sequence>
         <Series.Sequence
