@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { AbsoluteFill, spring } from "remotion";
+import { isWebkit } from "../../../remotion/Opening/devices";
 import { PlayButtonSVG } from "./PlayButtonSVG";
 import { PrefetchProgress } from "./PrefetchProgress";
 import styles from "./playbutton.module.css";
@@ -36,6 +37,11 @@ export const PlayButton: React.FC<{
 
         const start = Date.now();
         document.body.classList.add("videoplaying");
+
+        if (isWebkit()) {
+          onPlay(e);
+          return;
+        }
 
         const loop = () => {
           const { current } = ref;

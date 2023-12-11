@@ -94,18 +94,22 @@ export const MobileActionsContainer: React.FC<{
           style={{ flex: 1, gap: 8 }}
           onClick={handleClick}
         >
-          {loadingState.type === "downloading" ? (
+          {loadingState.type === "downloading" ||
+          loadingState.type === "no-file" ? (
             <Pie
-              radius={10}
+              radius={8}
               fill="none"
               closePath={false}
-              progress={loadingState.progress}
+              progress={
+                loadingState.type === "no-file" ? 0 : loadingState.progress
+              }
               stroke="white"
               strokeWidth={2}
               strokeLinecap="round"
             />
-          ) : null}
-          <ShareIcon width={20} color="white" />
+          ) : (
+            <ShareIcon width={20} color="white" />
+          )}
           Share
         </Button>
       </div>

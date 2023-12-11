@@ -1,11 +1,12 @@
-export const DownloadIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
-) => (
+export const DownloadIcon: React.FC = () => (
   <svg
     viewBox="0 0 21 21"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
+    style={{
+      flexShrink: 0,
+      width: 20,
+    }}
   >
     <path
       fillRule="evenodd"

@@ -83,11 +83,10 @@ export const DownloadButton: React.FC<{
             throw new Error("cannot click on not downloaded");
           }
 
-          window.open(
-            URL.createObjectURL(loadingState.file),
-            "_blank",
-            "noopener noreferrer",
-          );
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(loadingState.file);
+          a.setAttribute("download", "github-unwrapped-2023.mp4");
+          a.click();
         }}
       >
         {"progress" in status && (
@@ -96,7 +95,7 @@ export const DownloadButton: React.FC<{
             style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
           />
         )}
-        <DownloadIcon width={20} />
+        <DownloadIcon />
         Download
       </Button>
     );
@@ -148,11 +147,14 @@ export const DownloadButton: React.FC<{
         className={classNames.join(" ")}
         style={{ ...style }}
         onClick={() => {
-          window.open(status.url, "_blank", "noopener noreferrer");
+          const a = document.createElement("a");
+          a.href = status.url;
+          a.setAttribute("download", "github-unwrapped-2023.mp4");
+          a.click();
         }}
       >
         <HoverEffect />
-        <DownloadIcon width={20} />
+        <DownloadIcon />
         Download Video
       </Button>
     );
