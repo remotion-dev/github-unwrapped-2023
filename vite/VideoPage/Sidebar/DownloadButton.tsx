@@ -96,7 +96,7 @@ export const DownloadButton: React.FC<{
             style={{ width: `${status.progress * 100}%`, zIndex: -1 }}
           />
         )}
-        <DownloadIcon width={20} />
+        <DownloadIcon />
         Download
       </Button>
     );
@@ -152,7 +152,7 @@ export const DownloadButton: React.FC<{
         }}
       >
         <HoverEffect />
-        <DownloadIcon width={20} />
+        <DownloadIcon />
         Download Video
       </Button>
     );

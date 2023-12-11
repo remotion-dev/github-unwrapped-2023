@@ -19,14 +19,15 @@ export const BurgerMenu = () => {
         (style, item) =>
           item && (
             <animated.div style={style} className={styles.navWrapper}>
-              <Link
+              <a
+                target="_blank"
                 href={"https://github.com/remotion-dev/github-unwrapped-2023"}
               >
                 <div className={styles.navLink}>
                   <GithubIcon width={24} height={24} />
                   Source Code
                 </div>
-              </Link>
+              </a>
               <Link to={"/about"}>
                 <div className={styles.navLink}>
                   <NewRocketIcon width={24} height={24} />
