@@ -30,15 +30,24 @@ const useWindowDimensions = () => {
 
 const WINDOW_WIDTH_THRESHOLD = 640;
 
-const downloadVideo = (url: string) => {
-  window.open(url, "_blank", "noopener noreferrer");
-};
+export type LoadingState =
+  | {
+      type: "no-file";
+    }
+  | {
+      type: "downloading";
+      progress: number;
+    }
+  | {
+      type: "downloaded";
+      file: File;
+    };
 
 export const DownloadButton: React.FC<{
   style?: React.CSSProperties;
   className?: string;
 }> = ({ style, ...props }) => {
-  const { status } = useUserVideo();
+  const { status, loadingState } = useUserVideo();
   // const status: {
   //   type: "render-running";
   //   renderId: string;
@@ -64,14 +73,21 @@ export const DownloadButton: React.FC<{
           ...classNames,
           status.type === "video-available" ? undefined : styles.loadingButton,
         ].join(" ")}
+        disabled={loadingState.type !== "downloaded"}
         style={{
           pointerEvents: status.type === "video-available" ? "auto" : "none",
           ...style,
         }}
         onClick={() => {
-          if (status.type === "video-available") {
-            downloadVideo(status.url);
+          if (loadingState.type !== "downloaded") {
+            throw new Error("cannot click on not downloaded");
           }
+
+          window.open(
+            URL.createObjectURL(loadingState.file),
+            "_blank",
+            "noopener noreferrer",
+          );
         }}
       >
         {"progress" in status && (

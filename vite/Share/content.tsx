@@ -12,13 +12,6 @@ import {
 import { DownloadButton } from "../VideoPage/Sidebar/DownloadButton";
 import styles from "./styles.module.css";
 
-const step1Content = {
-  step: 1,
-  title: "Download your video",
-  description: "If you haven't already, download your video.",
-  node: <DownloadButton className={styles.sharePageButton} />,
-};
-
 const exampleDescription =
   "This is my #GitHubUnwrapped! Get your own: https://www.githubunwrapped.com";
 
@@ -72,6 +65,13 @@ const ShareToLinkedinButton = () => {
 export const useShareContent = (
   platform: "linkedin" | "twitter" | undefined,
 ): AboutItemContent[] => {
+  const step1Content = {
+    step: 1,
+    title: "Download your video",
+    description: "If you haven't already, download your video.",
+    node: <DownloadButton className={styles.sharePageButton} />,
+  };
+
   switch (platform) {
     case "linkedin": {
       return [
