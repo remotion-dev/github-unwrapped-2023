@@ -114,5 +114,6 @@ export const getStatsFromGitHub = async ({
     graphData,
     contributionData: allDays.map((d) => d.contributionCount),
     sampleStarredRepos: stars.map((s) => s.name),
+    allWeekdays: productivity.days,
   };
 };

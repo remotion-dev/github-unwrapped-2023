@@ -5,7 +5,6 @@ import { sendDiscordMessage } from "./discord.js";
 const NOT_FOUND_TOKEN = "Not found";
 
 export const emailEndpoint = async (req: Request, res: Response) => {
-  console.log("test");
   if (req.method === "OPTIONS") return res.end();
 
   const email = req.body?.email;

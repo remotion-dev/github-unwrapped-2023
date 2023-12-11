@@ -1,5 +1,5 @@
 import { Composition, Folder, Still, random } from "remotion";
-import { LanguagesEnum, compositionSchema } from "../src/config";
+import { LanguagesEnum, compositionSchema, ogImageSchema } from "../src/config";
 import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
   TOP_LANGUAGES_DURATION,
@@ -18,7 +18,7 @@ import { Issues, calculateIssueDuration, issuesSchema } from "./Issues";
 import { FPS } from "./Issues/make-ufo-positions";
 import { Main, mainCalculateMetadataScene } from "./Main";
 import { Noise, noiseSchema } from "./Noise";
-import { OgImage, ogImageSchema } from "./OgImage";
+import { OgImage } from "./OgImage";
 import { OPENING_SCENE_LENGTH, OpeningScene } from "./Opening";
 import { OpeningTitle } from "./Opening/Title";
 import { openingTitleSchema } from "./Opening/TitleImage";
@@ -849,7 +849,7 @@ export const RemotionRoot: React.FC = () => {
             pullRequests: 10,
             stars: 10,
             weekdays: [100, 200, 1, 0, 3, 400, 100],
-            graphData: [
+            contributionData: [
               34, 0, 35, 57, 67, 57, 126, 0, 97, 39, 0, 0, 46, 0, 114, 0, 82,
               72, 95, 63, 92, 32, 0, 57, 109, 0, 98, 69, 44, 58, 99, 0, 107, 75,
               104, 97, 100, 125, 38, 122, 55, 102, 77, 70, 0, 47, 47, 56, 58,

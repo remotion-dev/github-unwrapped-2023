@@ -20,9 +20,9 @@ const viteIndexHtml =
     ? path.join(viteDir, "index.html")
     : path.join(viteDistDir, "index.html");
 
-export const handleIndexHtmlDev = (
+export const indexHtmlDev = (
   vite: ViteDevServer,
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+  params: { handleUsername: boolean; stats: boolean },
 ) => {
   const index = viteIndexHtml;
 
@@ -57,9 +57,10 @@ export const handleIndexHtmlDev = (
   };
 };
 
-export const handleIndexHtmlProduction = (
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
-) => {
+export const indexHtmlProduction = (params: {
+  handleUsername: boolean;
+  stats: boolean;
+}) => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
   return async (req: Request, response: Response) => {

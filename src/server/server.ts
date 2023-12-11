@@ -6,12 +6,13 @@ import express from "express";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
+import { sendDiscordMessage } from "./discord.js";
 import { emailEndpoint } from "./email.js";
 import { faviconEndPoint } from "./favicon.js";
 import { statsEndPoint } from "./fetch-stats.js";
 import {
-  handleIndexHtmlDev,
-  handleIndexHtmlProduction,
+  indexHtmlDev,
+  indexHtmlProduction,
   nodeEnv,
   publicDir,
   viteDir,
@@ -20,6 +21,7 @@ import {
 import { loginEndPoint } from "./login.js";
 import { renderEndPoint } from "./render.js";
 import { errorEndpoint } from "./sentry-test.js";
+import { socialMediaPreview } from "./social-preview.js";
 
 const apiEndpointWrapper = (
   endpoint: (
@@ -32,11 +34,15 @@ const apiEndpointWrapper = (
     try {
       await endpoint(req, res, next);
     } catch (error) {
+      const err = error as Error;
       if (nodeEnv !== "development") {
-        Sentry.captureException(error);
+        Sentry.captureException(err);
+        sendDiscordMessage(`Error: ${err.stack}`);
       }
 
-      res.status(500).end((error as Error).message);
+      console.log(err);
+
+      res.status(500).end(err.message);
     }
   };
 };
@@ -72,6 +78,8 @@ export const startServer = async () => {
   app.post("/api/error", apiEndpointWrapper(errorEndpoint));
 
   app.post("/api/email", apiEndpointWrapper(emailEndpoint));
+  app.get("/:username.jpg", apiEndpointWrapper(socialMediaPreview));
+  app.get("/:username.jpeg", apiEndpointWrapper(socialMediaPreview));
 
   app.get("/favicon.ico", apiEndpointWrapper(faviconEndPoint));
   app.get(REDIRECT_URL_ENDPOINT, apiEndpointWrapper(loginEndPoint));
@@ -79,25 +87,43 @@ export const startServer = async () => {
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
 
-    app.get("/about", handleIndexHtmlDev(vite));
+    app.get(
+      "/about",
+      indexHtmlDev(vite, { stats: true, handleUsername: false }),
+    );
     app.get(
       "/loading/:username",
-      handleIndexHtmlDev(vite, { disableStats: true }),
+      indexHtmlDev(vite, { stats: false, handleUsername: false }),
     );
-    app.get("/:username", handleIndexHtmlDev(vite, { handleUsername: true }));
-    app.get("/:username/share", handleIndexHtmlDev(vite));
-    app.get("*", handleIndexHtmlDev(vite));
+    app.get(
+      "/:username",
+      indexHtmlDev(vite, { handleUsername: true, stats: true }),
+    );
+    app.get(
+      "/:username/share",
+      indexHtmlDev(vite, { stats: true, handleUsername: false }),
+    );
+    app.get("*", indexHtmlDev(vite, { stats: true, handleUsername: false }));
   } else {
-    app.get("/", handleIndexHtmlProduction());
+    app.get("/", indexHtmlProduction({ stats: true, handleUsername: false }));
     app.use(serveStatic(viteDistDir));
-    app.get("/about", handleIndexHtmlProduction());
+    app.get(
+      "/about",
+      indexHtmlProduction({ stats: true, handleUsername: false }),
+    );
     app.get(
       "/loading/:username",
-      handleIndexHtmlProduction({ disableStats: true }),
+      indexHtmlProduction({ stats: false, handleUsername: false }),
     );
-    app.get("/:username", handleIndexHtmlProduction({ handleUsername: true }));
-    app.get("/:username/share", handleIndexHtmlProduction());
-    app.get("*", handleIndexHtmlProduction());
+    app.get(
+      "/:username",
+      indexHtmlProduction({ handleUsername: true, stats: true }),
+    );
+    app.get(
+      "/:username/share",
+      indexHtmlProduction({ handleUsername: true, stats: true }),
+    );
+    app.get("*", indexHtmlProduction({ handleUsername: true, stats: true }));
   }
 
   const port = process.env.PORT || 8080;

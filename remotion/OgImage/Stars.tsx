@@ -1,6 +1,8 @@
 export const Stars: React.FC<{
   stars: number;
 }> = ({ stars }) => {
+  const digits = String(stars).length;
+
   return (
     <div
       style={{
@@ -40,8 +42,8 @@ export const Stars: React.FC<{
             fontFamily: "Mona Sans",
             fontWeight: "500",
             color: "white",
-            fontSize: 65,
-            lineHeight: 1,
+            fontSize: digits > 2 ? 55 : 65,
+            lineHeight: "65px",
           }}
         >
           {stars}

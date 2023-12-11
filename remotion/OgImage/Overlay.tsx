@@ -16,7 +16,7 @@ export const Overlay: React.FC<{
   pullRequests: number;
   stars: number;
   login: string;
-  topLanguage: TopLanguage;
+  topLanguage: TopLanguage | null;
 }> = ({
   issues,
   contributionData,
@@ -31,7 +31,7 @@ export const Overlay: React.FC<{
       <Title login={login} />
       <Stars stars={stars} />
       <PullRequests pullRequests={pullRequests} />
-      <Planets topLanguage={topLanguage} />
+      {topLanguage ? <Planets topLanguage={topLanguage} /> : null}
       <BarChart graphData={weekdays} />
       <ContributionGraphic graphData={contributionData} />
       <Issues issues={issues} />
