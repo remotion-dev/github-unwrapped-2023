@@ -66,7 +66,7 @@ export const PlanetEntrance: React.FC<{
       src={getPlanetFile(planet)}
       style={{
         transform:
-          planet === PlanetEnum.Enum.Silver ? "rotate(40deg)" : "rotate(20deg)",
+          planet === PlanetEnum.Enum.Silver ? "rotate(40deg)" : "rotate(0deg)",
         width: planetSize,
         position: "absolute",
         top: 500 + planetY - planetSize / 2,
