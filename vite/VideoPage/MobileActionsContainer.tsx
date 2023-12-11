@@ -80,7 +80,7 @@ export const MobileActionsContainer: React.FC = () => {
       navigator.canShare &&
       navigator.canShare(sharableContent);
     if (sharable && file) {
-      navigator.share();
+      navigator.share(sharableContent);
     } else {
       navigate({
         to: shareRoute.id,
