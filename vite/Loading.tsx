@@ -2,32 +2,33 @@
 // import { Navbar } from "./Home/Navbar";
 // import { Planet } from "./Home/Planet";
 // import { HomeBox } from "./HomeBox/HomeBox";
+import { useEffect } from "react";
 import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
 
 export const Loading = () => {
   const username = window.location.pathname.split("/")[2];
 
-  // useEffect(() => {
-  //   fetch("/api/stats", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username,
-  //     }),
-  //   })
-  //     // TODO
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     .then((res) => {
-  //       // window.location.href = `/${username}`;
-  //     })
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     .catch((err) => {
-  //       // TODO
-  //     });
-  // }, [username]);
+  useEffect(() => {
+    fetch("/api/stats", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    })
+      // TODO
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .then((res) => {
+        window.location.href = `/${username}`;
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .catch((err) => {
+        // TODO
+      });
+  }, [username]);
 
   return (
     <div className={styles.container}>
