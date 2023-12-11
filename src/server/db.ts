@@ -61,7 +61,7 @@ const dbEmailCollection = async () => {
     .collection<EmailCollection>("email");
 };
 
-const ogImageCollection = async () => {
+const getOgImageCollection = async () => {
   const client = await clientPromise;
   return client
     .db(backendCredentials().DB_NAME)
@@ -85,6 +85,16 @@ export const saveEmailAdress = async (email: string) => {
   );
 };
 
+export const getOgImage = async (username: string) => {
+  const collection = await getOgImageCollection();
+  const lowercasedUsername = username.toLowerCase();
+
+  const image = await collection.findOne({
+    lowercasedUsername,
+  });
+  return image;
+};
+
 export const saveOgImage = async ({
   username,
   url,
@@ -93,7 +103,7 @@ export const saveOgImage = async ({
   url: string;
 }) => {
   const lowercasedUsername = username.toLowerCase();
-  const collection = await ogImageCollection();
+  const collection = await getOgImageCollection();
   await collection.updateOne(
     {
       lowercasedUsername,
@@ -103,6 +113,9 @@ export const saveOgImage = async ({
         lowercasedUsername,
         url,
       },
+    },
+    {
+      upsert: true,
     },
   );
 };
@@ -133,6 +146,16 @@ export const clearRendersForUsername = async (params: { username: string }) => {
   const collection = await getRendersCollection();
   await collection.deleteMany({
     username: params.username.toLowerCase(),
+  });
+};
+
+export const clearOgImagesForUsername = async (params: {
+  username: string;
+}) => {
+  const lowercasedUsername = params.username.toLowerCase();
+  const collection = await getOgImageCollection();
+  await collection.deleteMany({
+    lowercasedUsername,
   });
 };
 

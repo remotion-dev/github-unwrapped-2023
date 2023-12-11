@@ -10,7 +10,6 @@ const getGithubCommits = async (
   page: number,
   token: string,
 ) => {
-  console.log("get github commits");
   const response = await fetch(
     `https://api.github.com/search/commits?q=author:${username}%20merge:false&sort=author-date&order=desc&page=${page}&per_page=100`,
     {

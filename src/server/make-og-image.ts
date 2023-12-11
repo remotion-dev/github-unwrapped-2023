@@ -5,10 +5,15 @@ import {
 import type { z } from "zod";
 import type { ProfileStats, ogImageSchema } from "../config.js";
 import { DISK, RAM, SITE_NAME, TIMEOUT, parseTopLanguage } from "../config.js";
-import { saveOgImage } from "./db.js";
+import { getOgImage, saveOgImage } from "./db.js";
 import { getRandomRegion } from "./render.js";
 
 export const makeOgImage = async (profileStats: ProfileStats) => {
+  const ogImage = await getOgImage(profileStats.username);
+  if (ogImage) {
+    return;
+  }
+
   const functionName = speculateFunctionName({
     diskSizeInMb: DISK,
     memorySizeInMb: RAM,
