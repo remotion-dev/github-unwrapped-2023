@@ -28,7 +28,7 @@ import {
 } from "./db.js";
 import { getFinality } from "./progress.js";
 
-const getRandomRegion = (): AwsRegion => {
+export const getRandomRegion = (): AwsRegion => {
   return getRegions()[Math.floor(Math.random() * getRegions().length)];
 };
 

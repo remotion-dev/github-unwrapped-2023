@@ -8,6 +8,11 @@ type EmailCollection = {
   email: string;
 };
 
+type OgImageCollection = {
+  lowercasedUsername: string;
+  url: string;
+};
+
 const mongoUrl = () => {
   const { DB_NAME, DB_PASSWORD, DB_HOST, DB_USER } = backendCredentials();
   return `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
@@ -56,6 +61,13 @@ const dbEmailCollection = async () => {
     .collection<EmailCollection>("email");
 };
 
+const ogImageCollection = async () => {
+  const client = await clientPromise;
+  return client
+    .db(backendCredentials().DB_NAME)
+    .collection<OgImageCollection>("ogimage");
+};
+
 export const saveEmailAdress = async (email: string) => {
   const collection = await dbEmailCollection();
   await collection.updateOne(
@@ -69,6 +81,28 @@ export const saveEmailAdress = async (email: string) => {
     },
     {
       upsert: true,
+    },
+  );
+};
+
+export const saveOgImage = async ({
+  username,
+  url,
+}: {
+  username: string;
+  url: string;
+}) => {
+  const lowercasedUsername = username.toLowerCase();
+  const collection = await ogImageCollection();
+  await collection.updateOne(
+    {
+      lowercasedUsername,
+    },
+    {
+      $set: {
+        lowercasedUsername,
+        url,
+      },
     },
   );
 };
