@@ -11,9 +11,15 @@ export const mapApiResponseToCommits = (
         return null;
       }
 
+      const hour = commit.commit.author.date.match(/T([0-9]+)/);
+      if (!hour) {
+        return;
+      }
+
       return {
         author: commit.author.login,
         date: new Date(commit.commit.author.date).getTime(),
+        hour: Number(hour[1]),
         message: commit.commit.message,
         repo: commit.repository.owner.login + "/" + commit.repository.name,
       };

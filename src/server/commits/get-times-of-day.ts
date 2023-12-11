@@ -27,9 +27,7 @@ type Hour =
   | 23;
 
 export const getTimesOfDay = (items: Commit[]) => {
-  const i = items.map((index) => index.date);
-
-  const times = i.map((item) => new Date(item).getHours());
+  const times = items.map((index) => index.hour);
 
   const hours: { [key in Hour]: number } = {
     "5": 0,
