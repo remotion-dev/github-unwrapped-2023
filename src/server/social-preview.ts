@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import { getRandomAwsAccount } from "../helpers/get-random-aws-account.js";
+import { setEnvForKey } from "../helpers/set-env-for-key.js";
 import { getProfileStatsFromCache } from "./db.js";
 import { makeOrGetOgImage } from "./make-og-image.js";
 
@@ -8,6 +10,8 @@ const getUrl = async (username: string): Promise<string> => {
     throw new Error("No image for this user");
   }
 
+  const account = getRandomAwsAccount();
+  setEnvForKey(account);
   return makeOrGetOgImage(stats);
 };
 
