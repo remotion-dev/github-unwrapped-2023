@@ -14,7 +14,7 @@ type AppHead = {
 
 const makeAppHead = async (
   username: string | null,
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+  params: { handleUsername: boolean; stats: boolean },
 ): Promise<AppHead> => {
   if (username === null) {
     const title = `#GitHubUnwrapped 2023 - Your coding year in review`;
@@ -44,7 +44,7 @@ const makeAppHead = async (
     };
   }
 
-  if (params.disableStats) {
+  if (!params.stats) {
     const newHead = renderToString(
       <title>{`${username}'s #GitHubUnwrapped`}</title>,
     );
@@ -79,7 +79,7 @@ type AppHtml = {
 export const replaceAppHead = async (
   username: string | null,
   html: string,
-  params: { handleUsername?: boolean; disableStats?: boolean } = {},
+  params: { handleUsername: boolean; stats: boolean },
 ): Promise<AppHtml> => {
   try {
     const { head, status } = await makeAppHead(username, params);

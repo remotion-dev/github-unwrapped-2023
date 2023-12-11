@@ -11,8 +11,8 @@ import { emailEndpoint } from "./email.js";
 import { faviconEndPoint } from "./favicon.js";
 import { statsEndPoint } from "./fetch-stats.js";
 import {
-  handleIndexHtmlDev,
-  handleIndexHtmlProduction,
+  indexHtmlDev,
+  indexHtmlProduction,
   nodeEnv,
   publicDir,
   viteDir,
@@ -84,25 +84,43 @@ export const startServer = async () => {
   if (nodeEnv === "development") {
     const vite = await startViteDevelopmentServer(app);
 
-    app.get("/about", handleIndexHtmlDev(vite));
+    app.get(
+      "/about",
+      indexHtmlDev(vite, { stats: true, handleUsername: false }),
+    );
     app.get(
       "/loading/:username",
-      handleIndexHtmlDev(vite, { disableStats: true }),
+      indexHtmlDev(vite, { stats: false, handleUsername: false }),
     );
-    app.get("/:username", handleIndexHtmlDev(vite, { handleUsername: true }));
-    app.get("/:username/share", handleIndexHtmlDev(vite));
-    app.get("*", handleIndexHtmlDev(vite));
+    app.get(
+      "/:username",
+      indexHtmlDev(vite, { handleUsername: true, stats: true }),
+    );
+    app.get(
+      "/:username/share",
+      indexHtmlDev(vite, { stats: true, handleUsername: false }),
+    );
+    app.get("*", indexHtmlDev(vite, { stats: true, handleUsername: false }));
   } else {
-    app.get("/", handleIndexHtmlProduction());
+    app.get("/", indexHtmlProduction({ stats: true, handleUsername: false }));
     app.use(serveStatic(viteDistDir));
-    app.get("/about", handleIndexHtmlProduction());
+    app.get(
+      "/about",
+      indexHtmlProduction({ stats: true, handleUsername: false }),
+    );
     app.get(
       "/loading/:username",
-      handleIndexHtmlProduction({ disableStats: true }),
+      indexHtmlProduction({ stats: false, handleUsername: false }),
     );
-    app.get("/:username", handleIndexHtmlProduction({ handleUsername: true }));
-    app.get("/:username/share", handleIndexHtmlProduction());
-    app.get("*", handleIndexHtmlProduction());
+    app.get(
+      "/:username",
+      indexHtmlProduction({ handleUsername: true, stats: true }),
+    );
+    app.get(
+      "/:username/share",
+      indexHtmlProduction({ handleUsername: true, stats: true }),
+    );
+    app.get("*", indexHtmlProduction({ handleUsername: true, stats: true }));
   }
 
   const port = process.env.PORT || 8080;
