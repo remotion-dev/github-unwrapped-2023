@@ -38,7 +38,7 @@ export const GoldPlanetShine: React.FC = () => {
           opacity: channel - fadeOut,
           position: "absolute",
           top: -1000 + 1000 * channel,
-          width: 240,
+          width: 320,
           height: "100%",
           background: "rgba(255,255,255,0.05)",
         }}

@@ -6,7 +6,7 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-const THREAD_SPEED = 300;
+const THREAD_SPEED = 2100;
 
 type Orb = {
   source: string;
@@ -92,7 +92,6 @@ const Thread = (props: { thread: ThreadT }) => {
       }}
     >
       {props.thread.orbs.map((orb, j) => {
-        console.log(orb);
         return (
           <AbsoluteFill
             // eslint-disable-next-line react/no-array-index-key
@@ -121,7 +120,7 @@ export const Threads: React.FC = () => {
 
         return {
           left,
-          speed: random(i + "speed") * (THREAD_SPEED / 2) + THREAD_SPEED,
+          speed: random(i + "speedx") * (THREAD_SPEED / 2),
           size: Number(random(i + "size")) + 0.3,
           // eslint-disable-next-line @typescript-eslint/no-shadow
           orbs: new Array(12).fill(0).map((_, j) => ({
