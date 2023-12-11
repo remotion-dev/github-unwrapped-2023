@@ -85,10 +85,10 @@ const Dot: React.FC<{
 
     const noiseAngle = Math.atan2(noise.noiseY, noise.noiseX);
 
-    const maxGlow = interpolate(data, [0, highestPoint], [0, 2.4], {
+    const maxGlow = interpolate(data, [0, highestPoint], [0, 5], {
       extrapolateRight: "clamp",
     });
-    glow = interpolate(moveProgress, [0, 1], [1, maxGlow]);
+    glow = interpolate(moveProgress, [0, 1], [2, maxGlow]);
 
     const d = interpolate(
       frame,
@@ -98,11 +98,11 @@ const Dot: React.FC<{
 
     const towardsCenter = moveProgress * d;
 
-    const pushFromCenter = Math.sin(noiseAngle + frame / 100) * towardsCenter;
+    const pushFromCenter = Math.sin(noiseAngle + frame / 90) * towardsCenter;
     const pushFromTop = Math.cos(noiseAngle + frame / 100) * towardsCenter;
 
-    const xDelta = noise.noiseX * 200;
-    const yDelta = noise.noiseY * 800;
+    const xDelta = noise.noiseX * 300;
+    const yDelta = noise.noiseY * 10;
 
     left = moveProgress * xDelta + pushFromCenter;
     top = moveProgress * yDelta + pushFromTop;
@@ -141,7 +141,7 @@ const Dot: React.FC<{
       >
         {glow > 1 ? (
           <AbsoluteFill>
-            <Img src={staticFile("blurred-dot-blue.png")} />
+            <Img src={staticFile("blurred-dot-white.png")} />
           </AbsoluteFill>
         ) : (
           <div

@@ -572,7 +572,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Ice" as const,
+          planet: "Silver" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,

@@ -12,6 +12,7 @@ const SILVER_PLANET = staticFile("planet-silver.png");
 const ICE_PLANET = staticFile("planet-ice.png");
 const GOLD_PLANET = staticFile("planet-gold.png");
 // const TEST = staticFile("planet-leafy.png");
+const TEST = staticFile("planet-leafy.png");
 
 export const prefetchPlanetImage = (planet: Planet) => {
   switch (planet) {
@@ -27,7 +28,7 @@ export const prefetchPlanetImage = (planet: Planet) => {
 export const getPlanetFile = (planet: Planet) => {
   switch (planet) {
     case "Silver":
-      return SILVER_PLANET;
+      return TEST;
     case "Ice":
       return ICE_PLANET;
     default:
