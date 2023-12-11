@@ -25,6 +25,7 @@ export type Finality =
       type: "success";
       url: string;
       outputSize: number;
+      reportedCost: number;
     }
   | {
       type: "error";

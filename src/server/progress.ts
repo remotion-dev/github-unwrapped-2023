@@ -9,6 +9,7 @@ export const getFinality = (
       type: "success",
       url: renderProgress.outputFile,
       outputSize: renderProgress.outputSizeInBytes as number,
+      reportedCost: renderProgress.costs.accruedSoFar,
     };
   }
 
