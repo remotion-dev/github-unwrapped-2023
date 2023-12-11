@@ -7,7 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { z } from "zod";
-import { isIosSafari } from "../Opening/devices";
+import { isWebkit } from "../Opening/devices";
 import { Productivity } from "./Productivity";
 import { TabletSVG } from "./TabletSVG";
 
@@ -122,7 +122,7 @@ export const Tablet: React.FC<
       </AbsoluteFill>
       <AbsoluteFill
         style={{
-          transform: isIosSafari() ? `translateZ(200px)` : undefined,
+          transform: isWebkit() ? `translateZ(200px)` : undefined,
         }}
       >
         <div

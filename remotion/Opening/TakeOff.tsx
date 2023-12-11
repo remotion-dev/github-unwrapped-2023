@@ -10,7 +10,7 @@ import {
 import type { Rocket } from "../../src/config";
 import { remapSpeed } from "../TopLanguages/remap-speed";
 import Spaceship from "./RocketFront";
-import { isIosSafari } from "./devices";
+import { isWebkit } from "./devices";
 
 export const takeOffSpeedFucntion = (f: number) =>
   10 ** interpolate(f, [0, 120], [-1, 4]);
@@ -18,7 +18,7 @@ const speedFunctionShake = (f: number) =>
   10 ** interpolate(f, [0, 80, 150], [-1, 3, 1]);
 
 export const getFlame = (rocket: Rocket) => {
-  if (isIosSafari()) {
+  if (isWebkit()) {
     if (rocket === "yellow") {
       return staticFile("exhaust-orange-hevc-safari.mp4");
     }
