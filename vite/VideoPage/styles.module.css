@@ -1,11 +1,13 @@
 .wrapper {
   width: 100vw;
+  height: 180vh;
   height: 180svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   @media only screen and (min-width: 40em) {
+    height: 100vh;
     height: 100svh;
     padding: 0 40px;
     justify-content: center;
