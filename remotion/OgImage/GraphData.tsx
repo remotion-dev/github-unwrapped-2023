@@ -11,7 +11,7 @@ const Dot: React.FC<{
 
   const activityColor = interpolateColors(
     value,
-    [0, max],
+    [0, Math.max(1, max)],
     ["#202138", "#2486ff"],
   );
 
