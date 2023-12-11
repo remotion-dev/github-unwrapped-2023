@@ -22,8 +22,6 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     })
     .parse(request.query);
 
-  console.log(query);
-
   const { CLIENT_SECRET, VITE_CLIENT_ID } = backendCredentials();
 
   const formdata = new FormData();

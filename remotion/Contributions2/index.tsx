@@ -6,7 +6,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Planet, Rocket, type AccentColor } from "../../src/config";
 import { appearDelays } from "../Contributions/compute-positions";
 import { Gradient } from "../Gradients/NativeGradient";
@@ -54,7 +54,7 @@ const Dot: React.FC<{
   let top = 0;
   let left = 0;
   let glow = 1;
-  let opacity = data / 100;
+  let opacity = data >= maxContributions ? 1 : data / maxContributions;
 
   opacity = opacity < 0.1 ? 0.1 : opacity;
 
@@ -83,7 +83,9 @@ const Dot: React.FC<{
 
     const noiseAngle = Math.atan2(noise.noiseY, noise.noiseX);
 
-    const maxGlow = interpolate(data, [0, highestPoint], [0, 1.6]);
+    const maxGlow = interpolate(data, [0, highestPoint], [0, 1.6], {
+      extrapolateRight: "clamp",
+    });
     glow = interpolate(moveProgress, [0, 1], [1, maxGlow]);
 
     const d = interpolate(
@@ -172,6 +174,11 @@ export const ContributionsScene2: React.FC<{
 
   number = number > total ? total : number < 0 ? 0 : number;
 
+  const maxContributions = useMemo(() => {
+    const m = Math.max(...contributionData);
+    return m < 12 ? m : 12;
+  }, [contributionData]);
+
   return (
     <AbsoluteFill style={{}}>
       <AbsoluteFill style={{ backgroundColor: "black" }}>
@@ -200,7 +207,7 @@ export const ContributionsScene2: React.FC<{
               key={i}
               data={contributionData[i]}
               targetColumn={targetColumn}
-              maxContributions={Math.max(...contributionData)}
+              maxContributions={maxContributions}
             />
           ))}
         </div>

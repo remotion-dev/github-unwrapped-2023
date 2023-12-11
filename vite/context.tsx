@@ -77,7 +77,7 @@ const UserVideoProvider: React.FC<{
         type: "downloading",
         progress: receivedLength / contentLength,
       });
-      console.log(`Received ${receivedLength} of ${contentLength}`);
+      // console.log(`Received ${receivedLength} of ${contentLength}`);
     }
 
     const chunksAll = new Uint8Array(receivedLength);

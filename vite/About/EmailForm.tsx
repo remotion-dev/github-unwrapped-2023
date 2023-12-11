@@ -46,7 +46,7 @@ export const EmailForm: React.FC<{}> = () => {
         setLoading(false);
       } else {
         setError("Invalid email provided. Please try again");
-        console.log(error);
+        console.error(error);
       }
     },
     [email, error],
