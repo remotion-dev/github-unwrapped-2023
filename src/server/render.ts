@@ -26,6 +26,7 @@ import {
   saveRender,
   updateRender,
 } from "./db.js";
+import { makeOgImage } from "./make-og-image.js";
 import { getFinality } from "./progress.js";
 
 export const getRandomRegion = (): AwsRegion => {
@@ -119,18 +120,21 @@ export const renderOrGetProgress = async (
   const inputProps: z.infer<typeof compositionSchema> =
     computeCompositionParameters(userStat, theme);
 
-  const { renderId, bucketName } = await renderMediaOnLambda({
-    codec: "h264",
-    functionName,
-    region,
-    serveUrl: SITE_NAME,
-    composition: "Main",
-    inputProps,
-    downloadBehavior: {
-      type: "download",
-      fileName: `unwrapped-${username}.mp4`,
-    },
-  });
+  const [{ renderId, bucketName }] = await Promise.all([
+    renderMediaOnLambda({
+      codec: "h264",
+      functionName,
+      region,
+      serveUrl: SITE_NAME,
+      composition: "Main",
+      inputProps,
+      downloadBehavior: {
+        type: "download",
+        fileName: `unwrapped-${username}.mp4`,
+      },
+    }),
+    makeOgImage(userStat),
+  ]);
 
   const newRender: Render = {
     region,
