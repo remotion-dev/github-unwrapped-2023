@@ -22,7 +22,7 @@ export const makeOgImage = async (profileStats: ProfileStats) => {
 
   const schema: z.infer<typeof ogImageSchema> = {
     pullRequests: profileStats.totalPullRequests,
-    contributionData: profileStats.graphData.map((d) => d.productivity),
+    contributionData: profileStats.contributionData,
     issues: profileStats.closedIssues,
     login: profileStats.username,
     stars: profileStats.totalStars,
