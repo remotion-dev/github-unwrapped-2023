@@ -27,6 +27,7 @@ export const Loading = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((err) => {
         // TODO
+        console.log(err);
       });
   }, [username]);
 
@@ -67,7 +68,7 @@ export const Loading = () => {
           <div
             className={styles.animateProgress}
             style={{ height: 12, background: "white" }}
-          ></div>
+          />
         </div>
         {/* <p style={{ width: 144, textAlign: "center" }}>Unwrapping...</p> */}
       </div>

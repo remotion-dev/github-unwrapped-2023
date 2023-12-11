@@ -70,17 +70,6 @@ export const starsGivenCalculateMetadata: CalculateMetadataFunction<Props> = ({
   };
 };
 
-if (!Array.prototype.findLastIndex) {
-  // eslint-disable-next-line no-extend-native
-  Array.prototype.findLastIndex = function (callback, thisArg) {
-    for (let i = this.length - 1; i >= 0; i--) {
-      if (callback.call(thisArg, this[i], i, this)) return i;
-    }
-
-    return -1;
-  };
-}
-
 export const StarsGiven: React.FC<Props> = ({
   starsGiven,
   style,

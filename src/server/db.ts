@@ -48,11 +48,22 @@ const getRendersCollection = async () => {
   return client.db(backendCredentials().DB_NAME).collection<Render>("renders");
 };
 
+type ProfileSchema =
+  | {
+      type: "found";
+      lowercasedUsername: string;
+      profile: ProfileStats;
+    }
+  | {
+      lowercasedUsername: string;
+      type: "not-found";
+    };
+
 const getStatsCollection = async () => {
   const client = await clientPromise;
   return client
     .db(backendCredentials().DB_NAME)
-    .collection<ProfileStats>("stats");
+    .collection<ProfileSchema>("stats");
 };
 
 const dbEmailCollection = async () => {
@@ -190,28 +201,34 @@ export const getEmailFromDb = async (email: string) => {
 };
 
 export const insertProfileStats = async (
-  stats: ProfileStats,
+  stats: ProfileSchema,
 ): Promise<boolean> => {
   const collection = await getStatsCollection();
-  const { lowercasedUsername, ...statsWithoutPrimary } = stats;
+  if (stats.type === "not-found") {
+    const { type } = stats;
+    await collection.updateOne(
+      { lowercasedUsername: stats.lowercasedUsername },
+      {
+        $set: {
+          type,
+        },
+      },
+      { upsert: true },
+    );
+    return true;
+  }
+
   const value = await collection.updateOne(
     { lowercasedUsername: stats.lowercasedUsername },
     {
-      $set: statsWithoutPrimary,
+      $set: {
+        profile: stats.profile,
+        type: stats.type,
+      },
     },
     { upsert: true },
   );
   return value.acknowledged;
-};
-
-export const getProfileStatsFromCache = async (
-  username: string,
-): Promise<WithId<ProfileStats> | null> => {
-  const collection = await getStatsCollection();
-  const value = await collection.findOne({
-    lowercasedUsername: username.toLowerCase(),
-  });
-  return value;
 };
 
 export const ensureIndices = async () => {
@@ -220,4 +237,22 @@ export const ensureIndices = async () => {
 
   const renders = await getRendersCollection();
   await renders.createIndex({ username: 1, theme: 1 }, { unique: true });
+};
+
+export const getProfileStatsFromCache = async (
+  username: string,
+): Promise<ProfileStats | "not-found" | null> => {
+  const collection = await getStatsCollection();
+  const value = await collection.findOne({
+    lowercasedUsername: username.toLowerCase(),
+  });
+  if (value === null) {
+    return null;
+  }
+
+  if (value.type === "found") {
+    return value.profile;
+  }
+
+  return "not-found";
 };

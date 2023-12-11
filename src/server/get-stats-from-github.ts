@@ -30,14 +30,17 @@ export const getStatsFromGitHub = async ({
   username: string | null;
   token: string;
   loggedInWithGitHub: boolean;
-}): Promise<ProfileStats> => {
+}): Promise<ProfileStats | null> => {
   const fetchedAt = Date.now();
 
   const baseData = (await executeGitHubGraphQlQuery({
     username,
     token,
     query: getQuery(username, baseQuery),
-  })) as BaseQueryResponse;
+  })) as BaseQueryResponse | null;
+  if (baseData === null) {
+    return baseData;
+  }
 
   const [commits, morePullRequests, stars] = await Promise.all([
     username

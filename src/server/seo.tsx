@@ -58,7 +58,26 @@ const makeAppHead = async (
     token: getRandomGithubToken(),
   });
 
-  const usernameTitle = stats ? `${stats.username}'s #GitHubUnwrapped` : "404";
+  if (stats === "not-found") {
+    const fourOhFourHead = renderToString(
+      <>
+        <title>404</title>
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `window.__USER__ = ${JSON.stringify(stats)}`,
+          }}
+        />{" "}
+      </>,
+    );
+    return { head: fourOhFourHead, status: 404, cache: false };
+  }
+
+  if (stats === null) {
+    throw new Error("Stats should not be null");
+  }
+
+  const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
   const canonical = `${backendCredentials().VITE_HOST}/${username}`;
   const socialPreview = `${backendCredentials().VITE_HOST}/${username}.jpg`;
   const description = `See ${username}'s year in review and get your own.`;
@@ -67,13 +86,13 @@ const makeAppHead = async (
     <>
       <title>{usernameTitle}</title>
       <meta property="og:url" content={canonical} />
+      <link rel="canonical" href={canonical} />
       <meta property="og:image" content={socialPreview} />
       <meta property="og:title" content={usernameTitle} />
       <meta property="og:description" content={description} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={socialPreview} />
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonical} />
       <meta name="twitter:creator" content="@remotion" />
       <meta name="twitter:site" content="@remotion" />
 
@@ -85,7 +104,7 @@ const makeAppHead = async (
       />
     </>,
   );
-  return { head, status: stats ? 200 : 404, cache: false };
+  return { head, status: 200, cache: false };
 };
 
 type AppHtml = {

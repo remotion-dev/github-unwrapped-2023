@@ -202,6 +202,7 @@ export type Commit = {
   author: string;
   repo: string;
   date: number;
+  hour: number;
 };
 
 const remapWeekdays = (weekday: number): Weekday => {

@@ -10,7 +10,7 @@ import { VideoBox } from "./VideoBox";
 import styles from "./styles.module.css";
 declare global {
   interface Window {
-    __USER__: ProfileStats | null;
+    __USER__: ProfileStats | "not-found";
     __INTERNAL_ERROR__?: string;
   }
 }

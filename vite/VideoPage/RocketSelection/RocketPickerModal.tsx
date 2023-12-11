@@ -71,8 +71,8 @@ export const RocketPickerModal: React.FC<{
 
   const themeName = useMemo(() => {
     const blueTheme = "Glacial Soar";
-    const orangeTheme = "Blaze of fire";
-    const yellowTheme = "Golden ignition";
+    const orangeTheme = "Blaze of Fire";
+    const yellowTheme = "Golden Ignition";
 
     return rocket === "blue"
       ? blueTheme
