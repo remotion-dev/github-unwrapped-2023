@@ -7,7 +7,7 @@ export const App: React.FC = () => {
     return <NotFound code="500" />;
   }
 
-  if (window.__USER__ === null) {
+  if (window.__USER__ === "not-found") {
     return <NotFound code="404" />;
   }
 

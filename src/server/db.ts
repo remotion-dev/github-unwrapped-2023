@@ -51,9 +51,11 @@ const getRendersCollection = async () => {
 type ProfileSchema =
   | {
       type: "found";
+      lowercasedUsername: string;
       profile: ProfileStats;
     }
   | {
+      lowercasedUsername: string;
       type: "not-found";
     };
 
@@ -199,18 +201,42 @@ export const getEmailFromDb = async (email: string) => {
 };
 
 export const insertProfileStats = async (
-  stats: ProfileStats,
+  stats: ProfileSchema,
 ): Promise<boolean> => {
   const collection = await getStatsCollection();
-  const { lowercasedUsername, ...statsWithoutPrimary } = stats;
+  if (stats.type === "not-found") {
+    const { type } = stats;
+    await collection.updateOne(
+      { lowercasedUsername: stats.lowercasedUsername },
+      {
+        $set: {
+          type,
+        },
+      },
+      { upsert: true },
+    );
+    return true;
+  }
+
   const value = await collection.updateOne(
     { lowercasedUsername: stats.lowercasedUsername },
     {
-      $set: statsWithoutPrimary,
+      $set: {
+        profile: stats.profile,
+        type: stats.type,
+      },
     },
     { upsert: true },
   );
   return value.acknowledged;
+};
+
+export const ensureIndices = async () => {
+  const stats = await getStatsCollection();
+  await stats.createIndex({ lowercasedUsername: 1 }, { unique: true });
+
+  const renders = await getRendersCollection();
+  await renders.createIndex({ username: 1, theme: 1 }, { unique: true });
 };
 
 export const getProfileStatsFromCache = async (
@@ -229,12 +255,4 @@ export const getProfileStatsFromCache = async (
   }
 
   return "not-found";
-};
-
-export const ensureIndices = async () => {
-  const stats = await getStatsCollection();
-  await stats.createIndex({ lowercasedUsername: 1 }, { unique: true });
-
-  const renders = await getRendersCollection();
-  await renders.createIndex({ username: 1, theme: 1 }, { unique: true });
 };

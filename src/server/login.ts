@@ -64,7 +64,11 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     await clearOgImagesForUsername({ username: stats.username });
   }
 
-  await insertProfileStats(stats);
+  await insertProfileStats({
+    type: "found",
+    profile: stats,
+    lowercasedUsername: stats.username.toLowerCase(),
+  });
 
   return response.redirect(`/${stats.username}`);
 };

@@ -20,7 +20,16 @@ export const getStatsFromGitHubOrCache = async ({
   });
 
   if (stats) {
-    await insertProfileStats(stats);
+    await insertProfileStats({
+      type: "found",
+      profile: stats,
+      lowercasedUsername: stats.username.toLowerCase(),
+    });
+  } else {
+    await insertProfileStats({
+      lowercasedUsername: username.toLowerCase(),
+      type: "not-found",
+    });
   }
 
   return stats;
