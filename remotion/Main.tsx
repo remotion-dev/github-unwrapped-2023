@@ -214,7 +214,7 @@ export const Main: React.FC<Schema> = ({
           offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
         >
           <ContributionsScene2
-            total={5000}
+            total={totalContributions}
             rocket={rocket}
             contributionData={contributionData}
             accentColor={accentColor}
