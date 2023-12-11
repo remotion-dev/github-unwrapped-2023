@@ -39,7 +39,7 @@ export const indexHtmlDev = (
 
       const cachedStats = await getProfileStatsFromCache(username);
 
-      if (!cachedStats) {
+      if (cachedStats === null) {
         response.redirect(`/loading/${username}`);
         return;
       }

@@ -55,6 +55,10 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     username: null,
   });
 
+  if (!stats) {
+    throw new Error("No stats");
+  }
+
   await clearFailedRendersForUsername({ username: stats.username });
 
   if (query.reset === "true") {

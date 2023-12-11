@@ -109,10 +109,17 @@ export const renderOrGetProgress = async (
   const _id = new ObjectId();
 
   const userStat = await getProfileStatsFromCache(username);
-  if (!userStat) {
+  if (userStat === "not-found") {
     return {
       type: "render-error",
       error: "User not found",
+    };
+  }
+
+  if (userStat === null) {
+    return {
+      type: "render-error",
+      error: "User not fetched",
     };
   }
 

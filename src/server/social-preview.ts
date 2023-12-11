@@ -6,7 +6,7 @@ import { makeOrGetOgImage } from "./make-og-image.js";
 
 const getUrl = async (username: string): Promise<string> => {
   const stats = await getProfileStatsFromCache(username);
-  if (!stats) {
+  if (stats === "not-found" || stats === null) {
     throw new Error("No image for this user");
   }
 

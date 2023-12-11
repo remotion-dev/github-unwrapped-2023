@@ -48,11 +48,20 @@ const getRendersCollection = async () => {
   return client.db(backendCredentials().DB_NAME).collection<Render>("renders");
 };
 
+type ProfileSchema =
+  | {
+      type: "found";
+      profile: ProfileStats;
+    }
+  | {
+      type: "not-found";
+    };
+
 const getStatsCollection = async () => {
   const client = await clientPromise;
   return client
     .db(backendCredentials().DB_NAME)
-    .collection<ProfileStats>("stats");
+    .collection<ProfileSchema>("stats");
 };
 
 const dbEmailCollection = async () => {
@@ -206,12 +215,20 @@ export const insertProfileStats = async (
 
 export const getProfileStatsFromCache = async (
   username: string,
-): Promise<WithId<ProfileStats> | null> => {
+): Promise<ProfileStats | "not-found" | null> => {
   const collection = await getStatsCollection();
   const value = await collection.findOne({
     lowercasedUsername: username.toLowerCase(),
   });
-  return value;
+  if (value === null) {
+    return null;
+  }
+
+  if (value.type === "found") {
+    return value.profile;
+  }
+
+  return "not-found";
 };
 
 export const ensureIndices = async () => {

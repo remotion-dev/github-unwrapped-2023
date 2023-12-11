@@ -19,6 +19,9 @@ export const getStatsFromGitHubOrCache = async ({
     username,
   });
 
-  await insertProfileStats(stats);
+  if (stats) {
+    await insertProfileStats(stats);
+  }
+
   return stats;
 };

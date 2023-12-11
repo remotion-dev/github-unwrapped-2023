@@ -29,6 +29,14 @@ export const executeGitHubGraphQlQuery = async ({
 
   const response = await res.json();
   if (response.errors) {
+    if (
+      response.errors?.[0].message?.includes(
+        "Could not resolve to a User with the login",
+      )
+    ) {
+      return null;
+    }
+
     throw new Error(JSON.stringify(response.errors[0].message));
   }
 
