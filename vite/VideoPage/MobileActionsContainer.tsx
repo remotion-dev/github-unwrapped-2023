@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
 import { useUserVideo } from "../context";
@@ -53,51 +53,45 @@ export const MobileActionsContainer: React.FC = () => {
           (blob) =>
             new File([blob], "github_unwrapped.mp4", { type: "video/mp4" }),
         );
+
       setFile(f);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status.type]);
+  }, [status]);
 
   useEffect(() => {
     fetchFile();
   }, [fetchFile]);
 
-  const sharableContent = useMemo(
-    () =>
-      file
-        ? {
-            files: [file],
-            title: "Your GitHub Unwrapped 2023",
-            text: "Check out my #GitHubUnwrapped 2023! Get yours now on https://githubunwrapped.com",
-          }
-        : null,
-    [file],
-  );
+  const goToFallbackSharePage = useCallback(() => {
+    navigate({
+      to: shareRoute.id,
+      params: { username },
+      search: {
+        platform: undefined,
+        accentColor: compositionParams.accentColor,
+      },
+    });
+  }, [compositionParams.accentColor, navigate, username]);
 
   const handleClick = useCallback(() => {
-    const sharable =
-      sharableContent &&
-      navigator.canShare &&
-      navigator.canShare(sharableContent);
-    if (sharable && file) {
-      navigator.share(sharableContent);
-    } else {
-      navigate({
-        to: shareRoute.id,
-        params: { username },
-        search: {
-          platform: undefined,
-          accentColor: compositionParams.accentColor,
-        },
-      });
+    if (!file) {
+      goToFallbackSharePage();
+      return;
     }
-  }, [
-    compositionParams.accentColor,
-    file,
-    navigate,
-    sharableContent,
-    username,
-  ]);
+
+    const sharableContent = {
+      files: [file],
+      title: "Your GitHub Unwrapped 2023",
+      text: "Check out my #GitHubUnwrapped 2023! Get yours now on https://githubunwrapped.com",
+    };
+    const sharable = navigator.canShare && navigator.canShare(sharableContent);
+    if (!sharable) {
+      goToFallbackSharePage();
+      return;
+    }
+
+    navigator.share(sharableContent);
+  }, [file, goToFallbackSharePage]);
 
   return (
     <div className={styles.mobileActionsContainer}>
