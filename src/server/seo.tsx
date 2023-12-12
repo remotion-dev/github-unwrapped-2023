@@ -83,7 +83,7 @@ const makeAppHead = async (
 
   const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
   const canonical = `${backendCredentials().VITE_HOST}/${username}`;
-  const socialPreview = `${backendCredentials().VITE_HOST}/${username}.jpg`;
+  const socialPreview = `${backendCredentials().VITE_HOST}/og/${username}.jpg`;
   const description = `See ${username}'s year in review and get your own.`;
 
   const head = renderToString(
