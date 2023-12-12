@@ -1,14 +1,13 @@
 import React from "react";
-import { Easing, Img, interpolate, useCurrentFrame } from "remotion";
+import { Easing, Img, interpolate } from "remotion";
 import { type Planet } from "../../src/config";
 import { getPlanetFile } from "../planets";
 
 export const PlanetEntrance: React.FC<{
   planet: Planet;
   startingFrame?: number;
-}> = ({ planet, startingFrame }) => {
-  const frame = useCurrentFrame();
-
+  frame: number;
+}> = ({ planet, startingFrame, frame }) => {
   const planetSize = interpolate(
     frame + (startingFrame || 0),
     [80, 180],
