@@ -418,6 +418,7 @@ export const RemotionRoot: React.FC = () => {
             pluralizeLanguages: false,
             accentColor: "blue",
             rocket: "blue",
+            randomizeOctocatSeed: 0.4,
           }}
         />
         <Composition
@@ -538,6 +539,7 @@ export const RemotionRoot: React.FC = () => {
             login: "JonnyBurger",
             accentColor: "blue",
             rocket: "blue",
+            octocatSeed: 0.4,
           }}
         />
       </Folder>

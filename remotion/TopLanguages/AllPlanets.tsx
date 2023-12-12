@@ -29,6 +29,7 @@ export const allPlanetsSchema = z.object({
   login: z.string(),
   accentColor: accentColorSchema,
   rocket: rocketSchema,
+  octocatSeed: z.number(),
 });
 
 const allPlanetsTransitionTiming = springTiming({
@@ -101,6 +102,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
   topLanguages,
   accentColor,
   rocket,
+  octocatSeed,
 }) => {
   const { language1, language2, language3 } = topLanguages;
   const enterDirection = deriveEnterDirectionFromCorner(corner);
@@ -114,6 +116,7 @@ export const AllPlanets: React.FC<z.infer<typeof allPlanetsSchema>> = ({
           pluralizeLanguages={language2 !== null}
           accentColor={accentColor}
           randomizePlanetSeed={login}
+          randomizeOctocatSeed={octocatSeed}
         />
       </TransitionSeries.Sequence>
       <TransitionSeries.Transition
