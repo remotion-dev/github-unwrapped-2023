@@ -118,7 +118,7 @@ export const CallToAction: React.FC<{
               WebkitTextFillColor: "transparent",
             }}
           >
-            GithubUnwrapped.com
+            GitHubUnwrapped.com
           </div>
         </div>
       </div>
