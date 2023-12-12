@@ -50,7 +50,7 @@ export const getStatsFromGitHub = async ({
     getMoreStars({ token, username }),
   ]);
 
-  const acc: Record<string, { color: string; value: number }> = {};
+  const acc: Record<string, { color: string | null; value: number }> = {};
 
   baseData.contributionsCollection.commitContributionsByRepository.forEach(
     (i) => {

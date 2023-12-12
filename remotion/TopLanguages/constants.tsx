@@ -155,6 +155,17 @@ export const computePlanetInfo = (
     return mapLanguageToPlanet[language.name];
   }
 
+  if (language.color === null) {
+    return {
+      gradient: "white",
+      textColor: "white",
+      name: language.name,
+      opacity: 0.3,
+      customPlanetColor: "gray",
+      source: null,
+    };
+  }
+
   const isGoodContrast = getContrast(PANE_BACKGROUND, language.color);
 
   return {

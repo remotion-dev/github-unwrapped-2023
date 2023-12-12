@@ -547,8 +547,9 @@ export const RemotionRoot: React.FC = () => {
           corner: "bottom-left" as const,
           topLanguages: {
             language1: {
-              type: "designed" as const,
-              name: "JavaScript" as const,
+              type: "other" as const,
+              color: null,
+              name: "Nix" as const,
             },
             language2: {
               type: "designed" as const,

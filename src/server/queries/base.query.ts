@@ -86,7 +86,7 @@ export type BaseQueryResponse = {
           edges: Array<{
             size: number;
             node: {
-              color: string;
+              color: string | null;
               name: string;
               id: string;
             };
