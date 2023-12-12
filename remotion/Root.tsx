@@ -1,4 +1,4 @@
-import { Composition, Folder, Still, random } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import { LanguagesEnum, compositionSchema, ogImageSchema } from "../src/config";
 import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
@@ -173,11 +173,7 @@ export const RemotionRoot: React.FC = () => {
         height={VIDEO_HEIGHT}
         defaultProps={{
           accentColor: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) =>
-              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ),
+          contributionData: jonnysContributions,
         }}
       />
 

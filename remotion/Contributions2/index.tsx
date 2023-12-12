@@ -49,8 +49,8 @@ const Dot: React.FC<{
   targetColumn: number;
   maxContributions: number;
 }> = ({ i, data, targetColumn, maxContributions }) => {
-  const col = i % COLUMNS;
-  const row = Math.floor(i / COLUMNS);
+  const col = Math.floor(i / 7);
+  const row: number = i % 7;
 
   const frame = useCurrentFrame();
 
@@ -106,9 +106,6 @@ const Dot: React.FC<{
 
     left = moveProgress * xDelta + pushFromCenter;
     top = moveProgress * yDelta + pushFromTop;
-
-    // opacity =
-    //   1 - interpolate(frame, [START_SPREAD + 50, START_SPREAD + 120], [1, 1]);
   }
 
   if (data === 0 && frame > START_SPREAD + 5) {
@@ -149,7 +146,7 @@ const Dot: React.FC<{
               width: "100%",
               height: "100%",
               backgroundColor: `rgba(0, 166, 255, 1)`,
-              borderRadius: "50%",
+              borderRadius: 3,
             }}
           />
         )}
@@ -178,7 +175,7 @@ export const ContributionsScene2: React.FC<{
 
   const maxContributions = useMemo(() => {
     const m = Math.max(...contributionData);
-    return m < 12 ? m : 12;
+    return m;
   }, [contributionData]);
 
   const opacity = interpolate(frame, [0, 10], [0, 1], {
