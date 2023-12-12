@@ -16,6 +16,7 @@ const NOT_LANGUAGES = [
   "dockerfile",
   "roff",
   "shell",
+  "rich text format",
 ];
 
 const NOT_LANGUAGES_OBJ = Object.fromEntries(
