@@ -138,12 +138,13 @@ const Dot: React.FC<{
       extrapolateRight: "clamp",
     });
 
-    glow = interpolate(moveProgress, [0, 1], [6, maxGlow]);
+    glow =
+      interpolate(moveProgress, [0, 1], [6, maxGlow]) + (2 * moveProgress) ** 3;
 
     const d = interpolate(
       frame,
       [START_SPREAD + 50, START_SPREAD + 120],
-      [400, 800],
+      [400, 1200],
       {},
     );
 
@@ -160,7 +161,7 @@ const Dot: React.FC<{
 
     fadeOutOpacity = interpolate(
       frame,
-      [START_SPREAD + 60, START_SPREAD + 80],
+      [START_SPREAD + 70, START_SPREAD + 80],
       [1, 0],
       {
         extrapolateRight: "clamp",
