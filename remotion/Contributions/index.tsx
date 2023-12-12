@@ -1,8 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Img,
+  Sequence,
   interpolate,
   interpolateColors,
   staticFile,
@@ -17,6 +19,7 @@ import { Gradient } from "../Gradients/NativeGradient";
 import { IssueNumber } from "../Issues/IssueNumber";
 import { FPS } from "../Issues/make-ufo-positions";
 import { accentColorToGradient } from "../Opening/TitleImage";
+import { isMobileDevice } from "../Opening/devices";
 import * as FrontRocketSource from "../TopLanguages/svgs/FrontRocketSource";
 import { PlanetEntrance } from "./PlanetEntrance";
 
@@ -252,7 +255,6 @@ export const ContributionsScene: React.FC<{
   planet: Planet;
 }> = ({ accentColor, contributionData, total, rocket, planet }) => {
   const f = useCurrentFrame();
-
   const frame = f / 1.5;
 
   const targetColumn = interpolate(frame / 0.5, [0, 120], [-33, COLUMNS + 20], {
@@ -283,6 +285,11 @@ export const ContributionsScene: React.FC<{
       </AbsoluteFill>
 
       <AbsoluteFill>
+        {isMobileDevice() ? null : (
+          <Sequence>
+            <Audio startFrom={10} src={staticFile("contribution-rocket.mp3")} />
+          </Sequence>
+        )}
         {frame > 80 && <PlanetEntrance planet={planet} frame={frame} />}
       </AbsoluteFill>
       <AbsoluteFill
