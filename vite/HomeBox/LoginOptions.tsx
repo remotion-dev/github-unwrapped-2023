@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { SignInWithGitHub } from "../SignInWithGitHub";
@@ -9,29 +9,23 @@ type Props = {
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const getRandomUsername = () => {
+  const usernames = ["steven-tey", "awesomekling", "wcandillon", "mehmetademi"];
+  return usernames[Math.floor(Math.random() * usernames.length)];
+};
+
 export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
 }) => {
   const [username, setUsername] = useState<string>("");
-  const [placeholderUsername, setPlaceholderUsername] = useState<string>("");
 
-  // Function to select a random username
-  const getRandomUsername = () => {
-    const usernames = [
-      "steven-tey",
-      "awesomekling",
-      "wcandillon",
-      "jonnyburger",
-      "mehmetademi",
-    ];
-    return usernames[Math.floor(Math.random() * usernames.length)];
-  };
+  const placeholderUsername = getRandomUsername();
 
-  // Set a random username as placeholder on component mount
-  useEffect(() => {
-    setPlaceholderUsername(getRandomUsername());
-  }, []);
+  const placeholderString =
+    window.innerWidth > 640
+      ? `Your GitHub Username (e.g. ${placeholderUsername})`
+      : "Your GitHub Username";
 
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
@@ -56,7 +50,7 @@ export const LoginOptions: React.FC<Props> = ({
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
-          placeHolder={`Your GitHub Username  (e.g. ${placeholderUsername})`}
+          placeHolder={placeholderString}
           setText={setUsername}
           invalid={userNotFound}
           className={styles.input}
