@@ -144,6 +144,7 @@ const Dot: React.FC<{
       frame,
       [START_SPREAD + 50, START_SPREAD + 120],
       [400, 800],
+      {},
     );
 
     const towardsCenter = moveProgress * d;
@@ -264,7 +265,7 @@ export const ContributionsScene: React.FC<{
   number = number > total ? total : number < 0 ? 0 : number;
 
   const maxContributions = useMemo(() => {
-    return Math.max(...contributionData);
+    return Math.max(...[Math.max(...contributionData), 1]);
   }, [contributionData]);
 
   const opacity = interpolate(frame, [120, 180], [1, 0], {
