@@ -97,7 +97,8 @@ const ProductivityGraph = (props: {
               index={productivityPerHour.time}
               productivity={productivityPerHour.productivity / maxProductivity}
               mostProductive={
-                productivityPerHour.productivity === maxProductivity
+                productivityPerHour.productivity === maxProductivity &&
+                maxProductivity > 0
               }
             />
             <div
