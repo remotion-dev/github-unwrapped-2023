@@ -8,10 +8,13 @@ import {
   Sequence,
   spring,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import { isMobileDevice } from "../Opening/devices";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
@@ -89,6 +92,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   rocket,
 }) => {
   const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
   const totalIssues = openIssues + closedIssues;
 
   const {
@@ -183,8 +187,24 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       },
     }) * totalIssues;
 
+  const opacity = interpolate(
+    frame,
+    [0, 30, durationInFrames - 30, durationInFrames],
+    [0, 1, 1, 0],
+    {
+      extrapolateRight: "clamp",
+      extrapolateLeft: "clamp",
+    },
+  );
+
   return (
     <AbsoluteFill>
+      <AbsoluteFill style={{ opacity }}>
+        <Gradient gradient="greenRadial" />
+        <AbsoluteFill style={{ opacity: 0.4 }}>
+          <Noise translateX={3} translateY={10} />
+        </AbsoluteFill>
+      </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
         {withShootDurations.map((p, i) => {
           return (

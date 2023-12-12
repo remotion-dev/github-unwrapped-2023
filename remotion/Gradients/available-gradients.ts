@@ -7,6 +7,8 @@ export const availableGradients = {
   white: "radial-gradient(#FFFFFF, rgba(0, 0, 0, 0) 70%)",
   blueRadial:
     "radial-gradient(100% 100% at 47.08% 100%, #0F102E 0%, rgba(0, 0, 0, 0) 100%)",
+  greenRadial:
+    "radial-gradient(100% 100% at 47.08% 0%, rgba(176, 224, 186, 0.2) 0%, rgba(0, 0, 0, 0) 100%)",
   purpleRadial:
     "radial-gradient(100% 100% at 47.08% 100%, #381945 0%, rgba(0, 0, 0, 0) 100%)",
   silverRadial:
