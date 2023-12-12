@@ -13,14 +13,30 @@ import {
 import { getStatsFromGitHub } from "./get-stats-from-github.js";
 
 export const loginEndPoint = async (request: Request, response: Response) => {
-  if (request.method === "OPTIONS") return response.end();
+  if (request.method === "OPTIONS") {
+    return response.end();
+  }
 
   const query = z
     .object({
       code: z.string(),
       reset: z.string(),
     })
+    .or(
+      z.object({
+        error: z.string(),
+        error_description: z.string(),
+      }),
+    )
     .parse(request.query);
+
+  if ("error" in query) {
+    if (query.error === "access_denied") {
+      return response.redirect(`/`);
+    }
+
+    throw new Error(query.error_description);
+  }
 
   const { CLIENT_SECRET, VITE_CLIENT_ID } = backendCredentials();
 
