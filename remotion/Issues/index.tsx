@@ -307,7 +307,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             <IssueGridLeft />
             <IssueNumber
               align="left"
-              label="Opened"
+              label="Opened issues"
               currentNumber={Math.round(currentNumber)}
               max={totalIssues}
             />
@@ -316,7 +316,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             <IssueGridRight />
             <IssueNumber
               align="right"
-              label="Closed"
+              label="Closed issues"
               currentNumber={Math.min(
                 closedIssues,
                 Math.round(closedIssuesSoFar.length * (1 / factor)),
