@@ -110,7 +110,7 @@ export const UserVideoContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const user = window.__USER__;
 
-  if (user === null) {
+  if (user === "not-found") {
     return <NotFound code="404" />;
   }
 

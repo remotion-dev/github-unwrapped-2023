@@ -27,7 +27,7 @@ export const AmountOfStarsDisplay: React.FC<{
     <AbsoluteFill
       style={{
         position: "absolute",
-        backgroundColor: "#100714",
+        backgroundColor: "#0A111B",
         justifyContent: "center",
         alignItems: "center",
         color: "white",

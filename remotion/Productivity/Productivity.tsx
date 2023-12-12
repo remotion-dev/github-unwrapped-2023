@@ -97,7 +97,8 @@ const ProductivityGraph = (props: {
               index={productivityPerHour.time}
               productivity={productivityPerHour.productivity / maxProductivity}
               mostProductive={
-                productivityPerHour.productivity === maxProductivity
+                productivityPerHour.productivity === maxProductivity &&
+                maxProductivity > 0
               }
             />
             <div
@@ -181,7 +182,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
         label="Most productive time"
         value={hour}
         radius={300}
-        delay={90}
+        delay={70}
         renderLabel={(value) => {
           if (value === "12") {
             return "12 am";
@@ -193,7 +194,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
 
           return `${value} am`;
         }}
-        soundDelay={140}
+        soundDelay={120}
       />
 
       <div

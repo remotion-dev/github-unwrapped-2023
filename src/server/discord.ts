@@ -14,7 +14,7 @@ export const sendDiscordMessage = async (message: string) => {
     await fetch(`https://discord.com/api/channels/${channel}/messages`, {
       method: "post",
       body: JSON.stringify({
-        content: message,
+        content: `${backendCredentials().VITE_HOST} -${message}`,
         allowed_mentions: {},
         // eslint-disable-next-line no-bitwise
         flags: 1 << 2,

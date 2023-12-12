@@ -1,4 +1,4 @@
-import { Composition, Folder, Still, random } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import { LanguagesEnum, compositionSchema, ogImageSchema } from "../src/config";
 import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
@@ -9,7 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { ContributionsScene2 } from "./Contributions2";
+import { jonnysContributions } from "./Contributions/jonnys-contributions";
 import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
@@ -29,6 +29,8 @@ import { Tablet, tableSchema } from "./Productivity/Tablet";
 import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
+import { PromoVideo, promoVideoSchema } from "./PromoVideo";
+import { Planets } from "./PromoVideo/Planets";
 import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
 import {
   PULL_REQUESTS_DURATION,
@@ -88,6 +90,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={endSceneSchema}
           defaultProps={{
+            accentColor: "blue",
             rocket: "blue",
             planet: "Ice",
           }}
@@ -149,36 +152,17 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition
         id={"ContributionsScene2"}
-        component={ContributionsScene2}
+        component={ContributionsScene}
         durationInFrames={END_SCENE_DURATION}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{
-          total: 5000,
+          total: 300,
           rocket: "blue",
           planet: "Ice",
           accentColor: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) => (random(i) < 0.25 ? 0 : Math.floor(random(i) * 16))),
-        }}
-      />
-
-      <Composition
-        id={"Contributions"}
-        component={ContributionsScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          accentColor: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) =>
-              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ),
+          contributionData: jonnysContributions,
         }}
       />
 
@@ -197,7 +181,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id={"Issues2-0"}
           component={Issues}
-          durationInFrames={16 * 30}
+          durationInFrames={19 * 30}
           fps={VIDEO_FPS}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
@@ -289,7 +273,6 @@ export const RemotionRoot: React.FC = () => {
         schema={starsGivenSchema}
         defaultProps={{
           starsGiven: 10,
-          showBackground: true,
           showCockpit: true,
           topWeekday: "3",
           topHour: "0",
@@ -424,6 +407,7 @@ export const RemotionRoot: React.FC = () => {
             pluralizeLanguages: false,
             accentColor: "blue",
             rocket: "blue",
+            randomizeOctocatSeed: 0.4,
           }}
         />
         <Composition
@@ -544,6 +528,7 @@ export const RemotionRoot: React.FC = () => {
             login: "JonnyBurger",
             accentColor: "blue",
             rocket: "blue",
+            octocatSeed: 0.4,
           }}
         />
       </Folder>
@@ -608,30 +593,7 @@ export const RemotionRoot: React.FC = () => {
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
           rocket: "blue" as const,
-          contributionData: [
-            34, 0, 35, 57, 67, 57, 126, 0, 97, 39, 0, 0, 46, 0, 114, 0, 82, 72,
-            95, 63, 92, 32, 0, 57, 109, 0, 98, 69, 44, 58, 99, 0, 107, 75, 104,
-            97, 100, 125, 38, 122, 55, 102, 77, 70, 0, 47, 47, 56, 58, 49, 0,
-            86, 66, 75, 0, 36, 36, 71, 98, 93, 113, 0, 126, 51, 0, 0, 0, 0, 63,
-            36, 37, 55, 0, 69, 53, 0, 98, 56, 50, 0, 52, 75, 0, 65, 0, 37, 0, 0,
-            37, 98, 0, 60, 0, 34, 124, 119, 69, 70, 60, 0, 125, 0, 90, 99, 49,
-            36, 104, 43, 67, 0, 126, 112, 69, 113, 82, 106, 58, 74, 122, 0, 119,
-            111, 0, 35, 46, 40, 120, 0, 101, 125, 86, 56, 69, 100, 0, 94, 107,
-            108, 70, 56, 33, 0, 0, 87, 36, 68, 112, 39, 114, 122, 72, 45, 124,
-            46, 77, 0, 126, 0, 0, 0, 48, 75, 124, 74, 97, 105, 0, 77, 0, 54, 34,
-            72, 41, 74, 34, 81, 107, 104, 0, 47, 0, 42, 60, 0, 108, 59, 97, 124,
-            117, 78, 42, 0, 112, 108, 103, 117, 100, 0, 90, 35, 55, 96, 52, 0,
-            0, 57, 113, 100, 78, 0, 0, 0, 103, 71, 0, 116, 105, 61, 60, 111,
-            104, 0, 66, 75, 65, 76, 37, 42, 0, 0, 85, 76, 80, 99, 95, 0, 0, 59,
-            0, 108, 88, 74, 62, 109, 44, 0, 0, 104, 94, 108, 124, 70, 0, 88, 0,
-            102, 58, 73, 86, 0, 45, 98, 94, 84, 53, 0, 34, 76, 0, 122, 61, 80,
-            40, 105, 81, 88, 45, 108, 92, 90, 64, 56, 85, 70, 62, 45, 71, 33,
-            98, 0, 103, 68, 120, 38, 55, 0, 40, 0, 47, 0, 78, 94, 0, 42, 60, 57,
-            107, 46, 76, 80, 0, 119, 0, 121, 43, 0, 116, 47, 0, 87, 82, 105, 0,
-            126, 38, 102, 75, 89, 67, 109, 121, 70, 103, 116, 0, 33, 54, 66, 0,
-            36, 69, 124, 0, 0, 83, 0, 0, 127, 127, 0, 0, 54, 93, 91, 0, 38, 54,
-            72, 0, 39, 58, 82, 98, 127,
-          ],
+          contributionData: jonnysContributions,
           sampleStarredRepos: [
             "remotion",
             "React-native-skia",
@@ -720,7 +682,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 9,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -778,7 +739,6 @@ export const RemotionRoot: React.FC = () => {
           schema={starsGivenSchema}
           defaultProps={{
             starsGiven: 504,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -838,7 +798,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 50,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -852,6 +811,44 @@ export const RemotionRoot: React.FC = () => {
           calculateMetadata={starsGivenCalculateMetadata}
         />
       </Folder>
+      <Composition
+        id="PromoVideo"
+        component={PromoVideo}
+        width={1200}
+        height={630}
+        durationInFrames={20 * 30}
+        fps={30}
+        schema={promoVideoSchema}
+        defaultProps={{ layout: "short" as const }}
+        calculateMetadata={({ props: { layout } }) => {
+          if (layout === "landscape") {
+            return {
+              width: 1200,
+              height: 630,
+            };
+          }
+
+          if (layout === "short") {
+            return {
+              width: 1080,
+              height: 1920,
+            };
+          }
+
+          throw new Error("invalid layout");
+        }}
+      />
+      <Composition
+        id="PlanetPromo"
+        component={Planets}
+        width={1200}
+        height={630}
+        durationInFrames={20 * 30}
+        fps={30}
+        defaultProps={{
+          layout: "landscape",
+        }}
+      />
       <Folder name="Stills">
         <Still
           width={1200}

@@ -5,6 +5,7 @@ import {
   Audio,
   Sequence,
   Series,
+  random,
   staticFile,
   useVideoConfig,
 } from "remotion";
@@ -16,8 +17,8 @@ import {
   CONTRIBUTIONS_SCENE_DURATION,
   CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION,
   CONTRIBUTIONS_SCENE_EXIT_TRANSITION,
+  ContributionsScene,
 } from "./Contributions";
-import { ContributionsScene2 } from "./Contributions2";
 import { END_SCENE_DURATION, EndScene } from "./EndScene";
 import { ISSUES_EXIT_DURATION, Issues, getIssuesDuration } from "./Issues";
 import {
@@ -174,6 +175,7 @@ export const Main: React.FC<Schema> = ({
               login={login}
               accentColor={accentColor}
               rocket={rocket}
+              octocatSeed={random(login)}
             />
           </Series.Sequence>
         ) : null}
@@ -197,7 +199,6 @@ export const Main: React.FC<Schema> = ({
         >
           <StarsAndProductivity
             starsGiven={starsGiven}
-            showBackground={false}
             showCockpit
             topWeekday={topWeekday}
             topHour={topHour}
@@ -213,7 +214,7 @@ export const Main: React.FC<Schema> = ({
           durationInFrames={CONTRIBUTIONS_SCENE_DURATION}
           offset={-CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION}
         >
-          <ContributionsScene2
+          <ContributionsScene
             total={totalContributions}
             rocket={rocket}
             contributionData={contributionData}
@@ -225,7 +226,7 @@ export const Main: React.FC<Schema> = ({
           durationInFrames={END_SCENE_DURATION}
           offset={-CONTRIBUTIONS_SCENE_EXIT_TRANSITION}
         >
-          <EndScene planet={planet} rocket={rocket} />
+          <EndScene planet={planet} rocket={rocket} accentColor={accentColor} />
         </Series.Sequence>
       </Series>
       {isMobileDevice() ? null : (

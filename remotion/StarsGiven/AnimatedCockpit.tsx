@@ -46,6 +46,7 @@ export const AnimatedCockpit: React.FC<{
     config: {
       damping: 200,
     },
+    delay: -6,
   });
 
   const start = timeUntilTabletHides + TABLET_SCENE_HIDE_ANIMATION - 20;

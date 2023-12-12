@@ -15,7 +15,7 @@ import type { ShotWithShootDelay } from "./get-shots-to-fire";
 import { rocketRotation } from "./make-ufo-positions";
 
 export const ROCKET_JUMP_IN_DURATION = 20;
-export const ROCKET_JUMP_IN_DELAY = TIME_BEFORE_SHOOTING - 30;
+export const ROCKET_JUMP_IN_DELAY = TIME_BEFORE_SHOOTING - 50;
 
 export const RocketComponent = ({
   shots,

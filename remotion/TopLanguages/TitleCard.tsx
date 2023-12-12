@@ -4,6 +4,7 @@ import {
   Audio,
   Sequence,
   interpolate,
+  random,
   staticFile,
   useCurrentFrame,
 } from "remotion";
@@ -22,13 +23,20 @@ export const topLanguagesTitleCardSchema = z.object({
   accentColor: accentColorSchema,
   rocket: rocketSchema,
   randomizePlanetSeed: z.string(),
+  randomizeOctocatSeed: z.number(),
 });
 
 export const TITLE_CARD_DURATION = 100;
 
 export const TopLanguagesTitleCard: React.FC<
   z.infer<typeof topLanguagesTitleCardSchema>
-> = ({ pluralizeLanguages, accentColor, rocket, randomizePlanetSeed }) => {
+> = ({
+  pluralizeLanguages,
+  accentColor,
+  rocket,
+  randomizePlanetSeed,
+  randomizeOctocatSeed,
+}) => {
   const frame = useCurrentFrame();
   const zoomOutProgress = interpolate(frame, [0, TITLE_CARD_DURATION], [0, 1]);
   const scale = interpolate(zoomOutProgress, [0, 1], [1.3, 1]);
@@ -54,17 +62,23 @@ export const TopLanguagesTitleCard: React.FC<
         }}
       >
         <Gradient gradient={accentColorToGradient(accentColor)} />
+        <AbsoluteFill style={{ opacity: 0.5 }}>
+          <Noise translateX={0} translateY={0} />
+        </AbsoluteFill>
       </AbsoluteFill>
-      <AbsoluteFill style={{ opacity: 0.5 }}>
-        <Noise translateX={0} translateY={0} />
-      </AbsoluteFill>
-
       <Sequence from={30} style={{ transform: `translateY(-300px)` }}>
         <AbsoluteFill style={{ marginTop: 100, marginLeft: 300 }}>
           <TopLanguagesRocket rocket={rocket} />
         </AbsoluteFill>
       </Sequence>
-      <TitleCardOctocat accentColor={accentColor} />
+      <AbsoluteFill
+        style={{
+          transform:
+            random(randomizeOctocatSeed) > 0.5 ? `scaleX(-1)` : undefined,
+        }}
+      >
+        <TitleCardOctocat accentColor={accentColor} />
+      </AbsoluteFill>
       <AbsoluteFill
         style={{
           justifyContent: "center",

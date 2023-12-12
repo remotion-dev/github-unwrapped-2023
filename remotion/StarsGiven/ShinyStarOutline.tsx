@@ -12,7 +12,7 @@ export const ShinyStarOutline: React.FC = () => {
         height: 1080,
         width: 1080,
         overflow: "hidden",
-        backgroundColor: "#100714",
+        backgroundColor: "#0A111B",
       }}
     >
       <AbsoluteFill

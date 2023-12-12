@@ -8,10 +8,13 @@ import {
   Sequence,
   spring,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { z } from "zod";
 import { rocketSchema } from "../../src/config";
 import { VIDEO_FPS } from "../../types/constants";
+import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
 import { isMobileDevice } from "../Opening/devices";
 import { Poof, POOF_DURATION } from "../Poof";
 import {
@@ -65,7 +68,7 @@ export const getIssuesDuration = ({
     return ZERO_ISSUES_DURATION;
   }
 
-  return 4 * VIDEO_FPS + getTotalShootDuration(issuesClosed);
+  return 4 * VIDEO_FPS + 20 + getTotalShootDuration(issuesClosed);
 };
 
 export const calculateIssueDuration: CalculateMetadataFunction<
@@ -89,6 +92,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   rocket,
 }) => {
   const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
   const totalIssues = openIssues + closedIssues;
 
   const {
@@ -114,17 +118,20 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   });
 
   const UFO_EXIT_START =
-    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 30;
+    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 10;
 
-  const exit = spring({
-    fps: FPS,
-    frame,
-    config: {
-      damping: 200,
-    },
-    delay: UFO_EXIT_START,
-    durationInFrames: ISSUES_EXIT_DURATION,
-  });
+  const exit =
+    1 -
+    spring({
+      fps: FPS,
+      frame,
+      config: {
+        damping: 200,
+      },
+      delay: UFO_EXIT_START,
+      durationInFrames: ISSUES_EXIT_DURATION,
+      reverse: true,
+    });
 
   const entranceYOffset = interpolate(entrace, [0, 1], [-totalHeight, 0], {
     extrapolateLeft: "clamp",
@@ -162,7 +169,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     return false;
   });
 
-  const jumpIn = spring({
+  const jumpInRocket = spring({
     fps: FPS,
     frame,
     config: {
@@ -172,7 +179,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     durationInFrames: ROCKET_JUMP_IN_DURATION,
   });
 
-  const rocketOffset = interpolate(jumpIn, [0, 1], [400, 0]);
+  const jumpInCounter = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: ROCKET_JUMP_IN_DELAY + 30,
+    durationInFrames: ROCKET_JUMP_IN_DURATION,
+  });
+
+  const counterOffset = interpolate(jumpInCounter, [0, 1], [400, 0]);
 
   const currentNumber =
     spring({
@@ -183,8 +200,24 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       },
     }) * totalIssues;
 
+  const opacity = interpolate(
+    frame,
+    [0, 30, durationInFrames - 30, durationInFrames],
+    [0, 1, 1, 0],
+    {
+      extrapolateRight: "clamp",
+      extrapolateLeft: "clamp",
+    },
+  );
+
   return (
     <AbsoluteFill>
+      <AbsoluteFill style={{ opacity }}>
+        <Gradient gradient="greenRadial" />
+        <AbsoluteFill style={{ opacity: 0.4 }}>
+          <Noise translateX={3} translateY={10} />
+        </AbsoluteFill>
+      </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateY(${yOffset}px)` }}>
         {withShootDurations.map((p, i) => {
           return (
@@ -256,7 +289,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           <AbsoluteFill>
             <RocketComponent
               rocket={rocket}
-              jumpIn={jumpIn}
+              jumpIn={jumpInRocket}
               shots={withShootDurations}
             />
           </AbsoluteFill>
@@ -265,35 +298,23 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
       {totalIssues > 0 ? (
         <AbsoluteFill
           style={{
-            transform: `translateY(${rocketOffset}px)`,
+            transform: `translateY(${counterOffset}px)`,
           }}
         >
-          <AbsoluteFill
-            style={{
-              transform: `translateX(${interpolate(
-                exit,
-                [0, 1],
-                [0, -500],
-              )}px)`,
-            }}
-          >
+          <AbsoluteFill style={{}}>
             <IssueGridLeft />
             <IssueNumber
               align="left"
-              label="Opened"
+              label="Opened issues"
               currentNumber={Math.round(currentNumber)}
               max={totalIssues}
             />
           </AbsoluteFill>
-          <AbsoluteFill
-            style={{
-              transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
-            }}
-          >
+          <AbsoluteFill style={{}}>
             <IssueGridRight />
             <IssueNumber
               align="right"
-              label="Closed"
+              label="Closed issues"
               currentNumber={Math.min(
                 closedIssues,
                 Math.round(closedIssuesSoFar.length * (1 / factor)),
