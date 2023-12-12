@@ -73,7 +73,10 @@ const Dot: React.FC<{
   let fadeOutOpacity = 1;
   let left = 0;
   let glow = 1;
-  let opacity = data >= maxContributions ? 1 : data / maxContributions;
+  let opacity = Math.max(
+    0.1,
+    data >= maxContributions ? 1 : data / maxContributions,
+  );
   let borderRadius = 4;
   let glowOpacity = 0;
 
