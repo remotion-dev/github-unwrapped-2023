@@ -48,15 +48,6 @@ export const DownloadButton: React.FC<{
   className?: string;
 }> = ({ style, ...props }) => {
   const { status, loadingState } = useUserVideo();
-  // const status: {
-  //   type: "render-running";
-  //   renderId: string;
-  //   progress: number;
-  // } = {
-  //   type: "render-running",
-  //   renderId: "",
-  //   progress: 0.47,
-  // };
 
   const { innerWidth } = useWindowDimensions();
 
