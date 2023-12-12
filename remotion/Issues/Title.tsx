@@ -28,7 +28,7 @@ export const IssuesDetected: React.FC<{
           color: "#B0E0BA",
         }}
       >
-        {issues} issue{issues === 1 ? "" : "s"} invaded
+        issue{issues === 1 ? "" : "s"} invaders
       </div>
     </AbsoluteFill>
   );
