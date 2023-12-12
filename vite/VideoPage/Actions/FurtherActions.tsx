@@ -6,6 +6,10 @@ import { FurtherAction } from "./FurtherAction";
 import styles from "./styles.module.css";
 
 export const FurtherActions: React.FC = () => {
+  if (window.__USER__ === "not-found") {
+    return;
+  }
+
   return (
     <div className={styles.furtherActionsWrapper}>
       <div className={styles.furtherActionsTitle}>Still curious?</div>
