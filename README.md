@@ -1,4 +1,4 @@
-<img width="1200" alt="readme" src="https://github.com/remotion-dev/github-unwrapped-2023/assets/73991323/0faddc1f-dcd0-4ad4-99e9-88718e9a2d2f">
+<img width="1200" alt="readme" src="https://github.com/remotion-dev/github-unwrapped-2023/assets/73991323/0a907f4f-a591-4d98-8b38-c90581ccfb33">
 
 **Try it out live:** [GitHubUnwrapped.com](https://www.githubunwrapped.com)
 
