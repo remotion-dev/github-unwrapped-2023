@@ -102,7 +102,7 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     source: staticFile("languages/c.png"),
     gradient: "blue",
     textColor: "#4B8CC6",
-    name: "C++",
+    name: "C",
     opacity: 0.2,
     customPlanetColor: null,
   },
