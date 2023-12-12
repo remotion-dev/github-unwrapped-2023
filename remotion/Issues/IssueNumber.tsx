@@ -26,6 +26,7 @@ export const IssueNumber: React.FC<{
               ? { right: 40, alignItems: "flex-end" }
               : {
                   alignSelf: "center",
+                  alignItems: "center",
                 }),
           width: 300,
           position: "absolute",
