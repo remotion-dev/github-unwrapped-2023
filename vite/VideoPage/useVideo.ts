@@ -49,7 +49,7 @@ export const useVideo = ({
         );
         setStatus(res);
         if (res.type === "render-running" && !signal.aborted) {
-          setTimeout(queryState, 1000);
+          setTimeout(() => queryState(signal), 1000);
         }
       } catch (err) {
         if (!signal.aborted) {
