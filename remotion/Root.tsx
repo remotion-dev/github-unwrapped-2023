@@ -29,6 +29,7 @@ import { Tablet, tableSchema } from "./Productivity/Tablet";
 import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
+import { PromoVideo } from "./PromoVideo";
 import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
 import {
   PULL_REQUESTS_DURATION,
@@ -156,7 +157,7 @@ export const RemotionRoot: React.FC = () => {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         defaultProps={{
-          total: 5000,
+          total: 300,
           rocket: "blue",
           planet: "Ice",
           accentColor: "blue",
@@ -809,6 +810,14 @@ export const RemotionRoot: React.FC = () => {
           calculateMetadata={starsGivenCalculateMetadata}
         />
       </Folder>
+      <Composition
+        id="PromoVideo"
+        component={PromoVideo}
+        width={1200}
+        height={630}
+        durationInFrames={100}
+        fps={30}
+      />
       <Folder name="Stills">
         <Still
           width={1200}
