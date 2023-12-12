@@ -119,17 +119,20 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
   });
 
   const UFO_EXIT_START =
-    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 30;
+    TIME_BEFORE_SHOOTING + getTotalShootDuration(closedIssues) + 10;
 
-  const exit = spring({
-    fps: FPS,
-    frame,
-    config: {
-      damping: 200,
-    },
-    delay: UFO_EXIT_START,
-    durationInFrames: ISSUES_EXIT_DURATION,
-  });
+  const exit =
+    1 -
+    spring({
+      fps: FPS,
+      frame,
+      config: {
+        damping: 200,
+      },
+      delay: UFO_EXIT_START,
+      durationInFrames: ISSUES_EXIT_DURATION,
+      reverse: true,
+    });
 
   const entranceYOffset = interpolate(entrace, [0, 1], [-totalHeight, 0], {
     extrapolateLeft: "clamp",
@@ -300,15 +303,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
             transform: `translateY(${counterOffset}px)`,
           }}
         >
-          <AbsoluteFill
-            style={{
-              transform: `translateX(${interpolate(
-                exit,
-                [0, 1],
-                [0, -500],
-              )}px)`,
-            }}
-          >
+          <AbsoluteFill style={{}}>
             <IssueGridLeft />
             <IssueNumber
               align="left"
@@ -317,11 +312,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
               max={totalIssues}
             />
           </AbsoluteFill>
-          <AbsoluteFill
-            style={{
-              transform: `translateX(${interpolate(exit, [0, 1], [0, 500])}px)`,
-            }}
-          >
+          <AbsoluteFill style={{}}>
             <IssueGridRight />
             <IssueNumber
               align="right"
