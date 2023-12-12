@@ -46,7 +46,7 @@ const START_SPREAD = TRANSITION_GLOW + 10;
 const FADE_OUT_START = 80;
 const FADE_OUT_DURATION = 20;
 
-const mapRowToMove: any = {
+const mapRowToMove: Record<number, number> = {
   0: SIZE * 3,
   1: SIZE * 2,
   2: Number(SIZE),
