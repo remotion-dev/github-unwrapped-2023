@@ -74,7 +74,11 @@ const makeAppHead = async (
   }
 
   if (stats === null) {
-    throw new Error("Stats should not be null");
+    throw new Error(
+      `Stats should not be null (${username}, ${
+        backendCredentials().VITE_HOST
+      })`,
+    );
   }
 
   const usernameTitle = `${stats.username}'s #GitHubUnwrapped`;
