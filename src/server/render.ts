@@ -54,7 +54,7 @@ export const renderOrGetProgress = async (
 
       return {
         type: "render-error",
-        error: existingRender.finality.errors[0],
+        error: existingRender.finality.errors,
       };
     }
 

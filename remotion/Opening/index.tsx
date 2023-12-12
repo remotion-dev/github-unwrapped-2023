@@ -86,8 +86,8 @@ const OpeningSceneFull: React.FC<z.infer<typeof openingTitleSchema>> = ({
           }}
         >
           <Gradient gradient={accentColorToGradient(accentColor)} />
+          <Noise translateX={100} translateY={30} />
         </AbsoluteFill>
-        <Noise translateX={100} translateY={30} />
         <AbsoluteFill>
           <OpeningTitle
             startAngle={startAngle}

@@ -43,6 +43,7 @@ import {
   ROCKET_JUMP_IN_DURATION,
   RocketComponent,
 } from "./Rocket";
+import { IssuesDetected } from "./Title";
 import { Ufo } from "./Ufo";
 import { UFO_ASSET } from "./UfoSvg";
 import { ZERO_ISSUES_DURATION, ZeroIssues } from "./ZeroIssues";
@@ -68,7 +69,7 @@ export const getIssuesDuration = ({
     return ZERO_ISSUES_DURATION;
   }
 
-  return 4 * VIDEO_FPS + getTotalShootDuration(issuesClosed);
+  return 4 * VIDEO_FPS + 20 + getTotalShootDuration(issuesClosed);
 };
 
 export const calculateIssueDuration: CalculateMetadataFunction<
@@ -166,7 +167,7 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     return false;
   });
 
-  const jumpIn = spring({
+  const jumpInRocket = spring({
     fps: FPS,
     frame,
     config: {
@@ -176,7 +177,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
     durationInFrames: ROCKET_JUMP_IN_DURATION,
   });
 
-  const rocketOffset = interpolate(jumpIn, [0, 1], [400, 0]);
+  const jumpInCounter = spring({
+    fps: FPS,
+    frame,
+    config: {
+      damping: 200,
+    },
+    delay: ROCKET_JUMP_IN_DELAY + 30,
+    durationInFrames: ROCKET_JUMP_IN_DURATION,
+  });
+
+  const counterOffset = interpolate(jumpInCounter, [0, 1], [400, 0]);
 
   const currentNumber =
     spring({
@@ -276,16 +287,17 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           <AbsoluteFill>
             <RocketComponent
               rocket={rocket}
-              jumpIn={jumpIn}
+              jumpIn={jumpInRocket}
               shots={withShootDurations}
             />
           </AbsoluteFill>
         ) : null}
       </AbsoluteFill>
+      <IssuesDetected exit={jumpInCounter} issues={totalIssues} />
       {totalIssues > 0 ? (
         <AbsoluteFill
           style={{
-            transform: `translateY(${rocketOffset}px)`,
+            transform: `translateY(${counterOffset}px)`,
           }}
         >
           <AbsoluteFill

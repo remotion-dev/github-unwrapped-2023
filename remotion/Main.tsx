@@ -5,6 +5,7 @@ import {
   Audio,
   Sequence,
   Series,
+  random,
   staticFile,
   useVideoConfig,
 } from "remotion";
@@ -174,6 +175,7 @@ export const Main: React.FC<Schema> = ({
               login={login}
               accentColor={accentColor}
               rocket={rocket}
+              octocatSeed={random(login)}
             />
           </Series.Sequence>
         ) : null}
