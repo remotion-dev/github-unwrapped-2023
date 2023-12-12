@@ -21,23 +21,23 @@ export const LandingRocket: React.FC<{
 
   const finalOffset = useMemo(() => {
     if (planetType === "Ice") {
-      return 500;
+      return 450;
     }
 
     if (planetType === "Gold") {
-      return 500;
+      return 450;
     }
 
     if (planetType === "Leafy") {
-      return 490;
+      return 450;
     }
 
     if (planetType === "Fire") {
-      return 510;
+      return 450;
     }
 
     if (planetType === "Silver") {
-      return 430;
+      return 450;
     }
 
     return 450;
@@ -52,46 +52,66 @@ export const LandingRocket: React.FC<{
   const height = interpolate(frame, [30, 70], [400, 30]);
   const marginTop = height / 2;
 
+  const shadowTop = interpolate(frame, [0, 50], [140, 0], {
+    extrapolateRight: "clamp",
+  });
+
+  const shadow = interpolate(frame, [0, 50], [0, 50], {
+    extrapolateRight: "clamp",
+  });
+
   return (
-    <AbsoluteFill
-      style={{
-        position: "absolute",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: rocketOffset,
-        transform: "scale(0.7)",
-      }}
-    >
+    <>
       <AbsoluteFill
         style={{
-          justifyContent: "center",
-          alignItems: "center",
+          backgroundColor: "rgba(0,0,0,0.4)",
+          height: shadow * 1.5,
+          width: shadow * 6,
+          top: 800 - shadowTop,
+          left: 545 - shadow * 3,
+          borderRadius: "50%",
         }}
-      >
-        <OffthreadVideo
-          style={{
-            width: height,
-            height: 100,
-            objectFit: "fill",
-            transform: `rotate(-90deg)`,
-            marginTop: -500 + marginTop,
-            marginLeft: 20,
-          }}
-          startFrom={110}
-          muted
-          transparent
-          src={getFlame(rocket)}
-        />
-      </AbsoluteFill>
-      <div
+      />
+      <AbsoluteFill
         style={{
-          width: 400,
-          position: "relative",
-          top: -600,
+          position: "absolute",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: rocketOffset,
+          transform: "scale(0.7)",
         }}
       >
-        <RocketSide rocket={rocket} />
-      </div>
-    </AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <OffthreadVideo
+            style={{
+              width: height,
+              height: 100,
+              objectFit: "fill",
+              transform: `rotate(-90deg)`,
+              marginTop: -500 + marginTop,
+              marginLeft: 20,
+            }}
+            startFrom={110}
+            muted
+            transparent
+            src={getFlame(rocket)}
+          />
+        </AbsoluteFill>
+        <div
+          style={{
+            width: 400,
+            position: "relative",
+            top: -600,
+          }}
+        >
+          <RocketSide rocket={rocket} />
+        </div>
+      </AbsoluteFill>
+    </>
   );
 };
