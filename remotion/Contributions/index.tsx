@@ -7,8 +7,10 @@ import {
   Sequence,
   interpolate,
   interpolateColors,
+  spring,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 
 import React, { useMemo } from "react";
@@ -47,7 +49,7 @@ const START_SPREAD = TRANSITION_GLOW + 10;
 const FADE_OUT_START = 80;
 const FADE_OUT_DURATION = 20;
 
-const mapRowToMove: any = {
+const mapRowToMove: Record<number, number> = {
   0: SIZE * 3,
   1: SIZE * 2,
   2: Number(SIZE),
@@ -80,6 +82,8 @@ const Dot: React.FC<{
   let color = `rgba(0, 166, 255, 1)`;
 
   opacity = opacity < 0.1 ? 0.1 : opacity;
+
+  const startAbsolute = START_SPREAD + 15;
 
   if (frame < TRANSITION_GLOW) {
     let f = (targetColumn - col) / (COLUMNS / 3);
@@ -141,12 +145,13 @@ const Dot: React.FC<{
       extrapolateRight: "clamp",
     });
 
-    glow = interpolate(moveProgress, [0, 1], [6, maxGlow]);
+    glow =
+      interpolate(moveProgress, [0, 1], [6, maxGlow]) + (2 * moveProgress) ** 2;
 
     const d = interpolate(
       frame,
       [START_SPREAD + 50, START_SPREAD + 120],
-      [400, 800],
+      [400, 1200],
       {},
     );
 
@@ -155,15 +160,25 @@ const Dot: React.FC<{
     const pushFromCenter = Math.sin(noiseAngle + frame / 90) * towardsCenter;
     const pushFromTop = Math.cos(noiseAngle + frame / 100) * towardsCenter;
 
-    const xDelta = noise.noiseX * 300;
-    const yDelta = noise.noiseY * 10;
+    const noiseProgress = interpolate(
+      frame,
+      [startAbsolute, startAbsolute + 10],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      },
+    );
+
+    const xDelta = noise.noiseX * 300 * noiseProgress;
+    const yDelta = noise.noiseY * 10 * noiseProgress;
 
     left = moveProgress * xDelta + pushFromCenter;
     top = moveProgress * yDelta + pushFromTop;
 
     fadeOutOpacity = interpolate(
       frame,
-      [START_SPREAD + 60, START_SPREAD + 80],
+      [START_SPREAD + 70, START_SPREAD + 80],
       [1, 0],
       {
         extrapolateRight: "clamp",
@@ -193,7 +208,7 @@ const Dot: React.FC<{
     >
       <div
         style={{
-          ...(frame < TRANSITION_GLOW || frame >= START_SPREAD + 15
+          ...(frame < TRANSITION_GLOW || frame >= startAbsolute
             ? {
                 position: "absolute",
                 top,
@@ -255,6 +270,8 @@ export const ContributionsScene: React.FC<{
   planet: Planet;
 }> = ({ accentColor, contributionData, total, rocket, planet }) => {
   const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
   const frame = f / 1.5;
 
   const targetColumn = interpolate(frame / 0.5, [0, 120], [-33, COLUMNS + 20], {
@@ -274,9 +291,14 @@ export const ContributionsScene: React.FC<{
     extrapolateRight: "clamp",
   });
 
-  const numberTop = interpolate(frame, [0, 10], [250, 0], {
-    extrapolateRight: "clamp",
+  const numberEnter = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
   });
+  const numberTop = interpolate(numberEnter, [0, 1], [250, 0]);
 
   return (
     <AbsoluteFill>

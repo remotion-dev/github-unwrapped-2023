@@ -31,6 +31,7 @@ import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import { PromoVideo, promoVideoSchema } from "./PromoVideo";
 import { Planets } from "./PromoVideo/Planets";
+import { PromoGif } from "./PromoVideo/PromoGif";
 import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
 import {
   PULL_REQUESTS_DURATION,
@@ -557,7 +558,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Silver" as const,
+          planet: "Ice" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
@@ -820,6 +821,33 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         schema={promoVideoSchema}
         defaultProps={{ layout: "short" as const }}
+        calculateMetadata={({ props: { layout } }) => {
+          if (layout === "landscape") {
+            return {
+              width: 1200,
+              height: 630,
+            };
+          }
+
+          if (layout === "short") {
+            return {
+              width: 1080,
+              height: 1920,
+            };
+          }
+
+          throw new Error("invalid layout");
+        }}
+      />
+      <Composition
+        id="PromoGif"
+        component={PromoGif}
+        width={1200}
+        height={630}
+        durationInFrames={4 * 30}
+        fps={30}
+        schema={promoVideoSchema}
+        defaultProps={{ layout: "landscape" as const }}
         calculateMetadata={({ props: { layout } }) => {
           if (layout === "landscape") {
             return {

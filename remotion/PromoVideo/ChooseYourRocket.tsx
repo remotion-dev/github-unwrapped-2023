@@ -57,7 +57,7 @@ export const ChooseYourRocket: React.FC<{
             style={{
               fontFamily: "Mona Sans",
               fontWeight: "bold",
-              fontSize: 90,
+              fontSize: layout === "short" ? 120 : 90,
               color: "white",
               textAlign: "center",
               backgroundClip: "text",

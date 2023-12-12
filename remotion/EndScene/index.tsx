@@ -37,7 +37,7 @@ export const endSceneSchema = z.object({
   accentColor: accentColorSchema,
 });
 
-export const END_SCENE_DURATION = 6.5 * FPS;
+export const END_SCENE_DURATION = 7.5 * FPS;
 
 export const prefetchLandingAssets = (planet: Planet): string[] => {
   return [
@@ -73,7 +73,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
         damping: 200,
       },
       durationInFrames: 150,
-      delay: 70,
+      delay: 110,
     });
 
   return (
