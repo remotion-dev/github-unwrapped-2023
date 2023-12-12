@@ -16,7 +16,7 @@ export const getMorePullRequests = async ({
 
   const pullRequestData: Array<{ createdAt: string }> = [];
 
-  while (!done && safety < 10) {
+  while (!done && safety < 20) {
     const data = (await executeGitHubGraphQlQuery({
       username,
       token,
