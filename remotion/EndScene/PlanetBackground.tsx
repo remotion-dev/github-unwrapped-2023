@@ -1,8 +1,10 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, useCurrentFrame } from "remotion";
 import { GOLD_PLANET_BG } from ".";
-import type { Planet } from "../../src/config";
+import type { AccentColor, Planet } from "../../src/config";
 import { Gradient } from "../Gradients/NativeGradient";
+import { Noise } from "../Noise";
+import { planetToGradient } from "../planets";
 import { GoldPlanetShine } from "./GoldPlanetShine";
 import { Orbs, Threads } from "./Threads";
 
@@ -16,6 +18,7 @@ export const prefetchPlanetLandingBackground = (planet: Planet): string[] => {
 
 export const PlanetBackground: React.FC<{
   planet: Planet;
+  accentColor: AccentColor;
 }> = ({ planet }) => {
   const frame = useCurrentFrame();
 
@@ -24,12 +27,20 @@ export const PlanetBackground: React.FC<{
   });
 
   return (
-    <AbsoluteFill style={{ opacity }}>
-      {planet === "Ice" ? <Gradient gradient="iceRadial" /> : null}
-      {planet === "Silver" ? <Gradient gradient="silverRadial" /> : null}
-      {planet === "Gold" ? <Img src={GOLD_PLANET_BG} /> : null}
-      {planet === "Gold" ? <Threads /> : null}
-      {planet === "Gold" && <GoldPlanetShine />}
-    </AbsoluteFill>
+    <>
+      <AbsoluteFill style={{ opacity }}>
+        <Noise translateX={0} translateY={0} />
+      </AbsoluteFill>
+      <AbsoluteFill style={{ opacity }}>
+        {planet !== "Gold" && <Gradient gradient={planetToGradient(planet)} />}
+        {planet === "Gold" && (
+          <>
+            <Img src={GOLD_PLANET_BG} />
+            <Threads />
+            <GoldPlanetShine />
+          </>
+        )}
+      </AbsoluteFill>
+    </>
   );
 };

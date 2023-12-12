@@ -9,7 +9,6 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { ContributionsScene2 } from "./Contributions2";
 import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
@@ -88,6 +87,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={endSceneSchema}
           defaultProps={{
+            accentColor: "blue",
             rocket: "blue",
             planet: "Ice",
           }}
@@ -149,7 +149,7 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition
         id={"ContributionsScene2"}
-        component={ContributionsScene2}
+        component={ContributionsScene}
         durationInFrames={END_SCENE_DURATION}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
@@ -162,23 +162,6 @@ export const RemotionRoot: React.FC = () => {
           contributionData: new Array(364)
             .fill(0)
             .map((_, i) => (random(i) < 0.25 ? 0 : Math.floor(random(i) * 16))),
-        }}
-      />
-
-      <Composition
-        id={"Contributions"}
-        component={ContributionsScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
-          accentColor: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) =>
-              random(i) < 0.25 ? 0 : Math.floor(random(i) * 128),
-            ),
         }}
       />
 
@@ -572,7 +555,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Silver" as const,
+          planet: "Fire" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
@@ -609,28 +592,26 @@ export const RemotionRoot: React.FC = () => {
           accentColor: "blue" as const,
           rocket: "blue" as const,
           contributionData: [
-            34, 0, 35, 57, 67, 57, 126, 0, 97, 39, 0, 0, 46, 0, 114, 0, 82, 72,
-            95, 63, 92, 32, 0, 57, 109, 0, 98, 69, 44, 58, 99, 0, 107, 75, 104,
-            97, 100, 125, 38, 122, 55, 102, 77, 70, 0, 47, 47, 56, 58, 49, 0,
-            86, 66, 75, 0, 36, 36, 71, 98, 93, 113, 0, 126, 51, 0, 0, 0, 0, 63,
-            36, 37, 55, 0, 69, 53, 0, 98, 56, 50, 0, 52, 75, 0, 65, 0, 37, 0, 0,
-            37, 98, 0, 60, 0, 34, 124, 119, 69, 70, 60, 0, 125, 0, 90, 99, 49,
-            36, 104, 43, 67, 0, 126, 112, 69, 113, 82, 106, 58, 74, 122, 0, 119,
-            111, 0, 35, 46, 40, 120, 0, 101, 125, 86, 56, 69, 100, 0, 94, 107,
-            108, 70, 56, 33, 0, 0, 87, 36, 68, 112, 39, 114, 122, 72, 45, 124,
-            46, 77, 0, 126, 0, 0, 0, 48, 75, 124, 74, 97, 105, 0, 77, 0, 54, 34,
-            72, 41, 74, 34, 81, 107, 104, 0, 47, 0, 42, 60, 0, 108, 59, 97, 124,
-            117, 78, 42, 0, 112, 108, 103, 117, 100, 0, 90, 35, 55, 96, 52, 0,
-            0, 57, 113, 100, 78, 0, 0, 0, 103, 71, 0, 116, 105, 61, 60, 111,
-            104, 0, 66, 75, 65, 76, 37, 42, 0, 0, 85, 76, 80, 99, 95, 0, 0, 59,
-            0, 108, 88, 74, 62, 109, 44, 0, 0, 104, 94, 108, 124, 70, 0, 88, 0,
-            102, 58, 73, 86, 0, 45, 98, 94, 84, 53, 0, 34, 76, 0, 122, 61, 80,
-            40, 105, 81, 88, 45, 108, 92, 90, 64, 56, 85, 70, 62, 45, 71, 33,
-            98, 0, 103, 68, 120, 38, 55, 0, 40, 0, 47, 0, 78, 94, 0, 42, 60, 57,
-            107, 46, 76, 80, 0, 119, 0, 121, 43, 0, 116, 47, 0, 87, 82, 105, 0,
-            126, 38, 102, 75, 89, 67, 109, 121, 70, 103, 116, 0, 33, 54, 66, 0,
-            36, 69, 124, 0, 0, 83, 0, 0, 127, 127, 0, 0, 54, 93, 91, 0, 38, 54,
-            72, 0, 39, 58, 82, 98, 127,
+            9, 17, 8, 11, 12, 22, 14, 19, 16, 8, 14, 16, 19, 3, 2, 6, 3, 22, 23,
+            3, 17, 5, 15, 5, 13, 7, 17, 3, 10, 5, 21, 8, 15, 9, 16, 19, 9, 12,
+            17, 2, 7, 20, 0, 22, 12, 9, 9, 15, 2, 20, 3, 6, 9, 20, 3, 10, 19, 6,
+            20, 10, 5, 4, 22, 10, 4, 18, 11, 21, 14, 1, 9, 13, 4, 8, 11, 9, 6,
+            10, 11, 5, 11, 1, 4, 4, 10, 16, 19, 6, 0, 10, 17, 4, 15, 17, 10, 0,
+            10, 3, 3, 17, 3, 3, 21, 16, 23, 20, 2, 6, 17, 16, 14, 6, 1, 5, 2,
+            22, 5, 17, 0, 12, 13, 19, 6, 8, 23, 10, 16, 17, 1, 19, 7, 12, 10,
+            23, 5, 6, 15, 23, 4, 1, 11, 0, 9, 15, 8, 14, 14, 21, 1, 15, 7, 16,
+            22, 14, 16, 14, 15, 8, 15, 14, 23, 18, 1, 16, 14, 13, 0, 7, 5, 13,
+            2, 18, 22, 5, 2, 21, 22, 17, 9, 14, 8, 8, 9, 1, 2, 10, 20, 10, 8,
+            15, 6, 0, 1, 18, 8, 17, 9, 23, 16, 2, 21, 1, 0, 22, 3, 7, 3, 20, 20,
+            19, 8, 6, 15, 6, 6, 3, 0, 14, 7, 7, 21, 19, 16, 7, 0, 3, 14, 16, 23,
+            0, 7, 7, 1, 16, 5, 22, 0, 21, 12, 21, 21, 7, 5, 15, 22, 14, 1, 15,
+            1, 14, 4, 5, 15, 21, 13, 12, 18, 14, 14, 18, 14, 10, 3, 14, 3, 3, 7,
+            12, 20, 13, 10, 1, 1, 14, 14, 15, 2, 6, 19, 12, 6, 2, 16, 0, 16, 19,
+            2, 16, 22, 18, 13, 17, 10, 17, 22, 5, 8, 8, 12, 20, 22, 15, 19, 13,
+            19, 6, 11, 5, 11, 7, 16, 2, 18, 15, 8, 16, 6, 5, 11, 2, 20, 16, 13,
+            7, 8, 15, 23, 6, 15, 7, 17, 3, 14, 20, 10, 16, 23, 2, 10, 12, 8, 17,
+            10, 4, 12, 12, 11, 6, 17, 21, 9, 10, 18, 19, 3, 8, 14, 5, 22, 23,
+            16, 7, 19, 5,
           ],
           sampleStarredRepos: [
             "remotion",

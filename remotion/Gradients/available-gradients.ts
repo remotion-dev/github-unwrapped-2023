@@ -13,6 +13,10 @@ export const availableGradients = {
     "radial-gradient(170% 170% at 0% 0%, rgba(171, 169, 164, 0.2) 0%, rgba(0, 0, 0, 0) 100%)",
   iceRadial:
     "radial-gradient(170% 170% at 0% 0%, rgba(186, 204, 229, 0.15) 0%, rgba(0, 0, 0, 0) 100%)",
+  leafyRadial:
+    "radial-gradient(170% 170% at 0% 0%, rgba(177, 222, 192, 0.15) 0%, rgba(0, 0, 0, 0) 100%)",
+  fireRadial:
+    "radial-gradient(170% 170% at 0% 0%, rgba(230, 190, 186, 0.15) 0%, rgba(0, 0, 0, 0) 100%)",
   glow: "radial-gradient(circle at center, #e0ff5e 0, #3b6dd1 30%, #0086d4 50%, #021d57 65%, #01194a 100%)",
   whiteToTransparent: "linear-gradient(90deg, #ffffff00 0%, #ffffff20 100%)",
   pink: "radial-gradient(#484C7A, rgba(0, 0, 0, 0) 70%)",

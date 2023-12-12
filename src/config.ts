@@ -7,7 +7,7 @@ export const RAM = 1200;
 export const DISK = 2048;
 export const TIMEOUT = 120;
 
-const availablePlanets = ["Ice", "Silver", "Gold"] as const;
+const availablePlanets = ["Ice", "Silver", "Gold", "Leafy", "Fire"] as const;
 export type Planet = (typeof availablePlanets)[number];
 
 export const PlanetEnum = z.enum(availablePlanets);
@@ -199,8 +199,16 @@ const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
     return PlanetEnum.Enum.Gold;
   }
 
-  if (userStats.totalContributions > 1000) {
+  if (userStats.totalContributions > 4000) {
     return PlanetEnum.Enum.Silver;
+  }
+
+  if (userStats.totalContributions > 3000) {
+    return PlanetEnum.Enum.Leafy;
+  }
+
+  if (userStats.totalContributions > 2000) {
+    return PlanetEnum.Enum.Fire;
   }
 
   return PlanetEnum.Enum.Ice;
