@@ -187,6 +187,7 @@ export const Productivity: React.FC<Props> = ({ graphData, weekday, hour }) => {
           if (value === "12") {
             return "12 pm";
           }
+          
           if (value === "0") {
             return "12 am";
           }
