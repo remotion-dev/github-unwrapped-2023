@@ -49,7 +49,7 @@ export const LandingRocket: React.FC<{
     [finalOffset, -500],
   );
 
-  const height = interpolate(frame, [30, 70], [200, 30]);
+  const height = interpolate(frame, [30, 70], [400, 30]);
   const marginTop = height / 2;
 
   return (
