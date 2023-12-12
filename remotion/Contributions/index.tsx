@@ -287,7 +287,8 @@ export const ContributionsScene: React.FC<{
     return Math.max(...[Math.max(...contributionData), 1]);
   }, [contributionData]);
 
-  const opacity = interpolate(frame, [120, 180], [1, 0], {
+  const opacity = interpolate(frame, [0, 20, 120, 140], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
@@ -302,7 +303,7 @@ export const ContributionsScene: React.FC<{
 
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ opacity }}>
+      <AbsoluteFill style={{ opacity, transform: `rotate(180deg)` }}>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
 

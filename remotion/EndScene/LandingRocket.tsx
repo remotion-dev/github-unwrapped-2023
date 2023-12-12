@@ -64,7 +64,7 @@ export const LandingRocket: React.FC<{
     <>
       <AbsoluteFill
         style={{
-          backgroundColor: "rgba(0,0,0,0.4)",
+          backgroundColor: "rgba(0,0,0,0.2)",
           height: shadow * 1.5,
           width: shadow * 6,
           top: 780 - shadowTop,
