@@ -26,32 +26,30 @@ export const HeadsUpDisplay: React.FC<{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          color: "white",
+          color: textToDisplay ? "white" : "#AC8A4B",
           fontSize: 40,
         }}
       >
-        {textToDisplay === null ? null : (
+        <span
+          style={{
+            opacity: 0.6,
+            marginTop: 5,
+          }}
+        >
           <span
             style={{
-              opacity: 0.6,
-              marginTop: 5,
+              opacity: textToDisplay ? textToDisplay.opacity : 1,
+              fontFamily: "Seven Segment",
+              fontWeight: "bold",
+              maxWidth: 400,
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
             }}
           >
-            <span
-              style={{
-                opacity: textToDisplay.opacity,
-                fontFamily: "Seven Segment",
-                fontWeight: "bold",
-                maxWidth: 400,
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-              }}
-            >
-              {textToDisplay.text}
-            </span>
+            {textToDisplay ? textToDisplay.text : "repos starred"}
           </span>
-        )}
+        </span>
       </div>
     </AbsoluteFill>
   );
