@@ -20,8 +20,8 @@ import { accentColorToGradient } from "../Opening/TitleImage";
 import * as FrontRocketSource from "../TopLanguages/svgs/FrontRocketSource";
 import { PlanetEntrance } from "./PlanetEntrance";
 
-export const CONTRIBUTIONS_SCENE_DURATION = 5 * FPS;
-export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 20;
+export const CONTRIBUTIONS_SCENE_DURATION = 7.5 * FPS;
+export const CONTRIBUTIONS_SCENE_EXIT_TRANSITION = 30;
 export const CONTRIBUTIONS_SCENE_ENTRANCE_TRANSITION = 3;
 
 export const contributionSceneAssets = (): string[] => [];
@@ -252,7 +252,7 @@ export const ContributionsScene: React.FC<{
 }> = ({ accentColor, contributionData, total, rocket, planet }) => {
   const f = useCurrentFrame();
 
-  const frame = f;
+  const frame = f / 1.5;
 
   const targetColumn = interpolate(frame / 0.5, [0, 120], [-33, COLUMNS + 20], {
     extrapolateRight: "clamp",
