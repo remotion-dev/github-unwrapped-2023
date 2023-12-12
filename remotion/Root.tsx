@@ -30,6 +30,7 @@ import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
 import { PromoVideo } from "./PromoVideo";
+import { Planets } from "./PromoVideo/Planets";
 import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
 import {
   PULL_REQUESTS_DURATION,
@@ -815,7 +816,15 @@ export const RemotionRoot: React.FC = () => {
         component={PromoVideo}
         width={1200}
         height={630}
-        durationInFrames={100}
+        durationInFrames={20 * 30}
+        fps={30}
+      />
+      <Composition
+        id="PlanetPromo"
+        component={Planets}
+        width={1200}
+        height={630}
+        durationInFrames={20 * 30}
         fps={30}
       />
       <Folder name="Stills">
