@@ -43,7 +43,11 @@ export const Planets: React.FC<{
   });
 
   return (
-    <AbsoluteFill>
+    <AbsoluteFill
+      style={{
+        transform: `scale(${interpolate(frame, [0, 100], [1, 1.1])})`,
+      }}
+    >
       {new Array(8).fill(true).map((_, i) => {
         const spr = spring({
           fps,
@@ -66,7 +70,11 @@ export const Planets: React.FC<{
         const fromCenterX = left - width / 2;
         const fromCenterY = top - height / 2;
         const angle = Math.atan2(fromCenterY, fromCenterX);
-        const distance = interpolate(spr, [0, 1], [700, 0]);
+        const distance = interpolate(
+          spr,
+          [0, 1],
+          [layout === "short" ? 1200 : 700, 0],
+        );
         const offsetX = Math.cos(angle) * distance;
         const offsetY = Math.sin(angle) * distance;
 
@@ -109,6 +117,12 @@ export const Planets: React.FC<{
             fontSize: 50,
             fontWeight: "bold",
             transform: `scale(${interpolate(planetEnter, [0, 1], [2, 1])})`,
+            backgroundClip: "text",
+            backgroundImage:
+              "linear-gradient(27.02deg, #bbb 20.63%, #fff 99.87%)",
+            WebkitBackgroundClip: "text",
+            backgroundColor: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
           {layout === "short" ? (
