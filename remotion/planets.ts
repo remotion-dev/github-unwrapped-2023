@@ -28,15 +28,30 @@ export const planetToGradient = (
 export const planetToCTAGradient = (planet: Planet) => {
   switch (planet) {
     case PlanetEnum.Enum.Leafy:
-      return "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)";
+      return "linear-gradient(270.02deg, #54ad52 20.63%, #9af7bf 99.87%)";
     case PlanetEnum.Enum.Fire:
-      return "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)";
+      return "linear-gradient(270.02deg, #ad5d52 20.63%, #f7a69a 99.87%)";
     case PlanetEnum.Enum.Silver:
       return "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)";
     case PlanetEnum.Enum.Ice:
-      return "linear-gradient(270.02deg, #91AAD4 20.63%, #fff 99.87%)";
+      return "linear-gradient(270.02deg, #91AAD4 20.63%, #9ac4f7 99.87%)";
     default:
       return "linear-gradient(270.02deg, #AD8C52 20.63%, #F7E99A 99.87%)";
+  }
+};
+
+export const planetToCatColor = (planet: Planet) => {
+  switch (planet) {
+    case PlanetEnum.Enum.Leafy:
+      return "#9af7bf";
+    case PlanetEnum.Enum.Fire:
+      return "#f7a69a";
+    case PlanetEnum.Enum.Silver:
+      return "#fff";
+    case PlanetEnum.Enum.Ice:
+      return "#9ac4f7";
+    default:
+      return "#F7E99A";
   }
 };
 

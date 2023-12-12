@@ -1,7 +1,11 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, interpolate } from "remotion";
 import type { Planet } from "../../src/config";
-import { planetToCTABg, planetToCTAGradient } from "../planets";
+import {
+  planetToCTABg,
+  planetToCTAGradient,
+  planetToCatColor,
+} from "../planets";
 
 const padding = 10;
 const iconHeight = 120;
@@ -46,11 +50,7 @@ export const CallToAction: React.FC<{
   }, [planet]);
 
   const catColor = useMemo(() => {
-    if (planet === "Gold") {
-      return "#F7E99A";
-    }
-
-    return "white";
+    return planetToCatColor(planet);
   }, [planet]);
 
   return (
