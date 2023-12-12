@@ -3,10 +3,14 @@
   flex-direction: column;
   gap: 30px;
   padding: 20px;
-  min-width: 350px;
 
-  @media only screen and (min-width: 40em) {
+  @media only screen and (min-width: 53em) {
     display: flex;
+    min-width: 300px;
+  }
+
+  @media only screen and (min-width: 56em) {
+    min-width: 350px;
   }
 }
 

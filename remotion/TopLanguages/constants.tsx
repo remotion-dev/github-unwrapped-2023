@@ -1,11 +1,12 @@
 import { getLength, scalePath, translatePath } from "@remotion/paths";
+import { getContrast } from "polished/";
 import { staticFile } from "remotion";
 import type { z } from "zod";
 import type { languageSchema } from "../../src/config";
 import { LanguagesEnum } from "../../src/config";
 import { TOP_LANGUAGES_DURATION } from "../../types/constants";
 import type { GradientType } from "../Gradients/available-gradients";
-
+import { PANE_BACKGROUND } from "./Pane";
 const ACTION_DURATION = 60;
 
 export const PLANET_1_POSITION = 0.55;
@@ -154,9 +155,11 @@ export const computePlanetInfo = (
     return mapLanguageToPlanet[language.name];
   }
 
+  const isGoodContrast = getContrast(PANE_BACKGROUND, language.color);
+
   return {
     gradient: "white",
-    textColor: language.color,
+    textColor: isGoodContrast > 2 ? language.color : "white",
     name: language.name,
     opacity: 0.3,
     customPlanetColor: language.color,
