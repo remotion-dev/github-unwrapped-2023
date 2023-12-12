@@ -11,8 +11,11 @@ import {
 import { getFlame } from "../Opening/TakeOff";
 import { TitleCardOctocat } from "../TopLanguages/TitleCardOctocat";
 import { RocketFront } from "../TopLanguages/svgs/FrontRocketSource";
+import type { PromoVideoLayout } from "./promo-video-layout";
 
-export const PromoVideoTitle: React.FC = () => {
+export const PromoVideoTitle: React.FC<{
+  layout: PromoVideoLayout;
+}> = ({ layout }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const progress = interpolate(frame, [20, 60], [-0.2, 1.4], {
@@ -20,7 +23,12 @@ export const PromoVideoTitle: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const top = interpolate(progress, [0, 1], [800, -500], {});
+  const top = interpolate(
+    progress,
+    [0, 1],
+    [layout === "short" ? 1400 : 800, layout === "short" ? 100 : -500],
+    {},
+  );
   const rotate = interpolate(progress, [0, 1], [0, -Math.PI / 12]);
   const left = interpolate(progress, [0, 1], [0, -200]) + 200;
 
@@ -45,10 +53,10 @@ export const PromoVideoTitle: React.FC = () => {
       >
         <AbsoluteFill
           style={{
-            translate: "100px",
+            translate: layout === "short" ? 0 : "100px",
             transformOrigin: "top right",
-            scale: String(0.8),
-            top: 40,
+            scale: String(layout === "short" ? 1.2 : 0.8),
+            top: layout === "short" ? -800 : 40,
           }}
         >
           <TitleCardOctocat accentColor="blue" />
@@ -60,7 +68,7 @@ export const PromoVideoTitle: React.FC = () => {
           alignItems: "center",
           color: "white",
           fontFamily: "Mona Sans",
-          fontSize: 70,
+          fontSize: layout === "short" ? 90 : 70,
           fontWeight: "bolder",
           scale: String(prog),
         }}
@@ -78,7 +86,14 @@ export const PromoVideoTitle: React.FC = () => {
           #GitHubUnwrapped
         </div>
       </AbsoluteFill>
-      <AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          transform:
+            layout === "short"
+              ? "translateY(-200px) rotate(90deg) scale(1.5)"
+              : undefined,
+        }}
+      >
         <div
           style={{
             position: "relative",

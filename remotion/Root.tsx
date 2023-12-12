@@ -29,7 +29,7 @@ import { Tablet, tableSchema } from "./Productivity/Tablet";
 import { TopDay, topDaySchema } from "./Productivity/TopDay";
 import { Wheel } from "./Productivity/Wheel";
 import { GRAPH_DATA } from "./Productivity/constants";
-import { PromoVideo } from "./PromoVideo";
+import { PromoVideo, promoVideoSchema } from "./PromoVideo";
 import { Planets } from "./PromoVideo/Planets";
 import { PATHS_COMP_HEIGHT } from "./PullRequests/Path";
 import {
@@ -818,6 +818,25 @@ export const RemotionRoot: React.FC = () => {
         height={630}
         durationInFrames={20 * 30}
         fps={30}
+        schema={promoVideoSchema}
+        defaultProps={{ layout: "short" as const }}
+        calculateMetadata={({ props: { layout } }) => {
+          if (layout === "landscape") {
+            return {
+              width: 1200,
+              height: 630,
+            };
+          }
+
+          if (layout === "short") {
+            return {
+              width: 1080,
+              height: 1920,
+            };
+          }
+
+          throw new Error("invalid layout");
+        }}
       />
       <Composition
         id="PlanetPromo"
@@ -826,6 +845,9 @@ export const RemotionRoot: React.FC = () => {
         height={630}
         durationInFrames={20 * 30}
         fps={30}
+        defaultProps={{
+          layout: "landscape",
+        }}
       />
       <Folder name="Stills">
         <Still

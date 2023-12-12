@@ -1,8 +1,12 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, Series, staticFile } from "remotion";
 import { RemotionShineEffect } from "../PullRequests/RemotionShineEffect";
+import type { PromoVideoLayout } from "./promo-video-layout";
 
-export const YourYearInReview: React.FC = () => {
+export const YourYearInReview: React.FC<{
+  layout: PromoVideoLayout;
+}> = ({ layout }) => {
+  const widthWidth = layout === "short" ? 800 : 350;
   return (
     <AbsoluteFill
       style={{
@@ -11,24 +15,24 @@ export const YourYearInReview: React.FC = () => {
         color: "white",
         fontFamily: "Mona Sans",
         fontWeight: "bold",
-        fontSize: 65,
+        fontSize: layout === "landscape" ? 65 : 70,
         display: "flex",
-        flexDirection: "row",
+        flexDirection: layout === "landscape" ? "row" : "column",
       }}
     >
       <div
         style={{
-          height: 350,
-          width: 350,
-          marginRight: 50,
+          height: widthWidth,
+          width: widthWidth,
+          marginRight: layout === "landscape" ? 50 : 0,
           borderRadius: 40,
           position: "relative",
         }}
       >
         <AbsoluteFill>
           <RemotionShineEffect
-            width={350}
-            height={350}
+            width={widthWidth}
+            height={widthWidth}
             borderRadius={20}
             id="hi"
           />
@@ -40,8 +44,8 @@ export const YourYearInReview: React.FC = () => {
               muted
               style={{
                 position: "absolute",
-                height: 348,
-                width: 348,
+                height: widthWidth - 2,
+                width: widthWidth - 2,
                 borderRadius: 20,
                 marginRight: 50,
               }}
@@ -54,8 +58,8 @@ export const YourYearInReview: React.FC = () => {
               muted
               style={{
                 position: "absolute",
-                height: 348,
-                width: 348,
+                height: widthWidth - 2,
+                width: widthWidth - 2,
                 borderRadius: 20,
                 marginRight: 50,
               }}
@@ -67,8 +71,8 @@ export const YourYearInReview: React.FC = () => {
               startFrom={830}
               muted
               style={{
-                height: 348,
-                width: 348,
+                height: widthWidth - 2,
+                width: widthWidth - 2,
                 borderRadius: 20,
                 marginRight: 50,
               }}
@@ -77,7 +81,12 @@ export const YourYearInReview: React.FC = () => {
           </Series.Sequence>
         </Series>
       </div>
-      <div>
+      <div
+        style={{
+          textAlign: layout === "landscape" ? "left" : "center",
+          marginTop: layout === "landscape" ? 0 : 150,
+        }}
+      >
         Get your
         <br />
         personalized video

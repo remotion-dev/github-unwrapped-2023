@@ -8,13 +8,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-
-const PLANET_SIZE = 100;
-const PADDING_HORIZONTAL = 160;
-const PADDING_VERTICAL = 130;
-const PLANETS = 8;
-const COLUMNS = 4;
-const ROWS = PLANETS / COLUMNS;
+import type { PromoVideoLayout } from "./promo-video-layout";
 
 const PLANETS_ASSETS = [
   staticFile("languages/go.png"),
@@ -27,9 +21,18 @@ const PLANETS_ASSETS = [
   staticFile("languages/php.png"),
 ];
 
-export const Planets: React.FC = () => {
+export const Planets: React.FC<{
+  layout: PromoVideoLayout;
+}> = ({ layout }) => {
   const { height, width, fps } = useVideoConfig();
   const frame = useCurrentFrame();
+
+  const PLANET_SIZE = layout === "short" ? 180 : 100;
+  const PADDING_HORIZONTAL = layout === "short" ? 250 : 160;
+  const PADDING_VERTICAL = layout === "short" ? 200 : 130;
+  const PLANETS = 8;
+  const COLUMNS = layout === "short" ? 2 : 4;
+  const ROWS = PLANETS / COLUMNS;
 
   const planetEnter = spring({
     fps,
@@ -108,7 +111,14 @@ export const Planets: React.FC = () => {
             transform: `scale(${interpolate(planetEnter, [0, 1], [2, 1])})`,
           }}
         >
-          Explore your planets
+          {layout === "short" ? (
+            <div style={{ textAlign: "center", fontSize: 80 }}>
+              Explore your
+              <br />
+              planets
+            </div>
+          ) : null}
+          {layout === "landscape" ? <span>Explore your planets</span> : null}
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
