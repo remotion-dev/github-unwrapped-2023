@@ -52,7 +52,7 @@ export const LandingRocket: React.FC<{
   const height = interpolate(frame, [30, 70], [400, 30]);
   const marginTop = height / 2;
 
-  const shadowTop = interpolate(frame, [0, 50], [190, 0], {
+  const shadowTop = interpolate(frame, [0, 50], [140, 0], {
     extrapolateRight: "clamp",
   });
 
