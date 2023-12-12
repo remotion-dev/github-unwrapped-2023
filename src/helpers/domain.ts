@@ -43,6 +43,8 @@ const parseBackendCredentials = () => {
       DISCORD_TOKEN: z.string(),
       GITHUB_TOKEN_1: z.string(),
       GITHUB_TOKEN_2: z.string(),
+      GITHUB_TOKEN_3: z.string(),
+      GITHUB_TOKEN_4: z.string(),
       SENTRY_DSN: z.string(),
     })
     .parse(process.env);
