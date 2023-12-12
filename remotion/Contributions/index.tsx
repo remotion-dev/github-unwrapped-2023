@@ -4,6 +4,7 @@ import {
   Easing,
   Img,
   interpolate,
+  interpolateColors,
   staticFile,
   useCurrentFrame,
 } from "remotion";
@@ -35,9 +36,10 @@ const SIZE = 18;
 const GRID_WIDTH = COLUMNS * SIZE;
 const GRID_HEIGHT = ROWS * SIZE;
 
-const MAX_CONTRIBUTIONS = 16;
+// const MAX_CONTRIBUTIONS = 16;
 
-const START_SPREAD = 45;
+const TRANSITION_GLOW = 45;
+const START_SPREAD = TRANSITION_GLOW + 10;
 
 const FADE_OUT_START = 80;
 const FADE_OUT_DURATION = 20;
@@ -58,8 +60,8 @@ const Dot: React.FC<{
   targetColumn: number;
   maxContributions: number;
 }> = ({ i, data, targetColumn, maxContributions }) => {
-  const col = i % COLUMNS;
-  const row = Math.floor(i / COLUMNS);
+  const col = Math.floor(i / 7);
+  const row: number = i % 7;
 
   const frame = useCurrentFrame();
 
@@ -67,18 +69,58 @@ const Dot: React.FC<{
   let left = 0;
   let glow = 1;
   let opacity = data >= maxContributions ? 1 : data / maxContributions;
+  let borderRadius = 4;
+  let glowOpacity = 0;
+
+  let size = SIZE;
+
+  let color = `rgba(0, 166, 255, 1)`;
 
   opacity = opacity < 0.1 ? 0.1 : opacity;
 
-  if (frame < START_SPREAD) {
+  if (frame < TRANSITION_GLOW) {
     let f = (targetColumn - col) / (COLUMNS / 3);
 
     f = f < 0 ? 0 : f > 1 ? 1 : f;
 
     top = col >= targetColumn ? mapRowToMove[row] : (1 - f) * mapRowToMove[row];
     opacity = col >= targetColumn ? 0 : opacity;
+  } else if (frame < START_SPREAD) {
+    borderRadius = interpolate(
+      frame,
+      [TRANSITION_GLOW, START_SPREAD],
+      [4, SIZE / 2],
+    );
+
+    size = interpolate(
+      frame,
+      [TRANSITION_GLOW, START_SPREAD],
+      [SIZE, SIZE * 0.95],
+    );
+
+    color = interpolateColors(
+      frame,
+      [TRANSITION_GLOW, START_SPREAD],
+      [
+        `rgba(0, 166, 255, 1)`,
+        `rgba(255, 255, 255, ${opacity < 0.8 ? 0.8 : 1})`,
+      ],
+    );
   } else {
+    size = SIZE * 0.95;
+    color = `rgba(255, 255, 255, ${opacity < 0.8 ? 0.8 : 1})`;
+    borderRadius = SIZE / 2;
+
     const noise = appearDelays[i];
+
+    glowOpacity = interpolate(
+      frame,
+      [START_SPREAD, START_SPREAD + 15],
+      [0, 1],
+      {
+        extrapolateRight: "clamp",
+      },
+    );
 
     const moveProgress = interpolate(
       frame,
@@ -92,11 +134,11 @@ const Dot: React.FC<{
 
     const noiseAngle = Math.atan2(noise.noiseY, noise.noiseX);
 
-    const maxGlow = interpolate(data, [0, maxContributions], [0, 5], {
+    const maxGlow = interpolate(data, [0, maxContributions], [0, 6], {
       extrapolateRight: "clamp",
     });
 
-    glow = interpolate(moveProgress, [0, 1], [2, maxGlow]);
+    glow = interpolate(moveProgress, [0, 1], [6, maxGlow]);
 
     const d = interpolate(
       frame,
@@ -119,9 +161,9 @@ const Dot: React.FC<{
     //   1 - interpolate(frame, [START_SPREAD + 50, START_SPREAD + 120], [1, 1]);
   }
 
-  if (data === 0 && frame > START_SPREAD + 5) {
-    return null;
-  }
+  // if (data === 0 && frame > START_SPREAD + 5) {
+  //   return null;
+  // }
 
   return (
     <div
@@ -131,36 +173,61 @@ const Dot: React.FC<{
         height: SIZE,
         left: col * SIZE,
         top: row * SIZE,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <div
         style={{
-          top,
-          position: "absolute",
-          left,
-          width: "100%",
-          height: "100%",
-          transform: `scale(${glow})`,
+          ...(frame < TRANSITION_GLOW || frame >= START_SPREAD + 15
+            ? {
+                position: "absolute",
+                top,
+                left,
+              }
+            : {}),
+          width: size,
+          height: size,
           opacity,
           padding: 2,
-          borderRadius: "50%",
-          overflow: "hidden",
+          borderRadius,
+
+          display: "flex",
+          alignItems: "center",
+          justifyItems: "center",
         }}
       >
-        {glow > 1 ? (
-          <AbsoluteFill>
-            <Img src={staticFile("blurred-dot-white.png")} />
-          </AbsoluteFill>
-        ) : (
-          <div
+        {glow > 0 && (
+          <AbsoluteFill
             style={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: `rgba(0, 166, 255, 1)`,
-              borderRadius: "50%",
+              transform: `scale(${glow})`,
+              transformOrigin: "center",
+              width: size,
+              height: size,
+              top: 1,
+              left: 1,
             }}
-          />
+          >
+            <Img
+              src={staticFile("blurred-dot-white.png")}
+              style={{
+                opacity: glowOpacity,
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </AbsoluteFill>
         )}
+        <div
+          style={{
+            opacity: 1 - glowOpacity,
+            width: "100%",
+            height: "100%",
+            backgroundColor: color,
+            borderRadius,
+          }}
+        />
       </div>
     </div>
   );
@@ -185,11 +252,14 @@ export const ContributionsScene: React.FC<{
   number = number > total ? total : number < 0 ? 0 : number;
 
   const maxContributions = useMemo(() => {
-    const m = Math.max(...contributionData);
-    return m < MAX_CONTRIBUTIONS ? m : MAX_CONTRIBUTIONS;
+    return Math.max(...contributionData);
   }, [contributionData]);
 
   const opacity = interpolate(frame, [120, 180], [1, 0], {
+    extrapolateRight: "clamp",
+  });
+
+  const numberTop = interpolate(frame, [0, 10], [250, 0], {
     extrapolateRight: "clamp",
   });
 
@@ -228,6 +298,7 @@ export const ContributionsScene: React.FC<{
 
         <AbsoluteFill
           style={{
+            marginTop: numberTop,
             opacity:
               frame >= FADE_OUT_START &&
               frame < FADE_OUT_START + FADE_OUT_DURATION
@@ -239,7 +310,7 @@ export const ContributionsScene: React.FC<{
           }}
         >
           <IssueNumber
-            align="right"
+            align="center"
             label="Contributions"
             currentNumber={Math.floor(number)}
             max={total}

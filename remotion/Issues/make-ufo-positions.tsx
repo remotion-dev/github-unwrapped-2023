@@ -210,7 +210,7 @@ export const rocketRotation = (
     return { angle, delay: p.shootDelay };
   });
   if (angles.length === 0) {
-    return 0;
+    return -Math.PI / 2;
   }
 
   if (angles.length === 1) {

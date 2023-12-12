@@ -19,6 +19,7 @@ export const LanguagesEnum = z.enum([
   "TypeScript",
   "Go",
   "Rust",
+  "C",
   "C++",
   "Ruby",
   "PHP",

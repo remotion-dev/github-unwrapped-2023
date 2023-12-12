@@ -6,7 +6,7 @@ export const IssueNumber: React.FC<{
   currentNumber: number;
   max: number;
   label: string;
-  align: "left" | "right";
+  align: "left" | "right" | "center";
 }> = ({ currentNumber, label, align, max }) => {
   return (
     <AbsoluteFill
@@ -18,10 +18,15 @@ export const IssueNumber: React.FC<{
     >
       <div
         style={{
-          alignItems: align === "left" ? "flex-start" : "flex-end",
           display: "inline-flex",
           flexDirection: "column",
-          [align === "left" ? "left" : "right"]: 40,
+          ...(align === "left"
+            ? { left: 40, alignItems: "flex-start" }
+            : align === "right"
+              ? { right: 40, alignItems: "flex-end" }
+              : {
+                  alignSelf: "center",
+                }),
           width: 300,
           position: "absolute",
           bottom: 35,
@@ -44,6 +49,7 @@ export const IssueNumber: React.FC<{
             fontWeight: "700",
             paddingLeft: align === "left" ? 15 : 0,
             paddingRight: align === "right" ? 15 : 0,
+            textAlign: align,
             opacity: 0.7,
           }}
         >

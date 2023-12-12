@@ -28,7 +28,6 @@ import {
 
 export const starsGivenSchema = z.object({
   starsGiven: z.number().min(0),
-  showBackground: z.boolean(),
   showCockpit: z.boolean(),
   topWeekday: topWeekdaySchema,
   topHour: topHourSchema,
@@ -73,7 +72,6 @@ export const starsGivenCalculateMetadata: CalculateMetadataFunction<Props> = ({
 export const StarsGiven: React.FC<Props> = ({
   starsGiven,
   style,
-  showBackground,
   showCockpit,
   accentColor,
   totalPullRequests,
@@ -187,12 +185,17 @@ export const StarsGiven: React.FC<Props> = ({
     );
   }, [frame, hits, starsGiven]);
 
+  const gradientOpacity = interpolate(frame, [0, 10], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill style={style}>
       <Sequence durationInFrames={timeUntilTabletHasEntered}>
-        {showBackground ? (
+        <AbsoluteFill style={{ opacity: gradientOpacity }}>
           <Gradient gradient={accentColorToGradient(accentColor)} />
-        ) : null}
+        </AbsoluteFill>
         <Noise translateX={0} translateY={0} />
         {isMobileDevice() ? null : (
           <Shines

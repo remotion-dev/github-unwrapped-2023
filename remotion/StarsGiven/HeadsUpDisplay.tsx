@@ -33,7 +33,8 @@ export const HeadsUpDisplay: React.FC<{
         {textToDisplay === null ? null : (
           <span
             style={{
-              opacity: 0.8,
+              opacity: 0.6,
+              marginTop: 5,
             }}
           >
             <span

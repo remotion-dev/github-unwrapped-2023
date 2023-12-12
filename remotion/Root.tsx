@@ -1,4 +1,4 @@
-import { Composition, Folder, Still, random } from "remotion";
+import { Composition, Folder, Still } from "remotion";
 import { LanguagesEnum, compositionSchema, ogImageSchema } from "../src/config";
 import { SAMPLE_STARRED_REPOS } from "../src/server/random-sample-repos";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
+import { jonnysContributions } from "./Contributions/jonnys-contributions";
 import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
@@ -159,9 +160,7 @@ export const RemotionRoot: React.FC = () => {
           rocket: "blue",
           planet: "Ice",
           accentColor: "blue",
-          contributionData: new Array(364)
-            .fill(0)
-            .map((_, i) => (random(i) < 0.25 ? 0 : Math.floor(random(i) * 16))),
+          contributionData: jonnysContributions,
         }}
       />
 
@@ -272,7 +271,6 @@ export const RemotionRoot: React.FC = () => {
         schema={starsGivenSchema}
         defaultProps={{
           starsGiven: 10,
-          showBackground: true,
           showCockpit: true,
           topWeekday: "3",
           topHour: "0",
@@ -591,28 +589,7 @@ export const RemotionRoot: React.FC = () => {
           openingSceneStartAngle: "left" as const,
           accentColor: "blue" as const,
           rocket: "blue" as const,
-          contributionData: [
-            9, 17, 8, 11, 12, 22, 14, 19, 16, 8, 14, 16, 19, 3, 2, 6, 3, 22, 23,
-            3, 17, 5, 15, 5, 13, 7, 17, 3, 10, 5, 21, 8, 15, 9, 16, 19, 9, 12,
-            17, 2, 7, 20, 0, 22, 12, 9, 9, 15, 2, 20, 3, 6, 9, 20, 3, 10, 19, 6,
-            20, 10, 5, 4, 22, 10, 4, 18, 11, 21, 14, 1, 9, 13, 4, 8, 11, 9, 6,
-            10, 11, 5, 11, 1, 4, 4, 10, 16, 19, 6, 0, 10, 17, 4, 15, 17, 10, 0,
-            10, 3, 3, 17, 3, 3, 21, 16, 23, 20, 2, 6, 17, 16, 14, 6, 1, 5, 2,
-            22, 5, 17, 0, 12, 13, 19, 6, 8, 23, 10, 16, 17, 1, 19, 7, 12, 10,
-            23, 5, 6, 15, 23, 4, 1, 11, 0, 9, 15, 8, 14, 14, 21, 1, 15, 7, 16,
-            22, 14, 16, 14, 15, 8, 15, 14, 23, 18, 1, 16, 14, 13, 0, 7, 5, 13,
-            2, 18, 22, 5, 2, 21, 22, 17, 9, 14, 8, 8, 9, 1, 2, 10, 20, 10, 8,
-            15, 6, 0, 1, 18, 8, 17, 9, 23, 16, 2, 21, 1, 0, 22, 3, 7, 3, 20, 20,
-            19, 8, 6, 15, 6, 6, 3, 0, 14, 7, 7, 21, 19, 16, 7, 0, 3, 14, 16, 23,
-            0, 7, 7, 1, 16, 5, 22, 0, 21, 12, 21, 21, 7, 5, 15, 22, 14, 1, 15,
-            1, 14, 4, 5, 15, 21, 13, 12, 18, 14, 14, 18, 14, 10, 3, 14, 3, 3, 7,
-            12, 20, 13, 10, 1, 1, 14, 14, 15, 2, 6, 19, 12, 6, 2, 16, 0, 16, 19,
-            2, 16, 22, 18, 13, 17, 10, 17, 22, 5, 8, 8, 12, 20, 22, 15, 19, 13,
-            19, 6, 11, 5, 11, 7, 16, 2, 18, 15, 8, 16, 6, 5, 11, 2, 20, 16, 13,
-            7, 8, 15, 23, 6, 15, 7, 17, 3, 14, 20, 10, 16, 23, 2, 10, 12, 8, 17,
-            10, 4, 12, 12, 11, 6, 17, 21, 9, 10, 18, 19, 3, 8, 14, 5, 22, 23,
-            16, 7, 19, 5,
-          ],
+          contributionData: jonnysContributions,
           sampleStarredRepos: [
             "remotion",
             "React-native-skia",
@@ -701,7 +678,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 9,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -759,7 +735,6 @@ export const RemotionRoot: React.FC = () => {
           schema={starsGivenSchema}
           defaultProps={{
             starsGiven: 504,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -819,7 +794,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 50,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,

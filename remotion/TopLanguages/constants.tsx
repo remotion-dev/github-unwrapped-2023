@@ -97,6 +97,14 @@ export const mapLanguageToPlanet: Record<LanguageEnumType, PlanetInfo> = {
     opacity: 0.7,
     customPlanetColor: null,
   },
+  [LanguagesEnum.Enum.C]: {
+    source: staticFile("languages/c.png"),
+    gradient: "blue",
+    textColor: "#4B8CC6",
+    name: "C++",
+    opacity: 0.2,
+    customPlanetColor: null,
+  },
   [LanguagesEnum.Enum["C++"]]: {
     source: staticFile("languages/cplusplus.png"),
     gradient: "blue",
