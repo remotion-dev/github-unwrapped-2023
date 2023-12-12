@@ -16,43 +16,43 @@ export const LandingRocket: React.FC<{
 }> = ({ rocket, planetType }) => {
   const frame = useCurrentFrame();
 
-  const reversedFrame = 50 - frame;
+  const reversedFrame = 75 - frame;
   const acceleratedFrame = remapSpeed(reversedFrame, takeOffSpeedFucntion);
 
   const finalOffset = useMemo(() => {
-    if (planetType === "Ice") {
-      return 450;
-    }
+    // if (planetType === "Ice") {
+    //   return 450;
+    // }
 
-    if (planetType === "Gold") {
-      return 450;
-    }
+    // if (planetType === "Gold") {
+    //   return 450;
+    // }
 
-    if (planetType === "Leafy") {
-      return 450;
-    }
+    // if (planetType === "Leafy") {
+    //   return 450;
+    // }
 
-    if (planetType === "Fire") {
-      return 450;
-    }
+    // if (planetType === "Fire") {
+    //   return 450;
+    // }
 
-    if (planetType === "Silver") {
-      return 450;
-    }
+    // if (planetType === "Silver") {
+    //   return 450;
+    // }
 
-    return 450;
+    return 420;
   }, [planetType]);
 
   const rocketOffset = interpolate(
     acceleratedFrame,
-    [0, 50],
+    [0, 75],
     [finalOffset, -500],
   );
 
   const height = interpolate(frame, [30, 70], [400, 30]);
   const marginTop = height / 2;
 
-  const shadowTop = interpolate(frame, [0, 50], [140, 0], {
+  const shadowTop = interpolate(frame, [0, 75], [150, 0], {
     extrapolateRight: "clamp",
   });
 
@@ -67,7 +67,7 @@ export const LandingRocket: React.FC<{
           backgroundColor: "rgba(0,0,0,0.4)",
           height: shadow * 1.5,
           width: shadow * 6,
-          top: 800 - shadowTop,
+          top: 780 - shadowTop,
           left: 545 - shadow * 3,
           borderRadius: "50%",
         }}
@@ -96,7 +96,7 @@ export const LandingRocket: React.FC<{
               marginTop: -500 + marginTop,
               marginLeft: 20,
             }}
-            startFrom={110}
+            startFrom={80}
             muted
             transparent
             src={getFlame(rocket)}

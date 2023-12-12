@@ -5,28 +5,17 @@ import { getPlanetFile } from "../planets";
 
 export const PlanetEntrance: React.FC<{
   planet: Planet;
-  startingFrame?: number;
   frame: number;
-}> = ({ planet, startingFrame, frame }) => {
-  const planetSize = interpolate(
-    frame + (startingFrame || 0),
-    [80, 180],
-    [0, 1200],
-    {
-      extrapolateRight: "clamp",
-      easing: Easing.inOut((t) => t),
-    },
-  );
+}> = ({ planet, frame }) => {
+  const planetSize = interpolate(frame, [80, 180], [0, 1200], {
+    extrapolateRight: "clamp",
+    easing: Easing.inOut((t) => t),
+  });
 
-  const planetY = interpolate(
-    frame + (startingFrame || 0),
-    [80, 180],
-    [0, 700],
-    {
-      extrapolateRight: "clamp",
-      easing: Easing.inOut((t) => t),
-    },
-  );
+  const planetY = interpolate(frame, [80, 180], [0, 700], {
+    extrapolateRight: "clamp",
+    easing: Easing.inOut((t) => t),
+  });
 
   return (
     <Img

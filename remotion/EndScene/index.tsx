@@ -81,7 +81,7 @@ export const EndScene: React.FC<z.infer<typeof endSceneSchema>> = ({
       <AbsoluteFill style={container}>
         <PlanetBackground planet={planet} accentColor={accentColor} />
         <HidePlanets exitProgress={exitProgress} planet={planet}>
-          <PlanetEntrance planet={planet} startingFrame={130} frame={frame} />
+          <PlanetEntrance planet={planet} frame={frame / 1.5 + 130} />
           <LandingRocket planetType={planet} rocket={rocket} />
         </HidePlanets>
         <CallToAction

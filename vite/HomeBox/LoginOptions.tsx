@@ -9,11 +9,23 @@ type Props = {
   setUserNotFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const getRandomUsername = () => {
+  const usernames = ["steven-tey", "awesomekling", "wcandillon", "mehmetademi"];
+  return usernames[Math.floor(Math.random() * usernames.length)];
+};
+
 export const LoginOptions: React.FC<Props> = ({
   userNotFound,
   setUserNotFound,
 }) => {
   const [username, setUsername] = useState<string>("");
+
+  const placeholderUsername = getRandomUsername();
+
+  const placeholderString =
+    window.innerWidth > 640
+      ? `Your GitHub Username (e.g. ${placeholderUsername})`
+      : "Your GitHub Username";
 
   const handleClick: React.FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
@@ -38,7 +50,7 @@ export const LoginOptions: React.FC<Props> = ({
       <form className={styles.buttonContainer} onSubmit={handleClick}>
         <Input
           text={username}
-          placeHolder="GitHub Username"
+          placeHolder={placeholderString}
           setText={setUsername}
           invalid={userNotFound}
           className={styles.input}
