@@ -66,6 +66,7 @@ const Dot: React.FC<{
   const frame = useCurrentFrame();
 
   let top = 0;
+  let fadeOutOpacity = 1;
   let left = 0;
   let glow = 1;
   let opacity = data >= maxContributions ? 1 : data / maxContributions;
@@ -143,7 +144,7 @@ const Dot: React.FC<{
     const d = interpolate(
       frame,
       [START_SPREAD + 50, START_SPREAD + 120],
-      [400, 1500],
+      [400, 800],
     );
 
     const towardsCenter = moveProgress * d;
@@ -156,6 +157,15 @@ const Dot: React.FC<{
 
     left = moveProgress * xDelta + pushFromCenter;
     top = moveProgress * yDelta + pushFromTop;
+
+    fadeOutOpacity = interpolate(
+      frame,
+      [START_SPREAD + 60, START_SPREAD + 80],
+      [1, 0],
+      {
+        extrapolateRight: "clamp",
+      },
+    );
 
     // opacity =
     //   1 - interpolate(frame, [START_SPREAD + 50, START_SPREAD + 120], [1, 1]);
@@ -201,6 +211,7 @@ const Dot: React.FC<{
         {glow > 0 && (
           <AbsoluteFill
             style={{
+              opacity: frame > START_SPREAD + 60 ? fadeOutOpacity : 1,
               transform: `scale(${glow})`,
               transformOrigin: "center",
               width: size,
