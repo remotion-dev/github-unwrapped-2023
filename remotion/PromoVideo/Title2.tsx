@@ -78,9 +78,9 @@ export const YourYearInReview: React.FC = () => {
         </Series>
       </div>
       <div>
-        Your coding year
+        Get your
         <br />
-        in review
+        personalized video
       </div>
     </AbsoluteFill>
   );

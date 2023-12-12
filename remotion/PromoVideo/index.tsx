@@ -4,6 +4,7 @@ import React from "react";
 import { AbsoluteFill, Audio, staticFile } from "remotion";
 import { Gradient } from "../Gradients/NativeGradient";
 import { Noise } from "../Noise";
+import { Planets } from "./Planets";
 import { PromoVideoTitle } from "./Title";
 import { YourYearInReview } from "./Title2";
 
@@ -20,11 +21,23 @@ export const PromoVideo: React.FC = () => {
           <PromoVideoTitle />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
+          presentation={slide({ direction: "from-left" })}
+          timing={springTiming({
+            config: {
+              damping: 200,
+            },
+          })}
+        />
+        <TransitionSeries.Sequence durationInFrames={90}>
+          <Planets />
+        </TransitionSeries.Sequence>
+        <TransitionSeries.Transition
           presentation={slide({ direction: "from-bottom" })}
           timing={springTiming({
             config: {
               damping: 200,
             },
+            durationInFrames: 10,
           })}
         />
         <TransitionSeries.Sequence durationInFrames={180}>
