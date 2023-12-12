@@ -5,8 +5,10 @@ import {
   Img,
   interpolate,
   interpolateColors,
+  spring,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 
 import React, { useMemo } from "react";
@@ -77,6 +79,8 @@ const Dot: React.FC<{
   let color = `rgba(0, 166, 255, 1)`;
 
   opacity = opacity < 0.1 ? 0.1 : opacity;
+
+  const startAbsolute = START_SPREAD + 15;
 
   if (frame < TRANSITION_GLOW) {
     let f = (targetColumn - col) / (COLUMNS / 3);
@@ -153,8 +157,18 @@ const Dot: React.FC<{
     const pushFromCenter = Math.sin(noiseAngle + frame / 90) * towardsCenter;
     const pushFromTop = Math.cos(noiseAngle + frame / 100) * towardsCenter;
 
-    const xDelta = noise.noiseX * 300;
-    const yDelta = noise.noiseY * 10;
+    const noiseProgress = interpolate(
+      frame,
+      [startAbsolute, startAbsolute + 10],
+      [0, 1],
+      {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      },
+    );
+
+    const xDelta = noise.noiseX * 300 * noiseProgress;
+    const yDelta = noise.noiseY * 10 * noiseProgress;
 
     left = moveProgress * xDelta + pushFromCenter;
     top = moveProgress * yDelta + pushFromTop;
@@ -191,7 +205,7 @@ const Dot: React.FC<{
     >
       <div
         style={{
-          ...(frame < TRANSITION_GLOW || frame >= START_SPREAD + 15
+          ...(frame < TRANSITION_GLOW || frame >= startAbsolute
             ? {
                 position: "absolute",
                 top,
@@ -253,6 +267,7 @@ export const ContributionsScene: React.FC<{
   planet: Planet;
 }> = ({ accentColor, contributionData, total, rocket, planet }) => {
   const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
   const frame = f / 1.5;
 
@@ -273,9 +288,14 @@ export const ContributionsScene: React.FC<{
     extrapolateRight: "clamp",
   });
 
-  const numberTop = interpolate(frame, [0, 10], [250, 0], {
-    extrapolateRight: "clamp",
+  const numberEnter = spring({
+    fps,
+    frame,
+    config: {
+      damping: 200,
+    },
   });
+  const numberTop = interpolate(numberEnter, [0, 1], [250, 0]);
 
   return (
     <AbsoluteFill>
