@@ -46,7 +46,7 @@ export const VideoBox: React.FC<{
         ) : null,
         modalElement,
       )}
-      <Box style={{ overflow: "hidden" }}>
+      <Box style={{ overflow: "hidden" }} className={styles.box}>
         <VideoBoxTop
           inputProps={inputProps}
           rocket={rocket}
