@@ -82,7 +82,7 @@ const Dot: React.FC<{
   if (frame < TRANSITION_GLOW) {
     let f = (targetColumn - col) / (COLUMNS / 3);
 
-    f = f < 0 ? 0 : f > 1 ? 1 : f;
+    f = Math.min(...[Math.abs(f), 1]);
 
     top = col >= targetColumn ? mapRowToMove[row] : (1 - f) * mapRowToMove[row];
     opacity = col >= targetColumn ? 0 : opacity;

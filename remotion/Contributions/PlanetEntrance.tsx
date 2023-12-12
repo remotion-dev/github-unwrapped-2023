@@ -12,7 +12,7 @@ export const PlanetEntrance: React.FC<{
   const planetSize = interpolate(
     frame + (startingFrame || 0),
     [80, 180],
-    [0, 1000],
+    [0, 1200],
     {
       extrapolateRight: "clamp",
       easing: Easing.inOut((t) => t),
