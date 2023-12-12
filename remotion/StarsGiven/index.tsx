@@ -195,8 +195,8 @@ export const StarsGiven: React.FC<Props> = ({
       <Sequence durationInFrames={timeUntilTabletHasEntered}>
         <AbsoluteFill style={{ opacity: gradientOpacity }}>
           <Gradient gradient={accentColorToGradient(accentColor)} />
+          <Noise translateX={0} translateY={0} />
         </AbsoluteFill>
-        <Noise translateX={0} translateY={0} />
         {isMobileDevice() ? null : (
           <Shines
             rotationShake={rotationShake}
