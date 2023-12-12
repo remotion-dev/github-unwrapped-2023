@@ -289,7 +289,6 @@ export const RemotionRoot: React.FC = () => {
         schema={starsGivenSchema}
         defaultProps={{
           starsGiven: 10,
-          showBackground: true,
           showCockpit: true,
           topWeekday: "3",
           topHour: "0",
@@ -720,7 +719,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 9,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -778,7 +776,6 @@ export const RemotionRoot: React.FC = () => {
           schema={starsGivenSchema}
           defaultProps={{
             starsGiven: 504,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,
@@ -838,7 +835,6 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             timeUntilTabletHides: 200,
             starsGiven: 50,
-            showBackground: true,
             showCockpit: true,
             topWeekday: "1" as const,
             topHour: "0" as const,

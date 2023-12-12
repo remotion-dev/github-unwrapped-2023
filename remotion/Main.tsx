@@ -197,7 +197,6 @@ export const Main: React.FC<Schema> = ({
         >
           <StarsAndProductivity
             starsGiven={starsGiven}
-            showBackground={false}
             showCockpit
             topWeekday={topWeekday}
             topHour={topHour}

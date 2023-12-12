@@ -47,7 +47,6 @@ export const StarsAndProductivity: React.FC<
   z.infer<typeof starsGivenSchema>
 > = ({
   starsGiven,
-  showBackground,
   showCockpit,
   topWeekday,
   topHour,
@@ -108,7 +107,6 @@ export const StarsAndProductivity: React.FC<
     <AbsoluteFill>
       {frame < timeUntilTabletIsEntered || frame > timeUntilTabletHides ? (
         <StarsGiven
-          showBackground={showBackground}
           starsGiven={starsGiven}
           showCockpit={showCockpit}
           style={style}
