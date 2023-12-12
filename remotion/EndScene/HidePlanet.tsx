@@ -10,9 +10,9 @@ export const HidePlanets: React.FC<{
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${exitProgress < 0.1 ? 0.1 : exitProgress}) rotate(${
-          (1 - exitProgress) * 0
-        }deg)`,
+        transform: `scale(${
+          exitProgress ** 2 < 0.1 ? 0.1 : exitProgress ** 2
+        })`,
         top: (1 - exitProgress) ** 4 * -1200,
       }}
     >
