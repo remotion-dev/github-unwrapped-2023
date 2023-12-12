@@ -58,12 +58,11 @@ const Dot: React.FC<{
   i: number;
   data: number;
   targetColumn: number;
+  frame: number;
   maxContributions: number;
-}> = ({ i, data, targetColumn, maxContributions }) => {
+}> = ({ i, data, targetColumn, maxContributions, frame }) => {
   const col = Math.floor(i / 7);
   const row: number = i % 7;
-
-  const frame = useCurrentFrame();
 
   let top = 0;
   let fadeOutOpacity = 1;
@@ -251,7 +250,9 @@ export const ContributionsScene: React.FC<{
   rocket: Rocket;
   planet: Planet;
 }> = ({ accentColor, contributionData, total, rocket, planet }) => {
-  const frame = useCurrentFrame();
+  const f = useCurrentFrame();
+
+  const frame = f;
 
   const targetColumn = interpolate(frame / 0.5, [0, 120], [-33, COLUMNS + 20], {
     extrapolateRight: "clamp",
@@ -281,7 +282,7 @@ export const ContributionsScene: React.FC<{
       </AbsoluteFill>
 
       <AbsoluteFill>
-        {frame > 80 && <PlanetEntrance planet={planet} />}
+        {frame > 80 && <PlanetEntrance planet={planet} frame={frame} />}
       </AbsoluteFill>
       <AbsoluteFill
         style={{
@@ -299,6 +300,7 @@ export const ContributionsScene: React.FC<{
           {new Array(COUNT).fill(0).map((_, i) => (
             <Dot
               key={i}
+              frame={frame}
               i={i}
               data={contributionData[i]}
               targetColumn={targetColumn}
