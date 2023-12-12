@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, interpolate } from "remotion";
 import type { Planet } from "../../src/config";
+import { planetToCTABg, planetToCTAGradient } from "../planets";
 
 const padding = 10;
 const iconHeight = 120;
@@ -33,17 +34,7 @@ export const CallToAction: React.FC<{
   const offset = (Math.sin(onSinus) + 1) * -200;
 
   const backgroundColor = useMemo(() => {
-    if (planet === "Silver") {
-      return "rgb(38, 38, 38)";
-    }
-
-    if (planet === "Gold") {
-      return "#291C0B";
-    }
-
-    if (planet === "Ice") {
-      return "#1C2056";
-    }
+    return planetToCTABg(planet);
   }, [planet]);
 
   const border = useMemo(() => {
@@ -51,17 +42,7 @@ export const CallToAction: React.FC<{
   }, []);
 
   const gradient = useMemo(() => {
-    if (planet === "Silver") {
-      return "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)";
-    }
-
-    if (planet === "Gold") {
-      return "linear-gradient(270.02deg, #AD8C52 20.63%, #F7E99A 99.87%)";
-    }
-
-    if (planet === "Ice") {
-      return "linear-gradient(270.02deg, #91AAD4 20.63%, #fff 99.87%)";
-    }
+    return planetToCTAGradient(planet);
   }, [planet]);
 
   const catColor = useMemo(() => {

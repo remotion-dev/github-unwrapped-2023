@@ -9,8 +9,7 @@ import {
 } from "../types/constants";
 import { Stars } from "../vite/Home/Stars";
 import { ContributionsScene } from "./Contributions";
-import { ContributionsScene2 } from "./Contributions2";
-import { jonnysContributions } from "./Contributions2/jonnys-contributions";
+import { jonnysContributions } from "./Contributions/jonnys-contributions";
 import { END_SCENE_DURATION, EndScene, endSceneSchema } from "./EndScene";
 import { CallToAction } from "./EndScene/CallToAction";
 import { NativeGradient } from "./Gradients/NativeGradient";
@@ -89,6 +88,7 @@ export const RemotionRoot: React.FC = () => {
           height={VIDEO_HEIGHT}
           schema={endSceneSchema}
           defaultProps={{
+            accentColor: "blue",
             rocket: "blue",
             planet: "Ice",
           }}
@@ -150,7 +150,7 @@ export const RemotionRoot: React.FC = () => {
       />
       <Composition
         id={"ContributionsScene2"}
-        component={ContributionsScene2}
+        component={ContributionsScene}
         durationInFrames={END_SCENE_DURATION}
         fps={VIDEO_FPS}
         width={VIDEO_WIDTH}
@@ -159,19 +159,6 @@ export const RemotionRoot: React.FC = () => {
           total: 5000,
           rocket: "blue",
           planet: "Ice",
-          accentColor: "blue",
-          contributionData: jonnysContributions,
-        }}
-      />
-
-      <Composition
-        id={"Contributions"}
-        component={ContributionsScene}
-        durationInFrames={12 * 30}
-        fps={VIDEO_FPS}
-        width={VIDEO_WIDTH}
-        height={VIDEO_HEIGHT}
-        defaultProps={{
           accentColor: "blue",
           contributionData: jonnysContributions,
         }}
@@ -568,7 +555,7 @@ export const RemotionRoot: React.FC = () => {
           },
           showHelperLine: false,
           login: "iampato",
-          planet: "Silver" as const,
+          planet: "Fire" as const,
           starsGiven: 50,
           issuesClosed: 200,
           issuesOpened: 200,
