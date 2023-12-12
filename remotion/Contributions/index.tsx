@@ -139,7 +139,7 @@ const Dot: React.FC<{
     });
 
     glow =
-      interpolate(moveProgress, [0, 1], [6, maxGlow]) + (2 * moveProgress) ** 3;
+      interpolate(moveProgress, [0, 1], [6, maxGlow]) + (2 * moveProgress) ** 2;
 
     const d = interpolate(
       frame,
