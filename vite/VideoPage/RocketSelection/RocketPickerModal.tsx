@@ -12,6 +12,7 @@ const modalWrapper: React.CSSProperties = {
   alignItems: "center",
   zIndex: 1,
   justifyContent: "center",
+  position: "fixed",
 };
 
 const spacer: React.CSSProperties = {
