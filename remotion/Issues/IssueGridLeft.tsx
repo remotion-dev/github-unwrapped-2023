@@ -40,8 +40,8 @@ export const IssueGridLeft: React.FC = () => {
             y2="900"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#191C29" />
-            <stop offset="1" stopColor="#191C29" stopOpacity="0" />
+            <stop stopColor="#B0E0BA" stopOpacity={0.16} />
+            <stop offset="1" stopColor="#B0E0BA" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_0_3"

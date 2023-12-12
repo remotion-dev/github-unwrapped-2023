@@ -100,7 +100,7 @@ export const StarsGiven: React.FC<Props> = ({
   const rotationShake =
     shakeFactor === 0
       ? 0
-      : noise2D("rotateshake", frame / 10, 0) * 0.05 * shakeFactor;
+      : noise2D("rotateshake", frame / 10, 0) * 0.02 * shakeFactor;
 
   const starsDisplayed = useMemo(() => {
     return getActualStars(starsGiven);

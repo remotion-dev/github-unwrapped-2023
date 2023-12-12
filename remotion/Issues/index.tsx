@@ -43,7 +43,6 @@ import {
   ROCKET_JUMP_IN_DURATION,
   RocketComponent,
 } from "./Rocket";
-import { IssuesDetected } from "./Title";
 import { Ufo } from "./Ufo";
 import { UFO_ASSET } from "./UfoSvg";
 import { ZERO_ISSUES_DURATION, ZeroIssues } from "./ZeroIssues";
@@ -296,7 +295,6 @@ export const Issues: React.FC<z.infer<typeof issuesSchema>> = ({
           </AbsoluteFill>
         ) : null}
       </AbsoluteFill>
-      <IssuesDetected exit={jumpInCounter} issues={totalIssues} />
       {totalIssues > 0 ? (
         <AbsoluteFill
           style={{
