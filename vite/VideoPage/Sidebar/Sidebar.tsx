@@ -37,14 +37,7 @@ export const Sidebar: React.FC<{
           <div style={{ width: 16 }} />
           <h2>{inputProps.login}</h2>
         </div>
-
-        {status.type === "video-available" ? (
-          <a href={status.url} target="_blank" rel="noreferrer">
-            <DownloadButton />
-          </a>
-        ) : (
-          <DownloadButton />
-        )}
+        <DownloadButton />
       </div>
       {status.type === "render-error" && (
         <div style={{ fontSize: 14 }}>
