@@ -196,20 +196,20 @@ export type ProfileStats = {
 export type CompositionParameters = z.infer<typeof compositionSchema>;
 
 const computePlanet = (userStats: ProfileStats): z.infer<typeof PlanetEnum> => {
-  if (userStats.totalContributions >= 5000) {
+  if (userStats.totalContributions > 5000) {
     return PlanetEnum.Enum.Gold;
   }
 
-  if (userStats.totalContributions > 4000) {
+  if (userStats.totalContributions > 2400) {
     return PlanetEnum.Enum.Silver;
   }
 
-  if (userStats.totalContributions > 3000) {
-    return PlanetEnum.Enum.Leafy;
+  if (userStats.totalContributions > 500) {
+    return PlanetEnum.Enum.Fire;
   }
 
-  if (userStats.totalContributions > 2000) {
-    return PlanetEnum.Enum.Fire;
+  if (userStats.totalContributions > 25) {
+    return PlanetEnum.Enum.Leafy;
   }
 
   return PlanetEnum.Enum.Ice;
