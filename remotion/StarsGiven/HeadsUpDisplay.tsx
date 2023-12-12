@@ -34,6 +34,7 @@ export const HeadsUpDisplay: React.FC<{
           <span
             style={{
               opacity: 0.6,
+              marginTop: 5,
             }}
           >
             <span
