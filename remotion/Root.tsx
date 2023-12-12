@@ -815,7 +815,7 @@ export const RemotionRoot: React.FC = () => {
         component={PromoVideo}
         width={1200}
         height={630}
-        durationInFrames={100}
+        durationInFrames={300}
         fps={30}
       />
       <Folder name="Stills">
