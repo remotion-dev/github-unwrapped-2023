@@ -151,7 +151,7 @@ const Dot: React.FC<{
               backgroundColor: `rgba(0, 166, 255, 1)`,
               borderRadius: "50%",
             }}
-          ></div>
+          />
         )}
       </div>
     </div>
@@ -181,12 +181,15 @@ export const ContributionsScene2: React.FC<{
     return m < 12 ? m : 12;
   }, [contributionData]);
 
+  const opacity = interpolate(frame, [0, 10], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+
   return (
-    <AbsoluteFill style={{}}>
-      <AbsoluteFill>
+    <AbsoluteFill>
+      <AbsoluteFill style={{ opacity }}>
         <Gradient gradient={accentColorToGradient(accentColor)} />
       </AbsoluteFill>
-
       <AbsoluteFill>
         {frame > 80 && <PlanetEntrance planet={planet} />}
       </AbsoluteFill>
@@ -227,7 +230,7 @@ export const ContributionsScene2: React.FC<{
           }}
         >
           <IssueNumber
-            align="right"
+            align="center"
             label="Contributions"
             currentNumber={Math.floor(number)}
             max={total}
