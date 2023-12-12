@@ -2,7 +2,7 @@ import { staticFile } from "remotion";
 import { PlanetEnum, type Planet } from "../src/config";
 import { type availableGradients } from "./Gradients/available-gradients";
 
-const SILVER_PLANET = staticFile("planet-silver-2.png");
+const SILVER_PLANET = staticFile("planet-silver.png");
 const ICE_PLANET = staticFile("planet-ice.png");
 const GOLD_PLANET = staticFile("planet-gold.png");
 const FIRE_PLANET = staticFile("planet-fire.png");

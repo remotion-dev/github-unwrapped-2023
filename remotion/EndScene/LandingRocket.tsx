@@ -28,6 +28,18 @@ export const LandingRocket: React.FC<{
       return 500;
     }
 
+    if (planetType === "Leafy") {
+      return 490;
+    }
+
+    if (planetType === "Fire") {
+      return 510;
+    }
+
+    if (planetType === "Silver") {
+      return 430;
+    }
+
     return 450;
   }, [planetType]);
 
