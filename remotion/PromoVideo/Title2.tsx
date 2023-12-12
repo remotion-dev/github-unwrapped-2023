@@ -1,5 +1,12 @@
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, Series, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  OffthreadVideo,
+  Series,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { RemotionShineEffect } from "../PullRequests/RemotionShineEffect";
 import type { PromoVideoLayout } from "./promo-video-layout";
 
@@ -7,9 +14,11 @@ export const YourYearInReview: React.FC<{
   layout: PromoVideoLayout;
 }> = ({ layout }) => {
   const widthWidth = layout === "short" ? 800 : 350;
+  const frame = useCurrentFrame();
   return (
     <AbsoluteFill
       style={{
+        transform: `scale(${interpolate(frame, [0, 100], [1, 1.1])})`,
         justifyContent: "center",
         alignItems: "center",
         color: "white",
@@ -85,6 +94,12 @@ export const YourYearInReview: React.FC<{
         style={{
           textAlign: layout === "landscape" ? "left" : "center",
           marginTop: layout === "landscape" ? 0 : 150,
+          backgroundClip: "text",
+          backgroundImage:
+            "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)",
+          WebkitBackgroundClip: "text",
+          backgroundColor: "text",
+          WebkitTextFillColor: "transparent",
         }}
       >
         Get your

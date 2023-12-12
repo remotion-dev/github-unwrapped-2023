@@ -85,6 +85,19 @@ export const PromoVideoTitle: React.FC<{
         >
           #GitHubUnwrapped
         </div>
+        <div
+          style={{
+            backgroundClip: "text",
+            backgroundImage:
+              "linear-gradient(270.02deg, #bbb 20.63%, #fff 99.87%)",
+            WebkitBackgroundClip: "text",
+            backgroundColor: "text",
+            WebkitTextFillColor: "transparent",
+            fontSize: 35,
+          }}
+        >
+          Your coding year in review
+        </div>
       </AbsoluteFill>
       <AbsoluteFill
         style={{

@@ -816,7 +816,7 @@ export const RemotionRoot: React.FC = () => {
         component={PromoVideo}
         width={1200}
         height={630}
-        durationInFrames={20 * 30}
+        durationInFrames={15.5 * 30}
         fps={30}
         schema={promoVideoSchema}
         defaultProps={{ layout: "short" as const }}
