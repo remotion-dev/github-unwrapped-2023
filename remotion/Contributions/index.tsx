@@ -75,7 +75,7 @@ const Dot: React.FC<{
   let glow = 1;
   let opacity = Math.max(
     0.1,
-    data >= maxContributions ? 1 : data / maxContributions,
+    data >= maxContributions ? 1 : Math.max(data / maxContributions, 0.25),
   );
   let borderRadius = 4;
   let glowOpacity = 0;
@@ -83,8 +83,6 @@ const Dot: React.FC<{
   let size = SIZE;
 
   let color = `rgba(0, 166, 255, 1)`;
-
-  opacity = opacity < 0.1 ? 0.1 : opacity;
 
   const startAbsolute = START_SPREAD + 15;
 
