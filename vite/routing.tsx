@@ -1,6 +1,7 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
 import { accentColorValues } from "../src/config.js";
 import About from "./About/About.jsx";
+import { Dashboard } from "./Dashboard.jsx";
 import Home from "./Home.jsx";
 import { Loading } from "./Loading.jsx";
 import { SharePage } from "./Share/page.jsx";
@@ -93,12 +94,22 @@ const loadingRoute = new Route({
   component: Loading,
 });
 
+/**
+ * DASHBOARD ROUTE
+ */
+
+const dashboardRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/dashboard",
+  component: Dashboard,
+});
 // Create the route tree using your routes
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
   loadingRoute,
   userRoute.addChildren([videoRoute, shareRoute]),
+  dashboardRoute,
 ]);
 
 // Create the router using your route tree
