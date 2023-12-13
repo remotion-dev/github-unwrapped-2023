@@ -21,9 +21,5 @@ export const Dashboard = () => {
     fetchData();
   }, []);
 
-  return (
-    <div>
-      <div> Number of renders: {numberOfRenders}</div>
-    </div>
-  );
+  return <div>Number of renders: {numberOfRenders}</div>;
 };
