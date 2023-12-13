@@ -60,7 +60,9 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   const access_token = params.get("access_token");
   const error = params.get("error");
   if (error) {
-    throw new Error(decodeURIComponent(error));
+    throw new Error(
+      `Error with code: (${request.originalUrl}) ${decodeURIComponent(error)}`,
+    );
   }
 
   if (!access_token) {
