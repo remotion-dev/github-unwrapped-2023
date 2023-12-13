@@ -60,7 +60,7 @@ export const loginEndPoint = async (request: Request, response: Response) => {
   const access_token = params.get("access_token");
 
   if (!access_token) {
-    throw new Error("No access token parameter: " + JSON.stringify(params));
+    throw new Error("No access token parameter: " + paramsStringText);
   }
 
   const stats = await getStatsFromGitHub({
