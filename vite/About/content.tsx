@@ -61,7 +61,7 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
-    icon: "",
+    icon: "/key.svg",
     title: "Why GitHub Unwrapped needs write permission",
     description: "",
     node: (
