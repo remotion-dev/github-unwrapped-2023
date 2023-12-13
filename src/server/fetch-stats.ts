@@ -23,7 +23,7 @@ export const executeGitHubGraphQlQuery = async ({
   });
   const rateLimit = res.headers.get("x-ratelimit-remaining");
 
-  if (Math.random() < 0.1) {
+  if (Number(rateLimit) < 1000) {
     sendDiscordMessage(`Rate limit remaining: ${rateLimit}`);
   }
 
