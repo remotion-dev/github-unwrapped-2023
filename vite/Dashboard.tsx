@@ -24,7 +24,6 @@ export const Dashboard = () => {
       const data = await response.json();
       setNumberOfRenders(data.nrOfRenders);
       await wait(5000);
-      console.log("fetching");
       fetchData();
     };
 
