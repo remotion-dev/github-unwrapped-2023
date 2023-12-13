@@ -75,7 +75,11 @@ const Dot: React.FC<{
   let glow = 1;
   let opacity = Math.max(
     0.1,
-    data >= maxContributions ? 1 : Math.max(data / maxContributions, 0.25),
+    data >= maxContributions
+      ? 1
+      : data > 0
+        ? Math.max(data / maxContributions, 0.25)
+        : 0,
   );
   let borderRadius = 4;
   let glowOpacity = 0;
