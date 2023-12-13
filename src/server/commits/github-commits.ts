@@ -60,7 +60,7 @@ export const getALotOfGithubCommits = async (
 ) => {
   const listOfCommits: Commit[] = [];
 
-  const pages = [1, 2, 3, 4, 5];
+  const pages = [1, 2, 3];
 
   for (const page of pages) {
     const { commits, isDone } = await getGithubCommits(username, page, token);
