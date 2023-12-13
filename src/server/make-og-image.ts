@@ -42,6 +42,7 @@ export const makeOrGetOgImage = async (profileStats: ProfileStats) => {
     inputProps: schema,
     privacy: "public",
     region,
+    jpegQuality: 100,
   });
   await saveOgImage({ url, username: profileStats.username });
 
