@@ -117,6 +117,11 @@ export const startServer = async () => {
       "/about",
       indexHtmlProduction({ stats: true, handleUsername: false }),
     );
+
+    app.get(
+      "/dashboard",
+      indexHtmlProduction({ stats: false, handleUsername: false }),
+    );
     app.get(
       "/loading/:username",
       indexHtmlProduction({ stats: false, handleUsername: false }),
@@ -127,9 +132,9 @@ export const startServer = async () => {
     );
     app.get(
       "/:username/share",
-      indexHtmlProduction({ handleUsername: true, stats: true }),
+      indexHtmlProduction({ handleUsername: false, stats: true }),
     );
-    app.get("*", indexHtmlProduction({ handleUsername: true, stats: true }));
+    app.get("*", indexHtmlProduction({ handleUsername: false, stats: true }));
   }
 
   const port = process.env.PORT || 8080;
