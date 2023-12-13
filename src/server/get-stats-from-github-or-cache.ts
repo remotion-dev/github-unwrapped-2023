@@ -30,6 +30,7 @@ export const getStatsFromGitHubOrCache = async ({
       lowercasedUsername: username.toLowerCase(),
       type: "not-found",
     });
+    return "not-found";
   }
 
   return stats;
