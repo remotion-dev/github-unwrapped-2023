@@ -6,7 +6,7 @@ export const SignInWithGitHub: React.FC = () => {
     <a
       style={{ textDecoration: "none" }}
       className={buttonStyles.loginwithgithub}
-      href={signInWithGitHubLink()}
+      href={signInWithGitHubLink(true)}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
