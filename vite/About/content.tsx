@@ -125,7 +125,7 @@ export const content: Array<AboutItemContent> = [
           !<br />
           <br /> <strong>Non-developers</strong>:
           <br />
-          Drop your email and we{'"'}ll contact you in September 2024 for a free
+          Drop your email and we{"'"}ll contact you in September 2024 for a free
           consultation!
         </p>
         <EmailForm />
