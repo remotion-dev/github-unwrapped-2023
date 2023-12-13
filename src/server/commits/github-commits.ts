@@ -70,5 +70,5 @@ export const getALotOfGithubCommits = async (
     }
   }
 
-  return listOfCommits;
+  return listOfCommits.filter((c) => !c.fork);
 };
