@@ -15,7 +15,6 @@ export const Dashboard = () => {
     root.style.display = "flex";
     root.style.justifyContent = "center";
     root.style.flex = "1";
-    root.style.height = "100%";
   }
 
   useEffect(() => {
