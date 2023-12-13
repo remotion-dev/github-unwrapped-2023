@@ -2,8 +2,11 @@ import { backendCredentials } from "../helpers/domain.js";
 
 const TOKENS = 5;
 
+let i = 0;
+
 export const getRandomGithubToken = (): string => {
-  const index = Math.ceil(Math.random() * TOKENS);
+  i++;
+  const index = (i % TOKENS) + 1;
   if (index === 1) {
     return backendCredentials().GITHUB_TOKEN_1;
   }
