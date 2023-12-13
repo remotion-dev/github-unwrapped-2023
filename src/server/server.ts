@@ -6,6 +6,7 @@ import express from "express";
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import { REDIRECT_URL_ENDPOINT } from "../helpers/redirect-url.js";
+import { dashboardEndpoint } from "./dashboard.js";
 import { sendDiscordMessage } from "./discord.js";
 import { emailEndpoint } from "./email.js";
 import { faviconEndPoint } from "./favicon.js";
@@ -76,7 +77,7 @@ export const startServer = async () => {
   app.post("/api/stats", apiEndpointWrapper(statsEndPoint));
 
   app.post("/api/error", apiEndpointWrapper(errorEndpoint));
-
+  app.get("/api/dashboard", apiEndpointWrapper(dashboardEndpoint));
   app.post("/api/email", apiEndpointWrapper(emailEndpoint));
   app.get("/og/:username.jpg", apiEndpointWrapper(socialMediaPreview));
   app.get("/og/:username.jpeg", apiEndpointWrapper(socialMediaPreview));
@@ -93,6 +94,11 @@ export const startServer = async () => {
     );
     app.get(
       "/loading/:username",
+      indexHtmlDev(vite, { stats: false, handleUsername: false }),
+    );
+
+    app.get(
+      "/dashboard",
       indexHtmlDev(vite, { stats: false, handleUsername: false }),
     );
     app.get(

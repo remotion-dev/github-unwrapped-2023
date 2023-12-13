@@ -42,7 +42,6 @@ export type Render = {
   functionName: string;
   account: number;
 };
-
 const getRendersCollection = async () => {
   const client = await clientPromise;
   return client.db(backendCredentials().DB_NAME).collection<Render>("renders");
@@ -78,6 +77,11 @@ const getOgImageCollection = async () => {
   return client
     .db(backendCredentials().DB_NAME)
     .collection<OgImageCollection>("ogimage");
+};
+
+export const getNumberOfRenders = async () => {
+  const collection = await getRendersCollection();
+  return collection.countDocuments();
 };
 
 export const saveEmailAdress = async (email: string) => {
