@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AbsoluteFill } from "remotion";
 
 export const Dashboard = () => {
   const [numberOfRenders, setNumberOfRenders] = useState<number | null>(null);
@@ -8,6 +9,7 @@ export const Dashboard = () => {
     root.style.display = "flex";
     root.style.justifyContent = "center";
     root.style.flex = "1";
+    root.style.height = "100%";
   }
 
   useEffect(() => {
@@ -21,5 +23,9 @@ export const Dashboard = () => {
     fetchData();
   }, []);
 
-  return <div>Number of renders: {numberOfRenders}</div>;
+  return (
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
+      <div>Number of renders: {numberOfRenders}</div>
+    </AbsoluteFill>
+  );
 };
