@@ -62,14 +62,14 @@ export const content: Array<AboutItemContent> = [
   },
   {
     icon: "",
-    title: "Why GithHub Unwrapped needs write permission",
+    title: "Why GitHub Unwrapped needs write permission",
     description: "",
     node: (
       <>
         <p>There are two types of logins: GitHub apps and OAuth logins.</p>
         <p>
           We found that with GitHub apps, every organization admin needs to
-          grant access in order for the data to be included in Unwrapped.
+          grant access in order for the data to be included in GitHub Unwrapped.
           <br />
           OAuth apps don&apos;t have this limitation, but are not fine-grained -
           we require the repository scope which also grants write access.
