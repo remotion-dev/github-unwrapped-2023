@@ -61,10 +61,41 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    icon: "/key.svg",
+    title: "Why does GitHub Unwrapped need write permission?",
+    description: "",
+    node: (
+      <>
+        <p>There are two types of logins: GitHub apps and OAuth logins.</p>
+        <p>
+          We found that with GitHub apps, every organization admin needs to
+          grant access in order for the data to be included in GitHub Unwrapped.
+          <br />
+          OAuth apps don&apos;t have this limitation, but are not fine-grained -
+          we require the repository scope which also grants write access.
+        </p>
+        <p>
+          Of course we don&apos;t write to the account, we also don&apos;t keep
+          the access token after the stats have been fetched, abstaining
+          ourselves from any future access to your account. The authentication
+          code we deploy is available under{" "}
+          <a
+            className={styles.aboutLink}
+            href="https://github.com/remotion-dev/github-unwrapped-2023"
+          >
+            here
+          </a>
+          .
+        </p>
+      </>
+    ),
+  },
+  {
     icon: "/book.svg",
     title: "How it works",
     description: `We call GitHub's GraphQL API to fetch and calculate your statistics. The data cutoff is approximately 24 hours before you generated the video. The video gets created using Remotion.`,
   },
+
   {
     icon: "/calculator.svg",
     title: "How are my top languages calculated?",
