@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 
 const headerProps = {
   description:
-    "With this page we hope to answer all yor questions about GitHub Unwrapped 2023.",
+    "With this page we hope to answer all your questions about GitHub Unwrapped 2023.",
   title: "About",
 };
 
