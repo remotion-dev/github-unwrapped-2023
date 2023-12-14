@@ -53,12 +53,12 @@ export const executeGitHubGraphQlQuery = async ({
 
 export const statsEndPoint = async (request: Request, response: Response) => {
   if (request.method === "OPTIONS") return response.end();
-
-  const { username } = StatsRequest.parse(request.body);
+  const { username, refreshCache } = StatsRequest.parse(request.body);
 
   await getStatsFromGitHubOrCache({
     username,
     token: getRandomGithubToken(),
+    refreshCache,
   });
 
   return response.json({});

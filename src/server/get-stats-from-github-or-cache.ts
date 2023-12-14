@@ -4,12 +4,14 @@ import { getStatsFromGitHub } from "./get-stats-from-github.js";
 export const getStatsFromGitHubOrCache = async ({
   username,
   token,
+  refreshCache = false,
 }: {
   username: string;
   token: string;
+  refreshCache: boolean;
 }) => {
   const fromCache = await getProfileStatsFromCache(username);
-  if (fromCache !== null) {
+  if (fromCache !== null && !refreshCache) {
     return fromCache;
   }
 
