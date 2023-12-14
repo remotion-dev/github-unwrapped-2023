@@ -1,4 +1,11 @@
 import { useEffect, useState } from "react";
+import { AbsoluteFill } from "remotion";
+
+const wait = (milliseconds: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+};
 
 export const Dashboard = () => {
   const [numberOfRenders, setNumberOfRenders] = useState<number | null>(null);
@@ -13,13 +20,18 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/dashboard");
-
       const data = await response.json();
       setNumberOfRenders(data.nrOfRenders);
+      await wait(5000);
+      fetchData();
     };
 
     fetchData();
   }, []);
 
-  return <div>Number of renders: {numberOfRenders}</div>;
+  return (
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
+      <div>Number of renders: {numberOfRenders}</div>
+    </AbsoluteFill>
+  );
 };
