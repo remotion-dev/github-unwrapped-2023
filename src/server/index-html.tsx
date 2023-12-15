@@ -32,9 +32,15 @@ export const indexHtmlDev = (
 
     if (params.handleUsername) {
       const username = req.params.username || null;
+      const reset = req.query.reset || null;
 
       if (username === null) {
         return response.redirect("/");
+      }
+
+      if (reset) {
+        response.redirect(`/loading/${username}?reset=true`);
+        return;
       }
 
       const cachedStats = await getProfileStatsFromCache(username);

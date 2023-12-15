@@ -3,7 +3,8 @@ import styles from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
 export type AboutItemContent = {
-  icon?: string;
+  id: string;
+  icon: string;
   step?: number;
   title: string;
   description?: string;
@@ -12,6 +13,7 @@ export type AboutItemContent = {
 
 export const content: Array<AboutItemContent> = [
   {
+    id: "private-contributions",
     icon: "/eyeball.svg",
     title: "Private contributions not showing up?",
     description: "",
@@ -61,6 +63,7 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    id: "permissions",
     icon: "/key.svg",
     title: "Why does GitHub Unwrapped need write permission?",
     description: "",
@@ -91,18 +94,20 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    id: "how-it-works",
     icon: "/book.svg",
     title: "How it works",
     description: `We call GitHub's GraphQL API to fetch and calculate your statistics. The data cutoff is approximately 24 hours before you generated the video. The video gets created using Remotion.`,
   },
-
   {
+    id: "how-are-top-languages-calculated",
     icon: "/calculator.svg",
     title: "How are my top languages calculated?",
     description: `Your top languages are not exactly calculated in a scientific way but are estimated according to the following formula:
       The list of repositories that you contributed to are fetched. A ranking is assigned to the top 3 languages (top language = 3 points, second = 2 points, third = 1 point) and they are multiplied by the contribution count and the amount of lines of that language in that repository.`,
   },
   {
+    id: "open-source",
     icon: "/open-source.svg",
     title: "Is this project open-source?",
     description: ``,
@@ -132,6 +137,7 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    id: "make-your-own",
     icon: "/chat.svg",
     title: "Want to host a year in review for your users?",
     description: ``,
@@ -156,14 +162,15 @@ export const content: Array<AboutItemContent> = [
           !<br />
           <br /> <strong>Non-developers</strong>:
           <br />
-          Drop your email and we{"'"}ll contact you in September 2024 for a free
-          consultation!
+          Drop your company email and we{"'"}ll contact you in September 2024
+          for a free consultation!
         </p>
         <EmailForm />
       </>
     ),
   },
   {
+    id: "who-is-behind",
     icon: "/detective.svg",
     title: "Who is behind GitHub Unwrapped?",
     description: "",
@@ -183,6 +190,7 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    id: "credits",
     icon: "/trophy.svg",
     title: "Credits",
     node: (
@@ -209,6 +217,7 @@ export const content: Array<AboutItemContent> = [
     ),
   },
   {
+    id: "contact",
     icon: "/mail.svg",
     title: "Contact",
     description: ``,

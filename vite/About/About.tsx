@@ -22,7 +22,9 @@ const About = () => {
         <DesktopHeader {...headerProps} />
         <div className={styles.content}>
           {content.map((item) => (
-            <AboutItem key={item.title} item={item} />
+            <div key={item.id} id={item.id}>
+              <AboutItem item={item} />
+            </div>
           ))}
         </div>
       </div>
