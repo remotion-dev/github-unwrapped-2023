@@ -11,6 +11,7 @@
   background-color: #171823;
   border-radius: 20px;
   border: 1px solid;
+  flex-shrink: 0;
 }
 
 .avatarRocket {
