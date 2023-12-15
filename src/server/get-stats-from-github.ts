@@ -10,7 +10,6 @@ import { baseQuery } from "./queries/base.query.js";
 import { getQuery } from "./queries/query.js";
 
 const NOT_LANGUAGES = [
-  "css",
   "html",
   "markdown",
   "dockerfile",
