@@ -56,10 +56,11 @@ export const getStatsFromGitHub = async ({
     (i) => {
       i.repository.languages.edges
         .filter((e) => !NOT_LANGUAGES_OBJ[e.node.name.toLocaleLowerCase()])
-        .forEach((l) => {
+        .forEach((l, index) => {
+          const score = Math.max(0, 3 - index);
           acc[l.node.name] = {
             color: l.node.color,
-            value: l.size + (acc[l.node.name]?.value || 0),
+            value: score + (acc[l.node.name]?.value || 0),
           };
         });
     },
