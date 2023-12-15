@@ -1,7 +1,3 @@
-// import { HomeForeground } from "./Home/HomeForeground";
-// import { Navbar } from "./Home/Navbar";
-// import { Planet } from "./Home/Planet";
-// import { HomeBox } from "./HomeBox/HomeBox";
 import { useEffect } from "react";
 import { RadialGradient } from "./RadialGradient";
 import styles from "./styles.module.css";
@@ -19,14 +15,10 @@ export const Loading = () => {
         username,
       }),
     })
-      // TODO
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((res) => {
+      .then(() => {
         window.location.href = `/${username}`;
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((err) => {
-        // TODO
         console.log(err);
       });
   }, [username]);
@@ -34,7 +26,6 @@ export const Loading = () => {
   return (
     <div className={styles.container}>
       <RadialGradient />
-      {/* <Stars /> */}
       <div
         style={{
           height: "100vh",
