@@ -32,7 +32,7 @@ export const loginEndPoint = async (request: Request, response: Response) => {
 
   if ("error" in query) {
     if (query.error === "access_denied") {
-      return response.redirect(`/`);
+      return response.redirect(`/about#permissions`);
     }
 
     throw new Error(query.error_description);
