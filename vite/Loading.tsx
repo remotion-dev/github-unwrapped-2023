@@ -6,13 +6,17 @@ export const Loading = () => {
   const username = window.location.pathname.split("/")[2];
 
   useEffect(() => {
-    fetch("/api/stats", {
+    const urlParams = new URLSearchParams(window.location.search);
+    const reset = urlParams.get("reset");
+
+    fetch(`/api/stats`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username,
+        refreshCache: Boolean(reset),
       }),
     })
       .then((res) => {
