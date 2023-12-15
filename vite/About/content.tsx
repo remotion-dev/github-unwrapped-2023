@@ -21,8 +21,7 @@ export const content: Array<AboutItemContent> = [
       <>
         <p>
           To enable private contributions, you need to enable {'"'}Private
-          contributions{'"'} in your GitHub profile. Once you{"'"}ve done this,
-          login in again and regenerate your video.
+          contributions{'"'} in your GitHub profile.
         </p>
         <div
           style={{
@@ -51,7 +50,14 @@ export const content: Array<AboutItemContent> = [
             />
           </div>
         </div>
-
+        <div>
+          Furthermore, you may need to login with GitHub and authorize the
+          organizations you want to include in your video.
+        </div>
+        <p>
+          To reset your statistics if you logged in with GitHub, click the
+          button below.
+        </p>
         <a
           className={styles.aboutButton}
           style={{ lineHeight: "43px" }}
@@ -59,6 +65,11 @@ export const content: Array<AboutItemContent> = [
         >
           Login again
         </a>
+        <p>
+          If you just entered your username, visit
+          githubunwrapped.com/YourUsername?reset=true to reset your statistics
+          (can be done up to three times).
+        </p>
       </>
     ),
   },
