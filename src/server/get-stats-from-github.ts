@@ -1,3 +1,4 @@
+import { interpolate } from "remotion";
 import type { Hour, ProfileStats } from "../config.js";
 import { getMostProductive } from "./commits/commits.js";
 import { getTimesOfDay } from "./commits/get-times-of-day.js";
@@ -58,9 +59,17 @@ export const getStatsFromGitHub = async ({
         .filter((e) => !NOT_LANGUAGES_OBJ[e.node.name.toLocaleLowerCase()])
         .forEach((l, index) => {
           const score = Math.max(0, 3 - index);
+
+          const multiplier =
+            i.contributions.totalCount *
+            interpolate(l.size, [0, 3000000], [1, 10], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            });
+
           acc[l.node.name] = {
             color: l.node.color,
-            value: score + (acc[l.node.name]?.value || 0),
+            value: score * multiplier + (acc[l.node.name]?.value || 0),
           };
         });
     },

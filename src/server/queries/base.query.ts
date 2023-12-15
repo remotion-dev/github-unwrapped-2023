@@ -81,6 +81,9 @@ export type BaseQueryResponse = {
       }[];
     };
     commitContributionsByRepository: Array<{
+      contributions: {
+        totalCount: number;
+      };
       repository: {
         languages: {
           edges: Array<{
