@@ -13,9 +13,9 @@ export type AboutItemContent = {
 
 export const content: Array<AboutItemContent> = [
   {
-    id: "private-contributions",
+    id: "private-activity",
     icon: "/eyeball.svg",
-    title: "Private contributions not showing up?",
+    title: "Private activity not showing up?",
     description: "",
     node: (
       <>
