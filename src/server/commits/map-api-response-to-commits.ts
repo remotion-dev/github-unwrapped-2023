@@ -1,3 +1,4 @@
+import { YEAR_TO_REVIEW } from "../../helpers/year.js";
 import type { Commit, commits } from "./commits.js";
 
 type CommitsApiResponse = typeof commits;
@@ -11,7 +12,12 @@ export const mapApiResponseToCommits = (
         return null;
       }
 
-      const hour = commit.commit.author.date.match(/T([0-9]+)/);
+      const { date } = commit.commit.author;
+      if (!date.startsWith(String(YEAR_TO_REVIEW))) {
+        return null;
+      }
+
+      const hour = date.match(/T([0-9]+)/);
       if (!hour) {
         return null;
       }
