@@ -73,6 +73,7 @@ export const OpeningTitle: React.FC<
         fontSize: 40,
         marginTop: -200 + y,
         perspective: 1000,
+        scale: String(login.length > 18 ? 0.75 : 1),
       }}
     >
       <div

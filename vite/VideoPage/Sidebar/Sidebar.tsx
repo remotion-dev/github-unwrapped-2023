@@ -35,7 +35,15 @@ export const Sidebar: React.FC<{
             playerRef={playerRef}
           />
           <div style={{ width: 16 }} />
-          <h2>{inputProps.login}</h2>
+          <h2
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {inputProps.login}
+          </h2>
         </div>
         <DownloadButton />
       </div>
