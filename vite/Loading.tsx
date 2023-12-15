@@ -15,7 +15,16 @@ export const Loading = () => {
         username,
       }),
     })
-      .then(() => {
+      .then((res) => {
+        return res.json();
+      })
+      .then((payload) => {
+        if (payload.error) {
+          // eslint-disable-next-line no-alert
+          window.alert(payload.error);
+          return;
+        }
+
         window.location.href = `/${username}`;
       })
       .catch((err) => {

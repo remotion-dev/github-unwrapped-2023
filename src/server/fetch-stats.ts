@@ -1,6 +1,11 @@
 import type { Request, Response } from "express";
 import { StatsRequest } from "../config.js";
-import { clearOgImagesForUsername, clearRendersForUsername } from "./db.js";
+import {
+  clearOgImagesForUsername,
+  clearRendersForUsername,
+  getResetAttempts,
+  registerResetAttempt,
+} from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
 import { getRandomGithubToken } from "./github-token.js";
@@ -53,19 +58,32 @@ export const executeGitHubGraphQlQuery = async ({
 };
 
 export const statsEndPoint = async (request: Request, response: Response) => {
-  if (request.method === "OPTIONS") return response.end();
-  const { username, refreshCache } = StatsRequest.parse(request.body);
-
-  await getStatsFromGitHubOrCache({
-    username,
-    token: getRandomGithubToken(),
-    refreshCache,
-  });
-
-  if (refreshCache) {
-    await clearRendersForUsername({ username });
-    await clearOgImagesForUsername({ username });
+  if (request.method === "OPTIONS") {
+    return response.end();
   }
 
-  return response.json({});
+  try {
+    const { username, refreshCache } = StatsRequest.parse(request.body);
+
+    await getStatsFromGitHubOrCache({
+      username,
+      token: getRandomGithubToken(),
+      refreshCache,
+    });
+
+    if (refreshCache) {
+      const resetCount = await getResetAttempts(username);
+      if (resetCount > 3) {
+        throw new Error("Only three reset attempts possible");
+      }
+
+      await registerResetAttempt(username);
+      await clearRendersForUsername({ username });
+      await clearOgImagesForUsername({ username });
+    }
+
+    return response.json({});
+  } catch (err) {
+    response.json({ error: (err as Error).message });
+  }
 };

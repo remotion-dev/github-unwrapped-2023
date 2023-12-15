@@ -79,11 +79,11 @@ export const loginEndPoint = async (request: Request, response: Response) => {
     throw new Error("No stats");
   }
 
-  await clearFailedRendersForUsername({ username: stats.username });
-
   if (query.reset === "true") {
     await clearRendersForUsername({ username: stats.username });
     await clearOgImagesForUsername({ username: stats.username });
+  } else {
+    await clearFailedRendersForUsername({ username: stats.username });
   }
 
   await insertProfileStats({
