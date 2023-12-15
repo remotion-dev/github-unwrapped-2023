@@ -3,8 +3,8 @@ import styles from "../styles.module.css";
 import { EmailForm } from "./EmailForm";
 
 export type AboutItemContent = {
-  id: string;
-  icon: string;
+  id?: string;
+  icon?: string;
   step?: number;
   title: string;
   description?: string;
