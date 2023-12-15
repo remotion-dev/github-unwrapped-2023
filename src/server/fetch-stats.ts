@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { StatsRequest } from "../config.js";
+import { clearOgImagesForUsername, clearRendersForUsername } from "./db.js";
 import { sendDiscordMessage } from "./discord.js";
 import { getStatsFromGitHubOrCache } from "./get-stats-from-github-or-cache.js";
 import { getRandomGithubToken } from "./github-token.js";
@@ -60,6 +61,11 @@ export const statsEndPoint = async (request: Request, response: Response) => {
     token: getRandomGithubToken(),
     refreshCache,
   });
+
+  if (refreshCache) {
+    await clearRendersForUsername({ username });
+    await clearOgImagesForUsername({ username });
+  }
 
   return response.json({});
 };

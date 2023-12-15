@@ -4,7 +4,7 @@ import { getStatsFromGitHub } from "./get-stats-from-github.js";
 export const getStatsFromGitHubOrCache = async ({
   username,
   token,
-  refreshCache = false,
+  refreshCache,
 }: {
   username: string;
   token: string;

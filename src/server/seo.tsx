@@ -56,6 +56,7 @@ const makeAppHead = async (
   const stats = await getStatsFromGitHubOrCache({
     username,
     token: getRandomGithubToken(),
+    refreshCache: false,
   });
 
   if (stats === "not-found") {
