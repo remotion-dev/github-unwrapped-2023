@@ -42,9 +42,21 @@ export type Render = {
   functionName: string;
   account: number;
 };
+
 const getRendersCollection = async () => {
   const client = await clientPromise;
   return client.db(backendCredentials().DB_NAME).collection<Render>("renders");
+};
+
+export type ResetRequest = {
+  lowerCaseUsername: string;
+};
+
+const getResetCollection = async () => {
+  const client = await clientPromise;
+  return client
+    .db(backendCredentials().DB_NAME)
+    .collection<ResetRequest>("reset");
 };
 
 type ProfileSchema =
@@ -259,4 +271,20 @@ export const getProfileStatsFromCache = async (
   }
 
   return "not-found";
+};
+
+export const getResetAttempts = async (username: string) => {
+  const collection = await getResetCollection();
+
+  return collection.countDocuments({
+    lowerCaseUsername: username.toLowerCase(),
+  });
+};
+
+export const registerResetAttempt = async (username: string) => {
+  const collection = await getResetCollection();
+
+  await collection.insertOne({
+    lowerCaseUsername: username.toLowerCase(),
+  });
 };

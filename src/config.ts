@@ -159,6 +159,7 @@ export const ProgressRequest = z.object({
 
 export const StatsRequest = z.object({
   username: z.string(),
+  refreshCache: z.boolean().optional().default(false),
 });
 
 export const generateRandomCorner = ({
