@@ -15,7 +15,6 @@ const NOT_LANGUAGES = [
   "markdown",
   "dockerfile",
   "roff",
-  "shell",
   "rich text format",
 ];
 
