@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { readFileSync } from "node:fs";
+import type { ServerResponse } from "node:http";
 import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
@@ -63,17 +64,42 @@ export const indexHtmlDev = (
   };
 };
 
-export const indexHtmlProduction = (params: {
+export const indexHtmlProduction = ({
+  handleUsername,
+  stats,
+}: {
   handleUsername: boolean;
   stats: boolean;
+  response: ServerResponse;
 }) => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
   return async (req: Request, response: Response) => {
+    if (handleUsername) {
+      const username = req.params.username || null;
+      const reset = req.query.reset || null;
+
+      if (username === null) {
+        return response.redirect("/");
+      }
+
+      if (reset) {
+        response.redirect(`/loading/${username}?reset=true`);
+        return;
+      }
+
+      const cachedStats = await getProfileStatsFromCache(username);
+
+      if (cachedStats === null) {
+        response.redirect(`/loading/${username}`);
+        return;
+      }
+    }
+
     const { html, status } = await replaceAppHead(
       req.params.username ?? null,
       template,
-      params,
+      { handleUsername, stats },
     );
 
     response.status(status);
