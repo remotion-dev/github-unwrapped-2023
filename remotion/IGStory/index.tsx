@@ -4,7 +4,7 @@ import type { z } from "zod";
 import type { ogImageSchema } from "../../src/config";
 import { Overlay } from "./Overlay";
 
-export const OgImageContent: React.FC<z.infer<typeof ogImageSchema>> = ({
+export const IgStoryContent: React.FC<z.infer<typeof ogImageSchema>> = ({
   issues,
   contributionData: graphData,
   stars,
@@ -16,20 +16,10 @@ export const OgImageContent: React.FC<z.infer<typeof ogImageSchema>> = ({
   return (
     <AbsoluteFill>
       <AbsoluteFill>
-        <Img src={staticFile("og-image-background.png")} />
+        <Img src={staticFile("ig-story.png")} />
       </AbsoluteFill>
       <AbsoluteFill>
-        <div
-          style={{
-            height: 630,
-            width: 1500,
-            transform: `matrix3d(0.690392, 0.015822, 0, 0.00019, 
-              0, 0.609524, 0, 0, 
-              0, 0, 1, 0, 
-              101, 88, 0, 1)`,
-            transformOrigin: "0px 0px 0px",
-          }}
-        >
+        <div>
           <Overlay
             contributionData={graphData}
             issues={issues}
@@ -45,6 +35,6 @@ export const OgImageContent: React.FC<z.infer<typeof ogImageSchema>> = ({
   );
 };
 
-export const OgImage: React.FC<z.infer<typeof ogImageSchema>> = () => {
+export const IgStory: React.FC<z.infer<typeof ogImageSchema>> = ({}) => {
   return null;
 };
