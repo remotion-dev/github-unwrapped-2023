@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { StatsRequest } from "../config.js";
 import {
+  clearIgStoriesForUsername,
   clearOgImagesForUsername,
   clearRendersForUsername,
   getResetAttempts,
@@ -80,6 +81,7 @@ export const statsEndPoint = async (request: Request, response: Response) => {
       await registerResetAttempt(username);
       await clearRendersForUsername({ username });
       await clearOgImagesForUsername({ username });
+      await clearIgStoriesForUsername({ username });
     }
 
     return response.json({});

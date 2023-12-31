@@ -22,7 +22,7 @@ import {
 import { loginEndPoint } from "./login.js";
 import { renderEndPoint } from "./render.js";
 import { errorEndpoint } from "./sentry-test.js";
-import { socialMediaPreview } from "./social-preview.js";
+import { igStoryImageEndpoint, socialMediaPreview } from "./social-preview.js";
 
 const apiEndpointWrapper = (
   endpoint: (
@@ -81,6 +81,8 @@ export const startServer = async () => {
   app.post("/api/email", apiEndpointWrapper(emailEndpoint));
   app.get("/og/:username.jpg", apiEndpointWrapper(socialMediaPreview));
   app.get("/og/:username.jpeg", apiEndpointWrapper(socialMediaPreview));
+  app.get("/ig/:username.jpg", apiEndpointWrapper(igStoryImageEndpoint));
+  app.get("/ig/:username.jpeg", apiEndpointWrapper(igStoryImageEndpoint));
 
   app.get("/favicon.ico", apiEndpointWrapper(faviconEndPoint));
   app.get(REDIRECT_URL_ENDPOINT, apiEndpointWrapper(loginEndPoint));

@@ -26,7 +26,7 @@ import {
   saveRender,
   updateRender,
 } from "./db.js";
-import { makeOrGetOgImage } from "./make-og-image.js";
+import { makeOrGetIgStory, makeOrGetOgImage } from "./make-og-image.js";
 import { getFinality } from "./progress.js";
 
 export const getRandomRegion = (): AwsRegion => {
@@ -141,6 +141,7 @@ export const renderOrGetProgress = async (
       },
     }),
     makeOrGetOgImage(userStat),
+    makeOrGetIgStory(userStat),
   ]);
 
   const newRender: Render = {

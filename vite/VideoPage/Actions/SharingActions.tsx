@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { InstagramIcon } from "../../../icons/InstagramIcon";
 import { LinkedInIcon } from "../../../icons/LinkedInIcon";
 import { XIcon } from "../../../icons/XIcon";
 import type { accentColorValues } from "../../../src/config";
@@ -32,7 +33,6 @@ export const SharingActions: React.FC<{
           style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
         />
       </Link>
-
       <Link
         from={videoRoute.id}
         to={"share"}
@@ -45,6 +45,13 @@ export const SharingActions: React.FC<{
           style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
         />
       </Link>
+      <a href={`/ig/${username}.jpg`}>
+        <SharingAction
+          icon={(params) => <InstagramIcon {...params} />}
+          label="Download story (image)"
+          style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
+        />
+      </a>
     </div>
   );
 };

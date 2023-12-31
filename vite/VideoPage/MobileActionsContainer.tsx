@@ -1,11 +1,13 @@
 import { Pie } from "@remotion/shapes";
 import { useNavigate } from "@tanstack/react-router";
 import React, { useCallback } from "react";
+import { InstagramIcon } from "../../icons/InstagramIcon";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { Button } from "../Button/Button";
 import { useUserVideo } from "../context";
 import { shareRoute, videoRoute } from "../routing";
 import { FurtherActions } from "./Actions/FurtherActions";
+import { SharingAction } from "./Actions/SharingAction";
 import type { LoadingState } from "./Sidebar/DownloadButton";
 import { DownloadButton } from "./Sidebar/DownloadButton";
 import styles from "./styles.module.css";
@@ -113,6 +115,13 @@ export const MobileActionsContainer: React.FC<{
           Share
         </Button>
       </div>
+      <a href={`/ig/${username}.jpg`}>
+        <SharingAction
+          icon={(params) => <InstagramIcon {...params} />}
+          label="Download story (image)"
+          style={{ width: "100%", justifyContent: "flex-start", padding: 0 }}
+        />
+      </a>
     </div>
   );
 };

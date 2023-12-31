@@ -884,7 +884,7 @@ export const RemotionRoot: React.FC = () => {
           width={1200}
           height={630}
           component={OgImageContent}
-          id="og-image-content"
+          id="og-image"
           schema={ogImageSchema}
           defaultProps={{
             topLanguage: {
