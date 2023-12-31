@@ -968,8 +968,8 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
         <Still
-          width={466}
-          height={735}
+          width={1036}
+          height={1973}
           component={IgStory}
           id="ig-story"
           schema={ogImageSchema}
