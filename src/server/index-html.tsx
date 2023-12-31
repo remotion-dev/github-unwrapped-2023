@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import { readFileSync } from "node:fs";
-import type { ServerResponse } from "node:http";
 import { fileURLToPath } from "node:url";
 import path from "path";
 import type { ViteDevServer } from "vite";
@@ -70,7 +69,6 @@ export const indexHtmlProduction = ({
 }: {
   handleUsername: boolean;
   stats: boolean;
-  response: ServerResponse;
 }) => {
   const template = readFileSync(viteIndexHtml, "utf-8");
 
