@@ -150,7 +150,10 @@ export const PlanetScaleOut: React.FC<z.infer<typeof zoomOutSchema>> = ({
 
   const remappedFrame = remapSpeed(frame, speedFunction);
 
-  const progress = interpolate(remappedFrame, [15, 100], [0, 1]);
+  const progress = interpolate(remappedFrame, [15, 100], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
   const move = moveAlongLine(translated2, progress);
 
   const zoomOutJump = interpolate(frame, [40, 70], [0, 1], {
