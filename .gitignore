@@ -43,3 +43,5 @@ dist
 
 # Sentry Config File
 .sentryclirc
+
+build
