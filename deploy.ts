@@ -16,7 +16,7 @@ dotenv.config();
 const count = getAccountCount();
 console.log(`Found ${count} accounts. Deploying...`);
 
-for (let i = 1; i <= count; i++) {
+for (let i = 2; i <= count; i++) {
   for (const region of getRegions()) {
     setEnvForKey(i);
     console.log(`Deploying to ${region} in account ${i}`);
